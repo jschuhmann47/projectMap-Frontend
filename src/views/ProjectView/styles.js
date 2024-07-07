@@ -132,4 +132,6 @@ export const StepCard = styled('div')({
   width: '80%',
   height: 50,
   backgroundColor: '#719F9D',
+  marginTop: 10,
+  marginBottom: 10,
 })
