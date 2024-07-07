@@ -1,5 +1,5 @@
 import { styled } from '@mui/system';
-import { AppBar, CircularProgress, Tab } from '@mui/material';
+import { AppBar, CircularProgress, IconButton, Tab } from '@mui/material';
 import { circularProgressClasses } from '@mui/material/CircularProgress';
 
 import { COLORS } from 'helpers/enums/colors';
@@ -121,7 +121,7 @@ export const ProjectTab = styled(Tab)({
   fontFamily: 'Fira Sans',
 })
 
-export const StepsTab = styled('div')({
+export const StepsContainer = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -134,4 +134,10 @@ export const StepCard = styled('div')({
   backgroundColor: '#719F9D',
   marginTop: 10,
   marginBottom: 10,
+  display: 'flex',
+  alignItems: 'center',
+})
+
+export const StepIcons = styled('div')({
+  marginLeft: 'auto',
 })
