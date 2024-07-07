@@ -6,10 +6,10 @@ function stepCard(step) {
   return <StepCard>
     {step.title}
     <StepIcons>
-      <IconButton>
+      <IconButton onClick={(e) => step.onClickList(step.value, e.currentTarget)}>
         <Visibility />
       </IconButton>
-      <IconButton>
+      <IconButton onClick={(e) => step.onClickAdd(step.value, e.currentTarget)}>
         <Edit />
       </IconButton>
     </StepIcons>

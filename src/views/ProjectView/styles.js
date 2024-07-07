@@ -1,5 +1,5 @@
 import { styled } from '@mui/system';
-import { AppBar, CircularProgress, IconButton, Tab } from '@mui/material';
+import { AppBar, CircularProgress, Tab } from '@mui/material';
 import { circularProgressClasses } from '@mui/material/CircularProgress';
 
 import { COLORS } from 'helpers/enums/colors';
