@@ -1,5 +1,5 @@
 import { styled } from '@mui/system';
-import { AppBar, CircularProgress } from '@mui/material';
+import { AppBar, CircularProgress, Tab } from '@mui/material';
 import { circularProgressClasses } from '@mui/material/CircularProgress';
 
 import { COLORS } from 'helpers/enums/colors';
@@ -115,3 +115,8 @@ export const Header = styled(AppBar)({
   top: 'initial',
   height: 'fit-content',
 });
+
+export const ProjectTab = styled(Tab)({
+  color: 'white !important',
+  fontFamily: 'Fira Sans',
+})
