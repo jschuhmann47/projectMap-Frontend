@@ -1,5 +1,5 @@
 import { styled } from '@mui/system';
-import { CircularProgress } from '@mui/material';
+import { AppBar, CircularProgress } from '@mui/material';
 import { circularProgressClasses } from '@mui/material/CircularProgress';
 
 import { COLORS } from 'helpers/enums/colors';
@@ -102,4 +102,16 @@ export const Title = styled('span')({
   fontFamily: 'Fira Sans',
   fontWeight: 500,
   fontSize: 36,
+});
+
+export const MainContainer = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%'
+});
+
+export const Header = styled(AppBar)({
+  position: 'relative',
+  top: 'initial',
+  height: 'fit-content',
 });
