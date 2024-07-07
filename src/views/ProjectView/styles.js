@@ -102,6 +102,7 @@ export const Title = styled('span')({
   fontFamily: 'Fira Sans',
   fontWeight: 500,
   fontSize: 36,
+  padding: 10,
 });
 
 export const MainContainer = styled('div')({
@@ -114,11 +115,13 @@ export const Header = styled(AppBar)({
   position: 'relative',
   top: 'initial',
   height: 'fit-content',
+  backgroundColor: '#405C5E',
 });
 
 export const ProjectTab = styled(Tab)({
   color: 'white !important',
   fontFamily: 'Fira Sans',
+  fontSize: 20,
 })
 
 export const StepsContainer = styled('div')({
@@ -130,12 +133,14 @@ export const StepsContainer = styled('div')({
 
 export const StepCard = styled('div')({
   width: '80%',
-  height: 50,
+  height: 60,
   backgroundColor: '#719F9D',
   marginTop: 10,
   marginBottom: 10,
   display: 'flex',
   alignItems: 'center',
+  paddingLeft: 20,
+  fontSize: 20,
 })
 
 export const StepIcons = styled('div')({
