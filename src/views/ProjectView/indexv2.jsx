@@ -1,13 +1,14 @@
 import { Header, Title, MainContainer, ProjectTab } from "./styles"
 import { TabContext, TabList, TabPanel } from "@mui/lab"
 import { useState } from "react"
+import StepsTab from "./tabs/stepsTab";
 
-export default function ProjectView({ titulo }) {
+export default function ProjectView({ titulo, items }) {
   const [activeTab, setActiveTab] = useState(1);
   const tabs = [{
       id: 1,
       name: 'Etapas',
-      content: <div>etapas</div>
+      content: <StepsTab steps={items} />
     }, {
       id: 2,
       name: 'Organigrama',

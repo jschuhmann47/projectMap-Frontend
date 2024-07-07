@@ -107,7 +107,7 @@ export const Title = styled('span')({
 export const MainContainer = styled('div')({
   display: 'flex',
   flexDirection: 'column',
-  width: '100%'
+  width: '100%',
 });
 
 export const Header = styled(AppBar)({
@@ -119,4 +119,17 @@ export const Header = styled(AppBar)({
 export const ProjectTab = styled(Tab)({
   color: 'white !important',
   fontFamily: 'Fira Sans',
+})
+
+export const StepsTab = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  width: '100%',
+})
+
+export const StepCard = styled('div')({
+  width: '80%',
+  height: 50,
+  backgroundColor: '#719F9D',
 })
