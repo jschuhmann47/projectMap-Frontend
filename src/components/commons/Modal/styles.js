@@ -30,6 +30,7 @@ export const ModalContent = styled('div')((props) => ({
   padding: 15,
   borderRadius: 10,
   maxHeight: '90vh',
+  maxWidth: '80%',
   overflow: 'scroll',
   '&::-webkit-scrollbar': {
     display: 'none',

@@ -141,3 +141,10 @@ export const StepCard = styled('div')({
 export const StepIcons = styled('div')({
   marginLeft: 'auto',
 })
+
+export const StepInfo = styled('div')({
+  textAlign: 'left',
+  display: 'flex',
+  flexDirection: 'column',
+  fontSize: 18,
+})
