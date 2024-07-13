@@ -35,7 +35,7 @@ import {
 } from 'styles/form';
 
 import LayoutContainer from 'containers/LayoutContainer';
-import ProjectView from 'views/ProjectView';
+import ProjectView from 'views/ProjectView/indexv2';
 import { MenuItemText } from 'views/ProjectView/styles';
 import {
   stepToolsSelector,
