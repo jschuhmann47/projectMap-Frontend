@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { onCreate, onDelete, onFilter, onGetAll } from 'redux/actions/projects.actions';
+import { getUser } from 'redux/actions/user.actions';
 import DashboardView from 'views/DashboardView';
 import ProjectForm from 'views/DashboardView/ProjectForm';
 
@@ -13,10 +14,12 @@ const DashboardContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isAddNewOpen, setAddNew] = useState(false);
-  const { items, loading, user } = useSelector((state) => state.projects);
+  const { items, loading } = useSelector((state) => state.projects);
+  const user = useSelector((state) => state.user.data);
 
   useEffect(() => {
     dispatch(onGetAll());
+    dispatch(getUser());
   }, [dispatch]);
 
   const onSubmit = (formData) => {
@@ -48,7 +51,7 @@ const DashboardContainer = () => {
     dispatch(onFilter(filterCriteria));
   };
 
-  const isAdmin = user && user.role === 'admin'; // Asumiendo que el rol del usuario se encuentra en user.role
+  const isAdmin = user && user.role === 'admin';
 
   return (
     <LayoutContainer>
