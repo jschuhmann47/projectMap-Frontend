@@ -20,44 +20,32 @@ export default function ProjectView({ titulo, items }) {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [user, setUser] = useState(null);
-  const [integrantes, setIntegrantes] = useState([
-    {
-      name: 'Pedro Gomez',
-      email: 'pgomez@frba.utn.edu.ar',
-      role: 'Participante',
-      permissions: {
-        entornoExterno: 'Editar',
-        situacionInterna: 'Ver',
-        lineamientosEstrategicos: 'Ocultar',
-        estrategiaCompetitiva: 'Ocultar',
-        planesTransformacion: 'Ocultar',
-        planeamientoFinanciero: 'Ocultar'
-      }
-    },
-    {
-      name: 'Fulantio Perez',
-      email: 'fperez@frba.utn.edu.ar',
-      role: 'Coordinador',
-      permissions: {
-        entornoExterno: 'Ver',
-        situacionInterna: 'Ver',
-        lineamientosEstrategicos: 'Ver',
-        estrategiaCompetitiva: 'Ver',
-        planesTransformacion: 'Ver',
-        planeamientoFinanciero: 'Ver'
-      }
-    },
-  ]);
+  const [error, setError] = useState('');
+  const [integrantes, setIntegrantes] = useState([]);
+  const [hasNewMembers, setHasNewMembers] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const roles = ['Participante', 'Coordinador'];
+  const permissionOptions = ['Editar', 'Ver', 'Ocultar'];
 
   const handleSearchUser = async () => {
-    // Simulación de búsqueda de usuario por email
-    const foundUser = await fakeUserSearch(email);
-    setUser(foundUser);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError('Por favor, ingresa un email válido.');
+      return;
+    }
+
+    setError('');
+    const foundUser = await searchUserByEmail(email);
+    if (foundUser) {
+      setUser(foundUser);
+    } else {
+      setError('No se encontró un usuario con ese email.');
+    }
   };
 
   const handleConfirmUser = () => {
-    // Lógica para confirmar y agregar el usuario al proyecto
     setIntegrantes([...integrantes, user]);
+    setHasNewMembers(true);
     setOpen(false);
   };
 
@@ -67,8 +55,7 @@ export default function ProjectView({ titulo, items }) {
     setIntegrantes(newIntegrantes);
   };
 
-  const fakeUserSearch = async (email) => {
-    // Simulación de búsqueda de usuario
+  const searchUserByEmail = async (email) => {
     return {
       name: 'Usuario Ejemplo',
       email,
@@ -82,6 +69,33 @@ export default function ProjectView({ titulo, items }) {
         planeamientoFinanciero: 'Ver'
       }
     };
+  };
+
+  const handleSave = async () => {
+    const coordinators = integrantes.filter(integrante => integrante.role === 'Coordinador');
+    const participants = integrantes.filter(integrante => integrante.role === 'Participante');
+
+    if (coordinators.length > 0) {
+      // const resultCoordinators = await saveCoordinators(coordinators);
+      const resultCoordinators = await searchUserByEmail(coordinators);
+      if (!resultCoordinators) {
+        console.error('Fallo al guardar los coordinadores');
+        return;
+      }
+    }
+
+    if (participants.length > 0) {
+      // const resultParticipants = await saveParticipants(participants);
+      const resultParticipants = await searchUserByEmail(participants);
+      if (!resultParticipants) {
+        console.error('Fallo al guardar los participantes');
+        return;
+      }
+    }
+
+    console.log('Todos los datos se guardaron correctamente');
+    setShowConfirmation(true);
+    setHasNewMembers(false);
   };
 
   const tabs = [
@@ -117,6 +131,8 @@ export default function ProjectView({ titulo, items }) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 margin="normal"
+                error={!!error}
+                helperText={error}
               />
               <Button variant="contained" onClick={handleSearchUser}>Buscar</Button>
               {user && (
@@ -156,8 +172,11 @@ export default function ProjectView({ titulo, items }) {
                           setIntegrantes(newIntegrantes);
                         }}
                       >
-                        <MenuItem value="Participante">Participante</MenuItem>
-                        <MenuItem value="Coordinador">Coordinador</MenuItem>
+                        {roles.map((role) => (
+                          <MenuItem key={role} value={role}>
+                            {role}
+                          </MenuItem>
+                        ))}
                       </Select>
                     </TableCell>
                     <TableCell>
@@ -165,9 +184,11 @@ export default function ProjectView({ titulo, items }) {
                         value={integrante.permissions.entornoExterno || 'Ver'}
                         onChange={(e) => handlePermissionChange(index, 'entornoExterno', e.target.value)}
                       >
-                        <MenuItem value="Editar">Editar</MenuItem>
-                        <MenuItem value="Ver">Ver</MenuItem>
-                        <MenuItem value="Ocultar">Ocultar</MenuItem>
+                        {permissionOptions.map((option) => (
+                          <MenuItem key={option} value={option}>
+                            {option}
+                          </MenuItem>
+                        ))}
                       </Select>
                     </TableCell>
                     <TableCell>
@@ -175,9 +196,11 @@ export default function ProjectView({ titulo, items }) {
                         value={integrante.permissions.situacionInterna || 'Ver'}
                         onChange={(e) => handlePermissionChange(index, 'situacionInterna', e.target.value)}
                       >
-                        <MenuItem value="Editar">Editar</MenuItem>
-                        <MenuItem value="Ver">Ver</MenuItem>
-                        <MenuItem value="Ocultar">Ocultar</MenuItem>
+                        {permissionOptions.map((option) => (
+                          <MenuItem key={option} value={option}>
+                            {option}
+                          </MenuItem>
+                        ))}
                       </Select>
                     </TableCell>
                     <TableCell>
@@ -185,9 +208,11 @@ export default function ProjectView({ titulo, items }) {
                         value={integrante.permissions.lineamientosEstrategicos || 'Ver'}
                         onChange={(e) => handlePermissionChange(index, 'lineamientosEstrategicos', e.target.value)}
                       >
-                        <MenuItem value="Editar">Editar</MenuItem>
-                        <MenuItem value="Ver">Ver</MenuItem>
-                        <MenuItem value="Ocultar">Ocultar</MenuItem>
+                        {permissionOptions.map((option) => (
+                          <MenuItem key={option} value={option}>
+                            {option}
+                          </MenuItem>
+                        ))}
                       </Select>
                     </TableCell>
                     <TableCell>
@@ -195,9 +220,11 @@ export default function ProjectView({ titulo, items }) {
                         value={integrante.permissions.estrategiaCompetitiva || 'Ver'}
                         onChange={(e) => handlePermissionChange(index, 'estrategiaCompetitiva', e.target.value)}
                       >
-                        <MenuItem value="Editar">Editar</MenuItem>
-                        <MenuItem value="Ver">Ver</MenuItem>
-                        <MenuItem value="Ocultar">Ocultar</MenuItem>
+                        {permissionOptions.map((option) => (
+                          <MenuItem key={option} value={option}>
+                            {option}
+                          </MenuItem>
+                        ))}
                       </Select>
                     </TableCell>
                     <TableCell>
@@ -205,9 +232,11 @@ export default function ProjectView({ titulo, items }) {
                         value={integrante.permissions.planesTransformacion || 'Ver'}
                         onChange={(e) => handlePermissionChange(index, 'planesTransformacion', e.target.value)}
                       >
-                        <MenuItem value="Editar">Editar</MenuItem>
-                        <MenuItem value="Ver">Ver</MenuItem>
-                        <MenuItem value="Ocultar">Ocultar</MenuItem>
+                        {permissionOptions.map((option) => (
+                          <MenuItem key={option} value={option}>
+                            {option}
+                          </MenuItem>
+                        ))}
                       </Select>
                     </TableCell>
                     <TableCell>
@@ -215,9 +244,11 @@ export default function ProjectView({ titulo, items }) {
                         value={integrante.permissions.planeamientoFinanciero || 'Ver'}
                         onChange={(e) => handlePermissionChange(index, 'planeamientoFinanciero', e.target.value)}
                       >
-                        <MenuItem value="Editar">Editar</MenuItem>
-                        <MenuItem value="Ver">Ver</MenuItem>
-                        <MenuItem value="Ocultar">Ocultar</MenuItem>
+                        {permissionOptions.map((option) => (
+                          <MenuItem key={option} value={option}>
+                            {option}
+                          </MenuItem>
+                        ))}
                       </Select>
                     </TableCell>
                   </TableRow>
@@ -225,7 +256,29 @@ export default function ProjectView({ titulo, items }) {
               </TableBody>
             </Table>
           </TableContainer>
-          <Button variant="contained" style={{ marginTop: 20 }}>Guardar</Button>
+          {hasNewMembers && (
+            <Button variant="contained" style={{ marginTop: 20 }} onClick={handleSave}>
+              Guardar
+            </Button>
+          )}
+          <Modal
+            open={showConfirmation}
+            onClose={() => setShowConfirmation(false)}
+            aria-labelledby="modal-confirmation-title"
+            aria-describedby="modal-confirmation-description"
+          >
+            <Box sx={modalStyle}>
+              <Typography id="modal-confirmation-title" variant="h6" component="h2">
+                Guardado Exitoso
+              </Typography>
+              <Typography id="modal-confirmation-description" sx={{ mt: 2 }}>
+                Los integrantes se guardaron correctamente.
+              </Typography>
+              <Button onClick={() => setShowConfirmation(false)} variant="contained" sx={{ mt: 2 }}>
+                Cerrar
+              </Button>
+            </Box>
+          </Modal>
         </div>
       )
     }
