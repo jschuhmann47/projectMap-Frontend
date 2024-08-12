@@ -1,9 +1,11 @@
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import Grid from '@mui/material/Grid';
+import { useState } from 'react';
 
 import Button from 'components/commons/Button';
 import ProjectCard from 'components/commons/ProjectCard';
+import FilterProjectsModal from '../../components/commons/ProjectCard/components/FilterProjectsModal';
 
 import {
   ButtonContainer,
@@ -16,10 +18,30 @@ import {
 } from './styles';
 
 const DashboardView = (props) => {
-  const { onAddNew, onClickProject, items, onClickDelete, onFilterProjects, isAdmin } = props;
+  const { onAddNew, onClickProject, items, onClickDelete, isAdmin } = props;
+
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const [filteredItems, setFilteredItems] = useState(items);
 
   const handleFilterClick = () => {
-    onFilterProjects({ date: '2021-01-01', name: 'Project' });
+    setIsFilterModalOpen(true);
+  };
+
+  const handleCloseFilterModal = () => {
+    setIsFilterModalOpen(false);
+  };
+
+  const handleApplyFilters = (filters) => {
+    const { date, name } = filters;
+
+    const filtered = items.filter(item => {
+      const matchDate = date ? item.date === date : true;
+      const matchName = name ? item.titulo.toLowerCase().includes(name.toLowerCase()) : true;
+      return matchDate && matchName;
+    });
+
+    setFilteredItems(filtered);
+    handleCloseFilterModal();
   };
 
   return (
@@ -42,11 +64,11 @@ const DashboardView = (props) => {
             </ButtonContainer>
           )}
         </TitleContainer>
-        {items.length === 0 ? (
+        {filteredItems.length === 0 ? (
           <NoProjectsMessage>Aún no hay proyectos</NoProjectsMessage>
         ) : (
           <Grid container rowSpacing={2} columnSpacing={4}>
-            {items.map(({ _id, color, titulo, descripcion, coordinators }) => (
+            {filteredItems.map(({ _id, color, titulo, descripcion, coordinators, participants }) => (
               <Grid item xs={12} key={_id}>
                 <ProjectCard
                   key={_id}
@@ -57,12 +79,18 @@ const DashboardView = (props) => {
                   onClickDelete={isAdmin ? () => onClickDelete(_id) : null}
                   isAdmin={isAdmin}
                   coordinators={coordinators}
+                  participants={participants}
                 />
               </Grid>
             ))}
           </Grid>
         )}
       </Content>
+      <FilterProjectsModal
+        isOpen={isFilterModalOpen}
+        onClose={handleCloseFilterModal}
+        onApplyFilters={handleApplyFilters}
+      />
     </Container>
   );
 };

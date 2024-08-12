@@ -5,7 +5,7 @@ import { getRandomInt } from 'helpers/randomNumber';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { onCreate, onDelete, onFilter, onGetAll } from 'redux/actions/projects.actions';
+import { onCreate, onDelete, onGetAll } from 'redux/actions/projects.actions';
 import { getUser } from 'redux/actions/user.actions';
 import DashboardView from 'views/DashboardView';
 import ProjectForm from 'views/DashboardView/ProjectForm';
@@ -47,11 +47,7 @@ const DashboardContainer = () => {
     dispatch(onDelete(id));
   };
 
-  const onFilterProjects = (filterCriteria) => {
-    dispatch(onFilter(filterCriteria));
-  };
-
-  const isAdmin = user && user.role === 'admin';
+  const isAdmin = user && user.isAdmin;
 
   return (
     <LayoutContainer>
@@ -60,7 +56,6 @@ const DashboardContainer = () => {
         onClickProject={onClickProject}
         items={items}
         onClickDelete={onClickDelete}
-        onFilterProjects={onFilterProjects}
         isAdmin={isAdmin}
       />
       <Modal isOpen={isAddNewOpen} onClose={() => setAddNew(false)}>

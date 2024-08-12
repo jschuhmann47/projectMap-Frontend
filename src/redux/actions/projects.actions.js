@@ -10,11 +10,6 @@ export const onDelete = (id) => ({
   id,
 });
 
-export const onFilter = (id) => ({
-  type: constants.PROJECTS_ON_DELETE_REQUESTED,
-  id,
-});
-
 export const onGetAll = (id) => ({
   type: constants.PROJECTS_ON_GET_ALL_REQUESTED,
 });

@@ -1,7 +1,9 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import PersonIcon from '@mui/icons-material/Person';
 import { Box, IconButton, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser } from 'redux/actions/user.actions';
 import ConfirmDeleteModal from './components/confirmDeleteModal';
 import { Card, CardContent, Description, Title, TitleContainer } from './styles';
 
@@ -14,15 +16,32 @@ const ProjectCard = (props) => {
     onClickDelete,
     onDeleteDisable = false,
     isAdmin,
-    coordinators,
+    coordinators = [],
+    participants = [],
   } = props;
 
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.data);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [confirmDeleteError, setConfirmDeleteError] = useState(null);
+  const [userRole, setUserRole] = useState('');
+
   const closeModal = () => {
     setIsModalOpen(false);
     setConfirmDeleteError(null);
   };
+
+  useEffect(() => {
+    if (!user) {
+      dispatch(getUser());
+    } else {
+      if (participants.includes(user.id)) {
+        setUserRole('Participante');
+      } else if (coordinators.includes(user.id)) {
+        setUserRole('Coordinador');
+      }
+    }
+  }, [dispatch, user, participants, coordinators]);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -44,9 +63,9 @@ const ProjectCard = (props) => {
           <TitleContainer>
             <Title>{titulo}</Title>
             <Box display="flex" alignItems="center">
-              {!isAdmin && (
+              {!isAdmin && userRole && (
                 <Typography variant="body2" sx={{ marginRight: 1 }}>
-                  Coordinador / Participante
+                  {userRole}
                 </Typography>
               )}
               {!isAdmin ? (
