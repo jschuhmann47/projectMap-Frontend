@@ -69,7 +69,7 @@ const LoginForm = ({ onSubmit }) => (
           </Box>
           <Button type="submit">Iniciar sesión</Button>
           <CustomLink to="/register">
-            <Button>Crear una cuenta</Button>
+            <Button color='primary'>Crear una cuenta</Button>
           </CustomLink>
         </CustomForm>
       )}
