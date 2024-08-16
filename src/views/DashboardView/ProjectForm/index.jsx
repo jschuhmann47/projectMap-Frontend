@@ -3,8 +3,9 @@ import { ErrorMessage, Field, Formik } from 'formik';
 
 import Input from 'components/inputs/Input';
 import Textarea from 'components/inputs/Textarea';
+import Button from 'components/commons/Button';
 
-import { FormContainer, CustomForm, SubmitButton } from 'styles/form';
+import { FormContainer, CustomForm } from 'styles/form';
 import { validateField } from 'helpers/validateField';
 import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
@@ -62,9 +63,9 @@ const ProjectForm = ({ onSubmit }) => (
             </ErrorMessage>
           </Box>
 
-          <SubmitButton type="submit" color="primary">
+          <Button type="submit" color="primary">
             Crear
-          </SubmitButton>
+          </Button>
         </CustomForm>
       )}
     </Formik>

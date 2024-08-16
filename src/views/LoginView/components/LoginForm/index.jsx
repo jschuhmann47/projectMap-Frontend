@@ -2,13 +2,12 @@ import React from 'react';
 import { ErrorMessage, Field, Formik } from 'formik';
 
 import Input from 'components/inputs/Input';
+import Button from 'components/commons/Button';
 
 import { Title } from 'styles/form';
 import {
   FormContainer,
   CustomForm,
-  SubmitButton,
-  LinkContainer,
   CustomLink,
 } from 'styles/form';
 import { validateField } from 'helpers/validateField';
@@ -16,7 +15,7 @@ import { Box, Typography } from '@mui/material';
 
 const LoginForm = ({ onSubmit }) => (
   <FormContainer>
-    <Title>Ingresar</Title>
+    <Title>Iniciar sesión</Title>
     <Formik onSubmit={onSubmit} initialValues={{ email: '', password: '' }}>
       {({ handleSubmit }) => (
         <CustomForm onSubmit={handleSubmit}>
@@ -68,13 +67,13 @@ const LoginForm = ({ onSubmit }) => (
               )}
             </ErrorMessage>
           </Box>
-          <SubmitButton type="submit">Login</SubmitButton>
+          <Button type="submit">Iniciar sesión</Button>
+          <CustomLink to="/register">
+            <Button>Crear una cuenta</Button>
+          </CustomLink>
         </CustomForm>
       )}
     </Formik>
-    <LinkContainer>
-      <CustomLink to="/register">Crear una cuenta</CustomLink>
-    </LinkContainer>
   </FormContainer>
 );
 

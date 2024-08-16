@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 import { COLORS } from 'helpers/enums/colors';
 
-import Button from 'components/commons/Button';
 import { Form } from 'formik';
 
 export const Container = styled('div')({
@@ -26,26 +25,14 @@ export const FormContainer = styled('div')({
 export const CustomForm = styled(Form)({
   display: 'flex',
   flexDirection: 'column',
-  gap: 30,
+  gap: 15,
   alignItems: 'center',
 });
 
 export const Title = styled('span')({
   fontFamily: 'Fira Sans, sans-serif',
   fontSize: '50px',
-  fontWeight: '700',
-  color: COLORS.BlueDianne,
-});
-
-export const SubmitButton = styled(Button)`
-  width: 100%;
-`;
-
-export const LinkContainer = styled('div')({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: 25,
+  color: COLORS.white,
 });
 
 export const CustomLink = styled(Link)({
@@ -53,6 +40,7 @@ export const CustomLink = styled(Link)({
   fontFamily: 'Fira Sans, sans-serif',
   fontSize: '18px',
   color: COLORS.BlueDianne,
+  width: '100%'
 });
 
 export const ButtonsContainer = styled('div')({
