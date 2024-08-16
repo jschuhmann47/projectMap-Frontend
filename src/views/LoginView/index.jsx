@@ -9,7 +9,7 @@ const LoginView = (props) => {
   const { onSubmit } = props;
   return (
     <Container>
-      <Box sx={{ width: '60%' }}>
+      <Box sx={{ width: '40%' }}>
         <img src='projectmap-logo.png' width='100%' />
       </Box>
       <LoginForm onSubmit={onSubmit} />
