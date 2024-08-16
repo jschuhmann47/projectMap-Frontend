@@ -9,11 +9,10 @@ import { Form } from 'formik';
 export const Container = styled('div')({
   display: 'flex',
   flex: 1,
-  flexDirection: 'column',
+  flexDirection: 'row',
   alignItems: 'center',
-  justifyContent: 'center',
-  background:
-    'linear-gradient(180deg, #2A9D8F 0%, rgba(151, 255, 242, 0) 100%)',
+  justifyContent: 'space-around',
+  background: '#273638',
 });
 
 export const FormContainer = styled('div')({
