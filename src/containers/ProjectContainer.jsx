@@ -233,7 +233,6 @@ const ProjectContainer = () => {
   }));
 
   function onSearchUserByEmail(email) {
-    console.log('holaa')
     dispatch(onSearchByEmail(email));
   }
 
