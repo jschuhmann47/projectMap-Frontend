@@ -79,12 +79,18 @@ export const onUnShareUsers = (id, formData) => ({
 export const onSearchByEmail = (email) => ({
   type: constants.PROJECTS_SEARCH_BY_EMAIL_REQUESTED,
   email,
-})
+});
 
 export const openModal = () => ({
   type: constants.PROJECTS_OPEN_ADD_USER_MODAL,
-})
+});
 
 export const closeModal = () => ({
   type: constants.PROJECTS_CLOSE_ADD_USER_MODAL,
-})
+});
+
+export const onAddUser = (id, formData) => ({
+  type: constants.PROJECTS_ADD_USER_REQUESTED,
+  id,
+  formData,
+});

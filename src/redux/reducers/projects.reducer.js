@@ -279,9 +279,20 @@ const projectsReducer = (state = defaultState, action) => {
         addUserModal: { ...state.addUserModal, isOpen: true }
       }
     case constants.PROJECTS_CLOSE_ADD_USER_MODAL:
+    case constants.PROJECTS_ADD_USER_SUCCEEDED:
       return {
         ...state,
         addUserModal: defaultState.addUserModal
+      }
+    case constants.PROJECTS_ADD_USER_REQUESTED:
+      return {
+        ...state,
+        addUserModal: { ...state.addUserModal, loading: true }
+      }
+    case constants.PROJECTS_ADD_USER_FAILED:
+      return {
+        ...state,
+        addUserModal: { ...state.addUserModal, loading: false, error: error }
       }
     case constants.PROJECTS_SHARED_ON_GET_ALL_FAILED:
     case constants.PROJECTS_ON_CREATE_FAILED:

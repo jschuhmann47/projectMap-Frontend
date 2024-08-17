@@ -16,6 +16,10 @@ export default function AddUserModal({
     onClose();
   }
 
+  function addUserToProject() {
+    onAddUserToProject(info.user.email, 'participant') // TODO: allow adding coordinator directly
+  }
+
   return <Modal isOpen={info.isOpen} onClose={onCloseModal}>
     <Box>
       <Typography id="modal-modal-title" variant="h6" component="h2">
@@ -34,7 +38,7 @@ export default function AddUserModal({
       {info.user && (
         <Box mt={2}>
           <Typography variant="body1">Usuario encontrado: {info.user.firstName} {info.user.lastName}</Typography>
-          <Button variant="contained" color="primary" onClick={onAddUserToProject}>Confirmar</Button>
+          <Button variant="contained" color="primary" onClick={addUserToProject}>Confirmar</Button>
         </Box>
       )}
     </Box>

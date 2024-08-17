@@ -22,7 +22,8 @@ import {
   onShareUser,
   onUnShareUsers,
   openModal,
-  closeModal
+  closeModal,
+  onAddUser
 } from 'redux/actions/projects.actions';
 import { STEPS } from 'helpers/enums/steps';
 import { COLORS } from 'helpers/enums/colors';
@@ -234,15 +235,19 @@ const ProjectContainer = () => {
 
   function onSearchUserByEmail(email) {
     dispatch(onSearchByEmail(email));
-  }
+  };
 
   function onOpenModal() {
-    dispatch(openModal())
-  }
+    dispatch(openModal());
+  };
 
   function onCloseModal() {
-    dispatch(closeModal())
-  }
+    dispatch(closeModal());
+  };
+
+  function onAddUserToProject(email, role) {
+    dispatch(onAddUser(id, { userEmail: email, role }));
+  };
 
   return (
     <LayoutContainer>
@@ -253,7 +258,7 @@ const ProjectContainer = () => {
         members={members}
         addUserModalInfo={addUserModalInfo}
         onSearchUserByEmail={onSearchUserByEmail}
-        onAddUserToProject={() => {}}
+        onAddUserToProject={onAddUserToProject}
         onOpenModal={onOpenModal}
         onCloseModal={onCloseModal}
       />
