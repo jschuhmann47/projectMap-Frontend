@@ -18,6 +18,11 @@ const permissionNames = {
   hide: 'Ocultar'
 }
 
+const roleNames = {
+  participant: 'Participante',
+  coordinator: 'Coordinador'
+}
+
 function memberStepPermissionCell(userId, permission) {
   return <TableCell>
     <Select
@@ -33,6 +38,21 @@ function memberStepPermissionCell(userId, permission) {
   </TableCell>
 }
 
+function memberRoleCell(userId, role) {
+  return <TableCell>
+    <Select
+      value={roleNames[role]}
+      onChange={(e) => { console.log(e.target.value) }}
+    >
+      {Object.values(roleNames).map((role) => (
+        <MenuItem key={role} value={role}>
+          {role}
+        </MenuItem>
+      ))}
+    </Select>
+  </TableCell>
+}
+
 export default function RolesTab({
   members,
   onSearchUserByEmail,
@@ -41,10 +61,6 @@ export default function RolesTab({
   onOpenModal,
   onCloseModal,
 }) {
-  const roles = ['participant', 'coordinator'];
-
-  console.log(members[0].spheres.find((s) => s.id == 'externalEnvironment'))
-
   return (
     <div>
       <Button variant="contained" onClick={onOpenModal}>Agregar Integrante</Button>
@@ -69,21 +85,10 @@ export default function RolesTab({
               <TableRow key={index}>
                 <TableCell>{member.user.firstName} {member.user.lastName}</TableCell>
                 <TableCell>{member.user.email}</TableCell>
-                <TableCell>
-                  <Select
-                    value={member.role}
-                    onChange={(e) => { console.log(e.target.value) }}
-                  >
-                    {roles.map((role) => (
-                      <MenuItem value={role}>
-                        {role}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </TableCell>
+                {memberRoleCell(member.user._id, member.role)}
                 {Object.keys(stepNames).map((step) =>
                   member.role == 'participant' ? (
-                    memberStepPermissionCell(member.user.id, member.spheres.find((s) => s.id == step)?.permission)
+                    memberStepPermissionCell(member.user._id, member.spheres.find((s) => s.id == step)?.permission)
                   ) : '-'
                 )}
               </TableRow>

@@ -294,6 +294,23 @@ const projectsReducer = (state = defaultState, action) => {
         ...state,
         addUserModal: { ...state.addUserModal, loading: false, error: error }
       }
+    case constants.PROJECTS_CHANGE_MEMBER_ROLE:
+      return {
+        ...state,
+        members: state.members.map((m) => m._id != data.userId ? m : { ...m, role: data.newRole })
+      }
+    case constants.PROJECTS_CHANGE_MEMBER_PERMISSION:
+      return {
+        ...state,
+        // replace one sphere's permission in one member according to change
+        members: state.members.map((m) =>
+          m._id != data.userId ? m : {
+            ...m, spheres: m.spheres.map((s) =>
+              s.id != data.stepId ? s : { id: s.id, permission: data.newPermission }
+            )
+          }
+        )
+      }
     case constants.PROJECTS_SHARED_ON_GET_ALL_FAILED:
     case constants.PROJECTS_ON_CREATE_FAILED:
     case constants.PROJECTS_ON_GET_ONE_FAILED:
