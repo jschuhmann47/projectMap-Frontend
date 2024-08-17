@@ -35,7 +35,8 @@ export const defaultState = {
   members: [],
   addUserModal: {
     loading: false,
-    userFound: null
+    userFound: null,
+    error: null
   }
 };
 

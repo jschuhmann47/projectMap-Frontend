@@ -75,3 +75,8 @@ export const onUnShareUsers = (id, formData) => ({
   id,
   formData,
 });
+
+export const onSearchByEmail = (email) => ({
+  type: constants.PROJECTS_SEARCH_BY_EMAIL_REQUESTED,
+  email,
+})

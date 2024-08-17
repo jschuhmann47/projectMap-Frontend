@@ -2,107 +2,24 @@ import { Box, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContain
 import Button from "components/commons/Button";
 import Modal from "components/commons/Modal";
 import { useState } from "react";
+import AddUserModal from "./addUserModal";
 
-export default function RolesTab() {
+export default function RolesTab({ members, onSearchUserByEmail, onAddUserToProject, addUserModalInfo }) {
   const [open, setOpen] = useState(false);
-  const [email, setEmail] = useState('');
-  const [error, setError] = useState('');
-  const [user, setUser] = useState(null);
-  const [integrantes, setIntegrantes] = useState([]);
-  const [hasNewMembers, setHasNewMembers] = useState(false);
-  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const roles = ['Participante', 'Coordinador'];
   const permissionOptions = ['Editar', 'Ver', 'Ocultar'];
 
-  const handlePermissionChange = (index, field, value) => {
-    const newIntegrantes = [...integrantes];
-    newIntegrantes[index].permissions[field] = value;
-    setIntegrantes(newIntegrantes);
-  };
-
-  const handleSave = async () => {
-    const coordinators = integrantes.filter(integrante => integrante.role === 'Coordinador');
-    const participants = integrantes.filter(integrante => integrante.role === 'Participante');
-
-    if (coordinators.length > 0) {
-      // const resultCoordinators = await saveCoordinators(coordinators);
-      const resultCoordinators = await searchUserByEmail(coordinators);
-      if (!resultCoordinators) {
-        console.error('Fallo al guardar los coordinadores');
-        return;
-      }
-    }
-
-    if (participants.length > 0) {
-      // const resultParticipants = await saveParticipants(participants);
-      const resultParticipants = await searchUserByEmail(participants);
-      if (!resultParticipants) {
-        console.error('Fallo al guardar los participantes');
-        return;
-      }
-    }
-
-    console.log('Todos los datos se guardaron correctamente');
-    setShowConfirmation(true);
-    setHasNewMembers(false);
-  };
-
-  async function searchUserByEmail(email) {
-    return "implementame"
-  }
-
-  const handleSearchUser = async () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setError('Por favor, ingresa un email válido.');
-      return;
-    }
-
-    setError('');
-    const foundUser = await searchUserByEmail(email);
-    if (foundUser) {
-      setUser(foundUser);
-    } else {
-      setError('No se encontró un usuario con ese email.');
-    }
-  };
-
-  const handleConfirmUser = () => {
-    setIntegrantes([...integrantes, user]);
-    setHasNewMembers(true);
-    setOpen(false);
-  };
-
   return (
     <div>
       <Button variant="contained" onClick={() => setOpen(true)}>Agregar Integrante</Button>
-      <Modal
+      <AddUserModal
         isOpen={open}
         onClose={() => setOpen(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-          Buscar Integrante
-        </Typography>
-        <TextField
-          fullWidth
-          label="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          margin="normal"
-          error={!!error}
-          helperText={error}
-        />
-        <Button variant="contained" onClick={handleSearchUser}>Buscar</Button>
-        {user && (
-          <Box mt={2}>
-            <Typography variant="body1">Usuario encontrado: {user.name}</Typography>
-            <Button variant="contained" color="primary" onClick={handleConfirmUser}>Confirmar</Button>
-          </Box>
-        )}
-      </Modal>
+        onSearchUserByEmail={onSearchUserByEmail}
+        onAddUserToProject={onAddUserToProject}
+        info={addUserModalInfo}
+      />
       <TableContainer component={Paper} style={{ marginTop: 20 }}>
         <Table>
           <TableHead>

@@ -18,6 +18,7 @@ import {
   onGetPorter,
   onGetQuestionnaire,
   onGetSharedUsers,
+  onSearchByEmail,
   onShareUser,
   onUnShareUsers,
 } from 'redux/actions/projects.actions';
@@ -88,6 +89,7 @@ const ProjectContainer = () => {
   const projectInfo = useSelector((state) => state.projects.data);
   const sharedUsers = useSelector((state) => state.projects.sharedUsers);
   const members = useSelector((state) => state.projects.members);
+  const addUserModalInfo = useSelector((state) => state.projects.addUserModal);
   const errorShared = useSelector(
     (state) => state.projects.errorShared?.response?.data?.message
   );
@@ -228,6 +230,10 @@ const ProjectContainer = () => {
     onClickList,
   }));
 
+  function onSearchUserByEmail(email) {
+    dispatch(onSearchByEmail(email));
+  }
+
   return (
     <LayoutContainer>
       <ProjectView
@@ -235,7 +241,8 @@ const ProjectContainer = () => {
         title={projectInfo?.name}
         project={projectInfo}
         members={members}
-        onSearchUserByEmail={() => {}}
+        addUserModalInfo={addUserModalInfo}
+        onSearchUserByEmail={onSearchByEmail}
         onAddUserToProject={() => {}}
       />
       <Menu

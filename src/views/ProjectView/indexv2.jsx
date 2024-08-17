@@ -9,7 +9,8 @@ export default function ProjectView({
   items,
   members,
   onSearchUserByEmail,
-  onAddUserToProject
+  onAddUserToProject,
+  addUserModalInfo,
 }) {
   const [activeTab, setActiveTab] = useState("1");
 
@@ -31,6 +32,7 @@ export default function ProjectView({
         members={members}
         onSearchUserByEmail={onSearchUserByEmail}
         onAddUserToProject={onAddUserToProject}
+        addUserModalInfo={addUserModalInfo}
       />
     }
   ];
