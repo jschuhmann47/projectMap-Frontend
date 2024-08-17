@@ -249,6 +249,14 @@ const ProjectContainer = () => {
     dispatch(onAddUser(id, { userEmail: email, role }));
   };
 
+  function onChangeMemberRole(userId, newRole) {
+    dispatch(onChangeMemberRole(userId, newRole));
+  };
+
+  function onChangeMemberPermission(userId, stepId, newPermission) {
+    dispatch(onChangeMemberPermission(userId, stepId, newPermission));
+  };
+
   return (
     <LayoutContainer>
       <ProjectView
@@ -261,6 +269,7 @@ const ProjectContainer = () => {
         onAddUserToProject={onAddUserToProject}
         onOpenModal={onOpenModal}
         onCloseModal={onCloseModal}
+        
       />
       <Menu
         anchorEl={openComments}

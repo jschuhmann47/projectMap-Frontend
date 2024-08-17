@@ -297,7 +297,9 @@ const projectsReducer = (state = defaultState, action) => {
     case constants.PROJECTS_CHANGE_MEMBER_ROLE:
       return {
         ...state,
-        members: state.members.map((m) => m._id != data.userId ? m : { ...m, role: data.newRole })
+        members: state.members.map((m) =>
+          m._id != data.userId ? m : { ...m, role: data.newRole }
+        )
       }
     case constants.PROJECTS_CHANGE_MEMBER_PERMISSION:
       return {
