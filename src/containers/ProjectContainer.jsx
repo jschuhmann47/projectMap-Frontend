@@ -87,6 +87,7 @@ const ProjectContainer = () => {
 
   const projectInfo = useSelector((state) => state.projects.data);
   const sharedUsers = useSelector((state) => state.projects.sharedUsers);
+  const members = useSelector((state) => state.projects.members);
   const errorShared = useSelector(
     (state) => state.projects.errorShared?.response?.data?.message
   );
@@ -231,14 +232,11 @@ const ProjectContainer = () => {
     <LayoutContainer>
       <ProjectView
         items={items}
-        title={projectInfo?.title}
-        onClickButtonGoBack={onClickButtonGoBack}
+        title={projectInfo?.name}
         project={projectInfo}
-        onCLickMejoraContinua={onCLickMejoraContinua}
-        stepsColors={stepsColors}
-        openComments={(target) => setOpencomments(target)}
-        openShareModal={openShareModal}
-        openUnShareModal={openUnShareModal}
+        members={members}
+        onSearchUserByEmail={() => {}}
+        onAddUserToProject={() => {}}
       />
       <Menu
         anchorEl={openComments}

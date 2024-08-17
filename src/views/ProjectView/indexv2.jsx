@@ -4,7 +4,13 @@ import { Header, MainContainer, ProjectTab, Title } from "./styles";
 import StepsTab from "./tabs/stepsTab";
 import RolesTab from "./tabs/rolesTab";
 
-export default function ProjectView({ title, projectInfo, items }) {
+export default function ProjectView({
+  title,
+  items,
+  members,
+  onSearchUserByEmail,
+  onAddUserToProject
+}) {
   const [activeTab, setActiveTab] = useState("1");
 
   const tabs = [
@@ -21,7 +27,11 @@ export default function ProjectView({ title, projectInfo, items }) {
     {
       id: "3",
       name: 'Roles y permisos',
-      content: <RolesTab />
+      content: <RolesTab
+        members={members}
+        onSearchUserByEmail={onSearchUserByEmail}
+        onAddUserToProject={onAddUserToProject}
+      />
     }
   ];
 

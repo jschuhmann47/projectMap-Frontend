@@ -32,6 +32,11 @@ export const defaultState = {
   sharedUsers: [],
   errorShared: null,
   sharedUsersSuccess: false,
+  members: [],
+  addUserModal: {
+    loading: false,
+    userFound: null
+  }
 };
 
 const projectsReducer = (state = defaultState, action) => {
@@ -100,6 +105,10 @@ const projectsReducer = (state = defaultState, action) => {
       return {
         ...state,
         data: { ...state.data, ...data },
+        members: [
+          ...data.participants.map((p) => ({ ...p, role: 'participant' })),
+          ...data.coordinators.map((p) => ({ ...p, role: 'coordinator' }))
+        ],
         loading: false,
       };
     case constants.PROJECTS_ON_GET_FODA_SUCCEEDED:
@@ -246,6 +255,21 @@ const projectsReducer = (state = defaultState, action) => {
         ...state,
         errorShared: null,
         sharedUsersSuccess: false,
+      };
+    case constants.PROJECTS_SEARCH_BY_EMAIL_REQUESTED:
+      return {
+        ...state,
+        addUserModal: { loading: true, user: null, error: null }
+      };
+    case constants.PROJECTS_SEARCH_BY_EMAIL_SUCCEEDED:
+      return {
+        ...state,
+        addUserModal: { loading: false, user: data, error: null }
+      };
+    case constants.PROJECTS_SEARCH_BY_EMAIL_FAILED:
+      return {
+        ...state,
+        addUserModal: { loading: false, user: null, error: error }
       };
     case constants.PROJECTS_SHARED_ON_GET_ALL_FAILED:
     case constants.PROJECTS_ON_CREATE_FAILED:

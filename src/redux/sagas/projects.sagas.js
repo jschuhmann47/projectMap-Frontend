@@ -21,6 +21,7 @@ import {
   shareUser,
   unShareUsers,
 } from 'services/projects.services';
+import { searchByEmail } from 'services/user.services';
 
 export function* projectsSaveOne(action) {
   try {
@@ -264,6 +265,21 @@ export function* projectsOnUnShareUsers(action) {
   }
 }
 
+export function* projectsOnSearchByEmail(action) {
+  try {
+    const { email } = action;
+    if (email) {
+      const { data } = yield call(searchByEmail, email);
+      yield put({
+        type: constants.PROJECTS_SEARCH_BY_EMAIL_SUCCEEDED,
+        data,
+      });
+    }
+  } catch (error) {
+    yield put({ type: constants.PROJECTS_SEARCH_BY_EMAIL_FAILED, error });
+  }
+}
+
 export function* watchProjects() {
   yield all([
     takeLatest(constants.PROJECTS_ON_GET_ONE_REQUESTED, projectsOnGetOne),
@@ -312,5 +328,6 @@ export function* watchProjects() {
       ],
       projectsOnGetAllShared
     ),
+    takeLatest(constants.PROJECTS_SEARCH_BY_EMAIL_REQUESTED, projectsOnSearchByEmail),
   ]);
 }
