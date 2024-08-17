@@ -269,7 +269,8 @@ const ProjectContainer = () => {
         onAddUserToProject={onAddUserToProject}
         onOpenModal={onOpenModal}
         onCloseModal={onCloseModal}
-        
+        onChangeMemberRole={onChangeMemberRole}
+        onChangeMemberPermission={onChangeMemberPermission}
       />
       <Menu
         anchorEl={openComments}

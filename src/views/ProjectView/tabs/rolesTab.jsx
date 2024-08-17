@@ -60,7 +60,11 @@ export default function RolesTab({
   addUserModalInfo,
   onOpenModal,
   onCloseModal,
+  onChangeMemberPermission,
+  onChangeMemberRole
 }) {
+  
+
   return (
     <div>
       <Button variant="contained" onClick={onOpenModal}>Agregar Integrante</Button>
