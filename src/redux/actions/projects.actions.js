@@ -80,3 +80,11 @@ export const onSearchByEmail = (email) => ({
   type: constants.PROJECTS_SEARCH_BY_EMAIL_REQUESTED,
   email,
 })
+
+export const openModal = () => ({
+  type: constants.PROJECTS_OPEN_ADD_USER_MODAL,
+})
+
+export const closeModal = () => ({
+  type: constants.PROJECTS_CLOSE_ADD_USER_MODAL,
+})

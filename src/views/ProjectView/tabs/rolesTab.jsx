@@ -1,20 +1,23 @@
 import { Box, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
 import Button from "components/commons/Button";
-import { useState } from "react";
 import AddUserModal from "./addUserModal";
 
-export default function RolesTab({ members, onSearchUserByEmail, onAddUserToProject, addUserModalInfo }) {
-  const [open, setOpen] = useState(false);
-
+export default function RolesTab({
+  members,
+  onSearchUserByEmail,
+  onAddUserToProject,
+  addUserModalInfo,
+  onOpenModal,
+  onCloseModal,
+}) {
   const roles = ['Participante', 'Coordinador'];
   const permissionOptions = ['Editar', 'Ver', 'Ocultar'];
 
   return (
     <div>
-      <Button variant="contained" onClick={() => setOpen(true)}>Agregar Integrante</Button>
+      <Button variant="contained" onClick={onOpenModal}>Agregar Integrante</Button>
       <AddUserModal
-        isOpen={open}
-        onClose={() => setOpen(false)}
+        onClose={onCloseModal}
         onSearchUserByEmail={onSearchUserByEmail}
         onAddUserToProject={onAddUserToProject}
         info={addUserModalInfo}

@@ -34,6 +34,7 @@ export const defaultState = {
   sharedUsersSuccess: false,
   members: [],
   addUserModal: {
+    isOpen: false,
     loading: false,
     userFound: null,
     error: null
@@ -260,18 +261,28 @@ const projectsReducer = (state = defaultState, action) => {
     case constants.PROJECTS_SEARCH_BY_EMAIL_REQUESTED:
       return {
         ...state,
-        addUserModal: { loading: true, user: null, error: null }
+        addUserModal: { ...state.addUserModal, loading: true, user: null, error: null }
       };
     case constants.PROJECTS_SEARCH_BY_EMAIL_SUCCEEDED:
       return {
         ...state,
-        addUserModal: { loading: false, user: data, error: null }
+        addUserModal: { ...state.addUserModal, loading: false, user: data, error: null }
       };
     case constants.PROJECTS_SEARCH_BY_EMAIL_FAILED:
       return {
         ...state,
-        addUserModal: { loading: false, user: null, error: error }
+        addUserModal: { ...state.addUserModal, loading: false, user: null, error: error }
       };
+    case constants.PROJECTS_OPEN_ADD_USER_MODAL:
+      return {
+        ...state,
+        addUserModal: { ...state.addUserModal, isOpen: true }
+      }
+    case constants.PROJECTS_CLOSE_ADD_USER_MODAL:
+      return {
+        ...state,
+        addUserModal: defaultState.addUserModal
+      }
     case constants.PROJECTS_SHARED_ON_GET_ALL_FAILED:
     case constants.PROJECTS_ON_CREATE_FAILED:
     case constants.PROJECTS_ON_GET_ONE_FAILED:

@@ -4,7 +4,6 @@ import Modal from "components/commons/Modal";
 import { useState } from "react";
 
 export default function AddUserModal({
-  isOpen,
   onClose,
   onSearchUserByEmail,
   onAddUserToProject,
@@ -14,10 +13,10 @@ export default function AddUserModal({
 
   function onCloseModal() {
     setEmail('');
-    onClose()
+    onClose();
   }
 
-  return <Modal isOpen={isOpen} onClose={onCloseModal}>
+  return <Modal isOpen={info.isOpen} onClose={onCloseModal}>
     <Box>
       <Typography id="modal-modal-title" variant="h6" component="h2">
         Buscar Integrante

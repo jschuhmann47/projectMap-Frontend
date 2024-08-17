@@ -21,6 +21,8 @@ import {
   onSearchByEmail,
   onShareUser,
   onUnShareUsers,
+  openModal,
+  closeModal
 } from 'redux/actions/projects.actions';
 import { STEPS } from 'helpers/enums/steps';
 import { COLORS } from 'helpers/enums/colors';
@@ -235,6 +237,14 @@ const ProjectContainer = () => {
     dispatch(onSearchByEmail(email));
   }
 
+  function onOpenModal() {
+    dispatch(openModal())
+  }
+
+  function onCloseModal() {
+    dispatch(closeModal())
+  }
+
   return (
     <LayoutContainer>
       <ProjectView
@@ -245,6 +255,8 @@ const ProjectContainer = () => {
         addUserModalInfo={addUserModalInfo}
         onSearchUserByEmail={onSearchUserByEmail}
         onAddUserToProject={() => {}}
+        onOpenModal={onOpenModal}
+        onCloseModal={onCloseModal}
       />
       <Menu
         anchorEl={openComments}

@@ -11,6 +11,8 @@ export default function ProjectView({
   onSearchUserByEmail,
   onAddUserToProject,
   addUserModalInfo,
+  onOpenModal,
+  onCloseModal
 }) {
   const [activeTab, setActiveTab] = useState("1");
 
@@ -33,6 +35,8 @@ export default function ProjectView({
         onSearchUserByEmail={onSearchUserByEmail}
         onAddUserToProject={onAddUserToProject}
         addUserModalInfo={addUserModalInfo}
+        onOpenModal={onOpenModal}
+        onCloseModal={onCloseModal}
       />
     }
   ];
