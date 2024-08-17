@@ -231,6 +231,7 @@ const ProjectContainer = () => {
   }));
 
   function onSearchUserByEmail(email) {
+    console.log('holaa')
     dispatch(onSearchByEmail(email));
   }
 
@@ -242,7 +243,7 @@ const ProjectContainer = () => {
         project={projectInfo}
         members={members}
         addUserModalInfo={addUserModalInfo}
-        onSearchUserByEmail={onSearchByEmail}
+        onSearchUserByEmail={onSearchUserByEmail}
         onAddUserToProject={() => {}}
       />
       <Menu

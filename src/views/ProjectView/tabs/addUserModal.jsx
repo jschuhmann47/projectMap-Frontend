@@ -12,7 +12,12 @@ export default function AddUserModal({
 }) {
   const [email, setEmail] = useState('');
 
-  return <Modal isOpen={isOpen} onClose={onClose}>
+  function onCloseModal() {
+    setEmail('');
+    onClose()
+  }
+
+  return <Modal isOpen={isOpen} onClose={onCloseModal}>
     <Box>
       <Typography id="modal-modal-title" variant="h6" component="h2">
         Buscar Integrante
@@ -26,10 +31,10 @@ export default function AddUserModal({
         error={!!info.error}
         helperText={info.error}
       />
-      <Button variant="contained" onClick={onSearchUserByEmail}>Buscar</Button>
+      <Button variant="contained" onClick={() => onSearchUserByEmail(email)}>Buscar</Button>
       {info.user && (
         <Box mt={2}>
-          <Typography variant="body1">Usuario encontrado: {info.user.name}</Typography>
+          <Typography variant="body1">Usuario encontrado: {info.user.firstName} {info.user.lastName}</Typography>
           <Button variant="contained" color="primary" onClick={onAddUserToProject}>Confirmar</Button>
         </Box>
       )}

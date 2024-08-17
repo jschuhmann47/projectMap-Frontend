@@ -1,6 +1,5 @@
 import { Box, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
 import Button from "components/commons/Button";
-import Modal from "components/commons/Modal";
 import { useState } from "react";
 import AddUserModal from "./addUserModal";
 
@@ -20,7 +19,7 @@ export default function RolesTab({ members, onSearchUserByEmail, onAddUserToProj
         onAddUserToProject={onAddUserToProject}
         info={addUserModalInfo}
       />
-      <TableContainer component={Paper} style={{ marginTop: 20 }}>
+      {/* <TableContainer component={Paper} style={{ marginTop: 20 }}>
         <Table>
           <TableHead>
             <TableRow>
@@ -36,18 +35,14 @@ export default function RolesTab({ members, onSearchUserByEmail, onAddUserToProj
             </TableRow>
           </TableHead>
           <TableBody>
-            {integrantes.map((integrante, index) => (
+            {members.map((integrante, index) => (
               <TableRow key={index}>
                 <TableCell>{integrante.name}</TableCell>
                 <TableCell>{integrante.email}</TableCell>
                 <TableCell>
                   <Select
                     value={integrante.role}
-                    onChange={(e) => {
-                      const newIntegrantes = [...integrantes];
-                      newIntegrantes[index].role = e.target.value;
-                      setIntegrantes(newIntegrantes);
-                    }}
+                    onChange={(e) => { console.log(e.target.value) }}
                   >
                     {roles.map((role) => (
                       <MenuItem key={role} value={role}>
@@ -132,28 +127,12 @@ export default function RolesTab({ members, onSearchUserByEmail, onAddUserToProj
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
-      {hasNewMembers && (
+      </TableContainer> */}
+      {/* {hasNewMembers && (
         <Button variant="contained" style={{ marginTop: 20 }} onClick={handleSave}>
           Guardar
         </Button>
-      )}
-      <Modal
-        isOpen={showConfirmation}
-        onClose={() => setShowConfirmation(false)}
-        aria-labelledby="modal-confirmation-title"
-        aria-describedby="modal-confirmation-description"
-      >
-        <Typography id="modal-confirmation-title" variant="h6" component="h2">
-          Guardado Exitoso
-        </Typography>
-        <Typography id="modal-confirmation-description" sx={{ mt: 2 }}>
-          Los integrantes se guardaron correctamente.
-        </Typography>
-        <Button onClick={() => setShowConfirmation(false)} variant="contained" sx={{ mt: 2 }}>
-          Cerrar
-        </Button>
-      </Modal>
+      )} */}
     </div>
   )
 }
