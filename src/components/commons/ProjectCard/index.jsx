@@ -10,8 +10,8 @@ import { Card, CardContent, Description, Title, TitleContainer } from './styles'
 const ProjectCard = (props) => {
   const {
     color,
-    descripcion,
-    titulo,
+    description,
+    title,
     onClick,
     onClickDelete,
     onDeleteDisable = false,
@@ -48,7 +48,7 @@ const ProjectCard = (props) => {
   };
 
   const onSubmit = ({ name }) => {
-    if (name !== titulo) {
+    if (name !== title) {
       setConfirmDeleteError('Nombre del proyecto incorrecto.');
     } else {
       onClickDelete();
@@ -61,7 +61,7 @@ const ProjectCard = (props) => {
       <Card style={{ backgroundColor: color }} onClick={onClick}>
         <CardContent>
           <TitleContainer>
-            <Title>{titulo}</Title>
+            <Title>{title}</Title>
             <Box display="flex" alignItems="center">
               {!isAdmin && userRole && (
                 <Typography variant="body2" sx={{ marginRight: 1 }}>
@@ -83,7 +83,7 @@ const ProjectCard = (props) => {
               )}
             </Box>
           </TitleContainer>
-          <Description>{descripcion}</Description>
+          <Description>{description}</Description>
         </CardContent>
       </Card>
       {isAdmin && (

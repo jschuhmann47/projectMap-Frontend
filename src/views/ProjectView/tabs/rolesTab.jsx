@@ -227,17 +227,15 @@ export default function RolesTab() {
         aria-labelledby="modal-confirmation-title"
         aria-describedby="modal-confirmation-description"
       >
-        <Box sx={modalStyle}>
-          <Typography id="modal-confirmation-title" variant="h6" component="h2">
-            Guardado Exitoso
-          </Typography>
-          <Typography id="modal-confirmation-description" sx={{ mt: 2 }}>
-            Los integrantes se guardaron correctamente.
-          </Typography>
-          <Button onClick={() => setShowConfirmation(false)} variant="contained" sx={{ mt: 2 }}>
-            Cerrar
-          </Button>
-        </Box>
+        <Typography id="modal-confirmation-title" variant="h6" component="h2">
+          Guardado Exitoso
+        </Typography>
+        <Typography id="modal-confirmation-description" sx={{ mt: 2 }}>
+          Los integrantes se guardaron correctamente.
+        </Typography>
+        <Button onClick={() => setShowConfirmation(false)} variant="contained" sx={{ mt: 2 }}>
+          Cerrar
+        </Button>
       </Modal>
     </div>
   )

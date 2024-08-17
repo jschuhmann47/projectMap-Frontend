@@ -4,7 +4,7 @@ import { Header, MainContainer, ProjectTab, Title } from "./styles";
 import StepsTab from "./tabs/stepsTab";
 import RolesTab from "./tabs/rolesTab";
 
-export default function ProjectView({ titulo, items }) {
+export default function ProjectView({ title, projectInfo, items }) {
   const [activeTab, setActiveTab] = useState("1");
 
   const tabs = [
@@ -29,7 +29,7 @@ export default function ProjectView({ titulo, items }) {
     <MainContainer>
       <TabContext value={activeTab}>
         <Header position='static'>
-          <Title>{titulo}</Title>
+          <Title>{title}</Title>
           <TabList
             onChange={(_, newActiveTab) => setActiveTab(newActiveTab)}
             TabIndicatorProps={{ sx: { height: 4, backgroundColor: 'white' } }}

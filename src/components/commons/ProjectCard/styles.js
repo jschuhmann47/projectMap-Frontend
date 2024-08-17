@@ -28,5 +28,5 @@ export const Title = styled('h2')({
 
 export const Description = styled('p')({
   fontSize: '14px',
-  color: '#666',
+  color: '#000',
 });

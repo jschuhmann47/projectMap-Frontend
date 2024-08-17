@@ -36,13 +36,13 @@ const DashboardView = (props) => {
           <NoProjectsMessage>Aún no hay proyectos</NoProjectsMessage>
         ) : (
           <Grid container rowSpacing={2} columnSpacing={4}>
-            {items.map(({ _id, color, titulo, descripcion, coordinators, participants }) => (
+            {items.map(({ _id, color, name, description, coordinators, participants }) => (
               <Grid item xs={12} key={_id}>
                 <ProjectCard
                   key={_id}
                   color={color}
-                  titulo={titulo}
-                  descripcion={descripcion}
+                  title={name}
+                  description={description}
                   onClick={() => onClickProject(_id)}
                   onClickDelete={isAdmin ? () => onClickDelete(_id) : null}
                   isAdmin={isAdmin}

@@ -231,7 +231,7 @@ const ProjectContainer = () => {
     <LayoutContainer>
       <ProjectView
         items={items}
-        titulo={projectInfo?.titulo}
+        title={projectInfo?.title}
         onClickButtonGoBack={onClickButtonGoBack}
         project={projectInfo}
         onCLickMejoraContinua={onCLickMejoraContinua}
