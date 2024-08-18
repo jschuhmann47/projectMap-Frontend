@@ -20,7 +20,10 @@ import {
   getSharedUsers,
   shareUser,
   unShareUsers,
+  addUser,
+  updateUsers,
 } from 'services/projects.services';
+import { searchByEmail } from 'services/user.services';
 
 export function* projectsSaveOne(action) {
   try {
@@ -264,6 +267,57 @@ export function* projectsOnUnShareUsers(action) {
   }
 }
 
+export function* projectsOnSearchByEmail(action) {
+  try {
+    const { email } = action;
+    if (email) {
+      const { data } = yield call(searchByEmail, email);
+      yield put({
+        type: constants.PROJECTS_SEARCH_BY_EMAIL_SUCCEEDED,
+        data,
+      });
+    }
+  } catch (error) {
+    yield put({ type: constants.PROJECTS_SEARCH_BY_EMAIL_FAILED, error });
+  }
+}
+
+export function* projectsOnAddUser(action) {
+  try {
+    const { id, formData } = action;
+    yield call(addUser, id, formData);
+    yield put({
+      type: constants.PROJECTS_ADD_USER_SUCCEEDED,
+    })
+    // reload project data after adding user (todo: refactor)
+    const { data } = yield call(getOne, id);
+    yield put({
+      type: constants.PROJECTS_ON_GET_ONE_SUCCEEDED,
+      data,
+    });
+  } catch (error) {
+    yield put({ type: constants.PROJECTS_ADD_USER_FAILED, error });
+  }
+}
+
+export function* projectsOnSaveMembers(action) {
+  try {
+    const { id, formData } = action;
+    yield call(updateUsers, id, formData);
+    yield put({
+      type: constants.PROJECTS_SAVE_MEMBERS_SUCCEEDED,
+    })
+    // reload project data after saving members (todo: refactor)
+    const { data } = yield call(getOne, id);
+    yield put({
+      type: constants.PROJECTS_ON_GET_ONE_SUCCEEDED,
+      data,
+    });
+  } catch (error) {
+    yield put({ type: constants.PROJECTS_ADD_USER_FAILED, error })
+  }
+}
+
 export function* watchProjects() {
   yield all([
     takeLatest(constants.PROJECTS_ON_GET_ONE_REQUESTED, projectsOnGetOne),
@@ -312,5 +366,8 @@ export function* watchProjects() {
       ],
       projectsOnGetAllShared
     ),
+    takeLatest(constants.PROJECTS_SEARCH_BY_EMAIL_REQUESTED, projectsOnSearchByEmail),
+    takeLatest(constants.PROJECTS_ADD_USER_REQUESTED, projectsOnAddUser),
+    takeLatest(constants.PROJECTS_SAVE_MEMBERS_REQUESTED, projectsOnSaveMembers),
   ]);
 }

@@ -18,8 +18,15 @@ import {
   onGetPorter,
   onGetQuestionnaire,
   onGetSharedUsers,
+  onSearchByEmail,
   onShareUser,
   onUnShareUsers,
+  openModal,
+  closeModal,
+  onAddUser,
+  changeMemberPermission,
+  changeMemberRole,
+  onSaveMembers
 } from 'redux/actions/projects.actions';
 import { STEPS } from 'helpers/enums/steps';
 import { COLORS } from 'helpers/enums/colors';
@@ -87,6 +94,8 @@ const ProjectContainer = () => {
 
   const projectInfo = useSelector((state) => state.projects.data);
   const sharedUsers = useSelector((state) => state.projects.sharedUsers);
+  const members = useSelector((state) => state.projects.members);
+  const addUserModalInfo = useSelector((state) => state.projects.addUserModal);
   const errorShared = useSelector(
     (state) => state.projects.errorShared?.response?.data?.message
   );
@@ -227,18 +236,54 @@ const ProjectContainer = () => {
     onClickList,
   }));
 
+  function onSearchUserByEmail(email) {
+    dispatch(onSearchByEmail(email));
+  };
+
+  function onOpenModal() {
+    dispatch(openModal());
+  };
+
+  function onCloseModal() {
+    dispatch(closeModal());
+  };
+
+  function onAddUserToProject(email, role) {
+    dispatch(onAddUser(id, { userEmail: email, role }));
+  };
+
+  function onChangeMemberRole(userId, newRole) {
+    dispatch(changeMemberRole(userId, newRole));
+  };
+
+  function onChangeMemberPermission(userId, stepId, newPermission) {
+    dispatch(changeMemberPermission(userId, stepId, newPermission));
+  };
+
+  function onSaveChanges() {
+    const users = members.map((m) => ({
+      userId: m.user._id,
+      role: m.role,
+      spheres: m.role == 'participant' ? m.spheres : undefined,
+    }));
+    dispatch(onSaveMembers(id, { users }))
+  }
+
   return (
     <LayoutContainer>
       <ProjectView
         items={items}
-        titulo={projectInfo?.titulo}
-        onClickButtonGoBack={onClickButtonGoBack}
+        title={projectInfo?.name}
         project={projectInfo}
-        onCLickMejoraContinua={onCLickMejoraContinua}
-        stepsColors={stepsColors}
-        openComments={(target) => setOpencomments(target)}
-        openShareModal={openShareModal}
-        openUnShareModal={openUnShareModal}
+        members={members}
+        addUserModalInfo={addUserModalInfo}
+        onSearchUserByEmail={onSearchUserByEmail}
+        onAddUserToProject={onAddUserToProject}
+        onOpenModal={onOpenModal}
+        onCloseModal={onCloseModal}
+        onChangeMemberRole={onChangeMemberRole}
+        onChangeMemberPermission={onChangeMemberPermission}
+        onSaveChanges={onSaveChanges}
       />
       <Menu
         anchorEl={openComments}

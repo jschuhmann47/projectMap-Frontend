@@ -34,3 +34,9 @@ export const shareUser = (id, formData) =>
 
 export const unShareUsers = (id, formData) =>
   put(`projects/${id}/share/email/stop`, formData);
+
+export const addUser = (id, formData) =>
+  post(`projects/${id}/user/add`, formData);
+
+export const updateUsers = (id, formData) =>
+  put(`projects/${id}/roles`, formData)

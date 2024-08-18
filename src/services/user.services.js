@@ -15,3 +15,5 @@ export const resetPassword = async (formData) => put('auth/password', formData);
 export const editProfile = async (id, formData) => put(`users/${id}`, formData);
 
 export const getProfile = async (id) => get(`users/${id}`);
+
+export const searchByEmail = async (email) => get(`users/user/search?email=${email}`);

@@ -75,3 +75,45 @@ export const onUnShareUsers = (id, formData) => ({
   id,
   formData,
 });
+
+export const onSearchByEmail = (email) => ({
+  type: constants.PROJECTS_SEARCH_BY_EMAIL_REQUESTED,
+  email,
+});
+
+export const openModal = () => ({
+  type: constants.PROJECTS_OPEN_ADD_USER_MODAL,
+});
+
+export const closeModal = () => ({
+  type: constants.PROJECTS_CLOSE_ADD_USER_MODAL,
+});
+
+export const onAddUser = (id, formData) => ({
+  type: constants.PROJECTS_ADD_USER_REQUESTED,
+  id,
+  formData,
+});
+
+export const changeMemberRole = (userId, newRole) => ({
+  type: constants.PROJECTS_CHANGE_MEMBER_ROLE,
+  data: {
+    userId,
+    newRole
+  }
+});
+
+export const changeMemberPermission = (userId, stepId, newPermission) => ({
+  type: constants.PROJECTS_CHANGE_MEMBER_PERMISSION,
+  data: {
+    userId,
+    stepId,
+    newPermission
+  }
+});
+
+export const onSaveMembers = (id, formData) => ({
+  type: constants.PROJECTS_SAVE_MEMBERS_REQUESTED,
+  id,
+  formData
+});
