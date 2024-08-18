@@ -21,6 +21,7 @@ import {
   shareUser,
   unShareUsers,
   addUser,
+  updateUsers,
 } from 'services/projects.services';
 import { searchByEmail } from 'services/user.services';
 
@@ -293,6 +294,18 @@ export function* projectsOnAddUser(action) {
   }
 }
 
+export function* projectsOnSaveMembers(action) {
+  try {
+    const { id, formData } = action;
+    yield call(updateUsers, id, formData);
+    yield put({
+      type: constants.PROJECTS_SAVE_MEMBERS_SUCCEEDED,
+    })
+  } catch (error) {
+    yield put({ type: constants.PROJECTS_ADD_USER_FAILED, error })
+  }
+}
+
 export function* watchProjects() {
   yield all([
     takeLatest(constants.PROJECTS_ON_GET_ONE_REQUESTED, projectsOnGetOne),
@@ -342,6 +355,7 @@ export function* watchProjects() {
       projectsOnGetAllShared
     ),
     takeLatest(constants.PROJECTS_SEARCH_BY_EMAIL_REQUESTED, projectsOnSearchByEmail),
-    takeLatest(constants.PROJECTS_ADD_USER_REQUESTED, projectsOnAddUser)
+    takeLatest(constants.PROJECTS_ADD_USER_REQUESTED, projectsOnAddUser),
+    takeLatest(constants.PROJECTS_SAVE_MEMBERS_REQUESTED, projectsOnSaveMembers),
   ]);
 }

@@ -25,7 +25,8 @@ import {
   closeModal,
   onAddUser,
   changeMemberPermission,
-  changeMemberRole
+  changeMemberRole,
+  onSaveMembers
 } from 'redux/actions/projects.actions';
 import { STEPS } from 'helpers/enums/steps';
 import { COLORS } from 'helpers/enums/colors';
@@ -259,6 +260,15 @@ const ProjectContainer = () => {
     dispatch(changeMemberPermission(userId, stepId, newPermission));
   };
 
+  function onSaveChanges() {
+    const users = members.map((m) => ({
+      userId: m.user._id,
+      role: m.role,
+      spheres: m.role == 'participant' ? m.spheres : undefined,
+    }));
+    dispatch(onSaveMembers(id, { users }))
+  }
+
   return (
     <LayoutContainer>
       <ProjectView
@@ -273,6 +283,7 @@ const ProjectContainer = () => {
         onCloseModal={onCloseModal}
         onChangeMemberRole={onChangeMemberRole}
         onChangeMemberPermission={onChangeMemberPermission}
+        onSaveChanges={onSaveChanges}
       />
       <Menu
         anchorEl={openComments}

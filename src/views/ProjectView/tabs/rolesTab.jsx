@@ -73,11 +73,13 @@ export default function RolesTab({
   onOpenModal,
   onCloseModal,
   onChangeMemberPermission,
-  onChangeMemberRole
+  onChangeMemberRole,
+  onSaveChanges,
 }) {
   return (
     <div>
       <Button variant="contained" onClick={onOpenModal}>Agregar Integrante</Button>
+      <Button variant="contained" onClick={onSaveChanges}>Guardar</Button>
       <AddUserModal
         onClose={onCloseModal}
         onSearchUserByEmail={onSearchUserByEmail}
@@ -110,11 +112,6 @@ export default function RolesTab({
           </TableBody>
         </Table>
       </TableContainer>
-      {/* {hasNewMembers && (
-        <Button variant="contained" style={{ marginTop: 20 }} onClick={handleSave}>
-          Guardar
-        </Button>
-      )} */}
     </div>
   )
 }

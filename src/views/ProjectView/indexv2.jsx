@@ -14,7 +14,8 @@ export default function ProjectView({
   onOpenModal,
   onCloseModal,
   onChangeMemberPermission,
-  onChangeMemberRole
+  onChangeMemberRole,
+  onSaveChanges
 }) {
   const [activeTab, setActiveTab] = useState("1");
 
@@ -41,6 +42,7 @@ export default function ProjectView({
         onCloseModal={onCloseModal}
         onChangeMemberPermission={onChangeMemberPermission}
         onChangeMemberRole={onChangeMemberRole}
+        onSaveChanges={onSaveChanges}
       />
     }
   ];

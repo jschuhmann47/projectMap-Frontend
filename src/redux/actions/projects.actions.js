@@ -111,3 +111,9 @@ export const changeMemberPermission = (userId, stepId, newPermission) => ({
     newPermission
   }
 });
+
+export const onSaveMembers = (id, formData) => ({
+  type: constants.PROJECTS_SAVE_MEMBERS_REQUESTED,
+  id,
+  formData
+});
