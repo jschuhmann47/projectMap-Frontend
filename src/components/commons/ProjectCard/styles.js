@@ -1,19 +1,17 @@
-import { styled } from '@mui/material';
-import { CardContent as MUICardContent, Card as MUICard } from '@mui/material';
+import { styled } from '@mui/system';
 
-export const Card = styled(MUICard)({
-  display: 'flex',
-  borderRadius: 15,
+export const Card = styled('div')({
+  borderRadius: '8px',
+  boxShadow: '0 2px 5px rgba(0,0,0,0.15)',
+  margin: '10px 0',
+  width: '100%',
+  cursor: 'pointer', // Añadimos el cursor de pointer para indicar que es clicable
 });
 
-export const CardContent = styled(MUICardContent)((props) => ({
-  display: 'flex',
-  flex: 1,
-  flexDirection: 'column',
-  backgroundColor: props.backgroundcolor,
-  borderRadius: 15,
-  gap: 25,
-}));
+export const CardContent = styled('div')({
+  padding: '20px',
+  borderRadius: '8px',
+});
 
 export const TitleContainer = styled('div')({
   display: 'flex',
@@ -22,12 +20,13 @@ export const TitleContainer = styled('div')({
   alignItems: 'center',
 });
 
-export const Title = styled('span')({
-  fontFamily: 'Fira Sans',
-  fontWeight: 500,
-  fontSize: 24,
+export const Title = styled('h2')({
+  fontSize: '18px',
+  margin: 0,
+  color: 'black',
 });
 
-export const Description = styled('span')({
-  fontSize: 14,
+export const Description = styled('p')({
+  fontSize: '14px',
+  color: '#000',
 });

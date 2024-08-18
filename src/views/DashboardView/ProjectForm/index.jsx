@@ -1,14 +1,13 @@
-import React from 'react';
 import { ErrorMessage, Field, Formik } from 'formik';
 
 import Input from 'components/inputs/Input';
 import Textarea from 'components/inputs/Textarea';
 import Button from 'components/commons/Button';
 
-import { FormContainer, CustomForm } from 'styles/form';
-import { validateField } from 'helpers/validateField';
-import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
+import { Box } from '@mui/system';
+import { validateField } from 'helpers/validateField';
+import { CustomForm, FormContainer, SubmitButton } from 'styles/form';
 
 const ProjectForm = ({ onSubmit }) => (
   <FormContainer>

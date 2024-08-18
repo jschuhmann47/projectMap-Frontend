@@ -7,6 +7,7 @@ import * as mckinseyConsts from 'redux/contansts/mckinsey.constants';
 import * as okrConsts from 'redux/contansts/okr.constants';
 import * as bsConsts from 'redux/contansts/balanceScorecard.constants';
 import * as quesConstst from 'redux/contansts/questionnarie.constants';
+import { stepNames } from 'views/ProjectView/tabs/rolesTab';
 
 export const defaultState = {
   data: null,
@@ -32,6 +33,13 @@ export const defaultState = {
   sharedUsers: [],
   errorShared: null,
   sharedUsersSuccess: false,
+  members: [],
+  addUserModal: {
+    isOpen: false,
+    loading: false,
+    userFound: null,
+    error: null
+  }
 };
 
 const projectsReducer = (state = defaultState, action) => {
@@ -97,9 +105,15 @@ const projectsReducer = (state = defaultState, action) => {
         loading: false,
       };
     case constants.PROJECTS_ON_GET_ONE_SUCCEEDED:
+      const members = [
+        ...data.participants.map((p) => ({ ...p, role: 'participant' })),
+        ...data.coordinators.map((p) => ({ user: p, role: 'coordinator' }))
+      ]
+      console.log(members)
       return {
         ...state,
         data: { ...state.data, ...data },
+        members: members,
         loading: false,
       };
     case constants.PROJECTS_ON_GET_FODA_SUCCEEDED:
@@ -247,6 +261,84 @@ const projectsReducer = (state = defaultState, action) => {
         errorShared: null,
         sharedUsersSuccess: false,
       };
+    case constants.PROJECTS_SEARCH_BY_EMAIL_REQUESTED:
+      return {
+        ...state,
+        addUserModal: { ...state.addUserModal, loading: true, user: null, error: null }
+      };
+    case constants.PROJECTS_SEARCH_BY_EMAIL_SUCCEEDED:
+      return {
+        ...state,
+        addUserModal: { ...state.addUserModal, loading: false, user: data, error: null }
+      };
+    case constants.PROJECTS_SEARCH_BY_EMAIL_FAILED:
+      return {
+        ...state,
+        addUserModal: { ...state.addUserModal, loading: false, user: null, error: error }
+      };
+    case constants.PROJECTS_OPEN_ADD_USER_MODAL:
+      return {
+        ...state,
+        addUserModal: { ...state.addUserModal, isOpen: true }
+      }
+    case constants.PROJECTS_CLOSE_ADD_USER_MODAL:
+    case constants.PROJECTS_ADD_USER_SUCCEEDED:
+      return {
+        ...state,
+        addUserModal: defaultState.addUserModal
+      }
+    case constants.PROJECTS_ADD_USER_REQUESTED:
+      return {
+        ...state,
+        addUserModal: { ...state.addUserModal, loading: true }
+      }
+    case constants.PROJECTS_ADD_USER_FAILED:
+      return {
+        ...state,
+        addUserModal: { ...state.addUserModal, loading: false, error: error }
+      }
+    case constants.PROJECTS_CHANGE_MEMBER_ROLE:
+      let newMember = state.members.find((m) => m.user._id === data.userId);
+      newMember.role = data.newRole;
+      if (!newMember.spheres) {
+        newMember.spheres = Object.keys(stepNames).map((s) => ({ id: s, permission: 'hide' }))
+      }
+      return {
+        ...state,
+        members: state.members.map((m) =>
+          m.user._id !== data.userId ? m : newMember
+        )
+      }
+    case constants.PROJECTS_CHANGE_MEMBER_PERMISSION:
+      return {
+        ...state,
+        // replace one sphere's permission in one member according to change
+        members: state.members.map((m) =>
+          m.user._id !== data.userId ? m : {
+            ...m, spheres: m.spheres.map((s) =>
+              s.id !== data.stepId ? s : { id: s.id, permission: data.newPermission }
+            )
+          }
+        )
+      }
+    case constants.PROJECTS_SAVE_MEMBERS_REQUESTED:
+      return {
+        ...state,
+        loading: true
+      }
+    case constants.PROJECTS_SAVE_MEMBERS_SUCCEEDED:
+      alert('Se guardaron exitosamente los cambios en los permisos.')
+      return {
+        ...state,
+        loading: false
+      }
+    case constants.PROJECTS_SAVE_MEMBERS_FAILED:
+      alert('Hubo un problema al guardar los cambios.')
+      return {
+        ...state,
+        loading: false,
+        errorShared: error
+      }
     case constants.PROJECTS_SHARED_ON_GET_ALL_FAILED:
     case constants.PROJECTS_ON_CREATE_FAILED:
     case constants.PROJECTS_ON_GET_ONE_FAILED:

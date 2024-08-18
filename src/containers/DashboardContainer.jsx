@@ -1,29 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import Loading from 'components/commons/Loading';
+import Modal from 'components/commons/Modal';
+import LayoutContainer from 'containers/LayoutContainer';
+import { getRandomInt } from 'helpers/randomNumber';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
-import { onCreate, onGetAll, onDelete } from 'redux/actions/projects.actions';
-
-import LayoutContainer from 'containers/LayoutContainer';
-import Modal from 'components/commons/Modal';
-
+import { onCreate, onDelete, onGetAll } from 'redux/actions/projects.actions';
+import { getUser } from 'redux/actions/user.actions';
 import DashboardView from 'views/DashboardView';
 import ProjectForm from 'views/DashboardView/ProjectForm';
-import { COLORS } from 'helpers/enums/colors';
-import { getRandomInt } from 'helpers/randomNumber';
-import Loading from 'components/commons/Loading';
 
 const DashboardContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isAddNewOpen, setAddNew] = useState(false);
-  const { items, itemsShared, loading } = useSelector(
-    (state) => state.projects
-  );
+  const { items, loading } = useSelector((state) => state.projects);
+  const user = useSelector((state) => state.user.data);
 
   useEffect(() => {
     dispatch(onGetAll());
-  }, []);
+    dispatch(getUser());
+  }, [dispatch]);
 
   const onSubmit = (formData) => {
     const colors = [
@@ -38,7 +35,6 @@ const DashboardContainer = () => {
     ];
 
     const random = getRandomInt(8);
-
     const color = colors[random];
 
     dispatch(onCreate({ ...formData, color }));
@@ -51,14 +47,16 @@ const DashboardContainer = () => {
     dispatch(onDelete(id));
   };
 
+  const isAdmin = user && user.isAdmin;
+
   return (
     <LayoutContainer>
       <DashboardView
         onAddNew={() => setAddNew(true)}
         onClickProject={onClickProject}
         items={items}
-        itemsShared={itemsShared}
         onClickDelete={onClickDelete}
+        isAdmin={isAdmin}
       />
       <Modal isOpen={isAddNewOpen} onClose={() => setAddNew(false)}>
         <ProjectForm onSubmit={onSubmit} />

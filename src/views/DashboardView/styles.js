@@ -4,34 +4,36 @@ export const Container = styled('div')({
   display: 'flex',
   width: '100%',
   margin: '0 auto',
-  maxWidth: 900,
+  maxWidth: 1200,
 });
 
 export const Content = styled('div')({
   display: 'flex',
   flex: 1,
   flexDirection: 'column',
-  alignItems: 'center',
-  padding: '60px 20px 0',
-  gap: '50px',
+  padding: '20px',
+  gap: '20px',
 });
 
 export const TitleContainer = styled('div')({
   display: 'flex',
   width: '100%',
   flexDirection: 'row',
-  paddingBottom: 32,
+  paddingBottom: 16,
   borderBottom: '1px solid black',
   justifyContent: 'space-between',
   alignItems: 'center',
 });
 
 export const Title = styled('span')({
-  fontSize: 30,
+  fontSize: 24,
   fontWeight: 500,
 });
 
-export const ButtonContainer = styled('div')({});
+export const ButtonContainer = styled('div')({
+  display: 'flex',
+  gap: 10,
+});
 
 export const ButtonContent = styled('span')({
   display: 'flex',
@@ -42,4 +44,11 @@ export const ButtonContent = styled('span')({
   svg: {
     fontSize: '16px',
   },
+});
+
+export const NoProjectsMessage = styled('div')({
+  fontSize: 18,
+  color: 'grey',
+  textAlign: 'center',
+  marginTop: 20,
 });
