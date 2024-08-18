@@ -23,12 +23,8 @@ const LoginContainer = () => {
   return (
     <LayoutContainer hasHeader={false}>
       <LoginView onSubmit={onSubmit} initialValues={initialValues} />
-      {data && data.justRegistered ? (
-        <Navigate to="/login" replace={true} />
-      ) : data && data.role !== Role.ConsultantAdmin ? (
+      {data && !data.justRegistered ? (
         <Navigate to="/dashboard" replace={true} />
-      ) : data && data.role === Role.ConsultantAdmin ? (
-        <Navigate to="/consultoria" replace={true} />
       ) : (
         ''
       )}

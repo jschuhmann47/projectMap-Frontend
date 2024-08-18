@@ -4,9 +4,10 @@ import { ErrorMessage, Field, Formik } from 'formik';
 import Input from 'components/inputs/Input';
 
 import { Title } from 'styles/form';
-import { FormContainer, CustomForm, SubmitButton } from 'styles/form';
+import { FormContainer, CustomForm } from 'styles/form';
 import { validateField } from 'helpers/validateField';
 import { Box, Typography } from '@mui/material';
+import Button from 'components/commons/Button';
 
 const ForgotPasswordForm = ({ onSubmit }) => (
   <FormContainer>
@@ -38,7 +39,7 @@ const ForgotPasswordForm = ({ onSubmit }) => (
               )}
             </ErrorMessage>
           </Box>
-          <SubmitButton type="submit">Enviar</SubmitButton>
+          <Button type="submit">Enviar</Button>
         </CustomForm>
       )}
     </Formik>

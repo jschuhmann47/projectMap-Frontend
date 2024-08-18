@@ -10,11 +10,12 @@ const customTheme = createTheme({
     CustomButton: {
       styleOverrides: {
         root: {
-          backgroundColor: COLORS.BlueDianne,
+          backgroundColor: '#568482',
           color: COLORS.white,
         },
         primary: {
-          backgroundColor: COLORS.GreenJungle,
+          backgroundColor: '#e1eceb',
+          color: '#273638'
         },
         secondary: {
           backgroundColor: COLORS.white,

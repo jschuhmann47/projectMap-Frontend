@@ -2,6 +2,7 @@ import { ErrorMessage, Field, Formik } from 'formik';
 
 import Input from 'components/inputs/Input';
 import Textarea from 'components/inputs/Textarea';
+import Button from 'components/commons/Button';
 
 import { Typography } from '@mui/material';
 import { Box } from '@mui/system';
@@ -61,9 +62,9 @@ const ProjectForm = ({ onSubmit }) => (
             </ErrorMessage>
           </Box>
 
-          <SubmitButton type="submit" color="primary">
+          <Button type="submit" color="primary">
             Crear
-          </SubmitButton>
+          </Button>
         </CustomForm>
       )}
     </Formik>
