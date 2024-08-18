@@ -14,7 +14,7 @@ const stepNames = {
 
 const permissionNames = {
   edit: 'Editar',
-  read: 'Ver',
+  view: 'Ver',
   hide: 'Ocultar'
 }
 
