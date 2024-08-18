@@ -289,6 +289,12 @@ export function* projectsOnAddUser(action) {
     yield put({
       type: constants.PROJECTS_ADD_USER_SUCCEEDED,
     })
+    // reload project data after adding user (todo: refactor)
+    const { data } = yield call(getOne, id);
+    yield put({
+      type: constants.PROJECTS_ON_GET_ONE_SUCCEEDED,
+      data,
+    });
   } catch (error) {
     yield put({ type: constants.PROJECTS_ADD_USER_FAILED, error });
   }
@@ -301,6 +307,12 @@ export function* projectsOnSaveMembers(action) {
     yield put({
       type: constants.PROJECTS_SAVE_MEMBERS_SUCCEEDED,
     })
+    // reload project data after saving members (todo: refactor)
+    const { data } = yield call(getOne, id);
+    yield put({
+      type: constants.PROJECTS_ON_GET_ONE_SUCCEEDED,
+      data,
+    });
   } catch (error) {
     yield put({ type: constants.PROJECTS_ADD_USER_FAILED, error })
   }

@@ -298,7 +298,7 @@ const projectsReducer = (state = defaultState, action) => {
       return {
         ...state,
         members: state.members.map((m) =>
-          m.user._id != data.userId ? m : { ...m, role: data.newRole }
+          m.user._id !== data.userId ? m : { ...m, role: data.newRole }
         )
       }
     case constants.PROJECTS_CHANGE_MEMBER_PERMISSION:
@@ -306,9 +306,9 @@ const projectsReducer = (state = defaultState, action) => {
         ...state,
         // replace one sphere's permission in one member according to change
         members: state.members.map((m) =>
-          m.user._id != data.userId ? m : {
+          m.user._id !== data.userId ? m : {
             ...m, spheres: m.spheres.map((s) =>
-              s.id != data.stepId ? s : { id: s.id, permission: data.newPermission }
+              s.id !== data.stepId ? s : { id: s.id, permission: data.newPermission }
             )
           }
         )
@@ -323,7 +323,7 @@ const projectsReducer = (state = defaultState, action) => {
         ...state,
         loading: false
       }
-    case constants.PROJECTS_SAVE_MEMBERS_SUCCEEDED:
+    case constants.PROJECTS_SAVE_MEMBERS_FAILED:
       return {
         ...state,
         loading: false,
