@@ -313,6 +313,22 @@ const projectsReducer = (state = defaultState, action) => {
           }
         )
       }
+    case constants.PROJECTS_SAVE_MEMBERS_REQUESTED:
+      return {
+        ...state,
+        loading: true
+      }
+    case constants.PROJECTS_SAVE_MEMBERS_SUCCEEDED:
+      return {
+        ...state,
+        loading: false
+      }
+    case constants.PROJECTS_SAVE_MEMBERS_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+        errorShared: error
+      }
     case constants.PROJECTS_SHARED_ON_GET_ALL_FAILED:
     case constants.PROJECTS_ON_CREATE_FAILED:
     case constants.PROJECTS_ON_GET_ONE_FAILED:
