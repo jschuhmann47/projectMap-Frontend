@@ -103,7 +103,7 @@ export default function RolesTab({
                 {Object.keys(stepNames).map((step) =>
                   member.role == 'participant' ? (
                     memberStepPermissionCell(member.user._id, step, member.spheres.find((s) => s.id == step)?.permission, onChangeMemberPermission)
-                  ) : '-'
+                  ) : <TableCell>-</TableCell>
                 )}
               </TableRow>
             ))}

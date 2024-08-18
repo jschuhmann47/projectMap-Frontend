@@ -23,7 +23,9 @@ import {
   onUnShareUsers,
   openModal,
   closeModal,
-  onAddUser
+  onAddUser,
+  changeMemberPermission,
+  changeMemberRole
 } from 'redux/actions/projects.actions';
 import { STEPS } from 'helpers/enums/steps';
 import { COLORS } from 'helpers/enums/colors';
@@ -250,11 +252,11 @@ const ProjectContainer = () => {
   };
 
   function onChangeMemberRole(userId, newRole) {
-    dispatch(onChangeMemberRole(userId, newRole));
+    dispatch(changeMemberRole(userId, newRole));
   };
 
   function onChangeMemberPermission(userId, stepId, newPermission) {
-    dispatch(onChangeMemberPermission(userId, stepId, newPermission));
+    dispatch(changeMemberPermission(userId, stepId, newPermission));
   };
 
   return (

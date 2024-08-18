@@ -97,8 +97,10 @@ export const onAddUser = (id, formData) => ({
 
 export const changeMemberRole = (userId, newRole) => ({
   type: constants.PROJECTS_CHANGE_MEMBER_ROLE,
-  userId,
-  newRole
+  data: {
+    userId,
+    newRole
+  }
 });
 
 export const changeMemberPermission = (userId, stepId, newPermission) => ({
