@@ -20,7 +20,7 @@ export default function AddUserModal({
     onAddUserToProject(info.user.email, 'participant') // TODO: allow adding coordinator directly
   }
 
-  return <Modal isOpen={info.isOpen} onClose={onCloseModal}>
+  return <Modal isOpen={info.isOpen} onClose={onCloseModal} backgroundColor="#C7DAD9">
     <Box>
       <Typography id="modal-modal-title" variant="h6" component="h2">
         Buscar Integrante
@@ -34,11 +34,11 @@ export default function AddUserModal({
         error={!!info.error}
         helperText={info.error}
       />
-      <Button variant="contained" onClick={() => onSearchUserByEmail(email)}>Buscar</Button>
+      <Button onClick={() => onSearchUserByEmail(email)}>Buscar</Button>
       {info.user && (
         <Box mt={2}>
           <Typography variant="body1">Usuario encontrado: {info.user.firstName} {info.user.lastName}</Typography>
-          <Button variant="contained" color="primary" onClick={addUserToProject}>Confirmar</Button>
+          <Button onClick={addUserToProject}>Confirmar</Button>
         </Box>
       )}
     </Box>
