@@ -1,4 +1,4 @@
-import { Box, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
+import { MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import Button from "components/commons/Button";
 import AddUserModal from "./addUserModal";
 
@@ -26,7 +26,7 @@ const roleNames = {
 function memberStepPermissionCell(userId, stepId, permission, changeCallback) {
   function onChange(e) {
     const permissionKey = Object.entries(permissionNames)
-      .find((entry) => entry[1] == e.target.value)[0]
+      .find((entry) => entry[1] === e.target.value)[0]
     changeCallback(userId, stepId, permissionKey)
   }
 
@@ -47,7 +47,7 @@ function memberStepPermissionCell(userId, stepId, permission, changeCallback) {
 function memberRoleCell(userId, role, changeCallback) {
   function onChange(e) {
     const roleKey = Object.entries(roleNames)
-      .find((entry) => entry[1] == e.target.value)[0]
+      .find((entry) => entry[1] === e.target.value)[0]
     changeCallback(userId, roleKey)
   }
 
@@ -103,8 +103,8 @@ export default function RolesTab({
                 <TableCell>{member.user.email}</TableCell>
                 {memberRoleCell(member.user._id, member.role, onChangeMemberRole)}
                 {Object.keys(stepNames).map((step) =>
-                  member.role == 'participant' ? (
-                    memberStepPermissionCell(member.user._id, step, member.spheres.find((s) => s.id == step)?.permission, onChangeMemberPermission)
+                  member.role === 'participant' ? (
+                    memberStepPermissionCell(member.user._id, step, member.spheres.find((s) => s.id === step)?.permission, onChangeMemberPermission)
                   ) : <TableCell>-</TableCell>
                 )}
               </TableRow>
