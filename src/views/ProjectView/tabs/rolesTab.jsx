@@ -1,4 +1,4 @@
-import { MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Box, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import Button from "components/commons/Button";
 import AddUserModal from "./addUserModal";
 
@@ -78,8 +78,14 @@ export default function RolesTab({
 }) {
   return (
     <div>
-      <Button variant="contained" onClick={onOpenModal}>Agregar Integrante</Button>
-      <Button variant="contained" onClick={onSaveChanges}>Guardar</Button>
+      <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+        <Box width='20%'>
+          <Button variant="contained" onClick={onOpenModal}>Agregar Integrante</Button>
+        </Box>
+        <Box width='20%'>
+          <Button variant="contained" onClick={onSaveChanges}>Guardar</Button>
+        </Box>
+      </Box>
       <AddUserModal
         onClose={onCloseModal}
         onSearchUserByEmail={onSearchUserByEmail}
