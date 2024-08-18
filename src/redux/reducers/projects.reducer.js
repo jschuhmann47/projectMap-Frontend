@@ -7,6 +7,7 @@ import * as mckinseyConsts from 'redux/contansts/mckinsey.constants';
 import * as okrConsts from 'redux/contansts/okr.constants';
 import * as bsConsts from 'redux/contansts/balanceScorecard.constants';
 import * as quesConstst from 'redux/contansts/questionnarie.constants';
+import { stepNames } from 'views/ProjectView/tabs/rolesTab';
 
 export const defaultState = {
   data: null,
@@ -297,10 +298,15 @@ const projectsReducer = (state = defaultState, action) => {
         addUserModal: { ...state.addUserModal, loading: false, error: error }
       }
     case constants.PROJECTS_CHANGE_MEMBER_ROLE:
+      let newMember = state.members.find((m) => m.user._id === data.userId);
+      newMember.role = data.newRole;
+      if (!newMember.spheres) {
+        newMember.spheres = Object.keys(stepNames).map((s) => ({ id: s, permission: 'hide' }))
+      }
       return {
         ...state,
         members: state.members.map((m) =>
-          m.user._id !== data.userId ? m : { ...m, role: data.newRole }
+          m.user._id !== data.userId ? m : newMember
         )
       }
     case constants.PROJECTS_CHANGE_MEMBER_PERMISSION:
