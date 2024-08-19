@@ -37,6 +37,8 @@ import { Box, Menu, MenuItem, Typography } from '@mui/material';
 import { validateField } from 'helpers/validateField';
 import ToolTip from 'components/commons/ToolTip';
 import Loading from 'components/commons/Loading';
+import { onGetOne as onGetProject } from 'redux/actions/projects.actions';
+import permission from 'helpers/permissions';
 
 const FodaContainer = () => {
   const { fodaId, id } = useParams();
@@ -45,7 +47,7 @@ const FodaContainer = () => {
   const onClickResultsButton = () =>
     navigate(`/projects/${id}/foda/${fodaId}/results`);
   const onClickResultsButtonGoBack = () => navigate(`/projects/${id}`);
-  const disptch = useDispatch();
+  const dispatch = useDispatch();
   const [anchorElement, setAnchorElement] = useState(null);
   const { importancia, intensidad, tendencia, urgencia } = useSelector(
     (state) => state.foda.options
@@ -58,22 +60,26 @@ const FodaContainer = () => {
   const loading = useSelector((state) => state.foda.loading);
   const { title } = useSelector(titleSelector);
 
+  const root = useSelector((state) => state);
+  const userPermission = permission(root, 'internalSituation');
+
   useEffect(() => {
-    disptch(onGetOptions());
-    disptch(onGetSeeds());
-    disptch(onGetOne(fodaId));
+    dispatch(onGetOptions());
+    dispatch(onGetSeeds());
+    dispatch(onGetOne(fodaId));
+    dispatch(onGetProject(id));
   }, []);
 
   const onAdd = (factor) => setFactor(factor);
 
   const onEdit = (factor) => setFactor(factor);
 
-  const onDelete = (factor) => disptch(onDeleteFactor(fodaId, factor._id));
+  const onDelete = (factor) => dispatch(onDeleteFactor(fodaId, factor._id));
 
   const onSubmitFactor = (formData) => {
     if (factor._id)
-      disptch(onUpdateFactor(fodaId, factor._id, { ...formData }));
-    else disptch(onInsertFactor(fodaId, { ...formData, area: factor }));
+      dispatch(onUpdateFactor(fodaId, factor._id, { ...formData }));
+    else dispatch(onInsertFactor(fodaId, { ...formData, area: factor }));
     setFactor('');
   };
 
@@ -107,6 +113,7 @@ const FodaContainer = () => {
           onClickButtonGoBack={onClickResultsButtonGoBack}
           buttonTitle="Resultados"
           openComments={(target) => setAnchorElement(target)}
+          userPermission={userPermission}
         />
         <Menu
           anchorEl={anchorElement}
