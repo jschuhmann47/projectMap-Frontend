@@ -71,7 +71,9 @@ const DashboardView = (props) => {
           )}
         </TitleContainer>
         {items.length === 0 ? (
-          <NoProjectsMessage>Aún no hay proyectos</NoProjectsMessage>
+          <NoProjectsMessage>
+            {isAdmin ? 'No hay proyectos con este nombre.' : 'No tenés proyectos asignados.'}
+          </NoProjectsMessage>
         ) : (
           <Grid container rowSpacing={2} columnSpacing={4}>
             {items.map(({ _id, color, name, description, coordinators, participants }) => (
