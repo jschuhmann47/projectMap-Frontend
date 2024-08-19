@@ -16,7 +16,8 @@ export default function ProjectView({
   onChangeMemberPermission,
   onChangeMemberRole,
   onSaveChanges,
-  hasFullPermissions
+  hasFullPermissions,
+  stepPermissions
 }) {
   const [activeTab, setActiveTab] = useState("1");
 
@@ -24,7 +25,11 @@ export default function ProjectView({
     {
       id: "1",
       name: 'Etapas',
-      content: <StepsTab steps={items} hasFullPermissions={hasFullPermissions} />
+      content: <StepsTab
+        steps={items}
+        hasFullPermissions={hasFullPermissions}
+        stepPermissions={stepPermissions}
+      />
     },
     {
       id: "2",

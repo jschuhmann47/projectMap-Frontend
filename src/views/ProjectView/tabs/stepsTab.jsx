@@ -4,7 +4,7 @@ import { Edit, HelpOutlined, Visibility } from "@mui/icons-material"
 import StepInfoModal from "./stepInfoModal"
 import { useState } from "react"
 
-function stepCard({ step, setStep, hasFullPermissions }) {
+function StepCardView({ step, setStep, permission }) {
   return <StepCard>
     {step.title}
     <IconButton>
@@ -21,7 +21,7 @@ function stepCard({ step, setStep, hasFullPermissions }) {
   </StepCard>
 }
 
-export default function StepsTab({ steps, hasFullPermissions }) {
+export default function StepsTab({ steps, hasFullPermissions, stepPermissions }) {
   const orderedSteps = steps.sort((step1, step2) => step1.value - step2.value)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedStep, setSelectedStep] = useState(0);
@@ -31,8 +31,21 @@ export default function StepsTab({ steps, hasFullPermissions }) {
     setIsModalOpen(true);
   }
 
+  function stepPermission(step) {
+    if (hasFullPermissions) return 'edit'
+    if (!stepPermissions) return 'hide'
+    return stepPermissions.find((p) => p.id === step.id).permission
+  }
+
   return <StepsContainer>
-    {orderedSteps.map((step) => stepCard({ step, setStep, hasFullPermissions }))}
+    {orderedSteps.map((step) =>
+      <StepCardView
+        step={step}
+        setStep={setStep}
+        permission={stepPermission(step)}
+      />
+      )
+    }
     <StepInfoModal
       isOpen={isModalOpen}
       selectedStep={selectedStep}

@@ -264,14 +264,17 @@ const ProjectContainer = () => {
     const users = members.map((m) => ({
       userId: m.user._id,
       role: m.role,
-      spheres: m.role == 'participant' ? m.spheres : undefined,
+      spheres: m.role === 'participant' ? m.spheres : undefined,
     }));
     dispatch(onSaveMembers(id, { users }))
   }
 
   const hasFullPermissions =
     user?.isAdmin ||
-    projectInfo?.coordinators.find((u) => u._id === user?.id)
+    projectInfo?.coordinators.find((u) => u.email === user?.email)
+
+  const stepPermissions = projectInfo?.participants
+    .find((u) => u.user.email === user?.email)?.spheres
 
   return (
     <LayoutContainer>
@@ -289,6 +292,7 @@ const ProjectContainer = () => {
         onChangeMemberPermission={onChangeMemberPermission}
         onSaveChanges={onSaveChanges}
         hasFullPermissions={hasFullPermissions}
+        stepPermissions={stepPermissions}
       />
       <Menu
         anchorEl={openComments}
