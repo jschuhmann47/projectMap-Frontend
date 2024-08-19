@@ -223,8 +223,6 @@ const ProjectContainer = () => {
         dispatch(onDelete(id));
       },
     };
-
-    console.log(tool);
     deleteTool[tool]();
   };
 
@@ -405,7 +403,6 @@ const ProjectContainer = () => {
         onClose={() => setAddTool('')}
       >
         <FormContainer>
-          {console.log(addTool)}
           <Title style={{ fontSize: 18 }}>{addTool?.title}</Title>
           <Formik
             onSubmit={(values) => onSubmitTool(addTool.action, values)}

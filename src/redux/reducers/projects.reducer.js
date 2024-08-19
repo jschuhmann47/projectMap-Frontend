@@ -110,7 +110,6 @@ const projectsReducer = (state = defaultState, action) => {
         ...data.participants.map((p) => ({ ...p, role: 'participant' })),
         ...data.coordinators.map((p) => ({ user: p, role: 'coordinator' }))
       ]
-      console.log(members)
       return {
         ...state,
         data: { ...state.data, ...data },
