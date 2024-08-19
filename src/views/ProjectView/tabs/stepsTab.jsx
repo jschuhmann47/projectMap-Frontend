@@ -14,9 +14,12 @@ function StepCardView({ step, setStep, permission }) {
       <IconButton onClick={(e) => step.onClickList(step.value, e.currentTarget)}>
         <Visibility />
       </IconButton>
-      <IconButton onClick={(e) => step.onClickAdd(step.value, e.currentTarget)}>
-        <Edit />
-      </IconButton>
+      {
+        permission === 'edit' &&
+        <IconButton onClick={(e) => step.onClickAdd(step.value, e.currentTarget)}>
+          <Edit />
+        </IconButton>
+      }
     </StepIcons>
   </StepCard>
 }
