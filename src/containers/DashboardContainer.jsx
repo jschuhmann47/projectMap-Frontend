@@ -14,6 +14,7 @@ const DashboardContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isAddNewOpen, setAddNew] = useState(false);
+  const [searchText, setSearchText] = useState('');
   const { items, loading } = useSelector((state) => state.projects);
   const user = useSelector((state) => state.user.data);
 
@@ -57,6 +58,9 @@ const DashboardContainer = () => {
         items={items}
         onClickDelete={onClickDelete}
         isAdmin={isAdmin}
+        searchText={searchText}
+        onChangeSearchText={(e) => setSearchText(e.target.value)}
+        onSearch={() => console.log('hey')}
       />
       <Modal isOpen={isAddNewOpen} onClose={() => setAddNew(false)}>
         <ProjectForm onSubmit={onSubmit} />

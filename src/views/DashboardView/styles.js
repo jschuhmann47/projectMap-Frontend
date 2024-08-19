@@ -30,6 +30,12 @@ export const Title = styled('span')({
   fontWeight: 500,
 });
 
+export const AdminButtonsContainer = styled('div')({
+  display: 'flex',
+  justifyContent: 'end',
+  gap: 10
+})
+
 export const ButtonContainer = styled('div')({
   display: 'flex',
   gap: 10,

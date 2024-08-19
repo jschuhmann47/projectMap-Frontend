@@ -5,6 +5,7 @@ import Button from 'components/commons/Button';
 import ProjectCard from 'components/commons/ProjectCard';
 
 import {
+  AdminButtonsContainer,
   ButtonContainer,
   ButtonContent,
   Container,
@@ -13,9 +14,20 @@ import {
   Title,
   TitleContainer,
 } from './styles';
+import { TextField } from '@mui/material';
+import { Search } from '@mui/icons-material';
 
 const DashboardView = (props) => {
-  const { onAddNew, onClickProject, items, onClickDelete, isAdmin } = props;
+  const {
+    onAddNew,
+    onClickProject,
+    items,
+    onClickDelete,
+    isAdmin,
+    searchText,
+    onChangeSearchText,
+    onSearch
+  } = props;
 
   return (
     <Container>
@@ -23,13 +35,29 @@ const DashboardView = (props) => {
         <TitleContainer>
           <Title>Proyectos</Title>
           {isAdmin && (
-            <ButtonContainer>
-              <Button onClick={onAddNew}>
-                <ButtonContent>
-                  <AddCircleIcon /> Nuevo
-                </ButtonContent>
-              </Button>
-            </ButtonContainer>
+            <AdminButtonsContainer>
+              <>
+                <TextField
+                  placeholder='Buscar proyectos'
+                  value={searchText}
+                  onChange={onChangeSearchText}
+                />
+                <ButtonContainer>
+                  <Button onClick={onSearch}>
+                    <ButtonContent>
+                      <Search />
+                    </ButtonContent>
+                  </Button>
+                </ButtonContainer>
+              </>
+              <ButtonContainer>
+                <Button onClick={onAddNew}>
+                  <ButtonContent>
+                    <AddCircleIcon />Nuevo
+                  </ButtonContent>
+                </Button>
+              </ButtonContainer>
+            </AdminButtonsContainer>
           )}
         </TitleContainer>
         {items.length === 0 ? (

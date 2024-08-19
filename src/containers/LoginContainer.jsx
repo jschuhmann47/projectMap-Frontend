@@ -8,7 +8,6 @@ import Loading from 'components/commons/Loading';
 import LayoutContainer from 'containers/LayoutContainer';
 
 import LoginView from 'views/LoginView';
-import { Role } from 'helpers/enums/roles';
 
 const LoginContainer = () => {
   const dispatch = useDispatch();
