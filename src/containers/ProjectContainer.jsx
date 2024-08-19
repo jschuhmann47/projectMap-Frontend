@@ -269,6 +269,10 @@ const ProjectContainer = () => {
     dispatch(onSaveMembers(id, { users }))
   }
 
+  const hasFullPermissions =
+    user?.isAdmin ||
+    projectInfo?.coordinators.find((u) => u._id === user?.id)
+
   return (
     <LayoutContainer>
       <ProjectView
@@ -284,6 +288,7 @@ const ProjectContainer = () => {
         onChangeMemberRole={onChangeMemberRole}
         onChangeMemberPermission={onChangeMemberPermission}
         onSaveChanges={onSaveChanges}
+        hasFullPermissions={hasFullPermissions}
       />
       <Menu
         anchorEl={openComments}
