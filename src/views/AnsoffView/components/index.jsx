@@ -22,8 +22,11 @@ const Steps = ({
   situacionDelMercadoOptions,
   situacionDelProductoOptions,
   onEditProducto,
+  userPermission
 }) => {
   const [editProductId, setEditProductId] = useState(null);
+
+  console.log('user permission', userPermission)
 
   const renderForm = (values) => (
     <Grid
@@ -217,22 +220,24 @@ const Steps = ({
                         >
                           {producto.situacionDelProducto}
                         </Grid>
-                        <Grid item xs={1} display="flex" alignItems={'center'}>
-                          <ButtonsContainer>
-                            <IconButton
-                              color="secondary"
-                              onClick={() => setEditProductId(producto._id)}
-                            >
-                              <Edit />
-                            </IconButton>
-                            <IconButton
-                              onClick={() => onDeleteProducto(producto._id)}
-                              sx={{ color: 'grey' }}
-                            >
-                              <Delete />
-                            </IconButton>
-                          </ButtonsContainer>
-                        </Grid>
+                        {userPermission === 'edit' &&
+                          <Grid item xs={1} display="flex" alignItems={'center'}>
+                            <ButtonsContainer>
+                              <IconButton
+                                color="secondary"
+                                onClick={() => setEditProductId(producto._id)}
+                              >
+                                <Edit />
+                              </IconButton>
+                              <IconButton
+                                onClick={() => onDeleteProducto(producto._id)}
+                                sx={{ color: 'grey' }}
+                              >
+                                <Delete />
+                              </IconButton>
+                            </ButtonsContainer>
+                          </Grid>
+                        }
                       </>
                     )}
                   </>
@@ -305,17 +310,22 @@ const Steps = ({
                       justifyContent={'center'}
                       sx={{ padding: '20px 0' }}
                     >
-                      <SelectMenu
-                        items={exitoProductoList}
-                        selectedValue={
+                      {userPermission === 'edit' ? (
+                        <SelectMenu
+                          items={exitoProductoList}
+                          selectedValue={
+                            producto?.exito
+                              ? getExitoProducto(producto.exito)
+                              : { label: 'Seleccione el exito', value: '' }
+                          }
+                          onChange={(newValue) => {
+                            onEditExito({ ...producto, exito: newValue });
+                          }}
+                        />
+                        ) : (
                           producto?.exito
-                            ? getExitoProducto(producto.exito)
-                            : { label: 'Seleccione el exito', value: '' }
-                        }
-                        onChange={(newValue) => {
-                          onEditExito({ ...producto, exito: newValue });
-                        }}
-                      />
+                        )
+                      }
                     </Grid>
                   </>
                 ))}
@@ -384,17 +394,22 @@ const Steps = ({
                         justifyContent={'center'}
                         sx={{ padding: '20px 0' }}
                       >
-                        <SelectMenu
-                          items={exitoProductoList}
-                          selectedValue={
+                        {userPermission === 'edit' ? (
+                          <SelectMenu
+                            items={exitoProductoList}
+                            selectedValue={
+                              producto?.exito
+                                ? getExitoProducto(producto.exito)
+                                : { label: 'Seleccione el exito', value: '' }
+                            }
+                            onChange={(newValue) => {
+                              onEditExito({ ...producto, exito: newValue });
+                            }}
+                          />
+                          ) : (
                             producto?.exito
-                              ? getExitoProducto(producto.exito)
-                              : { label: 'Seleccione el exito', value: '' }
-                          }
-                          onChange={(newValue) => {
-                            onEditExito({ ...producto, exito: newValue });
-                          }}
-                        />
+                          )
+                        }
                       </Grid>
                     </>
                   )
@@ -463,17 +478,22 @@ const Steps = ({
                       justifyContent={'center'}
                       sx={{ padding: '20px 0' }}
                     >
-                      <SelectMenu
-                        items={exitoProductoList}
-                        selectedValue={
+                      {userPermission === 'edit' ? (
+                        <SelectMenu
+                          items={exitoProductoList}
+                          selectedValue={
+                            producto?.exito
+                              ? getExitoProducto(producto.exito)
+                              : { label: 'Seleccione el exito', value: '' }
+                          }
+                          onChange={(newValue) => {
+                            onEditExito({ ...producto, exito: newValue });
+                          }}
+                        />
+                        ) : (
                           producto?.exito
-                            ? getExitoProducto(producto.exito)
-                            : { label: 'Seleccione el exito', value: '' }
-                        }
-                        onChange={(newValue) => {
-                          onEditExito({ ...producto, exito: newValue });
-                        }}
-                      />
+                        )
+                      }
                     </Grid>
                   </>
                 ))}
@@ -541,17 +561,22 @@ const Steps = ({
                       justifyContent={'center'}
                       sx={{ padding: '20px 0' }}
                     >
-                      <SelectMenu
-                        items={exitoProductoList}
-                        selectedValue={
+                      {userPermission === 'edit' ? (
+                        <SelectMenu
+                          items={exitoProductoList}
+                          selectedValue={
+                            producto?.exito
+                              ? getExitoProducto(producto.exito)
+                              : { label: 'Seleccione el exito', value: '' }
+                          }
+                          onChange={(newValue) => {
+                            onEditExito({ ...producto, exito: newValue });
+                          }}
+                        />
+                        ) : (
                           producto?.exito
-                            ? getExitoProducto(producto.exito)
-                            : { label: 'Seleccione el exito', value: '' }
-                        }
-                        onChange={(newValue) => {
-                          onEditExito({ ...producto, exito: newValue });
-                        }}
-                      />
+                        )
+                      }
                     </Grid>
                   </>
                 ))}
