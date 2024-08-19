@@ -4,6 +4,8 @@ export const save = (formData) => post('projects', formData);
 
 export const getAll = () => get('projects');
 
+export const search = (text) => get(`projects/search?name=${text}`)
+
 export const deleteProject = (id) => remove(`projects/${id}`);
 
 export const getOne = (id) => get(`projects/${id}`);

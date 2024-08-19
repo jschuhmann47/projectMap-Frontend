@@ -5,7 +5,7 @@ import { getRandomInt } from 'helpers/randomNumber';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { onCreate, onDelete, onGetAll } from 'redux/actions/projects.actions';
+import { onCreate, onDelete, onGetAll, onSearch } from 'redux/actions/projects.actions';
 import { getUser } from 'redux/actions/user.actions';
 import DashboardView from 'views/DashboardView';
 import ProjectForm from 'views/DashboardView/ProjectForm';
@@ -50,6 +50,10 @@ const DashboardContainer = () => {
 
   const isAdmin = user && user.isAdmin;
 
+  function search() {
+    dispatch(onSearch(searchText));
+  }
+
   return (
     <LayoutContainer>
       <DashboardView
@@ -60,7 +64,7 @@ const DashboardContainer = () => {
         isAdmin={isAdmin}
         searchText={searchText}
         onChangeSearchText={(e) => setSearchText(e.target.value)}
-        onSearch={() => console.log('hey')}
+        onSearch={search}
       />
       <Modal isOpen={isAddNewOpen} onClose={() => setAddNew(false)}>
         <ProjectForm onSubmit={onSubmit} />

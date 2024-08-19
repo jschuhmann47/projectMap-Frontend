@@ -99,6 +99,7 @@ const projectsReducer = (state = defaultState, action) => {
         loading: false,
       };
     case constants.PROJECTS_ON_GET_ALL_SUCCEEDED:
+    case constants.PROJECTS_ON_SEARCH_SUCCEEDED:
       return {
         ...state,
         items: data,
@@ -229,6 +230,7 @@ const projectsReducer = (state = defaultState, action) => {
         loading: false,
       };
     case constants.PROJECTS_ON_GET_ALL_REQUESTED:
+    case constants.PROJECTS_ON_SEARCH_REQUESTED:
       return {
         ...state,
         loading: true,
