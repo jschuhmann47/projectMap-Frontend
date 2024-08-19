@@ -52,7 +52,12 @@ const DashboardContainer = () => {
 
   function search() {
     dispatch(onSearch(searchText));
-  }
+  };
+
+  function clearSearch() {
+    setSearchText('');
+    dispatch(onGetAll());
+  };
 
   return (
     <LayoutContainer>
@@ -65,6 +70,7 @@ const DashboardContainer = () => {
         searchText={searchText}
         onChangeSearchText={(e) => setSearchText(e.target.value)}
         onSearch={search}
+        onClearSearch={clearSearch}
       />
       <Modal isOpen={isAddNewOpen} onClose={() => setAddNew(false)}>
         <ProjectForm onSubmit={onSubmit} />

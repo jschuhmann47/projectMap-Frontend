@@ -15,7 +15,7 @@ import {
   TitleContainer,
 } from './styles';
 import { TextField } from '@mui/material';
-import { Search } from '@mui/icons-material';
+import { Clear, Search } from '@mui/icons-material';
 
 const DashboardView = (props) => {
   const {
@@ -26,7 +26,8 @@ const DashboardView = (props) => {
     isAdmin,
     searchText,
     onChangeSearchText,
-    onSearch
+    onSearch,
+    onClearSearch,
   } = props;
 
   return (
@@ -36,6 +37,15 @@ const DashboardView = (props) => {
           <Title>Proyectos</Title>
           {isAdmin && (
             <AdminButtonsContainer>
+              {searchText && (
+                <ButtonContainer>
+                  <Button onClick={onClearSearch}>
+                    <ButtonContent>
+                      <Clear />Limpiar búsqueda
+                    </ButtonContent>
+                  </Button>
+                </ButtonContainer>
+              )}
               <>
                 <TextField
                   placeholder='Buscar proyectos'
