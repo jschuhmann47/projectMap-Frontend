@@ -5,6 +5,7 @@ import Button from 'components/commons/Button';
 import ProjectCard from 'components/commons/ProjectCard';
 
 import {
+  AdminButtonsContainer,
   ButtonContainer,
   ButtonContent,
   Container,
@@ -13,9 +14,21 @@ import {
   Title,
   TitleContainer,
 } from './styles';
+import { TextField } from '@mui/material';
+import { Clear, Search } from '@mui/icons-material';
 
 const DashboardView = (props) => {
-  const { onAddNew, onClickProject, items, onClickDelete, isAdmin } = props;
+  const {
+    onAddNew,
+    onClickProject,
+    items,
+    onClickDelete,
+    isAdmin,
+    searchText,
+    onChangeSearchText,
+    onSearch,
+    onClearSearch,
+  } = props;
 
   return (
     <Container>
@@ -23,17 +36,44 @@ const DashboardView = (props) => {
         <TitleContainer>
           <Title>Proyectos</Title>
           {isAdmin && (
-            <ButtonContainer>
-              <Button onClick={onAddNew}>
-                <ButtonContent>
-                  <AddCircleIcon /> Nuevo
-                </ButtonContent>
-              </Button>
-            </ButtonContainer>
+            <AdminButtonsContainer>
+              {searchText && (
+                <ButtonContainer>
+                  <Button onClick={onClearSearch}>
+                    <ButtonContent>
+                      <Clear />Limpiar búsqueda
+                    </ButtonContent>
+                  </Button>
+                </ButtonContainer>
+              )}
+              <>
+                <TextField
+                  placeholder='Buscar proyectos'
+                  value={searchText}
+                  onChange={onChangeSearchText}
+                />
+                <ButtonContainer>
+                  <Button onClick={onSearch}>
+                    <ButtonContent>
+                      <Search />
+                    </ButtonContent>
+                  </Button>
+                </ButtonContainer>
+              </>
+              <ButtonContainer>
+                <Button onClick={onAddNew}>
+                  <ButtonContent>
+                    <AddCircleIcon />Nuevo
+                  </ButtonContent>
+                </Button>
+              </ButtonContainer>
+            </AdminButtonsContainer>
           )}
         </TitleContainer>
         {items.length === 0 ? (
-          <NoProjectsMessage>Aún no hay proyectos</NoProjectsMessage>
+          <NoProjectsMessage>
+            {isAdmin ? 'No hay proyectos con este nombre.' : 'No tenés proyectos asignados.'}
+          </NoProjectsMessage>
         ) : (
           <Grid container rowSpacing={2} columnSpacing={4}>
             {items.map(({ _id, color, name, description, coordinators, participants }) => (

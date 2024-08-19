@@ -22,6 +22,7 @@ import {
   unShareUsers,
   addUser,
   updateUsers,
+  search,
 } from 'services/projects.services';
 import { searchByEmail } from 'services/user.services';
 
@@ -72,6 +73,19 @@ export function* projectsOnGetAll() {
     });
   } catch (error) {
     yield put({ type: constants.PROJECTS_ON_GET_ALL_FAILED, error });
+  }
+}
+
+export function* projectsOnSearch(action) {
+  const { text } = action;
+  try {
+    const { data } = yield call(search, text);
+    yield put({
+      type: constants.PROJECTS_ON_SEARCH_SUCCEEDED,
+      data,
+    });
+  } catch (error) {
+    yield put({ type: constants.PROJECTS_ON_SEARCH_FAILED, error });
   }
 }
 
@@ -323,6 +337,7 @@ export function* watchProjects() {
     takeLatest(constants.PROJECTS_ON_GET_ONE_REQUESTED, projectsOnGetOne),
     takeLatest(constants.PROJECTS_ON_DELETE_REQUESTED, projectsDelete),
     takeLatest(constants.PROJECTS_ON_GET_ALL_REQUESTED, projectsOnGetAll),
+    takeLatest(constants.PROJECTS_ON_SEARCH_REQUESTED, projectsOnSearch),
     takeLatest(constants.PROJECTS_ON_CREATE_REQUESTED, projectsSaveOne),
     takeLatest(constants.PROJECTS_ON_GET_FODA_REQUESTED, projectsOnGetFodas),
     takeLatest(
