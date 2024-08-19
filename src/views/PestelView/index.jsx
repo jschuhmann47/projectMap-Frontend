@@ -41,6 +41,7 @@ const PestelView = ({
   buttonTitle,
   total = {},
   openComments,
+  userPermission
 }) => {
   const renderTitle = (title, onAdd, total, toolTip) => (
     <CardTitleContainer>
@@ -53,9 +54,11 @@ const PestelView = ({
         />
       </Box>
       {!showResults ? (
-        <AddButton onClick={onAdd}>
-          <AddCircleRoundedIcon />
-        </AddButton>
+        userPermission === 'edit' && (
+          <AddButton onClick={onAdd}>
+            <AddCircleRoundedIcon />
+          </AddButton>
+        )
       ) : (
         <ChipContainer>
           <Chip label={total} />
@@ -69,14 +72,16 @@ const PestelView = ({
       <FactorContent>
         <FactorDescription>{factor.descripcion}</FactorDescription>
         {!showResults ? (
-          <>
-            <IconButton size="small" onClick={() => onEdit(factor)}>
-              <EditIcon />
-            </IconButton>
-            <IconButton size="small" onClick={() => onDelete(factor)}>
-              <DeleteIcon />
-            </IconButton>
-          </>
+          userPermission === 'edit' && (
+            <>
+              <IconButton size="small" onClick={() => onEdit(factor)}>
+                <EditIcon />
+              </IconButton>
+              <IconButton size="small" onClick={() => onDelete(factor)}>
+                <DeleteIcon />
+              </IconButton>
+            </>
+          )
         ) : (
           <CustomChip value={factor.puntuacion} total={125} />
         )}

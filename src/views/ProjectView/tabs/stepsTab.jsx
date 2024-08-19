@@ -40,7 +40,7 @@ export default function StepsTab({ steps, hasFullPermissions, stepPermissions })
   function stepPermission(step) {
     if (hasFullPermissions) return 'edit'
     if (!stepPermissions) return 'hide'
-    return stepPermissions.find((p) => p.id === step.id).permission
+    return stepPermissions.find((p) => p.id === step).permission
   }
 
   return <StepsContainer>
@@ -48,7 +48,7 @@ export default function StepsTab({ steps, hasFullPermissions, stepPermissions })
       <StepCardView
         step={step}
         setStep={setStep}
-        permission={stepPermission(step)}
+        permission={stepPermission(step.id)}
       />
       )
     }
