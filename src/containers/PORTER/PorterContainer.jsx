@@ -50,8 +50,6 @@ const PorterContainer = () => {
   const root = useSelector((state) => state);
   const userPermission = permission(root, 'externalEnvironment');
 
-  const { loading: loadingProject } = useSelector((state) => state.projects.loading);
-
   const isStepOptional = (step) => {
     return step === 99;
   };
@@ -89,11 +87,11 @@ const PorterContainer = () => {
   };
 
   useEffect(() => {
+    dispatch(onGetProject(id));
     dispatch(onGetOne(porterId));
     dispatch(onGetQuestions());
     dispatch(onGetOptions());
     dispatch(onGetAllComments('PORTER', porterId));
-    dispatch(onGetProject(id));
   }, []);
 
   return (
@@ -132,7 +130,7 @@ const PorterContainer = () => {
           ) : (
             <React.Fragment>
               <Typography sx={{ mt: 2, mb: 1 }}>
-                {!loading && !loadingProject && (
+                {!loading && (
                   <PorterView
                     options={options}
                     questions={questions[steps[activeStep]]}
@@ -145,6 +143,7 @@ const PorterContainer = () => {
                     onClickResults={onClickResultsButton}
                     onClickButtonGoBack={onClickGoBackButton}
                     openComments={(target) => setAnchorElement(target)}
+                    userPermission={userPermission}
                   />
                 )}
                 <Menu
@@ -176,7 +175,7 @@ const PorterContainer = () => {
           )}
         </Box>
       </Container>
-      {(loading || loadingProject) && <Loading isModalMode message="Cargando Porter" />}
+      {(loading) && <Loading isModalMode message="Cargando Porter" />}
     </LayoutContainer>
   );
 };
