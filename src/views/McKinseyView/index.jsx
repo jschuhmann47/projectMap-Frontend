@@ -31,6 +31,7 @@ const McKinseyView = ({
   openComments,
   title,
   onDeleteItem,
+  userPermission,
 }) => {
   const renderTitle = (title) => (
     <CardTitleContainer>
@@ -45,7 +46,7 @@ const McKinseyView = ({
     items?.map((item) => (
       <FactorContent>
         <FactorDescription>{item.nombre}</FactorDescription>
-        {!showResults && (
+        {!showResults && userPermission === 'edit' && (
           <IconButton onClick={() => onDeleteItem(item._id)}>
             <Delete size="small" />
           </IconButton>
@@ -113,7 +114,7 @@ const McKinseyView = ({
           )
         )}
       </Grid>
-      {!showResults && (
+      {!showResults && userPermission === 'edit' && (
         <Fab
           color="primary"
           aria-label="add"

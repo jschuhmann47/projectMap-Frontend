@@ -15,6 +15,8 @@ import {
 } from 'redux/actions/questionnarie.actions';
 import { initialValuesSelector } from 'redux/selectors/questionnaire.selector';
 import Loading from 'components/commons/Loading';
+import { onGetOne as onGetProject } from 'redux/actions/projects.actions';
+import permission from 'helpers/permissions';
 
 const QuestionnarieQuestionsContainer = () => {
   const { questionnaireId, id } = useParams();
@@ -33,6 +35,9 @@ const QuestionnarieQuestionsContainer = () => {
     return dataList;
   });
 
+  const root = useSelector((state) => state);
+  const userPermission = permission(root, 'transformationPlans');
+
   const loading = useSelector((state) => state.questionnaire.loading);
   let initialValues = {};
   initialValues = useSelector(initialValuesSelector);
@@ -41,6 +46,7 @@ const QuestionnarieQuestionsContainer = () => {
   useEffect(() => {
     dispatch(onGetQuestions());
     dispatch(onGetOne(questionnaireId));
+    dispatch(onGetProject(id));
   }, []);
 
   const handleSubmit = (formData) => {
@@ -88,6 +94,7 @@ const QuestionnarieQuestionsContainer = () => {
             questions={data}
             handleSubmit={handleSubmit}
             initialValues={initialValues}
+            userPermission={userPermission}
           />
           <Menu
             anchorEl={anchorElement}

@@ -223,8 +223,6 @@ const ProjectContainer = () => {
         dispatch(onDelete(id));
       },
     };
-
-    console.log(tool);
     deleteTool[tool]();
   };
 
@@ -264,10 +262,17 @@ const ProjectContainer = () => {
     const users = members.map((m) => ({
       userId: m.user._id,
       role: m.role,
-      spheres: m.role == 'participant' ? m.spheres : undefined,
+      spheres: m.role === 'participant' ? m.spheres : undefined,
     }));
     dispatch(onSaveMembers(id, { users }))
   }
+
+  const hasFullPermissions =
+    user?.isAdmin ||
+    projectInfo?.coordinators.find((u) => u.email === user?.email)
+
+  const stepPermissions = projectInfo?.participants
+    .find((u) => u.user.email === user?.email)?.spheres
 
   return (
     <LayoutContainer>
@@ -284,6 +289,8 @@ const ProjectContainer = () => {
         onChangeMemberRole={onChangeMemberRole}
         onChangeMemberPermission={onChangeMemberPermission}
         onSaveChanges={onSaveChanges}
+        hasFullPermissions={hasFullPermissions}
+        stepPermissions={stepPermissions}
       />
       <Menu
         anchorEl={openComments}
@@ -336,7 +343,7 @@ const ProjectContainer = () => {
               >
                 {item?.titulo}
               </MenuItemText>
-              {item._id && !Number.isInteger(item._id) && (
+              {item._id && (hasFullPermissions || stepPermissions?.[stepValue] === 'edit') && !Number.isInteger(item._id) && (
                 <IconButton
                   sx={{
                     display: 'flex',
@@ -396,7 +403,6 @@ const ProjectContainer = () => {
         onClose={() => setAddTool('')}
       >
         <FormContainer>
-          {console.log(addTool)}
           <Title style={{ fontSize: 18 }}>{addTool?.title}</Title>
           <Formik
             onSubmit={(values) => onSubmitTool(addTool.action, values)}

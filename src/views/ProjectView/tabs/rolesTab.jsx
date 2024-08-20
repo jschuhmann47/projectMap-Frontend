@@ -2,6 +2,7 @@ import { Box, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContain
 import Button from "components/commons/Button";
 import AddUserModal from "./addUserModal";
 
+// to do: use helpers/enums/steps.js
 export const stepNames = {
   externalEnvironment: 'Evaluación de la situación externa',
   internalSituation: 'Evaluación de la situación interna',

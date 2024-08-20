@@ -22,6 +22,7 @@ import {
   onDeleteFactor,
   onGetSeeds,
 } from 'redux/actions/pestel.actions';
+import { onGetOne as onGetProject } from 'redux/actions/projects.actions';
 import { CustomForm } from 'styles/form';
 import { Formik, Field, ErrorMessage } from 'formik';
 import {
@@ -40,6 +41,7 @@ import { validateField } from 'helpers/validateField';
 import ToolTip from 'components/commons/ToolTip';
 import Loading from 'components/commons/Loading';
 import { onGetAll as onGetAllComments } from 'redux/actions/comments.actions';
+import permission from 'helpers/permissions';
 
 const PestelContainer = () => {
   const { pestelId, id } = useParams();
@@ -65,11 +67,15 @@ const PestelContainer = () => {
   const loading = useSelector((state) => state.pestel.loading);
   const { title } = useSelector(titleSelector);
 
+  const root = useSelector((state) => state);
+  const userPermission = permission(root, 'externalEnvironment');
+
   useEffect(() => {
     dispatch(onGetOptions());
     dispatch(onGetSeeds());
     dispatch(onGetOne(pestelId));
     dispatch(onGetAllComments('PESTEL', pestelId));
+    dispatch(onGetProject(id));
   }, []);
 
   const onAdd = (factor) => setFactor(factor);
@@ -112,6 +118,7 @@ const PestelContainer = () => {
           onClickButtonGoBack={onClickResultsButtonGoBack}
           buttonTitle="Resultados"
           openComments={(target) => setAnchorElement(target)}
+          userPermission={userPermission}
         />
         <Menu
           anchorEl={anchorElement}

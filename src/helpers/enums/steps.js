@@ -25,6 +25,7 @@ export const STEPS = [
       { titulo: 'Agregar Analisis de Porter', key: 1, action: onCreatePorter },
       { titulo: 'Agregar Analisis de Pestel', key: 2, action: onCreatePestel },
     ],
+    id: 'externalEnvironment'
   },
   {
     value: StepValue.PLAN_FINANCIERO_MEDICION_RESULTADOS,
@@ -33,6 +34,7 @@ export const STEPS = [
       { titulo: 'Agregar Balaced Scorecard', action: onCreateBalanced },
       { titulo: 'Agregar OKR', action: onCreateOkr },
     ],
+    id: 'financialPlanning'
   },
   {
     value: StepValue.EVALUACION_SITUACION_INTERNA,
@@ -43,11 +45,13 @@ export const STEPS = [
         action: onCreateFoda,
       },
     ],
+    id: 'internalSituation'
   },
   {
     value: StepValue.MEJORA_CONTINUA,
     title: 'Mejora Continua',
     menuItems: [{ titulo: '', action: () => {} }],
+    id: 'continuousImprovement'
   },
   {
     value: StepValue.DEFINICION_PLANES_TRANSFORMACION,
@@ -55,11 +59,13 @@ export const STEPS = [
     menuItems: [
       { titulo: 'Planes de transformacion', action: onCreateQuestionnarie },
     ],
+    id: 'transformationPlans'
   },
   {
     value: StepValue.DEFINICION_LINIAMIENTOS_ESTRATEGICOS,
     title: 'Definición de Lineamientos Estratégicos',
     menuItems: [{ titulo: 'Agregar Matiz ANSOFF', action: onCreateAnsoff }],
+    id: 'strategicGuidelines'
   },
   {
     value: StepValue.FORMULACION_ESTRATEGIA_COMPETITIVA,
@@ -67,6 +73,7 @@ export const STEPS = [
     menuItems: [
       { titulo: 'Agregar Matriz McKinsey', action: onCreateMckinsey },
     ],
+    id: 'competitiveStrategy'
   },
 ];
 

@@ -23,6 +23,8 @@ import { COLORS } from 'helpers/enums/colors';
 import Loading from 'components/commons/Loading';
 import { onGetAll as onGetAllComments } from 'redux/actions/comments.actions';
 import { getLabel } from 'helpers/enums/porter';
+import { onGetOne as onGetProject } from 'redux/actions/projects.actions';
+import permission from 'helpers/permissions';
 
 const PorterContainer = () => {
   const { porterId, id } = useParams();
@@ -44,6 +46,9 @@ const PorterContainer = () => {
   const [anchorElement, setAnchorElement] = useState(null);
 
   const initialValues = useSelector(initialValuesSelector);
+
+  const root = useSelector((state) => state);
+  const userPermission = permission(root, 'externalEnvironment');
 
   const isStepOptional = (step) => {
     return step === 99;
@@ -82,6 +87,7 @@ const PorterContainer = () => {
   };
 
   useEffect(() => {
+    dispatch(onGetProject(id));
     dispatch(onGetOne(porterId));
     dispatch(onGetQuestions());
     dispatch(onGetOptions());
@@ -137,6 +143,7 @@ const PorterContainer = () => {
                     onClickResults={onClickResultsButton}
                     onClickButtonGoBack={onClickGoBackButton}
                     openComments={(target) => setAnchorElement(target)}
+                    userPermission={userPermission}
                   />
                 )}
                 <Menu
@@ -168,7 +175,7 @@ const PorterContainer = () => {
           )}
         </Box>
       </Container>
-      {loading && <Loading isModalMode message="Cargando Porter" />}
+      {(loading) && <Loading isModalMode message="Cargando Porter" />}
     </LayoutContainer>
   );
 };

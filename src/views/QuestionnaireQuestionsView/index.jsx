@@ -20,6 +20,7 @@ const QuestionnaireQuestionsView = ({
   questions,
   handleSubmit,
   initialValues,
+  userPermission
 }) => {
   const [subjectId, setSubjectId] = useState(1);
   const handleChange = (event, newValue) => {
@@ -54,6 +55,8 @@ const QuestionnaireQuestionsView = ({
       </ButtonContainer>
     </Box>
   );
+
+  console.log('initial values', initialValues)
 
   const renderQuestions = () => (
     <Formik onSubmit={handleSubmit} initialValues={initialValues}>
@@ -92,13 +95,17 @@ const QuestionnaireQuestionsView = ({
                         </Grid>
                         <Grid item xs={6}>
                           <Box sx={{ width: '100%' }}>
-                            <Field
-                              name={`${subject.chapterId}.${questionId}.${question}`}
-                              component={SelectInput}
-                              options={answers?.map((answer) => answer.answer)}
-                              placeholder="Respuesta.."
-                              validate={validateField}
-                            />
+                            {userPermission === 'edit' ? (
+                              <Field
+                                name={`${subject.chapterId}.${questionId}.${question}`}
+                                component={SelectInput}
+                                options={answers?.map((answer) => answer.answer)}
+                                placeholder="Respuesta.."
+                                validate={validateField}
+                              />
+                            ) : (
+                              initialValues[subject.chapterId][questionId][question]
+                            )}
                             <ErrorMessage
                               name={`${subject.chapterId}.${questionId}.${question}`}
                             >

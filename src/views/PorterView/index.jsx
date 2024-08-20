@@ -30,6 +30,7 @@ const PorterView = ({
   onClickResults,
   onClickButtonGoBack,
   openComments,
+  userPermission
 }) => {
   return (
     <CreateContent>
@@ -89,17 +90,22 @@ const PorterView = ({
                 {Object.entries(options)?.map(([key, value]) => (
                   <Grid item xs={4}>
                     <Box sx={{ width: '100%' }}>
-                      <Field
-                        name={`${steps[activeStep]}.${id}.${key}`}
-                        component={SelectInput}
-                        options={value}
-                        placeholder={
-                          key === 'nivelDeConcordancia'
-                            ? 'nivel de concordancia'
-                            : key
-                        }
-                        validate={validateField}
-                      />
+                      {userPermission === 'edit' ? (
+                        <Field
+                          name={`${steps[activeStep]}.${id}.${key}`}
+                          component={SelectInput}
+                          options={value}
+                          placeholder={
+                            key === 'nivelDeConcordancia'
+                              ? 'nivel de concordancia'
+                              : key
+                          }
+                          validate={validateField}
+                        />
+                        ) : (
+                          initialValues[steps[activeStep]][id][key]
+                        )
+                      }
                       <ErrorMessage name={`${steps[activeStep]}.${id}.${key}`}>
                         {(msg) => (
                           <Typography

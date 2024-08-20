@@ -40,6 +40,7 @@ const FodaView = ({
   buttonTitle,
   total = {},
   openComments,
+  userPermission
 }) => {
   const renderTitle = (title, onAdd, value, toolTip) => (
     <CardTitleContainer>
@@ -52,7 +53,7 @@ const FodaView = ({
         />
       </Box>
       {!showResults ? (
-        <AddButton onClick={onAdd}>
+        userPermission === 'edit' && <AddButton onClick={onAdd}>
           <AddCircleRoundedIcon />
         </AddButton>
       ) : (
@@ -68,7 +69,7 @@ const FodaView = ({
       <FactorContent>
         <FactorDescription>{factor.descripcion}</FactorDescription>
         {!showResults ? (
-          <>
+          userPermission === 'edit' && <>
             <IconButton size="small" onClick={() => onEdit(factor)}>
               <EditIcon />
             </IconButton>

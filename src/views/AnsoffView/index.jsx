@@ -43,6 +43,7 @@ const AnsoffView = (props) => {
     onClickGoBackButton,
     title,
     openComments,
+    userPermission
   } = props;
   const [showForm, setShowForm] = useState(false);
 
@@ -210,7 +211,7 @@ const AnsoffView = (props) => {
           </Grid>
         )}
       </Grid>
-      {!showResults && !showForm && activeStep === 0 && (
+      {!showResults && !showForm && activeStep === 0 && userPermission === 'edit' && (
         <Fab
           color="primary"
           aria-label="add"

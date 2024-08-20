@@ -24,6 +24,8 @@ import Comments from 'components/comments/Comments';
 import { COLORS } from 'helpers/enums/colors';
 import Loading from 'components/commons/Loading';
 import { onGetAll as onGetAllComments } from 'redux/actions/comments.actions';
+import { onGetOne as onGetProject } from 'redux/actions/projects.actions';
+import permission from 'helpers/permissions';
 
 const AnsoffContainer = () => {
   const { ansoffId, id } = useParams();
@@ -39,10 +41,14 @@ const AnsoffContainer = () => {
   const situacionDelProductoOptions = useSelector(situacionDelProductoSelector);
   const productosFiltered = useSelector(productosSelector);
 
+  const root = useSelector((state) => state);
+  const userPermission = permission(root, 'strategicGuidelines');
+
   useEffect(() => {
     dispatch(onGetOne(ansoffId));
     dispatch(onGetOptions());
     dispatch(onGetAllComments('ANSOFF', ansoffId));
+    dispatch(onGetProject(id));
   }, []);
 
   const isLastStep = activeStep === 4;
@@ -108,6 +114,7 @@ const AnsoffContainer = () => {
             openComments={(target) => setAnchorElement(target)}
             onDeleteProducto={onDeleteProducto}
             onEditProducto={onEditProducto}
+            userPermission={userPermission}
           />
           <Menu
             anchorEl={anchorElement}
