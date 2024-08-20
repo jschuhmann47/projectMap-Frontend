@@ -36,7 +36,7 @@ const QuestionnarieQuestionsContainer = () => {
   });
 
   const root = useSelector((state) => state);
-  const userPermission = permission(root, 'internalSituation');
+  const userPermission = permission(root, 'transformationPlans');
 
   const loading = useSelector((state) => state.questionnaire.loading);
   let initialValues = {};

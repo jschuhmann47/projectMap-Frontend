@@ -55,7 +55,7 @@ const McKinseyContainer = () => {
   const [anchorElement, setAnchorElement] = useState(null);
 
   const root = useSelector((state) => state);
-  const userPermission = permission(root, 'internalSituation');
+  const userPermission = permission(root, 'competitiveStrategy');
 
   useEffect(() => {
     dispatch(onGetOne(matrizId));
