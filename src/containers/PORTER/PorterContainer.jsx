@@ -23,6 +23,8 @@ import { COLORS } from 'helpers/enums/colors';
 import Loading from 'components/commons/Loading';
 import { onGetAll as onGetAllComments } from 'redux/actions/comments.actions';
 import { getLabel } from 'helpers/enums/porter';
+import { onGetOne as onGetProject } from 'redux/actions/projects.actions';
+import permission from 'helpers/permissions';
 
 const PorterContainer = () => {
   const { porterId, id } = useParams();
@@ -44,6 +46,11 @@ const PorterContainer = () => {
   const [anchorElement, setAnchorElement] = useState(null);
 
   const initialValues = useSelector(initialValuesSelector);
+
+  const root = useSelector((state) => state);
+  const userPermission = permission(root, 'externalEnvironment');
+
+  const { loading: loadingProject } = useSelector((state) => state.projects.loading);
 
   const isStepOptional = (step) => {
     return step === 99;
@@ -86,6 +93,7 @@ const PorterContainer = () => {
     dispatch(onGetQuestions());
     dispatch(onGetOptions());
     dispatch(onGetAllComments('PORTER', porterId));
+    dispatch(onGetProject(id));
   }, []);
 
   return (
@@ -124,7 +132,7 @@ const PorterContainer = () => {
           ) : (
             <React.Fragment>
               <Typography sx={{ mt: 2, mb: 1 }}>
-                {!loading && (
+                {!loading && !loadingProject && (
                   <PorterView
                     options={options}
                     questions={questions[steps[activeStep]]}
@@ -168,7 +176,7 @@ const PorterContainer = () => {
           )}
         </Box>
       </Container>
-      {loading && <Loading isModalMode message="Cargando Porter" />}
+      {(loading || loadingProject) && <Loading isModalMode message="Cargando Porter" />}
     </LayoutContainer>
   );
 };

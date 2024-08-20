@@ -31,6 +31,8 @@ const PorterView = ({
   onClickButtonGoBack,
   openComments,
 }) => {
+  console.log('initial values', initialValues)
+
   return (
     <CreateContent>
       <Box
