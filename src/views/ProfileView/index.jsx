@@ -116,7 +116,7 @@ const ProfileView = ({ user, onSubmit }) => {
                       component={Textarea}
                     />
                   </Box>
-                  <Box
+                  {/* <Box
                     sx={{
                       display: 'flex',
                       flexDirection: 'column',
@@ -162,7 +162,7 @@ const ProfileView = ({ user, onSubmit }) => {
                         )}
                       </ErrorMessage>
                     </Box>
-                  )}
+                  )} */}
                   <Box
                     sx={{
                       display: 'flex',
