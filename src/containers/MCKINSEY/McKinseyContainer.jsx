@@ -60,6 +60,7 @@ const McKinseyContainer = () => {
   useEffect(() => {
     dispatch(onGetOne(matrizId));
     dispatch(onGetAllComments('MCKINSEY', matrizId));
+    dispatch(onGetProject(id));
   }, []);
 
   const onAdd = () => {
