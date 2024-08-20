@@ -37,6 +37,8 @@ import { validateField } from 'helpers/validateField';
 import { Container } from 'views/FodaView/styles';
 import ToolTip from 'components/commons/ToolTip';
 import Loading from 'components/commons/Loading';
+import { onGetOne as onGetProject } from 'redux/actions/projects.actions';
+import permission from 'helpers/permissions';
 
 const McKinseyContainer = () => {
   const { matrizId, id } = useParams();
@@ -51,6 +53,9 @@ const McKinseyContainer = () => {
   const loading = useSelector((state) => state.mckinsey.loading);
 
   const [anchorElement, setAnchorElement] = useState(null);
+
+  const root = useSelector((state) => state);
+  const userPermission = permission(root, 'internalSituation');
 
   useEffect(() => {
     dispatch(onGetOne(matrizId));
@@ -90,6 +95,7 @@ const McKinseyContainer = () => {
               openComments={(target) => setAnchorElement(target)}
               title={title}
               onDeleteItem={onDeleteItem}
+              userPermission={userPermission}
             />
           </Grid>
         </Grid>
