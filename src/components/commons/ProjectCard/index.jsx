@@ -16,32 +16,17 @@ const ProjectCard = (props) => {
     onClickDelete,
     onDeleteDisable = false,
     isAdmin,
-    coordinators = [],
-    participants = [],
+    userRole,
   } = props;
 
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.data);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [confirmDeleteError, setConfirmDeleteError] = useState(null);
-  const [userRole, setUserRole] = useState('');
 
   const closeModal = () => {
     setIsModalOpen(false);
     setConfirmDeleteError(null);
   };
-
-  useEffect(() => {
-    if (!user) {
-      dispatch(getUser());
-    } else {
-      if (participants.includes(user.id)) {
-        setUserRole('Participante');
-      } else if (coordinators.includes(user.id)) {
-        setUserRole('Coordinador');
-      }
-    }
-  }, [dispatch, user, participants, coordinators]);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -63,7 +48,7 @@ const ProjectCard = (props) => {
           <TitleContainer>
             <Title>{title}</Title>
             <Box display="flex" alignItems="center">
-              {!isAdmin && userRole && (
+              {!isAdmin && (
                 <Typography variant="body2" sx={{ marginRight: 1 }}>
                   {userRole}
                 </Typography>

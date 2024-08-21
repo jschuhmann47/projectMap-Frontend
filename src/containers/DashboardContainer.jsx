@@ -71,6 +71,7 @@ const DashboardContainer = () => {
         onChangeSearchText={(e) => setSearchText(e.target.value)}
         onSearch={search}
         onClearSearch={clearSearch}
+        userId={user?._id}
       />
       <Modal isOpen={isAddNewOpen} onClose={() => setAddNew(false)}>
         <ProjectForm onSubmit={onSubmit} />
