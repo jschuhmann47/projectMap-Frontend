@@ -71,9 +71,6 @@ const LoginForm = ({ onSubmit }) => (
           <CustomLink to="/register">
             <Button color='primary'>Crear una cuenta</Button>
           </CustomLink>
-          <CustomLink to="/forgot-password">
-            <Button color='primary'>Olvidé mi contraseña</Button>
-          </CustomLink>
         </CustomForm>
       )}
     </Formik>
