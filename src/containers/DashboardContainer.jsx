@@ -25,17 +25,16 @@ const DashboardContainer = () => {
 
   const onSubmit = (formData) => {
     const colors = [
-      '#d8f3dcff',
-      '#b7e4c7ff',
-      '#95d5b2ff',
-      '#74c69dff',
-      '#52b788ff',
-      '#40916cff',
-      '#2d6a4fff',
-      '#1b4332ff',
+      '#c7dad9',
+      '#9fc1bf',
+      '#719f9d',
+      '#67908e',
+      '#88a8a6',
+      '#a9c0bf',
+      '#568482'
     ];
 
-    const random = getRandomInt(8);
+    const random = getRandomInt(colors.length);
     const color = colors[random];
 
     dispatch(onCreate({ ...formData, color }));
