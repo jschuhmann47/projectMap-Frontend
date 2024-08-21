@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IconButton, Menu, MenuItem } from '@mui/material';
-import { InfoOutlined, KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
+import { InfoOutlined, KeyboardArrowDown, KeyboardArrowUp, Star } from '@mui/icons-material';
 
 import Logo from 'components/commons/Logo';
 
@@ -33,10 +33,17 @@ const Header = (props) => {
           <Logo />
           {user && (
             <HeaderAccountContainer>
-              Planificación estratégica
-              <IconButton onClick={() => setIsModalOpen(true)}>
-                <InfoOutlined htmlColor='#FFFFFF' />
-              </IconButton>
+              { !user.isAdmin ? (
+                <>
+                  Planificación estratégica
+                  <IconButton onClick={() => setIsModalOpen(true)}>
+                    <InfoOutlined htmlColor='#FFFFFF' />
+                  </IconButton>
+                </>
+              ) : 
+                <Star />
+              }
+              
               {!!menuItems?.length && (
                 <AccountButton
                   aria-haspopup="true"
