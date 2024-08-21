@@ -33,6 +33,7 @@ const Header = (props) => {
           <Logo />
           {user && (
             <HeaderAccountContainer>
+              Planificación estratégica
               <IconButton onClick={() => setIsModalOpen(true)}>
                 <InfoOutlined htmlColor='#FFFFFF' />
               </IconButton>
