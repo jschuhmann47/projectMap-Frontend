@@ -7,7 +7,7 @@ const Logo = () => {
   return (
     <LogoLink to="/dashboard">
       <Box sx={{ height: '100%' }}>
-        <img src='projectMap-logo-for-header.png' height='100%' />
+        <img src='projectmap-logo-for-header.png' height='100%' />
       </Box>
       <span>ProjectMap</span>
     </LogoLink>
