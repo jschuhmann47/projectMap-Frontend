@@ -1,11 +1,9 @@
 import { styled } from '@mui/system';
 
 export const Card = styled('div')({
-  borderRadius: '8px',
-  boxShadow: '0 2px 5px rgba(0,0,0,0.15)',
   margin: '10px 0',
   width: '100%',
-  cursor: 'pointer', // Añadimos el cursor de pointer para indicar que es clicable
+  cursor: 'pointer', // Añadimos el cursor de pointer para indicar que es clickeable
 });
 
 export const CardContent = styled('div')({
@@ -21,7 +19,7 @@ export const TitleContainer = styled('div')({
 });
 
 export const Title = styled('h2')({
-  fontSize: '18px',
+  fontSize: '22px',
   margin: 0,
   color: 'black',
 });

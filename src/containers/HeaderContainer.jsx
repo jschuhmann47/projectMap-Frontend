@@ -25,7 +25,7 @@ const HeaderContainer = () => {
     },
     {
       key: 'logout',
-      label: 'Cerrar sesion',
+      label: 'Cerrar sesión',
       onClick: onLogoutClick,
     },
   ];

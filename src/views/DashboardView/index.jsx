@@ -28,6 +28,7 @@ const DashboardView = (props) => {
     onChangeSearchText,
     onSearch,
     onClearSearch,
+    userId
   } = props;
 
   return (
@@ -86,8 +87,13 @@ const DashboardView = (props) => {
                   onClick={() => onClickProject(_id)}
                   onClickDelete={isAdmin ? () => onClickDelete(_id) : null}
                   isAdmin={isAdmin}
-                  coordinators={coordinators}
-                  participants={participants}
+                  userRole={
+                    coordinators.some((id) => id === userId)
+                      ? 'Coordinador'
+                      : participants.some((p) => p.user === userId)
+                      ? 'Participante'
+                      : ''
+                    }
                 />
               </Grid>
             ))}
