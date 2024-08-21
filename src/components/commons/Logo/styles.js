@@ -8,6 +8,8 @@ export const LogoLink = styled(Link)({
   display: 'flex',
   fontSize: 24,
   textDecoration: 'none',
+  height: '100%',
+  alignItems: 'center',
 
   span: {
     fontFamily: 'Fira Sans',
