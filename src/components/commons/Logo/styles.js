@@ -6,7 +6,6 @@ import { COLORS } from 'helpers/enums/colors';
 export const LogoLink = styled(Link)({
   color: COLORS.white,
   display: 'flex',
-  fontSize: 24,
   textDecoration: 'none',
   height: '100%',
   alignItems: 'center',
