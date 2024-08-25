@@ -74,28 +74,6 @@ export function* okrAddKeyResult(action) {
   }
 }
 
-export function* okrEditKeyStatus(action) {
-  try {
-    const { id, okrId, keyResultId, formData } = action;
-    const { data } = yield call(
-      editKeyStatus,
-      id,
-      okrId,
-      keyResultId,
-      formData
-    );
-    yield put({
-      type: constants.EDIT_KEY_RESULT_KEY_STATUS_SUCCEEDED,
-      data,
-    });
-  } catch (error) {
-    yield put({
-      type: constants.EDIT_KEY_RESULT_KEY_STATUS_FAILED,
-      error,
-    });
-  }
-}
-
 export function* okrEditKeyResult(action) {
   try {
     const { id, okrId, keyResultId, formData } = action;
@@ -152,7 +130,6 @@ export function* watchOkr() {
     takeLatest(constants.CREATE_OKR_REQUESTED, okrCreateOkr),
     takeLatest(constants.GET_OKR_REQUESTED, okrGetOkr),
     takeLatest(constants.ADD_OKR_KEY_RESULT_REQUESTED, okrAddKeyResult),
-    takeEvery(constants.EDIT_KEY_RESULT_KEY_STATUS_REQUESTED, okrEditKeyStatus),
     takeEvery(constants.EDIT_KEY_RESULT_REQUESTED, okrEditKeyResult),
     takeLatest(constants.DELETE_OKR_REQUEST, okrDeleteOkr),
     takeLatest(constants.DELETE_KEY_RESULT_REQUESTED, okrDeleteKeyResult),
