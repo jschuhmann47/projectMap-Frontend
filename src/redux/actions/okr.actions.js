@@ -15,18 +15,6 @@ export const onDeleteTool = (id) => ({
   id,
 });
 
-export const onAddOkr = (id, formData) => ({
-  type: constants.CREATE_OKR_REQUESTED,
-  id,
-  formData,
-});
-
-export const onDeleteOkr = (id, okrId) => ({
-  type: constants.DELETE_OKR_REQUEST,
-  id,
-  okrId,
-});
-
 export const onAddKeyResult = (id, okrId, formData) => ({
   type: constants.ADD_OKR_KEY_RESULT_REQUESTED,
   id,
