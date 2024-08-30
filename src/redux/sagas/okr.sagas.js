@@ -9,11 +9,19 @@ import {
 } from 'services/okr.services';
 
 import * as constants from 'redux/contansts/okr.constants';
+import { horizonOptions } from 'helpers/enums/okr';
 
 export function* okrCreateTool(action) {
   try {
     const { formData } = action;
-    const { data } = yield call(createOkr, formData);
+    const req = {
+      description: formData.titulo,
+      area: formData.area,
+      horizon: horizonOptions.findIndex((option) => option === formData.horizon),
+      keyResults: [],
+      projectId: formData.projectId,
+    };
+    const { data } = yield call(createOkr, req);
     yield put({ type: constants.CREATE_OKR_TOOL_SUCCEEDED, data });
   } catch (error) {
     yield put({ type: constants.CREATE_OKR_TOOL_FAILED, error });
