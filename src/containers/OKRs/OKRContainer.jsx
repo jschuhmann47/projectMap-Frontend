@@ -12,9 +12,7 @@ import {
 } from '@mui/material';
 import {
   onAddKeyResult,
-  onAddOkr,
   onDeleteKeyResult,
-  onDeleteOkr,
   onEditKeyResult,
   onGetOneTool,
 } from 'redux/actions/okr.actions';
@@ -52,7 +50,7 @@ const OKRContainer = () => {
   }, []);
 
   const onSubmitOkr = (formData) => {
-    dispatch(onAddOkr(okrToolId, formData));
+    // dispatch(onAddOkr(okrToolId, formData));
     setAddOkrModalOpen(false);
   };
 
@@ -72,7 +70,8 @@ const OKRContainer = () => {
     dispatch(onEditKeyResult(okrToolId, okrId, keyResultId, formData));
   };
 
-  const deleteOkr = (okrId) => dispatch(onDeleteOkr(okrToolId, okrId));
+  // const deleteOkr = (okrId) => dispatch(onDeleteOkr(okrToolId, okrId));
+  const deleteOkr = () => {};
 
   const deleteKeyResult = (okrId, keyResultId) =>
     dispatch(onDeleteKeyResult(okrToolId, okrId, keyResultId));
