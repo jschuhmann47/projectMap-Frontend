@@ -22,8 +22,8 @@ export const STEPS = [
     value: StepValue.EVALUACION_ENTORNO_EXTERNO,
     title: 'Evaluación del Entorno Externo',
     menuItems: [
-      { titulo: 'Agregar Análisis de Porter', key: 1, action: onCreatePorter },
-      { titulo: 'Agregar Análisis de Pestel', key: 2, action: onCreatePestel },
+      { titulo: 'Agregar Analisis de Porter', key: 1, action: onCreatePorter },
+      { titulo: 'Agregar Analisis de Pestel', key: 2, action: onCreatePestel },
     ],
     id: 'externalEnvironment'
   },
@@ -41,7 +41,7 @@ export const STEPS = [
     title: 'Evaluación de la Situación Interna',
     menuItems: [
       {
-        titulo: 'Agregar Análisis FODA',
+        titulo: 'Agregar Analisis FODA',
         action: onCreateFoda,
       },
     ],
@@ -64,7 +64,7 @@ export const STEPS = [
   {
     value: StepValue.DEFINICION_LINIAMIENTOS_ESTRATEGICOS,
     title: 'Definición de Lineamientos Estratégicos',
-    menuItems: [{ titulo: 'Agregar Matiz ANSOFF', action: onCreateAnsoff }],
+    menuItems: [{ titulo: 'Agregar Matriz ANSOFF', action: onCreateAnsoff }],
     id: 'strategicGuidelines'
   },
   {
