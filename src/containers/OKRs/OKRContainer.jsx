@@ -46,7 +46,6 @@ const OKRContainer = () => {
 
   useEffect(() => {
     dispatch(onGetOneTool(okrToolId));
-    dispatch(onGetAllComments('OKR', okrToolId));
   }, []);
 
   const onSubmitOkr = (formData) => {
