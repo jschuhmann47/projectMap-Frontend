@@ -22,8 +22,8 @@ export const STEPS = [
     value: StepValue.EVALUACION_ENTORNO_EXTERNO,
     title: 'Evaluación del Entorno Externo',
     menuItems: [
-      { titulo: 'Agregar Analisis de Porter', key: 1, action: onCreatePorter },
-      { titulo: 'Agregar Analisis de Pestel', key: 2, action: onCreatePestel },
+      { titulo: 'Agregar Análisis de Porter', key: 1, action: onCreatePorter },
+      { titulo: 'Agregar Análisis de Pestel', key: 2, action: onCreatePestel },
     ],
     id: 'externalEnvironment'
   },
@@ -31,7 +31,7 @@ export const STEPS = [
     value: StepValue.PLAN_FINANCIERO_MEDICION_RESULTADOS,
     title: 'Planeamiento Financiero y Medición de Resultados',
     menuItems: [
-      { titulo: 'Agregar Balaced Scorecard', action: onCreateBalanced },
+      { titulo: 'Agregar Balanced Scorecard', action: onCreateBalanced },
       { titulo: 'Agregar OKR', action: onCreateOkr },
     ],
     id: 'financialPlanning'
@@ -41,7 +41,7 @@ export const STEPS = [
     title: 'Evaluación de la Situación Interna',
     menuItems: [
       {
-        titulo: 'Agregar Analisis FODA',
+        titulo: 'Agregar Análisis FODA',
         action: onCreateFoda,
       },
     ],
