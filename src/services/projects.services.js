@@ -42,3 +42,9 @@ export const addUser = (id, formData) =>
 
 export const updateUsers = (id, formData) =>
   put(`projects/${id}/roles`, formData)
+
+export const saveOrganizationalChart = (projectId, data) =>
+  post(`projects/${projectId}/organizational-chart`, data);
+
+export const getOrganizationalChart = (projectId) => 
+  get(`projects/${projectId}/organizational-chart`);

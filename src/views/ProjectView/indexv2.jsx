@@ -3,8 +3,10 @@ import { useState } from 'react';
 import { Header, MainContainer, ProjectTab, Title } from "./styles";
 import StepsTab from "./tabs/stepsTab";
 import RolesTab from "./tabs/rolesTab";
+import OrganizationChartTab from "./tabs/organizationChartTab";
 
 export default function ProjectView({
+  project,
   title,
   items,
   members,
@@ -35,7 +37,9 @@ export default function ProjectView({
       {
         id: "2",
         name: 'Organigrama',
-        content: <div>organigrama</div>
+        content: <OrganizationChartTab 
+          projectId={project?._id}
+        />
       }
     ];
     if (hasFullPermissions) {
@@ -77,7 +81,7 @@ export default function ProjectView({
           </TabList>
         </Header>
         {tabs().map((tab) => (
-          <TabPanel key={tab.id} value={tab.id}>
+          <TabPanel key={tab.id} value={tab.id} style={{height: "100%"}}>
             {tab.content}
           </TabPanel>
         ))}
