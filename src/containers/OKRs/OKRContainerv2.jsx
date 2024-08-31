@@ -21,8 +21,6 @@ const OKRContainer = () => {
   const navigate = useNavigate();
   const { loading, data: okrData } = useSelector((state) => state.okr);
 
-  const [anchorElement, setAnchorElement] = useState(null);
-
   useEffect(() => {
     dispatch(onGetOneTool(okrToolId));
   }, []);
