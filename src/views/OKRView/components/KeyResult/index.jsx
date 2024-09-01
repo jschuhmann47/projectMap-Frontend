@@ -1,6 +1,8 @@
 import { Box, IconButton, Table, TableBody, TableCell, tableCellClasses, TableHead, TableRow } from "@mui/material";
 import { Cancel, Check, Delete, Edit } from "@mui/icons-material"
 import { useState } from "react";
+import { Field, Formik } from "formik";
+import Input from "../Input";
 
 export default function KeyResult({
   krData,
@@ -17,86 +19,172 @@ export default function KeyResult({
 
   return (
     <Box sx={{ borderRadius: 5, backgroundColor: '#C7DAD9' }}>
-      <Table
-        sx={{
-          backgroundColor: '#C7DAD9',
-          [`& .${tableCellClasses.root}`]: {
-            borderBottom: "none",
-            fontSize: 16,
-          },
-        }}
-      >
-        <TableHead>
-          <TableRow>
-            <TableCell>Key Result</TableCell>
-            <TableCell>Responsable</TableCell>
-            <TableCell>Prioridad</TableCell>
-            <TableCell>Línea base</TableCell>
-            <TableCell>Actual</TableCell>
-            <TableCell>Resultado esperado</TableCell>
-            <TableCell>Avance</TableCell>
-            <TableCell>Edición</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {isEditingKr ? (
-            <TableRow>
-              <TableCell>{krData.description}</TableCell>
-              <TableCell>{krData.responsible}</TableCell>
-              <TableCell>{krData.priority}</TableCell>
-              <TableCell>{krData.baseline}</TableCell>
-              <TableCell>{krData.currentScore}</TableCell>
-              <TableCell>{krData.goal}</TableCell>
-              <TableCell>{krData.progress}</TableCell>
-              <TableCell>
-                <IconButton onClick={onEditKr}>
-                  <Check />
-                </IconButton>
-                <IconButton onClick={() => setIsEditingKr(false)}>
-                  <Cancel />
-                </IconButton>
-              </TableCell>
-            </TableRow>
-          ) : (
-            <TableRow>
-              <TableCell>{krData.description}</TableCell>
-              <TableCell>{krData.responsible}</TableCell>
-              <TableCell>{krData.priority}</TableCell>
-              <TableCell>{krData.baseline}</TableCell>
-              <TableCell>{krData.currentScore}</TableCell>
-              <TableCell>{krData.goal}</TableCell>
-              <TableCell>{krData.progress}</TableCell>
-              <TableCell>
-                <IconButton onClick={() => setIsEditingKr(true)}>
-                  <Edit />
-                </IconButton>
-                <IconButton onClick={deleteKr}>
-                  <Delete />
-                </IconButton>
-              </TableCell>
-            </TableRow>
+      {isEditingKr ? (
+        <Formik
+          onSubmit={onEditKr}
+          initialValues={{ ...krData,  }}
+        >
+          {({ handleSubmit }) => (
+            <>
+              <Table
+                sx={{
+                  backgroundColor: '#C7DAD9',
+                  [`& .${tableCellClasses.root}`]: {
+                    borderBottom: "none",
+                    fontSize: 16,
+                  },
+                }}
+              >
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Key Result</TableCell>
+                    <TableCell>Responsable</TableCell>
+                    <TableCell>Prioridad</TableCell>
+                    <TableCell>Línea base</TableCell>
+                    <TableCell>Actual</TableCell>
+                    <TableCell>Resultado esperado</TableCell>
+                    <TableCell>Avance</TableCell>
+                    <TableCell>Edición</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell sx={{ maxWidth: 100, fontSize: '11px !important' }}>
+                      <Field
+                        component={Input}
+                        name="description"
+                      />
+                    </TableCell>
+                    <TableCell sx={{ maxWidth: 100 }}>
+                      <Field
+                        component={Input}
+                        name="responsible"
+                      />
+                    </TableCell>
+                    <TableCell sx={{ maxWidth: 100 }}>
+                      <Field
+                        component={Input}
+                        name="priority"
+                      />
+                    </TableCell>
+                    <TableCell sx={{ maxWidth: 100 }}>
+                      <Field
+                        component={Input}
+                        name="baseline"
+                      />
+                    </TableCell>
+                    <TableCell>{krData.currentScore}</TableCell>
+                    <TableCell sx={{ maxWidth: 100 }}>
+                      <Field
+                        component={Input}
+                        name="goal"
+                      />
+                    </TableCell>
+                    <TableCell>{krData.progress}</TableCell>
+                    <TableCell>
+                      <IconButton onClick={handleSubmit}>
+                        <Check />
+                      </IconButton>
+                      <IconButton onClick={() => setIsEditingKr(false)}>
+                        <Cancel />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+              <Table
+                sx={{
+                  backgroundColor: '#C7DAD9',
+                  [`& .${tableCellClasses.root}`]: {
+                    borderBottom: "none",
+                  },
+                }}
+              >
+                <TableHead>
+                  {krData.keyStatus.map((ks) => (
+                    <TableCell>{ks.period}</TableCell>
+                  ))}
+                </TableHead>
+                <TableBody>
+                  {krData.keyStatus.map((_, index) => (
+                    <TableCell sx={{ maxWidth: 100 }}>
+                      <Field
+                        component={Input}
+                        name={`keyStatus[${index}].value`}
+                      />
+                    </TableCell>
+                  ))}
+                </TableBody>
+              </Table>
+            </>
           )}
-        </TableBody>
-      </Table>
-      <Table
-        sx={{
-          backgroundColor: '#C7DAD9',
-          [`& .${tableCellClasses.root}`]: {
-            borderBottom: "none",
-          },
-        }}
-      >
-        <TableHead>
-          {krData.keyStatus.map((ks) => (
-            <TableCell>{ks.period} {ks.value}</TableCell>
-          ))}
-        </TableHead>
-        <TableBody>
-          {krData.keyStatus.map((ks) => (
-            <TableCell>{ks.value}</TableCell>
-          ))}
-        </TableBody>
-      </Table>
+          
+        </Formik>
+      ) : (
+        <>
+          <Table
+            sx={{
+              backgroundColor: '#C7DAD9',
+              [`& .${tableCellClasses.root}`]: {
+                borderBottom: "none",
+                fontSize: 16,
+              },
+            }}
+          >
+            <TableHead>
+              <TableRow>
+                <TableCell>Key Result</TableCell>
+                <TableCell>Responsable</TableCell>
+                <TableCell>Prioridad</TableCell>
+                <TableCell>Línea base</TableCell>
+                <TableCell>Actual</TableCell>
+                <TableCell>Resultado esperado</TableCell>
+                <TableCell>Avance</TableCell>
+                <TableCell>Edición</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell>{krData.description}</TableCell>
+                <TableCell>{krData.responsible}</TableCell>
+                <TableCell>{krData.priority}</TableCell>
+                <TableCell>{krData.baseline}</TableCell>
+                <TableCell>{krData.currentScore}</TableCell>
+                <TableCell>{krData.goal}</TableCell>
+                <TableCell>{krData.progress}</TableCell>
+                <TableCell>
+                  <IconButton onClick={() => setIsEditingKr(true)}>
+                    <Edit />
+                  </IconButton>
+                  <IconButton onClick={deleteKr}>
+                    <Delete />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+          <Table
+            sx={{
+              backgroundColor: '#C7DAD9',
+              [`& .${tableCellClasses.root}`]: {
+                borderBottom: "none",
+              },
+            }}
+          >
+            <TableHead>
+              {krData.keyStatus.map((ks) => (
+                <TableCell>{ks.period} {ks.value}</TableCell>
+              ))}
+            </TableHead>
+            <TableBody>
+              {krData.keyStatus.map((ks) => (
+                <TableCell>{ks.value}</TableCell>
+              ))}
+            </TableBody>
+          </Table>
+        </>
+      )}
+      
     </Box>
   );
 }
