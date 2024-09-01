@@ -49,32 +49,32 @@ export default function KeyResult({
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell sx={{ maxWidth: 100, fontSize: '11px !important' }}>
+                    <TableCell>
                       <Field
                         component={Input}
                         name="description"
                       />
                     </TableCell>
-                    <TableCell sx={{ maxWidth: 100 }}>
+                    <TableCell>
                       <Field
                         component={Input}
                         name="responsible"
                       />
                     </TableCell>
-                    <TableCell sx={{ maxWidth: 100 }}>
+                    <TableCell>
                       <Field
                         component={Input}
                         name="priority"
                       />
                     </TableCell>
-                    <TableCell sx={{ maxWidth: 100 }}>
+                    <TableCell>
                       <Field
                         component={Input}
                         name="baseline"
                       />
                     </TableCell>
                     <TableCell>{krData.currentScore}</TableCell>
-                    <TableCell sx={{ maxWidth: 100 }}>
+                    <TableCell>
                       <Field
                         component={Input}
                         name="goal"
@@ -107,7 +107,7 @@ export default function KeyResult({
                 </TableHead>
                 <TableBody>
                   {krData.keyStatus.map((_, index) => (
-                    <TableCell sx={{ maxWidth: 100 }}>
+                    <TableCell>
                       <Field
                         component={Input}
                         name={`keyStatus[${index}].value`}
@@ -173,7 +173,7 @@ export default function KeyResult({
           >
             <TableHead>
               {krData.keyStatus.map((ks) => (
-                <TableCell>{ks.period} {ks.value}</TableCell>
+                <TableCell>{ks.period}</TableCell>
               ))}
             </TableHead>
             <TableBody>
