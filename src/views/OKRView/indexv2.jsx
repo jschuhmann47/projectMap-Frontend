@@ -8,6 +8,7 @@ import { CardTitle } from "views/FodaView/styles";
 import { Box, Typography } from "@mui/material";
 import { validateField } from "helpers/validateField";
 import Input from "components/inputs/Input";
+import KeyResult from "./components/KeyResult";
 
 const OKRView = ({
   okrData,
@@ -29,6 +30,11 @@ const OKRView = ({
       <span>Prioridad: {okrData?.priority}</span>
       <span>Avance: {okrData?.progress * 100}%</span>
     </OkrMoreData>
+    <KeyResultsContainer>
+      {okrData?.keyResults.map((kr) => (
+        <KeyResult krData={kr} />
+      ))}
+    </KeyResultsContainer>
     <Modal isOpen={isEditOkrModalOpen} onClose={closeEditOkrModal} backgroundColor='#C7DAD9'>
       <FormContainer>
         <Formik
