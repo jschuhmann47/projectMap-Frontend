@@ -31,7 +31,7 @@ export const STEPS = [
     value: StepValue.PLAN_FINANCIERO_MEDICION_RESULTADOS,
     title: 'Planeamiento Financiero y Medición de Resultados',
     menuItems: [
-      { titulo: 'Agregar Balaced Scorecard', action: onCreateBalanced },
+      { titulo: 'Agregar Balanced Scorecard', action: onCreateBalanced },
       { titulo: 'Agregar OKR', action: onCreateOkr },
     ],
     id: 'financialPlanning'
@@ -64,7 +64,7 @@ export const STEPS = [
   {
     value: StepValue.DEFINICION_LINIAMIENTOS_ESTRATEGICOS,
     title: 'Definición de Lineamientos Estratégicos',
-    menuItems: [{ titulo: 'Agregar Matiz ANSOFF', action: onCreateAnsoff }],
+    menuItems: [{ titulo: 'Agregar Matriz ANSOFF', action: onCreateAnsoff }],
     id: 'strategicGuidelines'
   },
   {
