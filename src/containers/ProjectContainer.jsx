@@ -343,7 +343,7 @@ const ProjectContainer = () => {
                   }
                 }}
               >
-                {item?.titulo}
+                {item?.titulo ?? item?.description}
               </MenuItemText>
               {item._id && (hasFullPermissions || stepPermissions?.[stepValue] === 'edit') && !Number.isInteger(item._id) && (
                 <IconButton
