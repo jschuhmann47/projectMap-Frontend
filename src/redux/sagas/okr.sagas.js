@@ -53,7 +53,7 @@ export function* okrDelete(action) {
   try {
     const { id } = action;
     const { data } = yield call(deleteOkr, id);
-    yield put({ type: constants.DELETE_OKR_TOOL_SUCCEEDED, data });
+    yield put({ type: constants.DELETE_OKR_TOOL_SUCCEEDED, data: { _id: data } });
   } catch (error) {
     yield put({ type: constants.DELETE_OKR_TOOL_FAILED, error });
   }

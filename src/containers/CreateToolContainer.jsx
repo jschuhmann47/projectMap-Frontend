@@ -20,6 +20,9 @@ const CreateToolContainer = () => {
   const questionnarie = useSelector((state) => state.questionnaire.data);
   const loading = useSelector(toolsLoadingSelector);
 
+  const creationSucceeded =
+    foda?._id || pestel?._id || mckinsey?._id || porter?._id || ansoff?._id || okr?._id || balanceScorecard?._id || questionnarie?._id
+
   return (
     <LayoutContainer hasHeader={false}>
       <Routes>
@@ -94,6 +97,9 @@ const CreateToolContainer = () => {
             }
           />
         )}
+      </Routes>
+      {loading && <Loading isModalMode message="Cargando" />}
+      {!loading && !creationSucceeded && (
         <Route
           path="/"
           element={
@@ -103,8 +109,7 @@ const CreateToolContainer = () => {
             />
           }
         />
-      </Routes>
-      {loading && <Loading isModalMode message="Cargando" />}
+      )}
     </LayoutContainer>
   );
 };
