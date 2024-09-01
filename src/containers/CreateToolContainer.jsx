@@ -94,6 +94,15 @@ const CreateToolContainer = () => {
             }
           />
         )}
+        <Route
+          path="/"
+          element={
+            <Navigate
+              to={`/projects/${id}`}
+              replace
+            />
+          }
+        />
       </Routes>
       {loading && <Loading isModalMode message="Cargando" />}
     </LayoutContainer>
