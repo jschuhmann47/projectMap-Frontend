@@ -7,6 +7,7 @@ import {
   onAddKeyResult,
   onDeleteKeyResult,
   onEditKeyResult,
+  onEditTool,
   onGetOneTool,
 } from 'redux/actions/okr.actions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,13 +24,27 @@ const OKRContainer = () => {
     dispatch(onGetOneTool(okrToolId));
   }, []);
 
+  function editObjective({ description, area }) {
+    const formData = {
+      description,
+      area,
+      horizon: okrData.horizon,
+      keyResults: okrData.keyResults,
+      projectId: okrData.projectId,
+    }
+    dispatch(onEditTool(okrToolId, formData));
+    setIsEditOkrModalOpen(false);
+  }
+
   return (
     <LayoutContainer>
       <Grid item sx={{ height: '100%', width: '100%' }}>
         <OKRView
           okrData={okrData}
           openEditOkrModal={() => setIsEditOkrModalOpen(true)}
+          closeEditOkrModal={() => setIsEditOkrModalOpen(false)}
           isEditOkrModalOpen={isEditOkrModalOpen}
+          editObjective={editObjective}
         />
       </Grid>
       {loading && <Loading isModalMode message="Cargando OKR" />}
