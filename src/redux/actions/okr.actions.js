@@ -21,24 +21,21 @@ export const onDeleteTool = (id) => ({
   id,
 });
 
-export const onAddKeyResult = (id, okrId, formData) => ({
+export const onAddKeyResult = (id, formData) => ({
   type: constants.ADD_OKR_KEY_RESULT_REQUESTED,
   id,
-  okrId,
   formData,
 });
 
-export const onEditKeyResult = (id, okrId, keyResultId, formData) => ({
+export const onEditKeyResult = (id, keyResultId, formData) => ({
   type: constants.EDIT_KEY_RESULT_REQUESTED,
   id,
-  okrId,
   keyResultId,
   formData,
 });
 
-export const onDeleteKeyResult = (id, okrId, keyResultId) => ({
+export const onDeleteKeyResult = (id, keyResultId) => ({
   type: constants.DELETE_KEY_RESULT_REQUESTED,
   id,
-  okrId,
   keyResultId,
 });

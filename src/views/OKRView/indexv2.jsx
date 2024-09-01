@@ -1,5 +1,5 @@
-import { horizonOptions } from "helpers/enums/okr";
-import { EditObjectiveButton, OkrContainerV2, OkrHeader, OkrMoreData, OkrTitle } from "./styles";
+import { frequencyOptions, horizonOptions } from "helpers/enums/okr";
+import { EditObjectiveButton, KeyResultsContainer, OkrContainerV2, OkrHeader, OkrMoreData, OkrTitle } from "./styles";
 import Button from "components/commons/Button";
 import Modal from "components/commons/Modal";
 import { ButtonsContainer, CustomForm, FormContainer } from "styles/form";
@@ -9,6 +9,7 @@ import { Box, Typography } from "@mui/material";
 import { validateField } from "helpers/validateField";
 import Input from "components/inputs/Input";
 import KeyResult from "./components/KeyResult";
+import SelectInput from "components/inputs/SelectInput";
 
 const OKRView = ({
   okrData,
@@ -16,6 +17,10 @@ const OKRView = ({
   closeEditOkrModal,
   isEditOkrModalOpen,
   editObjective,
+  openAddKrModal,
+  closeAddKrModal,
+  isAddKrModalOpen,
+  addKr
 }) => {
   return <OkrContainerV2>
     <OkrHeader>
@@ -35,6 +40,7 @@ const OKRView = ({
         <KeyResult krData={kr} />
       ))}
     </KeyResultsContainer>
+    <Button onClick={openAddKrModal}>Agregar Key Result</Button>
     <Modal isOpen={isEditOkrModalOpen} onClose={closeEditOkrModal} backgroundColor='#C7DAD9'>
       <FormContainer>
         <Formik
@@ -79,6 +85,94 @@ const OKRView = ({
                 </Button>
                 <Button color="primary" type="submit">
                   Editar
+                </Button>
+              </ButtonsContainer>
+            </CustomForm>
+          )}
+        </Formik>
+      </FormContainer>
+    </Modal>
+    <Modal isOpen={isAddKrModalOpen} onClose={closeAddKrModal} backgroundColor='#C7DAD9'>
+      <FormContainer>
+        <Formik
+          onSubmit={addKr}
+          initialValues={{ description: '', frequency: '', responsible: '' }}
+        >
+          {({ handleSubmit }) => (
+            <CustomForm onSubmit={handleSubmit}>
+              <CardTitle>Agregar Key Result</CardTitle>
+              <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}>
+                <Field
+                  name="description"
+                  placeholder="Nombre"
+                  component={Input}
+                  validate={validateField}
+                />
+                <ErrorMessage name="description">
+                  {(msg) => (
+                    <Typography
+                      sx={{
+                        textAlign: 'left',
+                        color: 'red',
+                        marginLeft: 2,
+                        marginTop: '2px',
+                        fontSize: '14px',
+                      }}
+                    >
+                      {msg}
+                    </Typography>
+                  )}
+                </ErrorMessage>
+                <Field
+                  name="frequency"
+                  placeholder="Frecuencia"
+                  component={SelectInput}
+                  options={Object.values(frequencyOptions)}
+                  validate={validateField}
+                />
+                <ErrorMessage name="frequency">
+                  {(msg) => (
+                    <Typography
+                      sx={{
+                        textAlign: 'left',
+                        color: 'red',
+                        marginLeft: 2,
+                        marginTop: '2px',
+                        fontSize: '14px',
+                      }}
+                    >
+                      {msg}
+                    </Typography>
+                  )}
+                </ErrorMessage>
+                <Field
+                  name="responsible"
+                  placeholder="Responsable"
+                  component={Input}
+                  validate={validateField}
+                />
+                <ErrorMessage name="responsible">
+                  {(msg) => (
+                    <Typography
+                      sx={{
+                        textAlign: 'left',
+                        color: 'red',
+                        marginLeft: 2,
+                        marginTop: '2px',
+                        fontSize: '14px',
+                      }}
+                    >
+                      {msg}
+                    </Typography>
+                  )}
+                </ErrorMessage>
+              </Box>
+              <ButtonsContainer>
+                <Button color="secondary" onClick={closeEditOkrModal}>
+                  Cancelar
+                </Button>
+                <Button color="primary" type="submit">
+                  Agregar
                 </Button>
               </ButtonsContainer>
             </CustomForm>

@@ -46,3 +46,13 @@ export const horizonOptions = {
   30: 'A un mes',
   15: 'A quince días'
 }
+
+export const frequencyOptions = {
+  180: 'Semestral',
+  90: 'Trimestral',
+  60: 'Bimestral',
+  30: 'Mensual',
+  15: 'Quincenal',
+  7: 'Semanal',
+  1: 'Diaria'
+}
