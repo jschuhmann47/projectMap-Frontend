@@ -37,7 +37,7 @@ const OKRView = ({
     </OkrMoreData>
     <KeyResultsContainer>
       {okrData?.keyResults.map((kr) => (
-        <KeyResult krData={kr} />
+        <KeyResult krData={kr} editKr={() => {}} deleteKr={() => {}} />
       ))}
     </KeyResultsContainer>
     <Button onClick={openAddKrModal}>Agregar Key Result</Button>

@@ -1,13 +1,19 @@
 import { Box, IconButton, Table, TableBody, TableCell, tableCellClasses, TableHead, TableRow } from "@mui/material";
-import { Cancel, Check, Edit } from "@mui/icons-material"
+import { Cancel, Check, Delete, Edit } from "@mui/icons-material"
 import { useState } from "react";
 
 export default function KeyResult({
-  krData
+  krData,
+  editKr,
+  deleteKr,
 }) {
   console.log('krData', krData);
-
   const [isEditingKr, setIsEditingKr] = useState(false);
+
+  function onEditKr() {
+    editKr();
+    setIsEditingKr(false);
+  }
 
   return (
     <Box sx={{ borderRadius: 5, backgroundColor: '#C7DAD9' }}>
@@ -43,7 +49,7 @@ export default function KeyResult({
               <TableCell>{krData.goal}</TableCell>
               <TableCell>{krData.progress}</TableCell>
               <TableCell>
-                <IconButton onClick={() => setIsEditingKr(false)}>
+                <IconButton onClick={onEditKr}>
                   <Check />
                 </IconButton>
                 <IconButton onClick={() => setIsEditingKr(false)}>
@@ -63,6 +69,9 @@ export default function KeyResult({
               <TableCell>
                 <IconButton onClick={() => setIsEditingKr(true)}>
                   <Edit />
+                </IconButton>
+                <IconButton onClick={deleteKr}>
+                  <Delete />
                 </IconButton>
               </TableCell>
             </TableRow>
