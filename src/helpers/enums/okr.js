@@ -37,3 +37,12 @@ export const getKeyResultWitValues = (quarter, values) => {
     value: values[index].value,
   }));
 };
+
+export const horizonOptions = {
+  360: 'A un año',
+  180: 'A seis meses',
+  90: 'A tres meses',
+  60: 'A dos meses',
+  30: 'A un mes',
+  15: 'A quince días'
+}

@@ -17,7 +17,7 @@ import AnsoffContainer from 'containers/ANSOFF/AnsoffContainer';
 import AnsoffContainerResults from 'containers/ANSOFF/AnsoffContainerResults';
 import PorterContainerResults from 'containers/PORTER/PorterContainerResults';
 import PorterContainer from 'containers/PORTER/PorterContainer';
-import OKRContainer from 'containers/OKRs/OKRContainer';
+import OKRContainer from 'containers/OKRs/OKRContainerv2';
 import BalancedContainer from 'containers/Balanced Scorecard/BalancedContainer';
 import QuestionnarieContainer from 'containers/Questionnarie/QuestionnarieContainer';
 import QuestionnarieQuestionsContainer from 'containers/Questionnarie/QuestionnarieQuestionsContainer';

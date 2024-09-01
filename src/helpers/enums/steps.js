@@ -22,8 +22,8 @@ export const STEPS = [
     value: StepValue.EVALUACION_ENTORNO_EXTERNO,
     title: 'Evaluación del Entorno Externo',
     menuItems: [
-      { titulo: 'Agregar Analisis de Porter', key: 1, action: onCreatePorter },
-      { titulo: 'Agregar Analisis de Pestel', key: 2, action: onCreatePestel },
+      { titulo: 'Agregar Análisis de Porter', key: 1, action: onCreatePorter },
+      { titulo: 'Agregar Análisis PESTEL', key: 2, action: onCreatePestel },
     ],
     id: 'externalEnvironment'
   },
@@ -32,7 +32,7 @@ export const STEPS = [
     title: 'Planeamiento Financiero y Medición de Resultados',
     menuItems: [
       { titulo: 'Agregar Balanced Scorecard', action: onCreateBalanced },
-      { titulo: 'Agregar OKR', action: onCreateOkr },
+      { titulo: 'Agregar OKR', action: onCreateOkr, area: true, horizon: true },
     ],
     id: 'financialPlanning'
   },
@@ -41,7 +41,7 @@ export const STEPS = [
     title: 'Evaluación de la Situación Interna',
     menuItems: [
       {
-        titulo: 'Agregar Analisis FODA',
+        titulo: 'Agregar Análisis FODA',
         action: onCreateFoda,
       },
     ],
@@ -57,14 +57,14 @@ export const STEPS = [
     value: StepValue.DEFINICION_PLANES_TRANSFORMACION,
     title: 'Definición de los Planes de Transformación',
     menuItems: [
-      { titulo: 'Planes de transformacion', action: onCreateQuestionnarie },
+      { titulo: 'Planes de transformación', action: onCreateQuestionnarie },
     ],
     id: 'transformationPlans'
   },
   {
     value: StepValue.DEFINICION_LINIAMIENTOS_ESTRATEGICOS,
     title: 'Definición de Lineamientos Estratégicos',
-    menuItems: [{ titulo: 'Agregar Matriz ANSOFF', action: onCreateAnsoff }],
+    menuItems: [{ titulo: 'Agregar Matriz Ansoff', action: onCreateAnsoff }],
     id: 'strategicGuidelines'
   },
   {
