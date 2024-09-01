@@ -27,12 +27,13 @@ export const OkrHeader = styled('div')({
   flexDirection: 'row',
   justifyContent: 'space-between',
   alignItems: 'center',
+  marginBottom: 10,
 });
 
 export const EditObjectiveButton = styled('div')({
   height: '60%',
   width: '20%',
-})
+});
 
 export const OkrTitle = styled('span')({
   fontSize: 30,
@@ -42,4 +43,12 @@ export const OkrMoreData = styled('div')({
   fontSize: 24,
   display: 'flex',
   justifyContent: 'space-between',
+});
+
+export const KeyResultsContainer = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 10,
+  marginTop: 10,
+  marginBottom: 10,
 });

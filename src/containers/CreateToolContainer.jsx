@@ -17,8 +17,15 @@ const CreateToolContainer = () => {
   const ansoff = useSelector((state) => state.ansoff.data);
   const okr = useSelector((state) => state.okr.data);
   const balanceScorecard = useSelector((state) => state.balanceScorecard.data);
-  const questionnarie = useSelector((state) => state.questionnaire.data);
+  const questionnaire = useSelector((state) => state.questionnaire.data);
   const loading = useSelector(toolsLoadingSelector);
+
+  const creationSucceeded =
+    foda?._id || pestel?._id || mckinsey?._id || porter?._id || ansoff?._id || okr?._id || balanceScorecard?._id || questionnaire?._id;
+
+  if (!creationSucceeded && !loading) {
+    alert('La creación de la herramienta falló.');
+  };
 
   return (
     <LayoutContainer hasHeader={false}>
@@ -83,12 +90,23 @@ const CreateToolContainer = () => {
             }
           />
         )}
-        {!!questionnarie?._id && (
+        {!!questionnaire?._id && (
           <Route
             path="/"
             element={
               <Navigate
-                to={`/projects/${id}/questionnaire/${questionnarie._id}`}
+                to={`/projects/${id}/questionnaire/${questionnaire._id}`}
+                replace
+              />
+            }
+          />
+        )}
+        {!creationSucceeded && !loading && (
+          <Route
+            path="/"
+            element={
+              <Navigate
+                to={`/projects/${id}`}
                 replace
               />
             }

@@ -18,7 +18,7 @@ export function* okrCreateTool(action) {
     const req = {
       description: formData.titulo,
       area: formData.area,
-      horizon: Object.entries(horizonOptions).find((days, name) => name === formData.horizon)[0],
+      horizon: +(Object.entries(horizonOptions).find((kv) => kv[1] === formData.horizon)[0]),
       keyResults: [],
       projectId: formData.projectId,
     };
@@ -53,7 +53,7 @@ export function* okrDelete(action) {
   try {
     const { id } = action;
     const { data } = yield call(deleteOkr, id);
-    yield put({ type: constants.DELETE_OKR_TOOL_SUCCEEDED, data });
+    yield put({ type: constants.DELETE_OKR_TOOL_SUCCEEDED, data: { _id: data } });
   } catch (error) {
     yield put({ type: constants.DELETE_OKR_TOOL_FAILED, error });
   }
