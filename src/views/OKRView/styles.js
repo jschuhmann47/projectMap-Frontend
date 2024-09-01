@@ -27,6 +27,7 @@ export const OkrHeader = styled('div')({
   flexDirection: 'row',
   justifyContent: 'space-between',
   alignItems: 'center',
+  marginBottom: 10,
 });
 
 export const EditObjectiveButton = styled('div')({
@@ -47,5 +48,7 @@ export const OkrMoreData = styled('div')({
 export const KeyResultsContainer = styled('div')({
   display: 'flex',
   flexDirection: 'column',
-  gap: 2,
+  gap: 10,
+  marginTop: 10,
+  marginBottom: 10,
 });
