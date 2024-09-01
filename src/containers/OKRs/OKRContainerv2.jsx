@@ -11,15 +11,13 @@ import {
 } from 'redux/actions/okr.actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import { okrToolSelector } from 'redux/selectors/okr.selector';
-import { useNavigate } from 'react-router-dom';
 import Loading from 'components/commons/Loading';
 
 const OKRContainer = () => {
   const { okrToolId, id } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { loading, data: okrData } = useSelector((state) => state.okr);
+  const [isEditOkrModalOpen, setIsEditOkrModalOpen] = useState(false);
 
   useEffect(() => {
     dispatch(onGetOneTool(okrToolId));
@@ -30,6 +28,8 @@ const OKRContainer = () => {
       <Grid item sx={{ height: '100%', width: '100%' }}>
         <OKRView
           okrData={okrData}
+          openEditOkrModal={() => setIsEditOkrModalOpen(true)}
+          isEditOkrModalOpen={isEditOkrModalOpen}
         />
       </Grid>
       {loading && <Loading isModalMode message="Cargando OKR" />}

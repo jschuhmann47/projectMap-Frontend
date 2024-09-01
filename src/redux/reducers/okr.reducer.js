@@ -13,6 +13,7 @@ const okrReducer = (state = defaultState, action) => {
     case constants.CREATE_OKR_TOOL_REQUESTED:
     case constants.ADD_OKR_KEY_RESULT_REQUESTED:
     case constants.GET_OKR_TOOL_REQUESTED:
+    case constants.EDIT_OKR_TOOL_REQUESTED:
       return {
         ...state,
         loading: true,
@@ -21,6 +22,7 @@ const okrReducer = (state = defaultState, action) => {
     case constants.ADD_OKR_KEY_RESULT_SUCCEEDED:
     case constants.GET_OKR_TOOL_SUCCEEDED:
     case constants.EDIT_KEY_RESULT_SUCCEEDED:
+    case constants.EDIT_OKR_TOOL_SUCCEEDED:
       return {
         ...state,
         data: { ...state.data, ...data },
@@ -34,6 +36,7 @@ const okrReducer = (state = defaultState, action) => {
     case constants.ADD_OKR_KEY_RESULT_FAILED:
     case constants.CREATE_OKR_TOOL_FAILED:
     case constants.EDIT_KEY_RESULT_FAILED:
+    case constants.EDIT_OKR_TOOL_FAILED:
       return {
         ...state,
         loading: false,

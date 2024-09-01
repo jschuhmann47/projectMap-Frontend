@@ -10,6 +10,12 @@ export const onGetOneTool = (id) => ({
   id,
 });
 
+export const onEditTool = (id, formData) => ({
+  type: constants.EDIT_OKR_TOOL_REQUESTED,
+  id,
+  formData,
+});
+
 export const onDeleteTool = (id) => ({
   type: constants.DELETE_OKR_TOOL_REQUEST,
   id,
