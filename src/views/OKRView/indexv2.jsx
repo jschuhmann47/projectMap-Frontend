@@ -29,7 +29,6 @@ const OKRView = ({
       <span>Prioridad: {okrData?.priority}</span>
       <span>Avance: {okrData?.progress * 100}%</span>
     </OkrMoreData>
-    {isEditOkrModalOpen && 'se abrió el modal'}
     <Modal isOpen={isEditOkrModalOpen} onClose={closeEditOkrModal} backgroundColor='#C7DAD9'>
       <FormContainer>
         <Formik
@@ -73,7 +72,7 @@ const OKRView = ({
                   Cancelar
                 </Button>
                 <Button color="primary" type="submit">
-                  Agregar
+                  Editar
                 </Button>
               </ButtonsContainer>
             </CustomForm>

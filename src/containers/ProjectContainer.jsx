@@ -448,7 +448,7 @@ const ProjectContainer = () => {
                       name="horizon"
                       placeholder="Horizonte"
                       component={SelectInput}
-                      options={horizonOptions}
+                      options={Object.values(horizonOptions)}
                       validate={validateField}
                     />
                   }

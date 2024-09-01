@@ -18,7 +18,7 @@ export function* okrCreateTool(action) {
     const req = {
       description: formData.titulo,
       area: formData.area,
-      horizon: horizonOptions.findIndex((option) => option === formData.horizon),
+      horizon: Object.entries(horizonOptions).find((days, name) => name === formData.horizon)[0],
       keyResults: [],
       projectId: formData.projectId,
     };
