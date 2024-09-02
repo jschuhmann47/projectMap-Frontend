@@ -1,7 +1,7 @@
 import { Box, IconButton, Table, TableBody, TableCell, tableCellClasses, TableHead, TableRow } from "@mui/material";
 import { Cancel, Check, Delete, Edit } from "@mui/icons-material"
 import { useState } from "react";
-import { Field, Formik } from "formik";
+import { Field, Form, Formik } from "formik";
 import Input from "../Input";
 
 export default function KeyResult({
@@ -9,11 +9,11 @@ export default function KeyResult({
   editKr,
   deleteKr,
 }) {
-  console.log('krData', krData);
   const [isEditingKr, setIsEditingKr] = useState(false);
 
-  function onEditKr() {
-    editKr();
+  function onEditKr(formData) {
+    console.log('formData', formData);
+    editKr(formData);
     setIsEditingKr(false);
   }
 
@@ -22,10 +22,10 @@ export default function KeyResult({
       {isEditingKr ? (
         <Formik
           onSubmit={onEditKr}
-          initialValues={{ ...krData,  }}
+          initialValues={{ ...krData }}
         >
           {({ handleSubmit }) => (
-            <>
+            <Form onSubmit={handleSubmit}>
               <Table
                 sx={{
                   backgroundColor: '#C7DAD9',
@@ -71,6 +71,7 @@ export default function KeyResult({
                       <Field
                         component={Input}
                         name="baseline"
+                        type="number"
                       />
                     </TableCell>
                     <TableCell>{krData.currentScore}</TableCell>
@@ -78,11 +79,12 @@ export default function KeyResult({
                       <Field
                         component={Input}
                         name="goal"
+                        type="number"
                       />
                     </TableCell>
                     <TableCell>{krData.progress}</TableCell>
                     <TableCell>
-                      <IconButton onClick={handleSubmit}>
+                      <IconButton type="submit">
                         <Check />
                       </IconButton>
                       <IconButton onClick={() => setIsEditingKr(false)}>
@@ -111,12 +113,13 @@ export default function KeyResult({
                       <Field
                         component={Input}
                         name={`keyStatus[${index}].value`}
+                        type="number"
                       />
                     </TableCell>
                   ))}
                 </TableBody>
               </Table>
-            </>
+            </Form>
           )}
           
         </Formik>

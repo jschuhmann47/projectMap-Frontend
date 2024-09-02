@@ -20,7 +20,9 @@ const OKRView = ({
   openAddKrModal,
   closeAddKrModal,
   isAddKrModalOpen,
-  addKr
+  addKr,
+  editKr,
+  deleteKr
 }) => {
   return <OkrContainerV2>
     <OkrHeader>
@@ -33,11 +35,11 @@ const OKRView = ({
       <span>Área: {okrData?.area}</span>
       <span>Horizonte: {horizonOptions[okrData?.horizon]}</span>
       <span>Prioridad: {okrData?.priority}</span>
-      <span>Avance: {okrData?.progress * 100}%</span>
+      <span>Avance: {okrData?.progress}%</span>
     </OkrMoreData>
     <KeyResultsContainer>
       {okrData?.keyResults.map((kr) => (
-        <KeyResult krData={kr} editKr={() => {}} deleteKr={() => {}} />
+        <KeyResult krData={kr} editKr={editKr} deleteKr={deleteKr} />
       ))}
     </KeyResultsContainer>
     <Button onClick={openAddKrModal}>Agregar Key Result</Button>
