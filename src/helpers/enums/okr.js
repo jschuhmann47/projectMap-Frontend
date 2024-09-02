@@ -56,3 +56,9 @@ export const frequencyOptions = {
   7: 'Semanal',
   1: 'Diaria'
 }
+
+export const priorityOptions = [
+  '/priorities/low.svg',
+  '/priorities/medium.svg',
+  '/priorities/high.svg'
+]

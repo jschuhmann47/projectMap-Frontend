@@ -3,6 +3,8 @@ import { Cancel, Check, Delete, Edit } from "@mui/icons-material"
 import { useState } from "react";
 import { Field, Form, Formik } from "formik";
 import Input from "../Input";
+import { priorityOptions } from "helpers/enums/okr";
+import ImgSelect from "../ImgSelect";
 
 export default function KeyResult({
   krData,
@@ -63,8 +65,9 @@ export default function KeyResult({
                     </TableCell>
                     <TableCell>
                       <Field
-                        component={Input}
+                        component={ImgSelect}
                         name="priority"
+                        options={priorityOptions.map((path, i) => ({ path, value: i }))}
                       />
                     </TableCell>
                     <TableCell>
@@ -150,7 +153,9 @@ export default function KeyResult({
               <TableRow>
                 <TableCell>{krData.description}</TableCell>
                 <TableCell>{krData.responsible}</TableCell>
-                <TableCell>{krData.priority}</TableCell>
+                <TableCell>
+                  <img src={priorityOptions[krData.priority]} height="20" width="20" />
+                </TableCell>
                 <TableCell>{krData.baseline}</TableCell>
                 <TableCell>{krData.currentScore}</TableCell>
                 <TableCell>{krData.goal}</TableCell>
