@@ -159,7 +159,7 @@ export default function KeyResult({
                   <IconButton onClick={() => setIsEditingKr(true)}>
                     <Edit />
                   </IconButton>
-                  <IconButton onClick={deleteKr}>
+                  <IconButton onClick={() => deleteKr(krData._id)}>
                     <Delete />
                   </IconButton>
                 </TableCell>
