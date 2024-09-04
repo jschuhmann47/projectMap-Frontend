@@ -35,6 +35,9 @@ export default function KeyResult({
                     borderBottom: "none",
                     fontSize: 16,
                   },
+                  [`& .${tableCellClasses.head}`]: {
+                    fontWeight: "bold",
+                  },
                 }}
               >
                 <TableHead>
@@ -103,6 +106,9 @@ export default function KeyResult({
                   [`& .${tableCellClasses.root}`]: {
                     borderBottom: "none",
                   },
+                  [`& .${tableCellClasses.head}`]: {
+                    fontWeight: "bold",
+                  },
                 }}
               >
                 <TableHead>
@@ -134,6 +140,9 @@ export default function KeyResult({
               [`& .${tableCellClasses.root}`]: {
                 borderBottom: "none",
                 fontSize: 16,
+              },
+              [`& .${tableCellClasses.head}`]: {
+                fontWeight: "bold",
               },
             }}
           >
@@ -176,6 +185,9 @@ export default function KeyResult({
               backgroundColor: '#C7DAD9',
               [`& .${tableCellClasses.root}`]: {
                 borderBottom: "none",
+              },
+              [`& .${tableCellClasses.head}`]: {
+                fontWeight: "bold",
               },
             }}
           >
