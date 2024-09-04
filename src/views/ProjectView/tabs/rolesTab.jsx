@@ -111,7 +111,7 @@ export default function RolesTab({
                 {memberRoleCell(member.user._id, member.role, onChangeMemberRole)}
                 {Object.keys(stepNames).map((step) =>
                   member.role === 'participant' ? (
-                    memberStepPermissionCell(member.user._id, step, member.spheres.find((s) => s.id === step)?.permission, onChangeMemberPermission)
+                    memberStepPermissionCell(member.user._id, step, member.stages.find((s) => s.id === step)?.permission, onChangeMemberPermission)
                   ) : <TableCell>-</TableCell>
                 )}
               </TableRow>

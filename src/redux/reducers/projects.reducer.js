@@ -301,8 +301,8 @@ const projectsReducer = (state = defaultState, action) => {
     case constants.PROJECTS_CHANGE_MEMBER_ROLE:
       let newMember = state.members.find((m) => m.user._id === data.userId);
       newMember.role = data.newRole;
-      if (!newMember.spheres) {
-        newMember.spheres = Object.keys(stepNames).map((s) => ({ id: s, permission: 'hide' }))
+      if (!newMember.stages) {
+        newMember.stages = Object.keys(stepNames).map((s) => ({ id: s, permission: 'hide' }))
       }
       return {
         ...state,
@@ -316,7 +316,7 @@ const projectsReducer = (state = defaultState, action) => {
         // replace one sphere's permission in one member according to change
         members: state.members.map((m) =>
           m.user._id !== data.userId ? m : {
-            ...m, spheres: m.spheres.map((s) =>
+            ...m, stages: m.stages.map((s) =>
               s.id !== data.stepId ? s : { id: s.id, permission: data.newPermission }
             )
           }
