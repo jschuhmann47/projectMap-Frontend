@@ -50,6 +50,32 @@ const OKRContainer = () => {
     dispatch(onAddKeyResult(okrToolId, formData));
     setIsAddKrModalOpen(false);
   };
+  
+  function editKr({
+    baseline,
+    description,
+    frequency,
+    goal,
+    keyStatus,
+    priority,
+    responsible,
+    _id
+  }) {
+    const formData = {
+      description,
+      responsible,
+      priority,
+      baseline,
+      goal,
+      frequency,
+      keyStatus,
+    };
+    dispatch(onEditKeyResult(okrToolId, _id, formData));
+  };
+
+  function deleteKr(keyResultId) {
+    dispatch(onDeleteKeyResult(okrToolId, keyResultId));
+  };
 
   return (
     <LayoutContainer>
@@ -64,6 +90,8 @@ const OKRContainer = () => {
           closeAddKrModal={() => setIsAddKrModalOpen(false)}
           isAddKrModalOpen={isAddKrModalOpen}
           addKr={addKr}
+          editKr={editKr}
+          deleteKr={deleteKr}
         />
       </Grid>
       {loading && <Loading isModalMode message="Cargando OKR" />}

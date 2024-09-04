@@ -1,4 +1,4 @@
-import { frequencyOptions, horizonOptions } from "helpers/enums/okr";
+import { frequencyOptions, horizonOptions, priorityOptions } from "helpers/enums/okr";
 import { EditObjectiveButton, KeyResultsContainer, OkrContainerV2, OkrHeader, OkrMoreData, OkrTitle } from "./styles";
 import Button from "components/commons/Button";
 import Modal from "components/commons/Modal";
@@ -20,7 +20,9 @@ const OKRView = ({
   openAddKrModal,
   closeAddKrModal,
   isAddKrModalOpen,
-  addKr
+  addKr,
+  editKr,
+  deleteKr
 }) => {
   return <OkrContainerV2>
     <OkrHeader>
@@ -32,12 +34,12 @@ const OKRView = ({
     <OkrMoreData>
       <span>Área: {okrData?.area}</span>
       <span>Horizonte: {horizonOptions[okrData?.horizon]}</span>
-      <span>Prioridad: {okrData?.priority}</span>
-      <span>Avance: {okrData?.progress * 100}%</span>
+      <span>Prioridad: <img src={priorityOptions[okrData?.priority]} height="20" width="20" /></span>
+      <span>Avance: {okrData?.progress}%</span>
     </OkrMoreData>
     <KeyResultsContainer>
       {okrData?.keyResults.map((kr) => (
-        <KeyResult krData={kr} />
+        <KeyResult krData={kr} editKr={editKr} deleteKr={deleteKr} />
       ))}
     </KeyResultsContainer>
     <Button onClick={openAddKrModal}>Agregar Key Result</Button>

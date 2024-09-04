@@ -15,8 +15,8 @@ export const OkrContainer = styled('div')({
 
 export const OkrContainerV2 = styled('div')({
   fontFamily: "'Fira Sans'",
-  marginLeft: '10%',
-  marginRight: '10%',
+  marginLeft: '5%',
+  marginRight: '5%',
   marginTop: '5%',
   display: 'flex',
   flexDirection: 'column',
