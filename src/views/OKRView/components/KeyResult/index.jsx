@@ -168,7 +168,7 @@ export default function KeyResult({
                 <TableCell>{krData.baseline}</TableCell>
                 <TableCell>{krData.currentScore}</TableCell>
                 <TableCell>{krData.goal}</TableCell>
-                <TableCell>{krData.progress}</TableCell>
+                <TableCell>{krData.progress}%</TableCell>
                 <TableCell>
                   <IconButton onClick={() => setIsEditingKr(true)}>
                     <Edit />
