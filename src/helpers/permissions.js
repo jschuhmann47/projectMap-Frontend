@@ -8,7 +8,7 @@ export default function permission(rootState, stepId) {
   if (hasFullPermissions) return 'edit';
 
   const stepPermissions = projectInfo?.participants
-    .find((u) => u.user.email === user?.email)?.spheres;
+    .find((u) => u.user.email === user?.email)?.stages;
   if (!stepPermissions) return 'hide';
   return stepPermissions.find((p) => p.id === stepId).permission;
 }

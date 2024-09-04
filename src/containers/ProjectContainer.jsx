@@ -264,7 +264,7 @@ const ProjectContainer = () => {
     const users = members.map((m) => ({
       userId: m.user._id,
       role: m.role,
-      spheres: m.role === 'participant' ? m.spheres : undefined,
+      stages: m.role === 'participant' ? m.stages : undefined,
     }));
     dispatch(onSaveMembers(id, { users }))
   }
@@ -274,7 +274,7 @@ const ProjectContainer = () => {
     projectInfo?.coordinators.find((u) => u.email === user?.email)
 
   const stepPermissions = projectInfo?.participants
-    .find((u) => u.user.email === user?.email)?.spheres
+    .find((u) => u.user.email === user?.email)?.stages
 
   return (
     <LayoutContainer>
