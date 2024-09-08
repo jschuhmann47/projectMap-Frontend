@@ -41,3 +41,19 @@ export const DeviationColor = {
 export const getDeviation = (deviation) => Deviation[deviation] || '';
 
 export const getDeviationColor = (deviation) => DeviationColor[deviation];
+
+export const horizonOptions = {
+  1800: 'A cinco años',
+  1440: 'A cuatro años',
+  1080: 'A tres años',
+  720: 'A dos años',
+  360: 'A un año',
+}
+
+export const frequencyOptions = {
+  360: 'Anual',
+  180: 'Semestral',
+  90: 'Trimestral',
+  60: 'Bimestral',
+  30: 'Mensual',
+}
