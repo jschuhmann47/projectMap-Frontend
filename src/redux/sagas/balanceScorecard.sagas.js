@@ -27,7 +27,7 @@ export function* balanceScorecardCreate(action) {
       objectives: [],
       projectId: formData.projectId,
     };
-    const { data } = yield call(create, formData);
+    const { data } = yield call(create, req);
     yield put({ type: constants.CREATE_BALANCE_SCORECARD_SUCCEEDED, data });
   } catch (error) {
     yield put({ type: constants.CREATE_BALANCE_SCORECARD_FAILED, error });
