@@ -141,7 +141,11 @@ const ProjectContainer = () => {
   };
 
   const onSubmitConfirmModal = ({ name }) => {
-    if (name !== itemToDelete?.titulo && name !== itemToDelete?.description) {
+    if (
+      name !== itemToDelete?.titulo &&
+      name !== itemToDelete?.description &&
+      name !== itemToDelete?.title
+    ) {
       setConfirmDeleteError('Nombre de la herramienta incorrecto.');
     } else {
       deleteTool(itemToDelete);
