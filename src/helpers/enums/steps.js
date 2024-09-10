@@ -6,6 +6,9 @@ import { onCreate as onCreatePorter } from 'redux/actions/porter.actions';
 import { onCreateTool as onCreateOkr } from 'redux/actions/okr.actions';
 import { onCreate as onCreateBalanced } from 'redux/actions/balanceScorecard.actions';
 import { onCreate as onCreateQuestionnarie } from 'redux/actions/questionnarie.actions';
+import { horizonOptions as okrHorizonOptions } from './okr';
+import { horizonOptions as bscHorizonOptions } from './balanced';
+
 
 export const StepValue = {
   EVALUACION_ENTORNO_EXTERNO: 1,
@@ -31,8 +34,8 @@ export const STEPS = [
     value: StepValue.PLAN_FINANCIERO_MEDICION_RESULTADOS,
     title: 'Planeamiento Financiero y Medición de Resultados',
     menuItems: [
-      { titulo: 'Agregar Balanced Scorecard', action: onCreateBalanced },
-      { titulo: 'Agregar OKR', action: onCreateOkr, area: true, horizon: true },
+      { titulo: 'Agregar Balanced Scorecard', action: onCreateBalanced, horizon: bscHorizonOptions },
+      { titulo: 'Agregar OKR', action: onCreateOkr, area: true, horizon: okrHorizonOptions },
     ],
     id: 'financialPlanning'
   },

@@ -141,7 +141,10 @@ const ProjectContainer = () => {
   };
 
   const onSubmitConfirmModal = ({ name }) => {
-    if (name !== itemToDelete?.titulo && name !== itemToDelete?.description) {
+    if (
+      name !== itemToDelete?.titulo &&
+      name !== itemToDelete?.description
+    ) {
       setConfirmDeleteError('Nombre de la herramienta incorrecto.');
     } else {
       deleteTool(itemToDelete);
@@ -448,7 +451,7 @@ const ProjectContainer = () => {
                       name="horizon"
                       placeholder="Horizonte"
                       component={SelectInput}
-                      options={Object.values(horizonOptions)}
+                      options={Object.values(addTool?.horizon)}
                       validate={validateField}
                     />
                   }
