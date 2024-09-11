@@ -1,30 +1,18 @@
 import { get, post, put, remove } from 'services/api';
 
-export const createTool = (formData) => post('okr-projects', formData);
+export const createOkr = (formData) => post('okr', formData);
 
-export const getOneTool = (id) => get(`okr-projects/${id}`);
+export const getOneOkr = (id) => get(`okr/${id}`);
 
-export const deleteOkr = (id) => remove(`okr-projects/${id}`);
+export const editOneOkr = (id, formData) => put(`okr/${id}`, formData);
 
-export const createOkr = (id, formData) =>
-  post(`okr-projects/${id}/okrs`, formData);
+export const deleteOkr = (id) => remove(`okr/${id}`);
 
-export const getOneOkr = (id, okrId) => get(`okr-projects/${id}/okrs/${okrId}`);
+export const addKeyResult = (id, formData) =>
+  post(`okr/${id}/key-result`, formData);
 
-export const deleteOkrItem = (id, okrId) =>
-  remove(`okr-projects/${id}/okrs/${okrId}`);
+export const editKeyResult = (id, keyResultId, formData) =>
+  put(`okr/${id}/key-result/${keyResultId}`, formData);
 
-export const addKeyResult = (id, okrId, formData) =>
-  post(`okr-projects/${id}/okrs/${okrId}`, formData);
-
-export const editKeyResult = (id, okrId, keyResultId, formData) =>
-  put(`okr-projects/${id}/okrs/${okrId}/key-results/${keyResultId}`, formData);
-
-export const editKeyStatus = (id, okrId, keyResultId, formData) =>
-  put(
-    `okr-projects/${id}/okrs/${okrId}/key-results/${keyResultId}/key-status/${formData.id}`,
-    formData
-  );
-
-export const deleteOkrKeyResultItem = (id, okrId, keyResultId) =>
-  remove(`okr-projects/${id}/okrs/${okrId}/key-results/${keyResultId}`);
+export const deleteKeyResult = (id, keyResultId) =>
+  remove(`okr/${id}/key-result/${keyResultId}`);

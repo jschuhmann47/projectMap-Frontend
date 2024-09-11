@@ -10,49 +10,32 @@ export const onGetOneTool = (id) => ({
   id,
 });
 
+export const onEditTool = (id, formData) => ({
+  type: constants.EDIT_OKR_TOOL_REQUESTED,
+  id,
+  formData,
+});
+
 export const onDeleteTool = (id) => ({
   type: constants.DELETE_OKR_TOOL_REQUEST,
   id,
 });
 
-export const onAddOkr = (id, formData) => ({
-  type: constants.CREATE_OKR_REQUESTED,
-  id,
-  formData,
-});
-
-export const onDeleteOkr = (id, okrId) => ({
-  type: constants.DELETE_OKR_REQUEST,
-  id,
-  okrId,
-});
-
-export const onAddKeyResult = (id, okrId, formData) => ({
+export const onAddKeyResult = (id, formData) => ({
   type: constants.ADD_OKR_KEY_RESULT_REQUESTED,
   id,
-  okrId,
   formData,
 });
 
-export const onEditKeyStatus = (id, okrId, keyResultId, formData) => ({
-  type: constants.EDIT_KEY_RESULT_KEY_STATUS_REQUESTED,
-  id,
-  okrId,
-  keyResultId,
-  formData,
-});
-
-export const onEditKeyResult = (id, okrId, keyResultId, formData) => ({
+export const onEditKeyResult = (id, keyResultId, formData) => ({
   type: constants.EDIT_KEY_RESULT_REQUESTED,
   id,
-  okrId,
   keyResultId,
   formData,
 });
 
-export const onDeleteKeyResult = (id, okrId, keyResultId) => ({
+export const onDeleteKeyResult = (id, keyResultId) => ({
   type: constants.DELETE_KEY_RESULT_REQUESTED,
   id,
-  okrId,
   keyResultId,
 });

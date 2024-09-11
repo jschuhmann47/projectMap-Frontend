@@ -37,3 +37,28 @@ export const getKeyResultWitValues = (quarter, values) => {
     value: values[index].value,
   }));
 };
+
+export const horizonOptions = {
+  360: 'A un año',
+  180: 'A seis meses',
+  90: 'A tres meses',
+  60: 'A dos meses',
+  30: 'A un mes',
+  15: 'A quince días'
+}
+
+export const frequencyOptions = {
+  180: 'Semestral',
+  90: 'Trimestral',
+  60: 'Bimestral',
+  30: 'Mensual',
+  15: 'Quincenal',
+  7: 'Semanal',
+  1: 'Diaria'
+}
+
+export const priorityOptions = [
+  '/priorities/low.svg',
+  '/priorities/medium.svg',
+  '/priorities/high.svg'
+]

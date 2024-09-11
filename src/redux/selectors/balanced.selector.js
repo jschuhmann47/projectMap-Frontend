@@ -1,5 +1,5 @@
 import { parseDate } from 'helpers/date';
-import { Area } from 'helpers/enums/balanced';
+import { Area, horizonOptions } from 'helpers/enums/balanced';
 import { createSelector } from 'reselect';
 
 const getBalancedSelected = (state) => state.balanceScorecard.data;
@@ -23,5 +23,5 @@ export const areaObjectivesSelector = createSelector(
 
 export const titleSelector = createSelector([getBalancedSelected], (tool) => ({
   ...tool,
-  title: `${tool?.titulo} - ${parseDate(tool?.createdAt)}`,
+  title: `${tool?.description} - ${parseDate(tool?.createdAt)} - Horizonte: ${horizonOptions[tool?.horizon]}`,
 }));

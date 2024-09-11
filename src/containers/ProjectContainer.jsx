@@ -68,6 +68,8 @@ import Loading from 'components/commons/Loading';
 import { onGetAll as onGetAllComments } from 'redux/actions/comments.actions';
 import { onDelete } from 'redux/actions/questionnarie.actions';
 import { CardTitle } from 'views/FodaView/styles';
+import SelectInput from 'components/inputs/SelectInput';
+import { horizonOptions } from 'helpers/enums/okr';
 
 const ProjectContainer = () => {
   let { id } = useParams();
@@ -139,7 +141,10 @@ const ProjectContainer = () => {
   };
 
   const onSubmitConfirmModal = ({ name }) => {
-    if (name !== itemToDelete?.titulo) {
+    if (
+      name !== itemToDelete?.titulo &&
+      name !== itemToDelete?.description
+    ) {
       setConfirmDeleteError('Nombre de la herramienta incorrecto.');
     } else {
       deleteTool(itemToDelete);
@@ -262,7 +267,7 @@ const ProjectContainer = () => {
     const users = members.map((m) => ({
       userId: m.user._id,
       role: m.role,
-      spheres: m.role === 'participant' ? m.spheres : undefined,
+      stages: m.role === 'participant' ? m.stages : undefined,
     }));
     dispatch(onSaveMembers(id, { users }))
   }
@@ -272,7 +277,7 @@ const ProjectContainer = () => {
     projectInfo?.coordinators.find((u) => u.email === user?.email)
 
   const stepPermissions = projectInfo?.participants
-    .find((u) => u.user.email === user?.email)?.spheres
+    .find((u) => u.user.email === user?.email)?.stages
 
   return (
     <LayoutContainer>
@@ -341,7 +346,7 @@ const ProjectContainer = () => {
                   }
                 }}
               >
-                {item?.titulo}
+                {item?.titulo ?? item?.description}
               </MenuItemText>
               {item._id && (hasFullPermissions || stepPermissions?.[stepValue] === 'edit') && !Number.isInteger(item._id) && (
                 <IconButton
@@ -400,21 +405,21 @@ const ProjectContainer = () => {
       <Modal
         isOpen={!!addTool}
         backgroundColor={COLORS.WildSand}
-        onClose={() => setAddTool('')}
+        onClose={() => setAddTool(null)}
       >
         <FormContainer>
           <Title style={{ fontSize: 18 }}>{addTool?.title}</Title>
           <Formik
             onSubmit={(values) => onSubmitTool(addTool.action, values)}
-            initialValues={{ titulo: '' }}
+            initialValues={{ titulo: '', area: '' }}
           >
             {({ handleSubmit }) => (
               <CustomForm onSubmit={handleSubmit}>
                 <CardTitle>{addTool?.titulo}</CardTitle>
-                <Box sx={{ width: '100%' }}>
+                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}>
                   <Field
                     name="titulo"
-                    placeholder="Titulo"
+                    placeholder="Título"
                     component={Input}
                     validate={validateField}
                   />
@@ -433,6 +438,23 @@ const ProjectContainer = () => {
                       </Typography>
                     )}
                   </ErrorMessage>
+                  {addTool?.area &&
+                    <Field
+                      name="area"
+                      placeholder="Área"
+                      component={Input}
+                      validate={validateField}
+                    />
+                  }
+                  {addTool?.horizon &&
+                    <Field
+                      name="horizon"
+                      placeholder="Horizonte"
+                      component={SelectInput}
+                      options={Object.values(addTool?.horizon)}
+                      validate={validateField}
+                    />
+                  }
                 </Box>
                 <ButtonsContainer>
                   <Button color="secondary" onClick={() => setAddTool(null)}>

@@ -1,3 +1,4 @@
+import { horizonOptions } from 'helpers/enums/balanced';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import * as constants from 'redux/contansts/balanceScorecard.constants';
 import {
@@ -20,7 +21,13 @@ import {
 export function* balanceScorecardCreate(action) {
   try {
     const { formData } = action;
-    const { data } = yield call(create, formData);
+    const req = {
+      description: formData.titulo,
+      horizon: +(Object.entries(horizonOptions).find((kv) => kv[1] === formData.horizon)[0]),
+      objectives: [],
+      projectId: formData.projectId,
+    };
+    const { data } = yield call(create, req);
     yield put({ type: constants.CREATE_BALANCE_SCORECARD_SUCCEEDED, data });
   } catch (error) {
     yield put({ type: constants.CREATE_BALANCE_SCORECARD_FAILED, error });
