@@ -164,3 +164,13 @@ export const StepInfo = styled('div')({
   flexDirection: 'column',
   fontSize: 18,
 })
+
+export const ChartButtons = styled('div')({
+  display: 'flex',
+  justifyContent: 'flex-start',
+  position: 'fixed',
+  'z-index': 9999,
+  button: {
+    marginRight: '10px',
+  }
+})
