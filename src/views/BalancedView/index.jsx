@@ -9,9 +9,8 @@ import {
 } from '@mui/material';
 
 import { COLORS } from 'helpers/enums/colors';
-import { Area, getDeviationColor, Trend } from 'helpers/enums/balanced';
+import { Area, frequencyOptions, getDeviationColor, Trend } from 'helpers/enums/balanced';
 
-import ObjetiveInput from './components/ObjetiveInput';
 import AddButton from './components/AddButton';
 
 import { Accordion, AccordionDetails, AccordionSummary } from './styles';
@@ -23,8 +22,15 @@ import {
   TrendingUp,
   Comment,
 } from '@mui/icons-material';
-import { ButtonContainer, Title, TitleContainer } from 'views/FodaView/styles';
+import { ButtonContainer, CardTitle, Title } from 'views/FodaView/styles';
 import ToolTip from 'components/commons/ToolTip';
+import Modal from 'components/commons/Modal';
+import { ButtonsContainer, CustomForm, FormContainer } from 'styles/form';
+import { ErrorMessage, Field, Formik } from 'formik';
+import Input from 'components/inputs/Input';
+import { validateField } from 'helpers/validateField';
+import SelectInput from 'components/inputs/SelectInput';
+import Button from 'components/commons/Button';
 
 const tableHeaderStyle = {
   display: 'flex',
@@ -80,12 +86,15 @@ const getTrendIcon = (trend) => {
 };
 
 const BalancedView = ({
-  onSubmitObjetive,
+  onSubmitObjective,
   objectives,
   onEditObjective,
   title,
   openComments,
   onClickButtonGoBack,
+  isModalOpen,
+  openModal,
+  closeModal,
 }) => {
   const [areaInput, setAreaInput] = useState(null);
   const [expanded, setExpanded] = useState(null);
@@ -174,6 +183,11 @@ const BalancedView = ({
     );
   };
 
+  function selectArea(area) {
+    setAreaInput(area);
+    openModal();
+  };
+
   const renderRow = ({
     action,
     measure,
@@ -231,85 +245,166 @@ const BalancedView = ({
   );
 
   return (
-    <Grid>
-      <Box
-        sx={{
-          padding: '30px',
-          display: 'flex',
-          flex: 1,
-          justifyContent: 'space-between',
-        }}
-      >
-        <ButtonContainer>
-          <IconButton size="small" onClick={onClickButtonGoBack}>
-            <ArrowBack />
-          </IconButton>
-        </ButtonContainer>
-        <Title>{title}</Title>
-        <ButtonContainer sx={{ gap: '10px' }}>
-          <IconButton
-            size="small"
-            onClick={(event) => openComments(event.currentTarget)}
-          >
-            <Comment />
-          </IconButton>
-        </ButtonContainer>
-      </Box>
-      <Grid
-        container
-        sx={{
-          padding: '30px',
-        }}
-        rowGap={6}
-      >
-        {Object.values(Area).map((area) => (
-          <Grid item xs={12}>
-            {renderHeader(area)}
-            <Grid
-              container
-              sx={{
-                padding: '10px',
-                background: COLORS.AthensGray,
-                alignItems: 'center',
-              }}
+    <>
+      <Grid>
+        <Box
+          sx={{
+            padding: '30px',
+            display: 'flex',
+            flex: 1,
+            justifyContent: 'space-between',
+          }}
+        >
+          <ButtonContainer>
+            <IconButton size="small" onClick={onClickButtonGoBack}>
+              <ArrowBack />
+            </IconButton>
+          </ButtonContainer>
+          <Title>{title}</Title>
+          <ButtonContainer sx={{ gap: '10px' }}>
+            <IconButton
+              size="small"
+              onClick={(event) => openComments(event.currentTarget)}
             >
-              {objectives[area]?.map((objective) => (
-                <Grid item xs={12}>
-                  <Accordion
-                    expanded={expanded === objective._id}
-                    onChange={handleChange(objective._id)}
-                  >
-                    <AccordionSummary>{renderRow(objective)}</AccordionSummary>
-                    <AccordionDetails>
-                      <Checkpoints
-                        checkpoints={objective.checkpoints}
-                        onClickCancel={handleChange(null)}
-                        onSubmit={(formData) =>
-                          onEditObjective(objective._id, {
-                            ...objective,
-                            ...formData,
-                          })
-                        }
-                      />
-                    </AccordionDetails>
-                  </Accordion>
-                </Grid>
-              ))}
-              <Grid item xs={12}>
-                {areaInput === area && (
-                  <ObjetiveInput
-                    area={area}
-                    onClickCancel={() => setAreaInput(null)}
-                    onSubmit={onSubmitObjetive}
-                  />
-                )}
+              <Comment />
+            </IconButton>
+          </ButtonContainer>
+        </Box>
+        <Grid
+          container
+          sx={{
+            padding: '30px',
+          }}
+          rowGap={6}
+        >
+          {Object.values(Area).map((area) => (
+            <Grid item xs={12}>
+              {renderHeader(area)}
+              <Grid
+                container
+                sx={{
+                  padding: '10px',
+                  background: COLORS.AthensGray,
+                  alignItems: 'center',
+                }}
+              >
+                {objectives[area]?.map((objective) => (
+                  <Grid item xs={12}>
+                    <Accordion
+                      expanded={expanded === objective._id}
+                      onChange={handleChange(objective._id)}
+                    >
+                      <AccordionSummary>{renderRow(objective)}</AccordionSummary>
+                      <AccordionDetails>
+                        <Checkpoints
+                          checkpoints={objective.checkpoints}
+                          onClickCancel={handleChange(null)}
+                          onSubmit={(formData) =>
+                            onEditObjective(objective._id, {
+                              ...objective,
+                              ...formData,
+                            })
+                          }
+                        />
+                      </AccordionDetails>
+                    </Accordion>
+                  </Grid>
+                ))}
+                <AddButton onClick={() => selectArea(area)} />
               </Grid>
-              <AddButton onClick={() => setAreaInput(area)} />
             </Grid>
-          </Grid>
-        ))}
+          ))}
+        </Grid>
       </Grid>
-    </Grid>
+      <Modal isOpen={isModalOpen} onClose={closeModal} backgroundColor='#C7DAD9'>
+        <FormContainer>
+          <Formik
+            onSubmit={(formData) => onSubmitObjective(areaInput, formData)}
+            initialValues={{ action: '', frequency: '', responsible: '' }}
+          >
+            {({ handleSubmit }) => (
+              <CustomForm onSubmit={handleSubmit}>
+                <CardTitle>Agregar objetivo</CardTitle>
+                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}>
+                  <Field
+                    name="action"
+                    placeholder="Nombre"
+                    component={Input}
+                    validate={validateField}
+                  />
+                  <ErrorMessage name="action">
+                    {(msg) => (
+                      <Typography
+                        sx={{
+                          textAlign: 'left',
+                          color: 'red',
+                          marginLeft: 2,
+                          marginTop: '2px',
+                          fontSize: '14px',
+                        }}
+                      >
+                        {msg}
+                      </Typography>
+                    )}
+                  </ErrorMessage>
+                  <Field
+                    name="frequency"
+                    placeholder="Frecuencia"
+                    component={SelectInput}
+                    options={Object.values(frequencyOptions)}
+                    validate={validateField}
+                  />
+                  <ErrorMessage name="frequency">
+                    {(msg) => (
+                      <Typography
+                        sx={{
+                          textAlign: 'left',
+                          color: 'red',
+                          marginLeft: 2,
+                          marginTop: '2px',
+                          fontSize: '14px',
+                        }}
+                      >
+                        {msg}
+                      </Typography>
+                    )}
+                  </ErrorMessage>
+                  <Field
+                    name="responsible"
+                    placeholder="Responsable"
+                    component={Input}
+                    validate={validateField}
+                  />
+                  <ErrorMessage name="responsible">
+                    {(msg) => (
+                      <Typography
+                        sx={{
+                          textAlign: 'left',
+                          color: 'red',
+                          marginLeft: 2,
+                          marginTop: '2px',
+                          fontSize: '14px',
+                        }}
+                      >
+                        {msg}
+                      </Typography>
+                    )}
+                  </ErrorMessage>
+                </Box>
+                <ButtonsContainer>
+                  <Button color="secondary" onClick={closeModal}>
+                    Cancelar
+                  </Button>
+                  <Button color="primary" type="submit">
+                    Agregar
+                  </Button>
+                </ButtonsContainer>
+              </CustomForm>
+            )}
+          </Formik>
+        </FormContainer>
+      </Modal>
+    </>
   );
 };
 
