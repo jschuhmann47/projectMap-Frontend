@@ -139,10 +139,26 @@ const BalancedView = ({
             fontSize="14px"
           />
         </Grid>
-        <Grid item md={2} sx={tableHeaderStyle}>
+        <Grid item md={1} sx={tableHeaderStyle}>
           <span>Responsable</span>
           <ToolTip
             text="Es importante que todo el equipo sepa quien es el responsable de que se haga seguimiento de este objetivo."
+            placement="right"
+            fontSize="14px"
+          />
+        </Grid>
+        <Grid item md={1} sx={tableHeaderStyle}>
+          <span>L. base</span>
+          <ToolTip
+            text="completar estos tooltips"
+            placement="right"
+            fontSize="14px"
+          />
+        </Grid>
+        <Grid item md={1} sx={tableHeaderStyle}>
+          <span>Avance</span>
+          <ToolTip
+            text="completar estos tooltips"
             placement="right"
             fontSize="14px"
           />
@@ -156,14 +172,6 @@ const BalancedView = ({
           />
         </Grid>
         <Grid item md={1} sx={tableHeaderStyle}>
-          <span>Actual</span>
-          <ToolTip
-            text="Representa el avance porcentual a su objetivo. Recuerde comparar esto con el lugar en el que está en el trimestre para entender su situación actual. Además, utilice el desvío y tendencia para contextualizar"
-            placement="right"
-            fontSize="14px"
-          />
-        </Grid>
-        <Grid item md={1} sx={tableHeaderStyle}>
           <span>Tendencia</span>
           <ToolTip
             text="Representa la tendencia del avance en función de los últimos data points."
@@ -172,7 +180,7 @@ const BalancedView = ({
           />
         </Grid>
         <Grid item md={1} sx={tableHeaderStyle}>
-          <span>Desvio</span>
+          <span>Desvío</span>
           <ToolTip
             text="Representa la diferencia entre donde estoy versus donde debería estar; el avance esperado versus el avance real."
             placement="right"
@@ -192,10 +200,11 @@ const BalancedView = ({
     action,
     measure,
     responsible,
-    target,
+    goal,
     progress,
     trend,
     deviation,
+    baseline,
   }) => (
     <Grid
       container
@@ -209,13 +218,13 @@ const BalancedView = ({
       <Grid item md={2} sx={tableHeaderStyle}>
         <span>{measure}</span>
       </Grid>
-      <Grid item md={2} sx={tableHeaderStyle}>
+      <Grid item md={1} sx={tableHeaderStyle}>
         <Tooltip title={responsible} placement="top" arrow>
           <Avatar {...stringAvatar(responsible)} />
         </Tooltip>
       </Grid>
       <Grid item md={1} sx={tableHeaderStyle}>
-        <span>{target}</span>
+        <span>{baseline}</span>
       </Grid>
       <Grid item md={1} sx={tableHeaderStyle}>
         <span>
@@ -225,6 +234,9 @@ const BalancedView = ({
           }) || 0}
           %
         </span>
+      </Grid>
+      <Grid item md={1} sx={tableHeaderStyle}>
+        <span>{goal}</span>
       </Grid>
       <Grid item md={1} sx={tableHeaderStyle}>
         <span>{trend && getTrendIcon(trend)}</span>
@@ -273,7 +285,7 @@ const BalancedView = ({
         <Grid
           container
           sx={{
-            padding: '30px',
+            padding: '20px',
           }}
           rowGap={6}
         >
@@ -320,7 +332,7 @@ const BalancedView = ({
         <FormContainer>
           <Formik
             onSubmit={(formData) => onSubmitObjective(areaInput, formData)}
-            initialValues={{ action: '', frequency: '', responsible: '' }}
+            initialValues={{ action: '', frequency: '', responsible: '', measure: '' }}
           >
             {({ handleSubmit }) => (
               <CustomForm onSubmit={handleSubmit}>
@@ -390,6 +402,56 @@ const BalancedView = ({
                       </Typography>
                     )}
                   </ErrorMessage>
+                  <Field
+                    name="baseline"
+                    placeholder="Línea base"
+                    type="number"
+                    component={Input}
+                    validate={validateField}
+                  />
+                  <ErrorMessage name="baseline">
+                    {(msg) => (
+                      <Typography
+                        sx={{
+                          textAlign: 'left',
+                          color: 'red',
+                          marginLeft: 2,
+                          marginTop: '2px',
+                          fontSize: '14px',
+                        }}
+                      >
+                        {msg}
+                      </Typography>
+                    )}
+                  </ErrorMessage>
+                  <Field
+                    name="goal"
+                    placeholder="Resultado esperado"
+                    type="number"
+                    component={Input}
+                    validate={validateField}
+                  />
+                  <ErrorMessage name="goal">
+                    {(msg) => (
+                      <Typography
+                        sx={{
+                          textAlign: 'left',
+                          color: 'red',
+                          marginLeft: 2,
+                          marginTop: '2px',
+                          fontSize: '14px',
+                        }}
+                      >
+                        {msg}
+                      </Typography>
+                    )}
+                  </ErrorMessage>
+                  <Field
+                    name="measure"
+                    placeholder="Unidad de medida"
+                    component={Input}
+                    validate={validateField}
+                  />
                 </Box>
                 <ButtonsContainer>
                   <Button color="secondary" onClick={closeModal}>

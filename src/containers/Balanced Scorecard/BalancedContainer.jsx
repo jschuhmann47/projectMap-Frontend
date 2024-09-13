@@ -35,16 +35,16 @@ const BalancedContainer = () => {
     dispatch(onGetAllComments('BALANCED_SCORECARD', balancedId));
   }, []);
 
-  const onSubmitObjective = (category, { action, frequency, responsible }) => {
+  const onSubmitObjective = (category, { action, frequency, responsible, goal, baseline, measure }) => {
     dispatch(
       onAddObjective(balancedId, {
         action,
         category,
         responsible,
         frequency: +(Object.entries(frequencyOptions).find((kv) => kv[1] === frequency)[0]),
-        measure: '',
-        goal: 0,
-        baseline: 0,
+        measure,
+        goal,
+        baseline,
         progress: 0,
       })
     );
@@ -53,6 +53,8 @@ const BalancedContainer = () => {
   const onEditObjective = (objectiveId, formData) => {
     dispatch(onUpdateObjective(balancedId, objectiveId, formData));
   };
+
+  console.log('obj', objectives)
 
   return (
     <LayoutContainer>

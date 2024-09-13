@@ -13,7 +13,7 @@ export const areaObjectivesSelector = createSelector(
         ...objectivesPerArea,
         [area]:
           balanced?.objectives?.filter(
-            (objective) => objective.area === area
+            (objective) => objective.category === area
           ) || [],
       };
     });
