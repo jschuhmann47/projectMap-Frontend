@@ -48,13 +48,12 @@ const BalancedContainer = () => {
         progress: 0,
       })
     );
+    setIsModalOpen(false);
   };
 
   const onEditObjective = (objectiveId, formData) => {
     dispatch(onUpdateObjective(balancedId, objectiveId, formData));
   };
-
-  console.log('obj', objectives)
 
   return (
     <LayoutContainer>

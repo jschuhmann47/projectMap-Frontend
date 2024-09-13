@@ -142,7 +142,7 @@ const BalancedView = ({
         <Grid item md={1} sx={tableHeaderStyle}>
           <span>Responsable</span>
           <ToolTip
-            text="Es importante que todo el equipo sepa quien es el responsable de que se haga seguimiento de este objetivo."
+            text="Es importante que todo el equipo sepa quién es el responsable de que se haga seguimiento de este objetivo."
             placement="right"
             fontSize="14px"
           />
@@ -150,7 +150,7 @@ const BalancedView = ({
         <Grid item md={1} sx={tableHeaderStyle}>
           <span>L. base</span>
           <ToolTip
-            text="completar estos tooltips"
+            text="Medición de la que se parte en este objetivo. Saber el estado actual es fundamental para trazar objetivos realistas."
             placement="right"
             fontSize="14px"
           />
@@ -158,7 +158,7 @@ const BalancedView = ({
         <Grid item md={1} sx={tableHeaderStyle}>
           <span>Avance</span>
           <ToolTip
-            text="completar estos tooltips"
+            text="Porcentaje de completitud actual de este objetivo, en función de las mediciones ingresadas."
             placement="right"
             fontSize="14px"
           />
