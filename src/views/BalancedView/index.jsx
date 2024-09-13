@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 
 import { COLORS } from 'helpers/enums/colors';
-import { Area, frequencyOptions, getDeviationColor, Trend } from 'helpers/enums/balanced';
+import { Area, filterFrequenciesByHorizon, getDeviationColor, Trend } from 'helpers/enums/balanced';
 
 import AddButton from './components/AddButton';
 
@@ -95,6 +95,7 @@ const BalancedView = ({
   isModalOpen,
   openModal,
   closeModal,
+  horizon,
 }) => {
   const [areaInput, setAreaInput] = useState(null);
   const [expanded, setExpanded] = useState(null);
@@ -363,7 +364,7 @@ const BalancedView = ({
                     name="frequency"
                     placeholder="Frecuencia"
                     component={SelectInput}
-                    options={Object.values(frequencyOptions)}
+                    options={filterFrequenciesByHorizon(horizon)}
                     validate={validateField}
                   />
                   <ErrorMessage name="frequency">

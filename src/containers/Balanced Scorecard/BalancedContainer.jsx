@@ -25,7 +25,7 @@ const BalancedContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const objectives = useSelector(areaObjectivesSelector);
-  const { title } = useSelector(titleSelector);
+  const { title, horizon } = useSelector(titleSelector);
   const { loading } = useSelector((state) => state.balanceScorecard);
   const [anchorElement, setAnchorElement] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -67,6 +67,7 @@ const BalancedContainer = () => {
         isModalOpen={isModalOpen}
         openModal={() => setIsModalOpen(true)}
         closeModal={() => setIsModalOpen(false)}
+        horizon={horizon}
       />
       <Menu
         anchorEl={anchorElement}
