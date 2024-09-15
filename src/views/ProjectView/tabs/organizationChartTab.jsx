@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import ReactFlow, {
   ReactFlowProvider,
   addEdge,
@@ -15,6 +16,7 @@ import {
 } from '../styles';
 import { getOrganizationalChart, saveOrganizationalChart } from 'services/projects.services';
 import { Dialog, DialogActions, DialogContent, DialogTitle, TextField, Snackbar, Alert } from '@mui/material';
+import { onGetOrganizationalChart, onSaveOrganizationalChart } from 'redux/actions/projects.actions';
 
 export default function OrganizationChartTab({ projectId }) {
   const reactFlowWrapper = useRef(null);
@@ -27,16 +29,41 @@ export default function OrganizationChartTab({ projectId }) {
   const [snackbarStatus, setSnackbarStatus] = useState('success');
   const [snackbarText, setSnackbarText] = useState('');
   const [inputNewNodeError, setInputNewNodeError] = useState(false);
+  const dispatch = useDispatch();
+  const { organizationalChart } = useSelector((state) => state.projects);
 
   useEffect(() => {
-    const fetchChart = async () => {
-      const { data } = await getOrganizationalChart(projectId);
-      setNodes(data.nodes);
-      setEdges(data.edges);
-    };
+    dispatch(onGetOrganizationalChart(projectId));
+  }, [dispatch]);
 
-    fetchChart();
-  }, []);
+  useEffect(() => {
+    if (organizationalChart.success != null) {
+      processChartSnackbar()
+    }
+
+    if (organizationalChart.data != null) {
+      const {nodes, edges } = organizationalChart.data;
+      if (nodes != null) {
+        setNodes(nodes);
+      }
+
+      if (edges != null) {
+        setEdges(edges);
+      }
+    }
+  }, [organizationalChart]);
+
+  const processChartSnackbar = () => {
+    if (organizationalChart.success) {
+      setSnackbarStatus('success');
+      setSnackbarText('Guardado exitosamente')
+    } else {
+      setSnackbarStatus('error');
+      setSnackbarText('Hubo un error al guardar')
+    } 
+
+    setOpenSnackbar(true);
+  }
 
   const generateNextNodeId = () => {
     const { nodes } = reactFlowInstance.toObject();
@@ -92,16 +119,7 @@ export default function OrganizationChartTab({ projectId }) {
   const onSaveDiagram = async () => {
     const { nodes, edges } = reactFlowInstance.toObject();
     const data = { nodes, edges };
-    try {
-      await saveOrganizationalChart(projectId, data);
-      setSnackbarStatus('success');
-      setSnackbarText('Guardado exitosamente')
-    } catch (e) {
-      setSnackbarStatus('error');
-      setSnackbarText('Hubo un error al guardar')
-    } finally {
-      setOpenSnackbar(true);
-    }
+    dispatch(onSaveOrganizationalChart(projectId, data));
   }
 
   const handleNewNodeInputName = (event) => {
