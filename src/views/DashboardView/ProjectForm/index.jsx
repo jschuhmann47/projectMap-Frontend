@@ -1,6 +1,5 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 
-import Input from 'components/inputs/Input';
 import Textarea from 'components/inputs/Textarea';
 import Button from 'components/commons/Button';
 
@@ -13,15 +12,13 @@ const ProjectForm = ({ onSubmit }) => (
   <Formik onSubmit={onSubmit} initialValues={{ titulo: '', descripcion: '' }}>
     {({ handleSubmit }) => (
       <Form onSubmit={handleSubmit}>
-        {/* <Box sx={{ width: '100%', height: '100px' }}> */}
-          <Field
-            name="titulo"
-            type="text"
-            fieldLabel="Nombre del proyecto"
-            component={InputV2}
-            validate={validateField}
-          />
-        {/* </Box> */}
+        <Field
+          name="titulo"
+          type="text"
+          fieldLabel="Nombre del proyecto"
+          component={InputV2}
+          validate={validateField}
+        />
         <Box sx={{ width: '100%', height: '140px' }}>
           <Field
             name="descripcion"
