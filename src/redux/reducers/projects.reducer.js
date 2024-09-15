@@ -39,6 +39,14 @@ export const defaultState = {
     loading: false,
     userFound: null,
     error: null
+  },
+  organizationalChart: {
+    data: {
+      nodes: null,
+      edges: null
+    },
+    error: null,
+    success: null,
   }
 };
 
@@ -340,6 +348,26 @@ const projectsReducer = (state = defaultState, action) => {
         loading: false,
         errorShared: error
       }
+    case constants.PROJECTS_ON_GET_ORGANIZATIONAL_CHART_SUCCEEDED:
+      return {
+        ...state,
+        organizationalChart: { data }
+      };
+    case constants.PROJECTS_ON_SAVE_ORGANIZATIONAL_CHART_REQUESTED:
+      return {
+        ...state,
+        organizationalChart: { error: null, success: null }
+      };
+    case constants.PROJECTS_ON_SAVE_ORGANIZATIONAL_CHART_FAILED:
+      return {
+        ...state,
+        organizationalChart: { error, success: false }
+      };
+    case constants.PROJECTS_ON_SAVE_ORGANIZATIONAL_CHART_SUCCEEDED:
+      return {
+        ...state,
+        organizationalChart: { success: true }
+      };
     case constants.PROJECTS_SHARED_ON_GET_ALL_FAILED:
     case constants.PROJECTS_ON_CREATE_FAILED:
     case constants.PROJECTS_ON_GET_ONE_FAILED:

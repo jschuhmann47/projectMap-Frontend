@@ -24,6 +24,17 @@ export const Content = styled('div')({
   aspectRatio: '1',
 });
 
+export const ButtonContent = styled('span')({
+  display: 'flex',
+  fontSize: '14px',
+  gap: 10,
+  alignItems: 'center',
+
+  svg: {
+    fontSize: '16px',
+  },
+});
+
 export const StepContainer = styled('div')({
   display: 'flex',
   flexDirection: 'row',
@@ -152,4 +163,14 @@ export const StepInfo = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   fontSize: 18,
+})
+
+export const ChartButtons = styled('div')({
+  display: 'flex',
+  justifyContent: 'flex-start',
+  position: 'fixed',
+  'z-index': 9999,
+  button: {
+    marginRight: '10px',
+  }
 })

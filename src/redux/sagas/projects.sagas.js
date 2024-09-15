@@ -1,4 +1,6 @@
+import { containerClasses } from '@mui/material';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
+import { onSaveOrganizationalChart } from 'redux/actions/projects.actions';
 
 import * as constantesConsultora from 'redux/contansts/consultora.constants';
 import * as constants from 'redux/contansts/projects.constants';
@@ -23,6 +25,8 @@ import {
   addUser,
   updateUsers,
   search,
+  getOrganizationalChart,
+  saveOrganizationalChart
 } from 'services/projects.services';
 import { searchByEmail } from 'services/user.services';
 
@@ -255,6 +259,33 @@ export function* projectsOnGetUsersShared(action) {
   }
 }
 
+
+export function* projectsOnGetOrganizationalChart(action) {
+  try {
+    const { id } = action;
+    const { data } = yield call(getOrganizationalChart, id);
+    yield put({
+      type: constants.PROJECTS_ON_GET_ORGANIZATIONAL_CHART_SUCCEEDED,
+      data,
+    });
+  } catch (error) {
+    yield put({ type: constants.PROJECTS_ON_GET_ORGANIZATIONAL_CHART_FAILED, error });
+  }
+}
+
+export function* projectsOnSaveOrganizationalChart(action) {
+  try {
+    const { id, chart } = action;
+    const { data } = yield call(saveOrganizationalChart, id, chart);
+    yield put({
+      type: constants.PROJECTS_ON_SAVE_ORGANIZATIONAL_CHART_SUCCEEDED,
+      data,
+    });
+  } catch (error) {
+    yield put({ type: constants.PROJECTS_ON_SAVE_ORGANIZATIONAL_CHART_FAILED, error });
+  }
+}
+
 export function* projectsOnShareUser(action) {
   try {
     const { id, formData } = action;
@@ -384,5 +415,7 @@ export function* watchProjects() {
     takeLatest(constants.PROJECTS_SEARCH_BY_EMAIL_REQUESTED, projectsOnSearchByEmail),
     takeLatest(constants.PROJECTS_ADD_USER_REQUESTED, projectsOnAddUser),
     takeLatest(constants.PROJECTS_SAVE_MEMBERS_REQUESTED, projectsOnSaveMembers),
+    takeLatest(constants.PROJECTS_ON_GET_ORGANIZATIONAL_CHART_REQUESTED, projectsOnGetOrganizationalChart),
+    takeLatest(constants.PROJECTS_ON_SAVE_ORGANIZATIONAL_CHART_REQUESTED, projectsOnSaveOrganizationalChart),
   ]);
 }
