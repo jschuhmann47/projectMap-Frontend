@@ -40,14 +40,14 @@ const ProjectCard = (props) => {
       closeModal();
     }
   };
-  const bgColor = !colorIsDarkSimple(color) ? "#000000" : "#ffffff";
+  const textColor = !isDarkColor(color) ? "#000000" : "#ffffff";
 
   return (
     <>
       <Card style={{ backgroundColor: color }} onClick={onClick}>
         <CardContent>
           <TitleContainer>
-            <Title style={{color: bgColor}}>{title}</Title>
+            <Title style={{color: textColor}}>{title}</Title>
             <Box display="flex" alignItems="center">
               {!isAdmin && (
                 <Typography variant="body2" sx={{ marginRight: 1 }}>
@@ -64,12 +64,12 @@ const ProjectCard = (props) => {
                   }}
                   disabled={onDeleteDisable}
                 >
-                  <DeleteIcon style={{color: bgColor}} />
+                  <DeleteIcon style={{color: textColor}} />
                 </IconButton>
               )}
             </Box>
           </TitleContainer>
-          <Description style={{color: bgColor}}>{description}</Description>
+          <Description style={{color: textColor}}>{description}</Description>
         </CardContent>
       </Card>
       {isAdmin && (
@@ -87,7 +87,7 @@ const ProjectCard = (props) => {
   );
 };
 
-function colorIsDarkSimple(bgColor) {
+function isDarkColor(bgColor) {
   let color = (bgColor.charAt(0) === '#') ? bgColor.substring(1, 7) : bgColor;
   let r = parseInt(color.substring(0, 2), 16); // hexToR
   let g = parseInt(color.substring(2, 4), 16); // hexToG
