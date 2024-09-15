@@ -24,18 +24,8 @@ const DashboardContainer = () => {
   }, [dispatch]);
 
   const onSubmit = (formData) => {
-    const colors = [
-      '#c7dad9',
-      '#9fc1bf',
-      '#719f9d',
-      '#67908e',
-      '#88a8a6',
-      '#a9c0bf',
-      '#568482'
-    ];
-
-    const random = getRandomInt(colors.length);
-    const color = colors[random];
+    
+    const color = "#" + ((1 << 24) * Math.random() | 0).toString(16).padStart(6, "0") // black magic
 
     dispatch(onCreate({ ...formData, color }));
     setAddNew(false);
