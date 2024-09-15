@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { getUser, onEdit, onGetProfile } from 'redux/actions/user.actions';
+import { getUser, onEdit } from 'redux/actions/user.actions';
 
 import ProfileView from 'views/ProfileView';
 
@@ -18,12 +18,8 @@ const UserProfileContainer = () => {
   const loadingProfile = useSelector((state) => state.user.loadingProfile);
 
   useEffect(() => {
-    if (userId) {
-      dispatch(onGetProfile(userId));
-    } else {
-      dispatch(getUser());
-    }
-  }, [userId]);
+    dispatch(getUser());
+  }, []);
 
   const onSubmit = (formData) => {
     dispatch(onEdit(profile?._id || user?._id, formData));

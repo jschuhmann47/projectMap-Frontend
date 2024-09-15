@@ -98,7 +98,7 @@ export function* userEditProfile(action) {
     const { formData, id } = action;
     const { data } = yield call(editProfile, id, formData);
     yield put({ type: constants.USER_ON_EDIT_SUCCEEDED, data });
-    yield put({ type: constants.USER_ON_GET_PROFILE_REQUESTED, id });
+    // yield put({ type: constants.USER_ON_GET_PROFILE_REQUESTED, id });
     yield put({ type: constants.USER_ON_INITIALIZE_REQUESTED });
   } catch (error) {
     yield put({ type: constants.USER_ON_EDIT_FAILED, error });
