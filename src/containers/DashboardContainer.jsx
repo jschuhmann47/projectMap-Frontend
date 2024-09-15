@@ -1,5 +1,6 @@
 import Loading from 'components/commons/Loading';
 import Modal from 'components/commons/Modal';
+import ModalV2 from 'components/commons/ModalV2';
 import LayoutContainer from 'containers/LayoutContainer';
 import { getRandomInt } from 'helpers/randomNumber';
 import { useEffect, useState } from 'react';
@@ -72,9 +73,9 @@ const DashboardContainer = () => {
         onClearSearch={clearSearch}
         userId={user?._id}
       />
-      <Modal isOpen={isAddNewOpen} onClose={() => setAddNew(false)}>
+      <ModalV2 isOpen={isAddNewOpen} onClose={() => setAddNew(false)}>
         <ProjectForm onSubmit={onSubmit} />
-      </Modal>
+      </ModalV2>
       {loading && <Loading isModalMode message="Cargando proyectos" />}
     </LayoutContainer>
   );

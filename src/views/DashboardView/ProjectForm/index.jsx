@@ -7,6 +7,7 @@ import Button from 'components/commons/Button';
 import { Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { validateField } from 'helpers/validateField';
+import InputV2 from 'components/inputs/InputV2';
 
 const ProjectForm = ({ onSubmit }) => (
   <Formik onSubmit={onSubmit} initialValues={{ titulo: '', descripcion: '' }}>
@@ -17,24 +18,9 @@ const ProjectForm = ({ onSubmit }) => (
             name="titulo"
             type="text"
             placeholder="Titulo"
-            component={Input}
+            component={InputV2}
             validate={validateField}
           />
-          <ErrorMessage name="titulo">
-            {(msg) => (
-              <Typography
-                sx={{
-                  textAlign: 'left',
-                  color: 'red',
-                  marginLeft: 2,
-                  marginTop: '2px',
-                  fontSize: '14px',
-                }}
-              >
-                {msg}
-              </Typography>
-            )}
-          </ErrorMessage>
         </Box>
         <Box sx={{ width: '100%', height: '140px' }}>
           <Field
