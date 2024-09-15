@@ -22,6 +22,8 @@ export default function InputV2(props) {
     return inputType;
   };
 
+  console.log('asdf', field, form)
+
   return (
     <Box sx={{ marginTop: '5px', marginBottom: '5px' }}>
       <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 16 }}>
@@ -41,7 +43,9 @@ export default function InputV2(props) {
           fontFamily: 'Fira Sans',
           fontSize: 16,
           width: '100%',
-          borderColor: getIn(form.errors, field.name) ? '#FF0000' : '#344345',
+          borderColor: getIn(form.errors, field.name) && getIn(form.touched, field.name)
+            ? '#FF0000' :
+            '#344345',
         }}
         multiline={multiline}
       />
