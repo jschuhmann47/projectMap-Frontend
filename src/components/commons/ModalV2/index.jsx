@@ -5,7 +5,8 @@ export default function ModalV2({
   title,
   children,
   isOpen,
-  onClose
+  onClose,
+  width = 800,
 }) {
   return (
     <Modal
@@ -23,7 +24,7 @@ export default function ModalV2({
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          width: 800,
+          width: width,
           borderRadius: '8px',
         }}
       >
