@@ -35,6 +35,7 @@ export default function ModalV2({
             borderRadius: '0px 0px 8px 8px',
             paddingLeft: '5%',
             paddingRight: '5%',
+            paddingBottom: '2%',
           }}
         >
           {children}

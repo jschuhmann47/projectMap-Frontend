@@ -73,7 +73,7 @@ const DashboardContainer = () => {
         onClearSearch={clearSearch}
         userId={user?._id}
       />
-      <ModalV2 isOpen={isAddNewOpen} onClose={() => setAddNew(false)} title='Crear proyecto'>
+      <ModalV2 isOpen={isAddNewOpen} onClose={() => setAddNew(false)} title='Nuevo proyecto'>
         <ProjectForm onSubmit={onSubmit} />
       </ModalV2>
       {loading && <Loading isModalMode message="Cargando proyectos" />}

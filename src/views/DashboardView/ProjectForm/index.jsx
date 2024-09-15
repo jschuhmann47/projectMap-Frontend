@@ -4,6 +4,7 @@ import Button from 'components/commons/Button';
 
 import { validateField } from 'helpers/validateField';
 import InputV2 from 'components/inputs/InputV2';
+import { Box } from '@mui/material';
 
 const ProjectForm = ({ onSubmit }) => (
   <Formik onSubmit={onSubmit} initialValues={{ titulo: '', descripcion: '' }}>
@@ -22,9 +23,11 @@ const ProjectForm = ({ onSubmit }) => (
           component={InputV2}
           validate={validateField}
         />
-        <Button type="submit" color="primary">
-          Crear
-        </Button>
+        <Box sx={{ paddingLeft: '30%', paddingRight: '30%' }}>
+          <Button type="submit">
+            Crear
+          </Button>
+        </Box>
       </Form>
     )}
   </Formik>

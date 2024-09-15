@@ -22,7 +22,7 @@ export default function InputV2(props) {
   };
 
   return (
-    <Box>
+    <Box sx={{ marginTop: '5px', marginBottom: '5px' }}>
       <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 16 }}>
         {fieldLabel}
       </Typography>
@@ -36,7 +36,7 @@ export default function InputV2(props) {
           paddingLeft: '14px',
           paddingRight: '14px',
           border: '1px solid',
-          borderRadius: '8px',
+          borderRadius: '4px',
           fontFamily: 'Fira Sans',
           fontSize: 16,
           width: '100%',
