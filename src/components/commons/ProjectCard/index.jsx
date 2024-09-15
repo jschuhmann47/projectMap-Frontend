@@ -40,14 +40,14 @@ const ProjectCard = (props) => {
       closeModal();
     }
   };
-  const bgColor = () => {if (!colorIsDarkSimple(color)){ return "#000000"} else{ return "#ffffff"}};
+  const bgColor = !colorIsDarkSimple(color) ? "#000000" : "#ffffff";
 
   return (
     <>
       <Card style={{ backgroundColor: color }} onClick={onClick}>
         <CardContent>
           <TitleContainer>
-            <Title style={{color: bgColor()}}>{title}</Title>
+            <Title style={{color: bgColor}}>{title}</Title>
             <Box display="flex" alignItems="center">
               {!isAdmin && (
                 <Typography variant="body2" sx={{ marginRight: 1 }}>
@@ -64,12 +64,12 @@ const ProjectCard = (props) => {
                   }}
                   disabled={onDeleteDisable}
                 >
-                  <DeleteIcon style={{ color: 'black' }} />
+                  <DeleteIcon style={{color: bgColor}} />
                 </IconButton>
               )}
             </Box>
           </TitleContainer>
-          <Description style={{color: bgColor()}}>{description}</Description>
+          <Description style={{color: bgColor}}>{description}</Description>
         </CardContent>
       </Card>
       {isAdmin && (
