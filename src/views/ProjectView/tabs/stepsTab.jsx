@@ -5,7 +5,7 @@ import StepInfoModal from "./stepInfoModal"
 import { useState } from "react"
 
 function StepCardView({ step, setStep, permission }) {
-  return <StepCard style={{backgroundColor: step.color || '#000ff'}}>
+  return <StepCard style={{backgroundColor: step.color}}>
     {step.title}
     <IconButton>
       <HelpOutlined onClick={() => setStep(step.value)} />
