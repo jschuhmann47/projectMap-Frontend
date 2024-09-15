@@ -18,32 +18,37 @@ import { COLORS } from 'helpers/enums/colors';
 import Comments from 'components/comments/Comments';
 import Loading from 'components/commons/Loading';
 import { onGetAll as onGetAllComments } from 'redux/actions/comments.actions';
+import { frequencyOptions } from 'helpers/enums/balanced';
 
 const BalancedContainer = () => {
   const { balancedId, id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const objectives = useSelector(areaObjectivesSelector);
-  const { title } = useSelector(titleSelector);
+  const { title, horizon } = useSelector(titleSelector);
   const { loading } = useSelector((state) => state.balanceScorecard);
   const [anchorElement, setAnchorElement] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     dispatch(onGetOne(balancedId));
     dispatch(onGetAllComments('BALANCED_SCORECARD', balancedId));
   }, []);
 
-  const onSubmitObjetive = (area, formData) => {
-    const [firstName, lastName] = formData.responsible.split(' ');
+  const onSubmitObjective = (category, { action, frequency, responsible, goal, baseline, measure }) => {
     dispatch(
       onAddObjective(balancedId, {
-        ...formData,
-        area,
-        responsible: `${firstName[0].toUpperCase() + firstName.slice(1)} ${
-          lastName ? lastName[0].toUpperCase() + lastName.slice(1) : ''
-        }`,
+        action,
+        category,
+        responsible,
+        frequency: +(Object.entries(frequencyOptions).find((kv) => kv[1] === frequency)[0]),
+        measure,
+        goal,
+        baseline,
+        progress: 0,
       })
     );
+    setIsModalOpen(false);
   };
 
   const onEditObjective = (objectiveId, formData) => {
@@ -53,12 +58,16 @@ const BalancedContainer = () => {
   return (
     <LayoutContainer>
       <BalancedView
-        onSubmitObjetive={onSubmitObjetive}
+        onSubmitObjective={onSubmitObjective}
         objectives={objectives}
         onEditObjective={onEditObjective}
         title={title}
         onClickButtonGoBack={() => navigate(`/projects/${id}`)}
         openComments={(target) => setAnchorElement(target)}
+        isModalOpen={isModalOpen}
+        openModal={() => setIsModalOpen(true)}
+        closeModal={() => setIsModalOpen(false)}
+        horizon={horizon}
       />
       <Menu
         anchorEl={anchorElement}
