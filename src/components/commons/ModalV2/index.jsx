@@ -23,12 +23,20 @@ export default function ModalV2({
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          width: 500,
+          width: 800,
           borderRadius: '8px',
         }}
       >
         <ModalV2Header title={title} onClose={onClose} />
-        <Box sx={{ backgroundColor: '#E1ECEB' }}>
+        <Box
+          sx={{
+            backgroundColor: '#E1ECEB',
+            width: '90%',
+            borderRadius: '0px 0px 8px 8px',
+            paddingLeft: '5%',
+            paddingRight: '5%',
+          }}
+        >
           {children}
         </Box>
       </Paper>
@@ -58,7 +66,7 @@ function ModalV2Header({ title, onClose }) {
           color: 'white',
         }}
       >
-        Crear proyecto
+        {title}
       </Typography>
       <IconButton onClick={onClose} sx={{ position: 'absolute', right: 1 }}>
         <Close htmlColor='white' />

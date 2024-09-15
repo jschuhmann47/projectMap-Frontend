@@ -13,15 +13,15 @@ const ProjectForm = ({ onSubmit }) => (
   <Formik onSubmit={onSubmit} initialValues={{ titulo: '', descripcion: '' }}>
     {({ handleSubmit }) => (
       <Form onSubmit={handleSubmit}>
-        <Box sx={{ width: '100%', height: '100px' }}>
+        {/* <Box sx={{ width: '100%', height: '100px' }}> */}
           <Field
             name="titulo"
             type="text"
-            placeholder="Titulo"
+            fieldLabel="Nombre del proyecto"
             component={InputV2}
             validate={validateField}
           />
-        </Box>
+        {/* </Box> */}
         <Box sx={{ width: '100%', height: '140px' }}>
           <Field
             name="descripcion"
