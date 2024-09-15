@@ -28,7 +28,8 @@ export const STEPS = [
       { titulo: 'Agregar Análisis de Porter', key: 1, action: onCreatePorter },
       { titulo: 'Agregar Análisis PESTEL', key: 2, action: onCreatePestel },
     ],
-    id: 'externalEnvironment'
+    id: 'externalEnvironment',
+    color: '#0f0ff0'
   },
   {
     value: StepValue.PLAN_FINANCIERO_MEDICION_RESULTADOS,
