@@ -2,6 +2,7 @@ import { Box, InputBase, Typography } from "@mui/material";
 import { useState } from "react";
 import { getIn } from "formik";
 
+// to do: support password type
 export default function InputV2(props) {
   const {
     type,
