@@ -21,7 +21,7 @@ const customTheme = createTheme({
           backgroundColor: COLORS.white,
           color: COLORS.GreenJungle,
           border: `1px solid ${COLORS.GreenJungle}`,
-        },
+        }
       },
     },
   },

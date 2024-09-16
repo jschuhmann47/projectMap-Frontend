@@ -69,6 +69,17 @@ export const onGetSharedUsers = (id) => ({
   id,
 });
 
+export const onGetOrganizationalChart = (id) => ({
+  type: constants.PROJECTS_ON_GET_ORGANIZATIONAL_CHART_REQUESTED,
+  id
+});
+
+export const onSaveOrganizationalChart = (id, chart) => ({
+  type: constants.PROJECTS_ON_SAVE_ORGANIZATIONAL_CHART_REQUESTED,
+  id,
+  chart
+});
+
 export const onShareUser = (id, formData) => ({
   type: constants.PROJECTS_SHARE_USER_REQUESTED,
   id,

@@ -57,3 +57,24 @@ export const frequencyOptions = {
   60: 'Bimestral',
   30: 'Mensual',
 }
+
+// A 1 año: MENSUAL, BIMESTRAL, TRIMESTRAL
+// A 2 años: BIMESTRAL, TRIMESTRAL, SEMESTRAL
+// A 3 años: TRIMESTRAL, SEMESTRAL, ANUAL
+// A 4 años: SEMESTRAL, ANUAL
+// A 5 años: SEMESTRAL, ANUAL
+export function filterFrequenciesByHorizon(horizon) {
+  if (horizon === 360) {
+    return ['Mensual', 'Bimestral', 'Trimestral']
+  }
+  if (horizon === 720) {
+    return ['Bimestral', 'Trimestral', 'Semestral']
+  }
+  if (horizon === 1080) {
+    return ['Trimestral', 'Semestral', 'Anual']
+  }
+  if (horizon === 1440 || horizon === 1800) {
+    return ['Semestral', 'Anual']
+  }
+  return []
+}

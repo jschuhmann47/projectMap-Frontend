@@ -9,9 +9,8 @@ import {
 } from '@mui/material';
 
 import { COLORS } from 'helpers/enums/colors';
-import { Area, getDeviationColor, Trend } from 'helpers/enums/balanced';
+import { Area, filterFrequenciesByHorizon, getDeviationColor, Trend } from 'helpers/enums/balanced';
 
-import ObjetiveInput from './components/ObjetiveInput';
 import AddButton from './components/AddButton';
 
 import { Accordion, AccordionDetails, AccordionSummary } from './styles';
@@ -23,8 +22,15 @@ import {
   TrendingUp,
   Comment,
 } from '@mui/icons-material';
-import { ButtonContainer, Title, TitleContainer } from 'views/FodaView/styles';
+import { ButtonContainer, CardTitle, Title } from 'views/FodaView/styles';
 import ToolTip from 'components/commons/ToolTip';
+import Modal from 'components/commons/Modal';
+import { ButtonsContainer, CustomForm, FormContainer } from 'styles/form';
+import { ErrorMessage, Field, Formik } from 'formik';
+import Input from 'components/inputs/Input';
+import { validateField } from 'helpers/validateField';
+import SelectInput from 'components/inputs/SelectInput';
+import Button from 'components/commons/Button';
 
 const tableHeaderStyle = {
   display: 'flex',
@@ -80,12 +86,16 @@ const getTrendIcon = (trend) => {
 };
 
 const BalancedView = ({
-  onSubmitObjetive,
+  onSubmitObjective,
   objectives,
   onEditObjective,
   title,
   openComments,
   onClickButtonGoBack,
+  isModalOpen,
+  openModal,
+  closeModal,
+  horizon,
 }) => {
   const [areaInput, setAreaInput] = useState(null);
   const [expanded, setExpanded] = useState(null);
@@ -130,10 +140,26 @@ const BalancedView = ({
             fontSize="14px"
           />
         </Grid>
-        <Grid item md={2} sx={tableHeaderStyle}>
+        <Grid item md={1} sx={tableHeaderStyle}>
           <span>Responsable</span>
           <ToolTip
-            text="Es importante que todo el equipo sepa quien es el responsable de que se haga seguimiento de este objetivo."
+            text="Es importante que todo el equipo sepa quién es el responsable de que se haga seguimiento de este objetivo."
+            placement="right"
+            fontSize="14px"
+          />
+        </Grid>
+        <Grid item md={1} sx={tableHeaderStyle}>
+          <span>L. base</span>
+          <ToolTip
+            text="Medición de la que se parte en este objetivo. Saber el estado actual es fundamental para trazar objetivos realistas."
+            placement="right"
+            fontSize="14px"
+          />
+        </Grid>
+        <Grid item md={1} sx={tableHeaderStyle}>
+          <span>Avance</span>
+          <ToolTip
+            text="Porcentaje de completitud actual de este objetivo, en función de las mediciones ingresadas."
             placement="right"
             fontSize="14px"
           />
@@ -147,14 +173,6 @@ const BalancedView = ({
           />
         </Grid>
         <Grid item md={1} sx={tableHeaderStyle}>
-          <span>Actual</span>
-          <ToolTip
-            text="Representa el avance porcentual a su objetivo. Recuerde comparar esto con el lugar en el que está en el trimestre para entender su situación actual. Además, utilice el desvío y tendencia para contextualizar"
-            placement="right"
-            fontSize="14px"
-          />
-        </Grid>
-        <Grid item md={1} sx={tableHeaderStyle}>
           <span>Tendencia</span>
           <ToolTip
             text="Representa la tendencia del avance en función de los últimos data points."
@@ -163,7 +181,7 @@ const BalancedView = ({
           />
         </Grid>
         <Grid item md={1} sx={tableHeaderStyle}>
-          <span>Desvio</span>
+          <span>Desvío</span>
           <ToolTip
             text="Representa la diferencia entre donde estoy versus donde debería estar; el avance esperado versus el avance real."
             placement="right"
@@ -174,14 +192,20 @@ const BalancedView = ({
     );
   };
 
+  function selectArea(area) {
+    setAreaInput(area);
+    openModal();
+  };
+
   const renderRow = ({
     action,
     measure,
     responsible,
-    target,
+    goal,
     progress,
     trend,
     deviation,
+    baseline,
   }) => (
     <Grid
       container
@@ -195,13 +219,13 @@ const BalancedView = ({
       <Grid item md={2} sx={tableHeaderStyle}>
         <span>{measure}</span>
       </Grid>
-      <Grid item md={2} sx={tableHeaderStyle}>
+      <Grid item md={1} sx={tableHeaderStyle}>
         <Tooltip title={responsible} placement="top" arrow>
           <Avatar {...stringAvatar(responsible)} />
         </Tooltip>
       </Grid>
       <Grid item md={1} sx={tableHeaderStyle}>
-        <span>{target}</span>
+        <span>{baseline}</span>
       </Grid>
       <Grid item md={1} sx={tableHeaderStyle}>
         <span>
@@ -211,6 +235,9 @@ const BalancedView = ({
           }) || 0}
           %
         </span>
+      </Grid>
+      <Grid item md={1} sx={tableHeaderStyle}>
+        <span>{goal}</span>
       </Grid>
       <Grid item md={1} sx={tableHeaderStyle}>
         <span>{trend && getTrendIcon(trend)}</span>
@@ -231,85 +258,216 @@ const BalancedView = ({
   );
 
   return (
-    <Grid>
-      <Box
-        sx={{
-          padding: '30px',
-          display: 'flex',
-          flex: 1,
-          justifyContent: 'space-between',
-        }}
-      >
-        <ButtonContainer>
-          <IconButton size="small" onClick={onClickButtonGoBack}>
-            <ArrowBack />
-          </IconButton>
-        </ButtonContainer>
-        <Title>{title}</Title>
-        <ButtonContainer sx={{ gap: '10px' }}>
-          <IconButton
-            size="small"
-            onClick={(event) => openComments(event.currentTarget)}
-          >
-            <Comment />
-          </IconButton>
-        </ButtonContainer>
-      </Box>
-      <Grid
-        container
-        sx={{
-          padding: '30px',
-        }}
-        rowGap={6}
-      >
-        {Object.values(Area).map((area) => (
-          <Grid item xs={12}>
-            {renderHeader(area)}
-            <Grid
-              container
-              sx={{
-                padding: '10px',
-                background: COLORS.AthensGray,
-                alignItems: 'center',
-              }}
+    <>
+      <Grid>
+        <Box
+          sx={{
+            padding: '30px',
+            display: 'flex',
+            flex: 1,
+            justifyContent: 'space-between',
+          }}
+        >
+          <ButtonContainer>
+            <IconButton size="small" onClick={onClickButtonGoBack}>
+              <ArrowBack />
+            </IconButton>
+          </ButtonContainer>
+          <Title>{title}</Title>
+          <ButtonContainer sx={{ gap: '10px' }}>
+            <IconButton
+              size="small"
+              onClick={(event) => openComments(event.currentTarget)}
             >
-              {objectives[area]?.map((objective) => (
-                <Grid item xs={12}>
-                  <Accordion
-                    expanded={expanded === objective._id}
-                    onChange={handleChange(objective._id)}
-                  >
-                    <AccordionSummary>{renderRow(objective)}</AccordionSummary>
-                    <AccordionDetails>
-                      <Checkpoints
-                        checkpoints={objective.checkpoints}
-                        onClickCancel={handleChange(null)}
-                        onSubmit={(formData) =>
-                          onEditObjective(objective._id, {
-                            ...objective,
-                            ...formData,
-                          })
-                        }
-                      />
-                    </AccordionDetails>
-                  </Accordion>
-                </Grid>
-              ))}
-              <Grid item xs={12}>
-                {areaInput === area && (
-                  <ObjetiveInput
-                    area={area}
-                    onClickCancel={() => setAreaInput(null)}
-                    onSubmit={onSubmitObjetive}
-                  />
-                )}
+              <Comment />
+            </IconButton>
+          </ButtonContainer>
+        </Box>
+        <Grid
+          container
+          sx={{
+            padding: '20px',
+          }}
+          rowGap={6}
+        >
+          {Object.values(Area).map((area) => (
+            <Grid item xs={12}>
+              {renderHeader(area)}
+              <Grid
+                container
+                sx={{
+                  padding: '10px',
+                  background: COLORS.AthensGray,
+                  alignItems: 'center',
+                }}
+              >
+                {objectives[area]?.map((objective) => (
+                  <Grid item xs={12}>
+                    <Accordion
+                      expanded={expanded === objective._id}
+                      onChange={handleChange(objective._id)}
+                    >
+                      <AccordionSummary>{renderRow(objective)}</AccordionSummary>
+                      <AccordionDetails>
+                        <Checkpoints
+                          checkpoints={objective.checkpoints}
+                          onClickCancel={handleChange(null)}
+                          onSubmit={(formData) =>
+                            onEditObjective(objective._id, {
+                              ...objective,
+                              ...formData,
+                            })
+                          }
+                        />
+                      </AccordionDetails>
+                    </Accordion>
+                  </Grid>
+                ))}
+                <AddButton onClick={() => selectArea(area)} />
               </Grid>
-              <AddButton onClick={() => setAreaInput(area)} />
             </Grid>
-          </Grid>
-        ))}
+          ))}
+        </Grid>
       </Grid>
-    </Grid>
+      <Modal isOpen={isModalOpen} onClose={closeModal} backgroundColor='#C7DAD9'>
+        <FormContainer>
+          <Formik
+            onSubmit={(formData) => onSubmitObjective(areaInput, formData)}
+            initialValues={{ action: '', frequency: '', responsible: '', measure: '' }}
+          >
+            {({ handleSubmit }) => (
+              <CustomForm onSubmit={handleSubmit}>
+                <CardTitle>Agregar objetivo</CardTitle>
+                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}>
+                  <Field
+                    name="action"
+                    placeholder="Nombre"
+                    component={Input}
+                    validate={validateField}
+                  />
+                  <ErrorMessage name="action">
+                    {(msg) => (
+                      <Typography
+                        sx={{
+                          textAlign: 'left',
+                          color: 'red',
+                          marginLeft: 2,
+                          marginTop: '2px',
+                          fontSize: '14px',
+                        }}
+                      >
+                        {msg}
+                      </Typography>
+                    )}
+                  </ErrorMessage>
+                  <Field
+                    name="frequency"
+                    placeholder="Frecuencia"
+                    component={SelectInput}
+                    options={filterFrequenciesByHorizon(horizon)}
+                    validate={validateField}
+                  />
+                  <ErrorMessage name="frequency">
+                    {(msg) => (
+                      <Typography
+                        sx={{
+                          textAlign: 'left',
+                          color: 'red',
+                          marginLeft: 2,
+                          marginTop: '2px',
+                          fontSize: '14px',
+                        }}
+                      >
+                        {msg}
+                      </Typography>
+                    )}
+                  </ErrorMessage>
+                  <Field
+                    name="responsible"
+                    placeholder="Responsable"
+                    component={Input}
+                    validate={validateField}
+                  />
+                  <ErrorMessage name="responsible">
+                    {(msg) => (
+                      <Typography
+                        sx={{
+                          textAlign: 'left',
+                          color: 'red',
+                          marginLeft: 2,
+                          marginTop: '2px',
+                          fontSize: '14px',
+                        }}
+                      >
+                        {msg}
+                      </Typography>
+                    )}
+                  </ErrorMessage>
+                  <Field
+                    name="baseline"
+                    placeholder="Línea base"
+                    type="number"
+                    component={Input}
+                    validate={validateField}
+                  />
+                  <ErrorMessage name="baseline">
+                    {(msg) => (
+                      <Typography
+                        sx={{
+                          textAlign: 'left',
+                          color: 'red',
+                          marginLeft: 2,
+                          marginTop: '2px',
+                          fontSize: '14px',
+                        }}
+                      >
+                        {msg}
+                      </Typography>
+                    )}
+                  </ErrorMessage>
+                  <Field
+                    name="goal"
+                    placeholder="Resultado esperado"
+                    type="number"
+                    component={Input}
+                    validate={validateField}
+                  />
+                  <ErrorMessage name="goal">
+                    {(msg) => (
+                      <Typography
+                        sx={{
+                          textAlign: 'left',
+                          color: 'red',
+                          marginLeft: 2,
+                          marginTop: '2px',
+                          fontSize: '14px',
+                        }}
+                      >
+                        {msg}
+                      </Typography>
+                    )}
+                  </ErrorMessage>
+                  <Field
+                    name="measure"
+                    placeholder="Unidad de medida"
+                    component={Input}
+                    validate={validateField}
+                  />
+                </Box>
+                <ButtonsContainer>
+                  <Button color="secondary" onClick={closeModal}>
+                    Cancelar
+                  </Button>
+                  <Button color="primary" type="submit">
+                    Agregar
+                  </Button>
+                </ButtonsContainer>
+              </CustomForm>
+            )}
+          </Formik>
+        </FormContainer>
+      </Modal>
+    </>
   );
 };
 

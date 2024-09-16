@@ -28,7 +28,8 @@ export const STEPS = [
       { titulo: 'Agregar Análisis de Porter', key: 1, action: onCreatePorter },
       { titulo: 'Agregar Análisis PESTEL', key: 2, action: onCreatePestel },
     ],
-    id: 'externalEnvironment'
+    id: 'externalEnvironment',
+    color: '#fcf281'
   },
   {
     value: StepValue.PLAN_FINANCIERO_MEDICION_RESULTADOS,
@@ -37,7 +38,8 @@ export const STEPS = [
       { titulo: 'Agregar Balanced Scorecard', action: onCreateBalanced, horizon: bscHorizonOptions },
       { titulo: 'Agregar OKR', action: onCreateOkr, area: true, horizon: okrHorizonOptions },
     ],
-    id: 'financialPlanning'
+    id: 'financialPlanning',
+    color: '#fcb6d4'
   },
   {
     value: StepValue.EVALUACION_SITUACION_INTERNA,
@@ -48,13 +50,15 @@ export const STEPS = [
         action: onCreateFoda,
       },
     ],
-    id: 'internalSituation'
+    id: 'internalSituation',
+    color: '#aaed92'
   },
   {
     value: StepValue.MEJORA_CONTINUA,
     title: 'Mejora Continua',
-    menuItems: [{ titulo: '', action: () => {} }],
-    id: 'continuousImprovement'
+    menuItems: [{ titulo: '', action: () => { } }],
+    id: 'continuousImprovement',
+    color: '#febbbe'
   },
   {
     value: StepValue.DEFINICION_PLANES_TRANSFORMACION,
@@ -62,13 +66,15 @@ export const STEPS = [
     menuItems: [
       { titulo: 'Planes de transformación', action: onCreateQuestionnarie },
     ],
-    id: 'transformationPlans'
+    id: 'transformationPlans',
+    color: '#d8c7ff'
   },
   {
     value: StepValue.DEFINICION_LINIAMIENTOS_ESTRATEGICOS,
     title: 'Definición de Lineamientos Estratégicos',
     menuItems: [{ titulo: 'Agregar Matriz Ansoff', action: onCreateAnsoff }],
-    id: 'strategicGuidelines'
+    id: 'strategicGuidelines',
+    color: '#86e6d9'
   },
   {
     value: StepValue.FORMULACION_ESTRATEGIA_COMPETITIVA,
@@ -76,7 +82,8 @@ export const STEPS = [
     menuItems: [
       { titulo: 'Agregar Matriz McKinsey', action: onCreateMckinsey },
     ],
-    id: 'competitiveStrategy'
+    id: 'competitiveStrategy',
+    color: '#9edcfa'
   },
 ];
 

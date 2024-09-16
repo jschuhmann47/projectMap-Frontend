@@ -15,7 +15,7 @@ const DashboardContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isAddNewOpen, setAddNew] = useState(false);
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
   const { items, loading } = useSelector((state) => state.projects);
   const user = useSelector((state) => state.user.data);
 
@@ -25,18 +25,10 @@ const DashboardContainer = () => {
   }, [dispatch]);
 
   const onSubmit = (formData) => {
-    const colors = [
-      '#c7dad9',
-      '#9fc1bf',
-      '#719f9d',
-      '#67908e',
-      '#88a8a6',
-      '#a9c0bf',
-      '#568482'
-    ];
-
-    const random = getRandomInt(colors.length);
-    const color = colors[random];
+    function randomHSLA() {
+      return `hsla(${~~(360 * Math.random())}, 70%,  72%, 0.8)`;
+    }
+    const color = randomHSLA();
 
     dispatch(onCreate({ ...formData, color }));
     setAddNew(false);
@@ -52,12 +44,12 @@ const DashboardContainer = () => {
 
   function search() {
     dispatch(onSearch(searchText));
-  };
+  }
 
   function clearSearch() {
-    setSearchText('');
+    setSearchText("");
     dispatch(onGetAll());
-  };
+  }
 
   return (
     <LayoutContainer>
