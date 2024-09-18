@@ -1,4 +1,4 @@
-import { frequencyOptions, horizonOptions, priorityOptions } from "helpers/enums/okr";
+import { filterFrequenciesByHorizon, horizonOptions, priorityOptions } from "helpers/enums/okr";
 import { EditObjectiveButton, KeyResultsContainer, OkrContainerV2, OkrHeader, OkrMoreData, OkrTitle } from "./styles";
 import Button from "components/commons/Button";
 import Modal from "components/commons/Modal";
@@ -129,7 +129,7 @@ const OKRView = ({
                   name="frequency"
                   placeholder="Frecuencia"
                   component={SelectInput}
-                  options={Object.values(frequencyOptions)}
+                  options={filterFrequenciesByHorizon(okrData?.horizon)}
                   validate={validateField}
                 />
                 <ErrorMessage name="frequency">
