@@ -62,3 +62,28 @@ export const priorityOptions = [
   '/priorities/medium.svg',
   '/priorities/high.svg'
 ]
+
+// A 15 dias: diario, semanal
+// A 1 mes: semanal, quincenal
+// A 2 meses: semanal, quincenal, mensual
+// A 3 meses: quincenal, mensual
+// A 6 meses: mensual, bimestral, trimestral
+// A 1 año: mensual, bimestral, trimestral
+export function filterFrequenciesByHorizon(horizon) {
+  if (horizon === 15) {
+    return ['Diario', 'Semanal']
+  }
+  if (horizon === 30) {
+    return ['Semanal', 'Quincenal']
+  }
+  if (horizon === 60) {
+    return ['Semanal', 'Quincenal', 'Mensual']
+  }
+  if (horizon === 90) {
+    return ['Quincenal', 'Mensual']
+  }
+  if (horizon === 180 || horizon === 360) {
+    return ['Mensual', 'Bimestral', 'Trimestral']
+  }
+  return []
+}
