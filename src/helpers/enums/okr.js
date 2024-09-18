@@ -65,7 +65,7 @@ export const priorityOptions = [
 
 // A 15 dias: diario, semanal
 // A 1 mes: semanal, quincenal
-// A 2 meses: 
+// A 2 meses: semanal, quincenal, mensual
 // A 3 meses: quincenal, mensual
 // A 6 meses: mensual, bimestral, trimestral
 // A 1 año: mensual, bimestral, trimestral
