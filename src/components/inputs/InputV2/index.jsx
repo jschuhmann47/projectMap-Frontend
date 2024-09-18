@@ -22,8 +22,6 @@ export default function InputV2(props) {
     return inputType;
   };
 
-  console.log('asdf', field, form)
-
   return (
     <Box sx={{ marginTop: '5px', marginBottom: '5px' }}>
       <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 16 }}>
