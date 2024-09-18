@@ -163,6 +163,7 @@ export const StepInfo = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   fontSize: 18,
+  paddingTop: 5,
 })
 
 export const ChartButtons = styled('div')({
