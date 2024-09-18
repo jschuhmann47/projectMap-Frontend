@@ -1,7 +1,9 @@
-import { Box, TextField, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Button from "components/commons/Button";
-import Modal from "components/commons/Modal";
-import { useState } from "react";
+import ModalV2 from "components/commons/ModalV2";
+import InputV2 from "components/inputs/InputV2";
+import { Field, Form, Formik } from "formik";
+import { validateField } from "helpers/validateField";
 
 export default function AddUserModal({
   onClose,
@@ -9,32 +11,25 @@ export default function AddUserModal({
   onAddUserToProject,
   info
 }) {
-  const [email, setEmail] = useState('');
-
-  function onCloseModal() {
-    setEmail('');
-    onClose();
-  }
-
   function addUserToProject() {
     onAddUserToProject(info.user.email, 'participant') // TODO: allow adding coordinator directly
   }
 
-  return <Modal isOpen={info.isOpen} onClose={onCloseModal} backgroundColor="#C7DAD9">
+  return <ModalV2 isOpen={info.isOpen} onClose={onClose} title='Buscar Integrante'>
     <Box>
-      <Typography id="modal-modal-title" variant="h6" component="h2">
-        Buscar Integrante
-      </Typography>
-      <TextField
-        fullWidth
-        label="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        margin="normal"
-        error={!!info.error}
-        helperText={info.error}
-      />
-      <Button onClick={() => onSearchUserByEmail(email)}>Buscar</Button>
+      <Formik onSubmit={({ userEmail }) => onSearchUserByEmail(userEmail)} initialValues={{ userEmail: '' }}>
+        {({ handleSubmit }) => (
+          <Form onSubmit={handleSubmit}>
+            <Field
+              name='userEmail'
+              fieldLabel='Email'
+              component={InputV2}
+              validate={validateField}
+            />
+            <Button type='submit'>Buscar</Button>
+          </Form>
+        )}
+      </Formik>
       {info.user && (
         <Box mt={2}>
           <Typography variant="body1">Usuario encontrado: {info.user.firstName} {info.user.lastName}</Typography>
@@ -42,5 +37,5 @@ export default function AddUserModal({
         </Box>
       )}
     </Box>
-  </Modal>;
+  </ModalV2>;
 }

@@ -37,7 +37,6 @@ const ConfirmDeleteModal = ({
           {({ handleSubmit, setFieldValue }) => (
             <Form
               onSubmit={handleSubmit}
-              sx={{ width: '500px', margin: '0 auto' }}
             >
               <Box
                 sx={{
@@ -78,7 +77,9 @@ const ConfirmDeleteModal = ({
                 sx={{
                   display: 'flex',
                   justifyContent: 'space-between',
-                  width: '100%',
+                  width: '40%',
+                  paddingLeft: '30%',
+                  paddingRight: '30%',
                 }}
               >
                 <Button color="secondary" onClick={() => onClose()}>
