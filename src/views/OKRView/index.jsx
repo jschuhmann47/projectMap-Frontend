@@ -80,6 +80,7 @@ const OKRView = ({
   deleteOkr,
   onClickBack,
   deleteKeyResult,
+  organizationalNodes
 }) => {
   const [okrInputId, setOkrInputId] = useState(null);
   const [keyResultId, setKeyResultId] = useState(null);

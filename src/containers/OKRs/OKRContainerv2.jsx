@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import Loading from 'components/commons/Loading';
 import { frequencyOptions } from 'helpers/enums/okr';
+import { onGetOne } from 'redux/actions/projects.actions';
 
 const OKRContainer = () => {
   const { okrToolId, id } = useParams();
@@ -21,8 +22,12 @@ const OKRContainer = () => {
   const { loading, data: okrData } = useSelector((state) => state.okr);
   const [isEditOkrModalOpen, setIsEditOkrModalOpen] = useState(false);
   const [isAddKrModalOpen, setIsAddKrModalOpen] = useState(false);
+  const organizationalNodes = useSelector(
+    (state) => state.projects.data?.chart?.nodes || []
+  );
 
   useEffect(() => {
+    dispatch(onGetOne(id));
     dispatch(onGetOneTool(okrToolId));
   }, []);
 
@@ -92,6 +97,7 @@ const OKRContainer = () => {
           addKr={addKr}
           editKr={editKr}
           deleteKr={deleteKr}
+          organizationalNodes={organizationalNodes}
         />
       </Grid>
       {loading && <Loading isModalMode message="Cargando OKR" />}

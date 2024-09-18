@@ -22,7 +22,8 @@ const OKRView = ({
   isAddKrModalOpen,
   addKr,
   editKr,
-  deleteKr
+  deleteKr,
+  organizationalNodes
 }) => {
   return <OkrContainerV2>
     <OkrHeader>
@@ -77,7 +78,14 @@ const OKRView = ({
                 <Field
                   name="area"
                   placeholder="Área"
-                  component={Input}
+                  component={SelectInput}
+                  options={[
+                    { value: "", label: "Sin área" },
+                    ...organizationalNodes.map((node) => ({
+                      value: node.id,
+                      label: node.data.label
+                    }))
+                  ].map(option => option.label)}
                   validate={validateField}
                 />
               </Box>

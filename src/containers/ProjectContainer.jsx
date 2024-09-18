@@ -107,6 +107,9 @@ const ProjectContainer = () => {
   const user = useSelector((state) => state.user.data);
   const loading = useSelector(getLoadingSelector);
 
+  const organizationalNodes = useSelector(
+    (state) => state.projects.data?.chart?.nodes || []
+  );
   const onClickButtonGoBack = () => {
     if (user?.role && user?.role === 'AdminConsultant')
       navigate(`/consultoria`);
@@ -442,7 +445,14 @@ const ProjectContainer = () => {
                     <Field
                       name="area"
                       placeholder="Área"
-                      component={Input}
+                      component={SelectInput}
+                      options={[
+                        { value: "", label: "Sin área" },
+                        ...organizationalNodes.map((node) => ({
+                          value: node.id,
+                          label: node.data.label
+                        }))
+                      ].map(option => option.label)}
                       validate={validateField}
                     />
                   }
