@@ -65,6 +65,7 @@ export const priorityOptions = [
 
 // A 15 dias: diario, semanal
 // A 1 mes: semanal, quincenal
+// A 2 meses: 
 // A 3 meses: quincenal, mensual
 // A 6 meses: mensual, bimestral, trimestral
 // A 1 año: mensual, bimestral, trimestral
@@ -74,6 +75,9 @@ export function filterFrequenciesByHorizon(horizon) {
   }
   if (horizon === 30) {
     return ['Semanal', 'Quincenal']
+  }
+  if (horizon === 60) {
+    return ['Semanal', 'Quincenal', 'Mensual']
   }
   if (horizon === 90) {
     return ['Quincenal', 'Mensual']
