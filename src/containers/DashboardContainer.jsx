@@ -1,19 +1,15 @@
-import Loading from "components/commons/Loading";
-import Modal from "components/commons/Modal";
-import LayoutContainer from "containers/LayoutContainer";
-import { getRandomInt } from "helpers/randomNumber";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import {
-  onCreate,
-  onDelete,
-  onGetAll,
-  onSearch,
-} from "redux/actions/projects.actions";
-import { getUser } from "redux/actions/user.actions";
-import DashboardView from "views/DashboardView";
-import ProjectForm from "views/DashboardView/ProjectForm";
+import Loading from 'components/commons/Loading';
+import Modal from 'components/commons/Modal';
+import ModalV2 from 'components/commons/ModalV2';
+import LayoutContainer from 'containers/LayoutContainer';
+import { getRandomInt } from 'helpers/randomNumber';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { onCreate, onDelete, onGetAll, onSearch } from 'redux/actions/projects.actions';
+import { getUser } from 'redux/actions/user.actions';
+import DashboardView from 'views/DashboardView';
+import ProjectForm from 'views/DashboardView/ProjectForm';
 
 const DashboardContainer = () => {
   const dispatch = useDispatch();
@@ -69,9 +65,9 @@ const DashboardContainer = () => {
         onClearSearch={clearSearch}
         userId={user?._id}
       />
-      <Modal isOpen={isAddNewOpen} onClose={() => setAddNew(false)}>
+      <ModalV2 isOpen={isAddNewOpen} onClose={() => setAddNew(false)} title='Nuevo proyecto'>
         <ProjectForm onSubmit={onSubmit} />
-      </Modal>
+      </ModalV2>
       {loading && <Loading isModalMode message="Cargando proyectos" />}
     </LayoutContainer>
   );
