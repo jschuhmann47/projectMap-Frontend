@@ -80,12 +80,9 @@ const OKRView = ({
                   placeholder="Área"
                   component={SelectInput}
                   options={[
-                    { value: "", label: "Sin área" },
-                    ...organizationalNodes.map((node) => ({
-                      value: node.id,
-                      label: node.data.label
-                    }))
-                  ].map(option => option.label)}
+                    "Sin área",
+                    ...organizationalNodes.map((node) => `${node.id}-${node.data.label}`)
+                  ]}
                   validate={validateField}
                 />
               </Box>

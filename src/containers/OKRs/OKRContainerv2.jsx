@@ -32,9 +32,17 @@ const OKRContainer = () => {
   }, []);
 
   function editObjective({ description, area }) {
+    let areaId = "";
+    let areaName = area;
+  
+    if (area && area.includes('-')) {
+      [areaId, areaName] = area.split('-');
+    }
+  
     const formData = {
       description,
-      area,
+      area: areaName,
+      areaId: areaId,
       horizon: okrData.horizon,
       keyResults: okrData.keyResults,
       projectId: okrData.projectId,

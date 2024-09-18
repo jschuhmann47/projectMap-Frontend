@@ -198,7 +198,23 @@ const ProjectContainer = () => {
   };
 
   const onSubmitTool = (action, formData) => {
-    dispatch(action({ ...formData, projectId: id }));
+    let areaId = "";
+    let area = formData.area;
+  
+    if (formData.area && formData.area.includes('-')) {
+      [areaId, area] = formData.area.split('-');
+    }
+  
+    const values = {
+      ...formData,
+      areaId: areaId,
+      area: area,
+      projectId: id,
+    };
+  
+    console.log("PABLO", values);
+  
+    dispatch(action(values));
     navigate('createTool');
   };
 
@@ -447,12 +463,9 @@ const ProjectContainer = () => {
                       placeholder="Área"
                       component={SelectInput}
                       options={[
-                        { value: "", label: "Sin área" },
-                        ...organizationalNodes.map((node) => ({
-                          value: node.id,
-                          label: node.data.label
-                        }))
-                      ].map(option => option.label)}
+                        "Sin área",
+                        ...organizationalNodes.map((node) => `${node.id}-${node.data.label}`)
+                      ]}
                       validate={validateField}
                     />
                   }
