@@ -15,20 +15,23 @@ export default function AddUserModal({
   function addUserToProject() {
     onAddUserToProject(info.user.email, 'participant') // TODO: allow adding coordinator directly
   }
+
+  console.log('userInfo', info);
   
-  return <ModalV2 isOpen={info.isOpen} onClose={onClose} title='Buscar Integrante'>
-    <Box sx={{ minHeight: 150, maxHeight: 150 }}>
+  return <ModalV2 isOpen={info.isOpen} onClose={onClose} title='Agregar integrante' width={500}>
+    <Box sx={{ height: 150 }}>
       {!info.user && (
         <Formik onSubmit={({ userEmail }) => onSearchUserByEmail(userEmail)} initialValues={{ userEmail: '' }}>
           {({ handleSubmit }) => (
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} style={{ position: 'relative', height: 150 }}>
               <Field
                 name='userEmail'
                 fieldLabel='Email'
                 component={InputV2}
                 validate={validateField}
               />
-              <Box sx={{ paddingLeft: '30%', paddingRight: '30%', width: '40%' }}>
+              <Box sx={{ color: 'red' }}>{info.error ? 'No se encontró un usuario con este email.' : ''}</Box>
+              <Box sx={{ paddingLeft: '30%', paddingRight: '30%', width: '40%', position: 'absolute', bottom: 0 }}>
                 <Button type='submit'>Buscar</Button>
               </Box>
             </Form>
@@ -36,7 +39,7 @@ export default function AddUserModal({
         </Formik>
       )}
       {info.user && (
-        <Box mt={2} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '5px' }}>
           <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 18 }}>
             ¡Usuario encontrado!
           </Typography>
@@ -46,8 +49,18 @@ export default function AddUserModal({
           <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 18 }}>
             Nombre: {info.user.firstName} {info.user.lastName}
           </Typography>
-          <Button onClick={onGoBack}>Atrás</Button>
-          <Button onClick={addUserToProject}>Confirmar</Button>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              width: '40%',
+              paddingLeft: '30%',
+              paddingRight: '30%',
+            }}
+          >
+            <Button color="secondary" onClick={onGoBack}>Atrás</Button>
+            <Button color="primary" onClick={addUserToProject}>Confirmar</Button>
+          </Box>
         </Box>
       )}
     </Box>
