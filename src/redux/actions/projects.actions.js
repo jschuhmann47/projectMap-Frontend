@@ -105,6 +105,10 @@ export const closeModal = () => ({
   type: constants.PROJECTS_CLOSE_ADD_USER_MODAL,
 });
 
+export const goBackModal = () => ({
+  type: constants.PROJECTS_GO_BACK_ADD_USER_MODAL,
+});
+
 export const onAddUser = (id, formData) => ({
   type: constants.PROJECTS_ADD_USER_REQUESTED,
   id,

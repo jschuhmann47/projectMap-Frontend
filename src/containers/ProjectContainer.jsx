@@ -26,7 +26,8 @@ import {
   onAddUser,
   changeMemberPermission,
   changeMemberRole,
-  onSaveMembers
+  onSaveMembers,
+  goBackModal
 } from 'redux/actions/projects.actions';
 import { STEPS } from 'helpers/enums/steps';
 import { COLORS } from 'helpers/enums/colors';
@@ -244,6 +245,10 @@ const ProjectContainer = () => {
     dispatch(onSearchByEmail(email));
   };
 
+  function onGoBackModal() {
+    dispatch(goBackModal());
+  }
+
   function onOpenModal() {
     dispatch(openModal());
   };
@@ -292,6 +297,7 @@ const ProjectContainer = () => {
         onAddUserToProject={onAddUserToProject}
         onOpenModal={onOpenModal}
         onCloseModal={onCloseModal}
+        onGoBackModal={onGoBackModal}
         onChangeMemberRole={onChangeMemberRole}
         onChangeMemberPermission={onChangeMemberPermission}
         onSaveChanges={onSaveChanges}
