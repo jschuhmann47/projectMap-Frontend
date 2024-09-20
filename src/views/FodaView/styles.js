@@ -53,9 +53,11 @@ export const AddButton = styled(IconButton)({
 
 export const ButtonsContainer = styled('div')({
   display: 'flex',
-  width: '100%',
+  width: '40%',
   gap: 15,
   justifyContent: 'space-between',
+  paddingLeft: '30%',
+  paddingRight: '30%',
 });
 
 export const CreateContent = styled('div')({

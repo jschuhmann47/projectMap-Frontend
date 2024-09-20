@@ -23,7 +23,7 @@ import {
   onGetSeeds,
 } from 'redux/actions/foda.actions';
 import { CustomForm } from 'styles/form';
-import { Formik, Field, ErrorMessage } from 'formik';
+import { Formik, Field, ErrorMessage, Form } from 'formik';
 import {
   amenazasSelector,
   debilidadesSelector,
@@ -39,6 +39,8 @@ import ToolTip from 'components/commons/ToolTip';
 import Loading from 'components/commons/Loading';
 import { onGetOne as onGetProject } from 'redux/actions/projects.actions';
 import permission from 'helpers/permissions';
+import SelectInputV2 from 'components/inputs/SelectInputV2';
+import ModalV2 from 'components/commons/ModalV2';
 
 const FodaContainer = () => {
   const { fodaId, id } = useParams();
@@ -97,6 +99,8 @@ const FodaContainer = () => {
     ? { ...factor }
     : { ...defaultValues, ...optionalValues };
 
+  console.log('seeds, factor', seeds, factor)
+
   return (
     <LayoutContainer>
       <Container>
@@ -134,158 +138,78 @@ const FodaContainer = () => {
             <Comments show tool="FODA" toolId={fodaId} projectId={id} />
           </MenuItem>
         </Menu>
-        <Modal isOpen={!!factor} backgroundColor={COLORS.WildSand} disabled>
-          <CreateContent sx={{ width: '400px' }}>
-            <CardTitle>
-              {!!factor?.area ? `Editar ${factor?.area}` : `Agregar ${factor}`}
-            </CardTitle>
-            <Formik onSubmit={onSubmitFactor} initialValues={initialValues}>
-              {({ handleSubmit, setFieldValue }) => (
-                <CustomForm onSubmit={handleSubmit}>
-                  <Box sx={{ width: '100%', display: 'flex' }}>
-                    <Field
-                      name="descripcion"
-                      placeholder="Descripción"
-                      component={AutoComplete}
-                      options={seeds[factor] || []}
-                      optionKey={'descripcion'}
-                      onChange={(value) =>
-                        setFieldValue(
-                          'descripcion',
-                          value?.descripcion !== null
-                            ? value.descripcion
-                            : initialValues.descripcion
-                        )
-                      }
-                      validate={validateField}
-                    />
-                    <ToolTip
-                      text="Seleccione o escriba el factor que quiere agregar a su análisis."
-                      placement="right"
-                      fontSize="14px"
-                    />
-                    <ErrorMessage name="descripcion">
-                      {(msg) => (
-                        <Typography
-                          sx={{
-                            textAlign: 'left',
-                            color: 'red',
-                            marginLeft: 2,
-                            marginTop: '2px',
-                            fontSize: '14px',
-                          }}
-                        >
-                          {msg}
-                        </Typography>
-                      )}
-                    </ErrorMessage>
-                  </Box>
-                  <Box sx={{ width: '100%', display: 'flex' }}>
-                    <Field
-                      name="importancia"
-                      component={SelectInput}
-                      options={importancia}
-                      placeholder="Importancia"
-                      validate={validateField}
-                    />
-                    <ToolTip
-                      text="Algunos factores que agregue en su análisis tendrán mayor impacto que otros. Si algo tiene un gran impacto, positivo o negativo, en su organización, utilice la opción superior, de ser menos importante, la inferior"
-                      placement="right"
-                      fontSize="14px"
-                    />
-                    <ErrorMessage name="importancia">
-                      {(msg) => (
-                        <Typography
-                          sx={{
-                            textAlign: 'left',
-                            color: 'red',
-                            marginLeft: 2,
-                            marginTop: '2px',
-                            fontSize: '14px',
-                          }}
-                        >
-                          {msg}
-                        </Typography>
-                      )}
-                    </ErrorMessage>
-                  </Box>
-                  <Box sx={{ width: '100%', display: 'flex' }}>
-                    <Field
-                      name={showUrgencia ? 'urgencia' : 'intensidad'}
-                      component={SelectInput}
-                      options={showUrgencia ? urgencia : intensidad}
-                      placeholder={showUrgencia ? 'Urgencia' : 'Intensidad'}
-                      validate={validateField}
-                    />
-                    <ToolTip
-                      text={
-                        showUrgencia
-                          ? 'El factor que está agregando tiene asignada una urgencia. Si es una oportunidad, representa la ventana de oportunidad para explotarlo y de ser una amenaza representa con qué rapidez está percibida amenaza se volverá realidad.'
-                          : 'Los factores a agregar se pueden manifestar con fuerza variable. No es lo mismo por ejemplo, una inflación del 2% a una de 20%. Utilice esta escala para describir ese comportamiento.'
-                      }
-                      placement="right"
-                      fontSize="14px"
-                    />
-                    <ErrorMessage
-                      name={showUrgencia ? 'urgencia' : 'intensidad'}
-                    >
-                      {(msg) => (
-                        <Typography
-                          sx={{
-                            textAlign: 'left',
-                            color: 'red',
-                            marginLeft: 2,
-                            marginTop: '2px',
-                            fontSize: '14px',
-                          }}
-                        >
-                          {msg}
-                        </Typography>
-                      )}
-                    </ErrorMessage>
-                  </Box>
-                  <Box sx={{ width: '100%', display: 'flex' }}>
-                    <Field
-                      name="tendencia"
-                      component={SelectInput}
-                      options={tendencia}
-                      placeholder="Tendencia"
-                      validate={validateField}
-                    />
-                    <ToolTip
-                      text="Un factor necesariamente tiene una tendencia, ¿Está empeorando o mejorando?, ¿Está tendiendo a desaparecer o se está volviendo más importante?. Utilice estas 5 posibilidades para representar este comportamiento."
-                      placement="right"
-                      fontSize="14px"
-                    />
-                    <ErrorMessage name={'tendencia'}>
-                      {(msg) => (
-                        <Typography
-                          sx={{
-                            textAlign: 'left',
-                            color: 'red',
-                            marginLeft: 2,
-                            marginTop: '2px',
-                            fontSize: '14px',
-                          }}
-                        >
-                          {msg}
-                        </Typography>
-                      )}
-                    </ErrorMessage>
-                  </Box>
-                  <ButtonsContainer>
-                    <Button color="secondary" onClick={() => setFactor('')}>
-                      Cancelar
-                    </Button>
-                    <Button color="primary" type="submit">
-                      {!!factor?.area ? 'Editar' : 'Agregar'}
-                    </Button>
-                  </ButtonsContainer>
-                </CustomForm>
-              )}
-            </Formik>
-          </CreateContent>
-        </Modal>
+        <ModalV2
+          isOpen={!!factor}
+          title={!!factor?.area ? `Editar ${factor?.area}` : `Agregar ${factor}`}
+          onClose={() => setFactor('')}
+        >
+          <Formik onSubmit={onSubmitFactor} initialValues={initialValues}>
+            {({ handleSubmit, setFieldValue }) => (
+              <Form onSubmit={handleSubmit}>
+                <Field
+                  name="descripcion"
+                  fieldLabel="Descripción"
+                  component={SelectInputV2}
+                  options={(seeds[factor] || seeds[factor?.area] || []).map((s) => s.descripcion)}
+                  validate={validateField}
+                />
+                <ToolTip
+                  text="Seleccione o escriba el factor que quiere agregar a su análisis."
+                  placement="right"
+                  fontSize="14px"
+                />
+                <Field
+                  name="importancia"
+                  component={SelectInputV2}
+                  options={importancia}
+                  fieldLabel="Importancia"
+                  validate={validateField}
+                />
+                <ToolTip
+                  text="Algunos factores que agregue en su análisis tendrán mayor impacto que otros. Si algo tiene un gran impacto, positivo o negativo, en su organización, utilice la opción superior, de ser menos importante, la inferior"
+                  placement="right"
+                  fontSize="14px"
+                />
+                <Field
+                  name={showUrgencia ? 'urgencia' : 'intensidad'}
+                  component={SelectInputV2}
+                  options={showUrgencia ? urgencia : intensidad}
+                  fieldLabel={showUrgencia ? 'Urgencia' : 'Intensidad'}
+                  validate={validateField}
+                />
+                <ToolTip
+                  text={
+                    showUrgencia
+                      ? 'El factor que está agregando tiene asignada una urgencia. Si es una oportunidad, representa la ventana de oportunidad para explotarlo y de ser una amenaza representa con qué rapidez está percibida amenaza se volverá realidad.'
+                      : 'Los factores a agregar se pueden manifestar con fuerza variable. No es lo mismo por ejemplo, una inflación del 2% a una de 20%. Utilice esta escala para describir ese comportamiento.'
+                  }
+                  placement="right"
+                  fontSize="14px"
+                />
+                <Field
+                  name="tendencia"
+                  component={SelectInputV2}
+                  options={tendencia}
+                  fieldLabel="Tendencia"
+                  validate={validateField}
+                />
+                <ToolTip
+                  text="Un factor necesariamente tiene una tendencia, ¿Está empeorando o mejorando?, ¿Está tendiendo a desaparecer o se está volviendo más importante?. Utilice estas 5 posibilidades para representar este comportamiento."
+                  placement="right"
+                  fontSize="14px"
+                />
+                <ButtonsContainer>
+                  <Button color="secondary" onClick={() => setFactor('')}>
+                    Cancelar
+                  </Button>
+                  <Button color="primary" type="submit">
+                    {!!factor?.area ? 'Editar' : 'Agregar'}
+                  </Button>
+                </ButtonsContainer>
+              </Form>
+            )}
+          </Formik>
+        </ModalV2>
       </Container>
       {loading && <Loading isModalMode message="Cargando FODA" />}
     </LayoutContainer>
