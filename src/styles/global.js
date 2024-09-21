@@ -29,7 +29,9 @@ export const CreateModalTitle = styled('span')({
 
 export const CreateButtonsContainer = styled('div')({
   display: 'flex',
-  width: '100%',
+  width: '40%',
+  paddingLeft: '30%',
+  paddingRight: '30%',
   gap: 15,
   justifyContent: 'space-between',
 });
