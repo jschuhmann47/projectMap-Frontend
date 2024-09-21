@@ -382,7 +382,7 @@ const BalancedView = ({
                 <Button color="secondary" onClick={closeModal}>
                   Cancelar
                 </Button>
-                <Button color="primary" type="submit">
+                <Button type="submit">
                   Agregar
                 </Button>
               </ButtonsContainer>

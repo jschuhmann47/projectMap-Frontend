@@ -68,7 +68,7 @@ const OKRView = ({
               <Button color="secondary" onClick={closeEditOkrModal}>
                 Cancelar
               </Button>
-              <Button color="primary" type="submit">
+              <Button type="submit">
                 Editar
               </Button>
             </ButtonsContainer>
@@ -110,7 +110,7 @@ const OKRView = ({
               <Button color="secondary" onClick={closeEditOkrModal}>
                 Cancelar
               </Button>
-              <Button color="primary" type="submit">
+              <Button type="submit">
                 Agregar
               </Button>
             </ButtonsContainer>

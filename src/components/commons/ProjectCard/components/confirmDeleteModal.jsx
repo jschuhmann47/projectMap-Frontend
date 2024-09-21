@@ -77,7 +77,7 @@ const ConfirmDeleteModal = ({
                 <Button color="secondary" onClick={() => onClose()}>
                   Cancelar
                 </Button>
-                <Button color="primary" type="submit">
+                <Button type="submit">
                   Confirmar
                 </Button>
               </ButtonsContainer>

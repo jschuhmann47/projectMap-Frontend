@@ -15,8 +15,6 @@ export default function AddUserModal({
   function addUserToProject() {
     onAddUserToProject(info.user.email, 'participant') // TODO: allow adding coordinator directly
   }
-
-  console.log('userInfo', info);
   
   return <ModalV2 isOpen={info.isOpen} onClose={onClose} title='Agregar integrante' width={500}>
     <Box sx={{ height: 150 }}>
@@ -59,7 +57,7 @@ export default function AddUserModal({
             }}
           >
             <Button color="secondary" onClick={onGoBack}>Atrás</Button>
-            <Button color="primary" onClick={addUserToProject}>Confirmar</Button>
+            <Button onClick={addUserToProject}>Confirmar</Button>
           </Box>
         </Box>
       )}

@@ -174,7 +174,7 @@ const McKinseyContainer = () => {
                   >
                     Cancelar
                   </Button>
-                  <Button color="primary" type="submit">
+                  <Button type="submit">
                     Agregar
                   </Button>
                 </ButtonsContainer>

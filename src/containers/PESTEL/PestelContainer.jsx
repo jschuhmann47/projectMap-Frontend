@@ -182,7 +182,7 @@ const PestelContainer = () => {
                   <Button color="secondary" onClick={() => setFactor('')}>
                     Cancelar
                   </Button>
-                  <Button color="primary" type="submit">
+                  <Button type="submit">
                     {!!factor?.area ? 'Editar' : 'Agregar'}
                   </Button>
                 </ButtonsContainer>

@@ -448,7 +448,7 @@ const ProjectContainer = () => {
                 <Button color="secondary" onClick={() => setAddTool(null)}>
                   Cancelar
                 </Button>
-                <Button color="primary" type="submit">
+                <Button type="submit">
                   Agregar
                 </Button>
               </ButtonsContainer>
