@@ -1,15 +1,10 @@
 import { filterFrequenciesByHorizon, horizonOptions, priorityOptions } from "helpers/enums/okr";
 import { EditObjectiveButton, KeyResultsContainer, OkrContainerV2, OkrHeader, OkrMoreData, OkrTitle } from "./styles";
 import Button from "components/commons/Button";
-import Modal from "components/commons/Modal";
-import { ButtonsContainer, CustomForm, FormContainer } from "styles/form";
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import { CardTitle } from "views/FodaView/styles";
-import { Box, Typography } from "@mui/material";
+import { ButtonsContainer } from "styles/form";
+import { Field, Form, Formik } from "formik";
 import { validateField } from "helpers/validateField";
-import Input from "components/inputs/Input";
 import KeyResult from "./components/KeyResult";
-import SelectInput from "components/inputs/SelectInput";
 import ModalV2 from "components/commons/ModalV2";
 import InputV2 from "components/inputs/InputV2";
 import SelectInputV2 from "components/inputs/SelectInputV2";
