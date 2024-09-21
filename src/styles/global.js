@@ -27,15 +27,6 @@ export const CreateModalTitle = styled('span')({
   color: COLORS.BlueDianne,
 });
 
-export const CreateButtonsContainer = styled('div')({
-  display: 'flex',
-  width: '40%',
-  paddingLeft: '30%',
-  paddingRight: '30%',
-  gap: 15,
-  justifyContent: 'space-between',
-});
-
 export const ViewContainer = styled('div')({
   display: 'flex',
   flex: 1,

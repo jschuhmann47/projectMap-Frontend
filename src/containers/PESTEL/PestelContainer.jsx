@@ -3,17 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import LayoutContainer from 'containers/LayoutContainer';
-import Modal from 'components/commons/Modal';
 import Button from 'components/commons/Button';
 import { COLORS } from 'helpers/enums/colors';
 import {
-  ButtonsContainer,
-  CardTitle,
-  CreateContent,
   Container,
 } from 'views/PestelView/styles';
 import PestelView from 'views/PestelView';
-import SelectInput from 'components/inputs/SelectInput';
 import {
   onGetOne,
   onGetOptions,
@@ -23,8 +18,7 @@ import {
   onGetSeeds,
 } from 'redux/actions/pestel.actions';
 import { onGetOne as onGetProject } from 'redux/actions/projects.actions';
-import { CustomForm } from 'styles/form';
-import { Formik, Field, ErrorMessage, Form } from 'formik';
+import { Formik, Field, Form } from 'formik';
 import {
   politicoSelector,
   economicoSelector,
@@ -34,17 +28,16 @@ import {
   legalSelector,
   titleSelector,
 } from 'redux/selectors/pestel.selector';
-import AutoComplete from 'components/inputs/Autocomplete';
 import Comments from 'components/comments/Comments';
-import { Box, Menu, MenuItem, Typography } from '@mui/material';
+import { Menu, MenuItem } from '@mui/material';
 import { validateField } from 'helpers/validateField';
-import ToolTip from 'components/commons/ToolTip';
 import Loading from 'components/commons/Loading';
 import { onGetAll as onGetAllComments } from 'redux/actions/comments.actions';
 import permission from 'helpers/permissions';
 import ModalV2 from 'components/commons/ModalV2';
 import SelectInputV2 from 'components/inputs/SelectInputV2';
 import InputV2 from 'components/inputs/InputV2';
+import { ButtonsContainer } from 'styles/form';
 
 const PestelContainer = () => {
   const { pestelId, id } = useParams();

@@ -4,16 +4,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import LayoutContainer from 'containers/LayoutContainer';
 import FodaView from 'views/FodaView';
-import Modal from 'components/commons/Modal';
+import { ButtonsContainer } from 'styles/form';
 import Button from 'components/commons/Button';
 import { COLORS } from 'helpers/enums/colors';
-import {
-  ButtonsContainer,
-  CardTitle,
-  CreateContent,
-  Container,
-} from 'views/FodaView/styles';
-import SelectInput from 'components/inputs/SelectInput';
+import { Container } from 'views/FodaView/styles';
 import {
   onGetOne,
   onGetOptions,
@@ -22,7 +16,6 @@ import {
   onDeleteFactor,
   onGetSeeds,
 } from 'redux/actions/foda.actions';
-import { CustomForm } from 'styles/form';
 import { Formik, Field, ErrorMessage, Form } from 'formik';
 import {
   amenazasSelector,
@@ -31,11 +24,9 @@ import {
   oportunidadesSelector,
   titleSelector,
 } from 'redux/selectors/foda.selector';
-import AutoComplete from 'components/inputs/Autocomplete';
 import Comments from 'components/comments/Comments';
-import { Box, Menu, MenuItem, Typography } from '@mui/material';
+import { Menu, MenuItem } from '@mui/material';
 import { validateField } from 'helpers/validateField';
-import ToolTip from 'components/commons/ToolTip';
 import Loading from 'components/commons/Loading';
 import { onGetOne as onGetProject } from 'redux/actions/projects.actions';
 import permission from 'helpers/permissions';

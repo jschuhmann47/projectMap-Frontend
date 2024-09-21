@@ -17,10 +17,6 @@ import { onGetAll as onGetAllComments } from 'redux/actions/comments.actions';
 import LayoutContainer from 'containers/LayoutContainer';
 import Button from 'components/commons/Button';
 
-import {
-  CreateButtonsContainer,
-} from 'styles/global';
-
 import McKinseyView from 'views/McKinseyView';
 import SliderInput from 'components/inputs/SliderInput';
 import { Box, Grid } from '@mui/material';
@@ -36,6 +32,7 @@ import { onGetOne as onGetProject } from 'redux/actions/projects.actions';
 import permission from 'helpers/permissions';
 import ModalV2 from 'components/commons/ModalV2';
 import InputV2 from 'components/inputs/InputV2';
+import { ButtonsContainer } from 'styles/form';
 
 const McKinseyContainer = () => {
   const { matrizId, id } = useParams();
@@ -170,7 +167,7 @@ const McKinseyContainer = () => {
                     fontSize="14px"
                   />
                 </Box>
-                <CreateButtonsContainer>
+                <ButtonsContainer>
                   <Button
                     color="secondary"
                     onClick={() => setAddModalOpen(false)}
@@ -180,7 +177,7 @@ const McKinseyContainer = () => {
                   <Button color="primary" type="submit">
                     Agregar
                   </Button>
-                </CreateButtonsContainer>
+                </ButtonsContainer>
               </Form>
             )}
           </Formik>

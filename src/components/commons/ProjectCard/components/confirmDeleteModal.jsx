@@ -4,9 +4,9 @@ import Button from 'components/commons/Button';
 import ModalV2 from 'components/commons/ModalV2';
 import InputV2 from 'components/inputs/InputV2';
 import { Field, Form, Formik } from 'formik';
-import { COLORS } from 'helpers/enums/colors';
 import { validateField } from 'helpers/validateField';
 import React from 'react';
+import { ButtonsContainer } from 'styles/form';
 
 const ConfirmDeleteModal = ({
   isOpen,
@@ -73,22 +73,14 @@ const ConfirmDeleteModal = ({
                   )}
                 </Box>
               </Box>
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  width: '40%',
-                  paddingLeft: '30%',
-                  paddingRight: '30%',
-                }}
-              >
+              <ButtonsContainer>
                 <Button color="secondary" onClick={() => onClose()}>
                   Cancelar
                 </Button>
                 <Button color="primary" type="submit">
                   Confirmar
                 </Button>
-              </Box>
+              </ButtonsContainer>
             </Form>
           )}
         </Formik>
