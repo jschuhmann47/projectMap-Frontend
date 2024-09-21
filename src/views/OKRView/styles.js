@@ -25,8 +25,8 @@ export const OkrContainerV2 = styled('div')({
 export const OkrHeader = styled('div')({
   display: 'flex',
   flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'center',
+  justifyContent: 'center',
+  width: '100%',
   marginBottom: 10,
 });
 
@@ -37,12 +37,31 @@ export const EditObjectiveButton = styled('div')({
 
 export const OkrTitle = styled('span')({
   fontSize: 30,
+  fontWeight: 'bold',
 });
 
-export const OkrMoreData = styled('div')({
-  fontSize: 24,
+export const OkrProgressAndMoreData = styled('div')({
+  display: 'grid',
+  gridTemplateColumns: '2fr 1fr',
+  fontSize: 18,
+  width: '100%',
+});
+
+export const OkrProgress = styled('div')({
   display: 'flex',
-  justifyContent: 'space-between',
+  flexDirection: 'row',
+  alignItems: 'center',
+  height: '100%',
+})
+
+export const OkrProgressBar = styled('div')({
+  width: '90%',
+  marginRight: '5px',
+})
+
+export const OkrMoreData = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
 });
 
 export const KeyResultsContainer = styled('div')({

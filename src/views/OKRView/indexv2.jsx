@@ -1,5 +1,5 @@
 import { filterFrequenciesByHorizon, horizonOptions, priorityOptions } from "helpers/enums/okr";
-import { EditObjectiveButton, KeyResultsContainer, OkrContainerV2, OkrHeader, OkrMoreData, OkrTitle } from "./styles";
+import { EditObjectiveButton, KeyResultsContainer, OkrContainerV2, OkrHeader, OkrMoreData, OkrProgress, OkrProgressAndMoreData, OkrProgressBar, OkrTitle } from "./styles";
 import Button from "components/commons/Button";
 import { ButtonsContainer } from "styles/form";
 import { Field, Form, Formik } from "formik";
@@ -8,6 +8,7 @@ import KeyResult from "./components/KeyResult";
 import ModalV2 from "components/commons/ModalV2";
 import InputV2 from "components/inputs/InputV2";
 import SelectInputV2 from "components/inputs/SelectInputV2";
+import { LinearProgress } from "@mui/material";
 
 const OKRView = ({
   okrData,
@@ -22,12 +23,25 @@ const OKRView = ({
     <OkrHeader>
       <OkrTitle>{okrData?.description}</OkrTitle>
     </OkrHeader>
-    <OkrMoreData>
-      <span>Área: {okrData?.area}</span>
-      <span>Horizonte: {horizonOptions[okrData?.horizon]}</span>
-      <span>Prioridad: <img src={priorityOptions[okrData?.priority]} height="20" width="20" /></span>
-      <span>Avance: {okrData?.progress}%</span>
-    </OkrMoreData>
+    <OkrProgressAndMoreData>
+      <OkrProgress>
+        <OkrProgressBar>
+          <LinearProgress value={30} variant="determinate" sx={{
+            height: 20,
+            backgroundColor: 'transparent',
+            border: '1px solid',
+            borderRadius: '8px',
+            ['.MuiLinearProgress-bar1Determinate']: { backgroundColor: '#405C5E' },
+          }} />
+        </OkrProgressBar>
+        <span>30%</span>
+      </OkrProgress>
+      <OkrMoreData>
+        <span>Área: {okrData?.area}</span>
+        <span>Horizonte: {horizonOptions[okrData?.horizon]}</span>
+        <span>Prioridad: <img src={priorityOptions[okrData?.priority]} height="20" width="20" /></span>
+      </OkrMoreData>
+    </OkrProgressAndMoreData>
     <KeyResultsContainer>
       {okrData?.keyResults.map((kr) => (
         <KeyResult krData={kr} editKr={editKr} deleteKr={deleteKr} />
