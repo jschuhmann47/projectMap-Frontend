@@ -82,10 +82,6 @@ const OKRContainer = () => {
       <Grid item sx={{ height: '100%', width: '100%' }}>
         <OKRView
           okrData={okrData}
-          openEditOkrModal={() => setIsEditOkrModalOpen(true)}
-          closeEditOkrModal={() => setIsEditOkrModalOpen(false)}
-          isEditOkrModalOpen={isEditOkrModalOpen}
-          editObjective={editObjective}
           openAddKrModal={() => setIsAddKrModalOpen(true)}
           closeAddKrModal={() => setIsAddKrModalOpen(false)}
           isAddKrModalOpen={isAddKrModalOpen}

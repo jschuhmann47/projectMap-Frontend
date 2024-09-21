@@ -11,10 +11,6 @@ import SelectInputV2 from "components/inputs/SelectInputV2";
 
 const OKRView = ({
   okrData,
-  openEditOkrModal,
-  closeEditOkrModal,
-  isEditOkrModalOpen,
-  editObjective,
   openAddKrModal,
   closeAddKrModal,
   isAddKrModalOpen,
@@ -25,9 +21,6 @@ const OKRView = ({
   return <OkrContainerV2>
     <OkrHeader>
       <OkrTitle>{okrData?.description}</OkrTitle>
-      <EditObjectiveButton>
-        <Button onClick={openEditOkrModal}>Editar objetivo</Button>
-      </EditObjectiveButton>
     </OkrHeader>
     <OkrMoreData>
       <span>Área: {okrData?.area}</span>
@@ -41,41 +34,6 @@ const OKRView = ({
       ))}
     </KeyResultsContainer>
     <Button onClick={openAddKrModal}>Agregar Key Result</Button>
-    <ModalV2
-      isOpen={isEditOkrModalOpen}
-      onClose={closeEditOkrModal}
-      title='Editar objetivo'
-    >
-      <Formik
-        onSubmit={editObjective}
-        initialValues={{ description: okrData?.description, area: okrData?.area }}
-      >
-        {({ handleSubmit }) => (
-          <Form onSubmit={handleSubmit}>
-            <Field
-              name="description"
-              fieldLabel="Título"
-              component={InputV2}
-              validate={validateField}
-            />
-            <Field
-              name="area"
-              fieldLabel="Área"
-              component={InputV2}
-              validate={validateField}
-            />
-            <ButtonsContainer>
-              <Button color="secondary" onClick={closeEditOkrModal}>
-                Cancelar
-              </Button>
-              <Button type="submit">
-                Editar
-              </Button>
-            </ButtonsContainer>
-          </Form>
-        )}
-      </Formik>
-    </ModalV2>
     <ModalV2
       isOpen={isAddKrModalOpen}
       onClose={closeAddKrModal}
@@ -107,7 +65,7 @@ const OKRView = ({
               validate={validateField}
             />
             <ButtonsContainer>
-              <Button color="secondary" onClick={closeEditOkrModal}>
+              <Button color="secondary" onClick={closeAddKrModal}>
                 Cancelar
               </Button>
               <Button type="submit">
