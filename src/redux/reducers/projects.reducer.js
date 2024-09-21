@@ -285,6 +285,11 @@ const projectsReducer = (state = defaultState, action) => {
         ...state,
         addUserModal: { ...state.addUserModal, loading: false, user: null, error: error }
       };
+    case constants.PROJECTS_GO_BACK_ADD_USER_MODAL:
+      return {
+        ...state,
+        addUserModal: { ...state.addUserModal, user: null }
+      };
     case constants.PROJECTS_OPEN_ADD_USER_MODAL:
       return {
         ...state,

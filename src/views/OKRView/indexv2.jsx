@@ -1,15 +1,13 @@
 import { filterFrequenciesByHorizon, horizonOptions, priorityOptions } from "helpers/enums/okr";
 import { EditObjectiveButton, KeyResultsContainer, OkrContainerV2, OkrHeader, OkrMoreData, OkrTitle } from "./styles";
 import Button from "components/commons/Button";
-import Modal from "components/commons/Modal";
-import { ButtonsContainer, CustomForm, FormContainer } from "styles/form";
-import { ErrorMessage, Field, Formik } from "formik";
-import { CardTitle } from "views/FodaView/styles";
-import { Box, Typography } from "@mui/material";
+import { ButtonsContainer } from "styles/form";
+import { Field, Form, Formik } from "formik";
 import { validateField } from "helpers/validateField";
-import Input from "components/inputs/Input";
 import KeyResult from "./components/KeyResult";
-import SelectInput from "components/inputs/SelectInput";
+import ModalV2 from "components/commons/ModalV2";
+import InputV2 from "components/inputs/InputV2";
+import SelectInputV2 from "components/inputs/SelectInputV2";
 
 const OKRView = ({
   okrData,
@@ -43,145 +41,83 @@ const OKRView = ({
       ))}
     </KeyResultsContainer>
     <Button onClick={openAddKrModal}>Agregar Key Result</Button>
-    <Modal isOpen={isEditOkrModalOpen} onClose={closeEditOkrModal} backgroundColor='#C7DAD9'>
-      <FormContainer>
-        <Formik
-          onSubmit={editObjective}
-          initialValues={{ description: okrData?.description, area: okrData?.area }}
-        >
-          {({ handleSubmit }) => (
-            <CustomForm onSubmit={handleSubmit}>
-              <CardTitle>Editar objetivo</CardTitle>
-              <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}>
-                <Field
-                  name="description"
-                  placeholder="Título"
-                  component={Input}
-                  validate={validateField}
-                />
-                <ErrorMessage name="description">
-                  {(msg) => (
-                    <Typography
-                      sx={{
-                        textAlign: 'left',
-                        color: 'red',
-                        marginLeft: 2,
-                        marginTop: '2px',
-                        fontSize: '14px',
-                      }}
-                    >
-                      {msg}
-                    </Typography>
-                  )}
-                </ErrorMessage>
-                <Field
-                  name="area"
-                  placeholder="Área"
-                  component={Input}
-                  validate={validateField}
-                />
-              </Box>
-              <ButtonsContainer>
-                <Button color="secondary" onClick={closeEditOkrModal}>
-                  Cancelar
-                </Button>
-                <Button color="primary" type="submit">
-                  Editar
-                </Button>
-              </ButtonsContainer>
-            </CustomForm>
-          )}
-        </Formik>
-      </FormContainer>
-    </Modal>
-    <Modal isOpen={isAddKrModalOpen} onClose={closeAddKrModal} backgroundColor='#C7DAD9'>
-      <FormContainer>
-        <Formik
-          onSubmit={addKr}
-          initialValues={{ description: '', frequency: '', responsible: '' }}
-        >
-          {({ handleSubmit }) => (
-            <CustomForm onSubmit={handleSubmit}>
-              <CardTitle>Agregar Key Result</CardTitle>
-              <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}>
-                <Field
-                  name="description"
-                  placeholder="Nombre"
-                  component={Input}
-                  validate={validateField}
-                />
-                <ErrorMessage name="description">
-                  {(msg) => (
-                    <Typography
-                      sx={{
-                        textAlign: 'left',
-                        color: 'red',
-                        marginLeft: 2,
-                        marginTop: '2px',
-                        fontSize: '14px',
-                      }}
-                    >
-                      {msg}
-                    </Typography>
-                  )}
-                </ErrorMessage>
-                <Field
-                  name="frequency"
-                  placeholder="Frecuencia"
-                  component={SelectInput}
-                  options={filterFrequenciesByHorizon(okrData?.horizon)}
-                  validate={validateField}
-                />
-                <ErrorMessage name="frequency">
-                  {(msg) => (
-                    <Typography
-                      sx={{
-                        textAlign: 'left',
-                        color: 'red',
-                        marginLeft: 2,
-                        marginTop: '2px',
-                        fontSize: '14px',
-                      }}
-                    >
-                      {msg}
-                    </Typography>
-                  )}
-                </ErrorMessage>
-                <Field
-                  name="responsible"
-                  placeholder="Responsable"
-                  component={Input}
-                  validate={validateField}
-                />
-                <ErrorMessage name="responsible">
-                  {(msg) => (
-                    <Typography
-                      sx={{
-                        textAlign: 'left',
-                        color: 'red',
-                        marginLeft: 2,
-                        marginTop: '2px',
-                        fontSize: '14px',
-                      }}
-                    >
-                      {msg}
-                    </Typography>
-                  )}
-                </ErrorMessage>
-              </Box>
-              <ButtonsContainer>
-                <Button color="secondary" onClick={closeEditOkrModal}>
-                  Cancelar
-                </Button>
-                <Button color="primary" type="submit">
-                  Agregar
-                </Button>
-              </ButtonsContainer>
-            </CustomForm>
-          )}
-        </Formik>
-      </FormContainer>
-    </Modal>
+    <ModalV2
+      isOpen={isEditOkrModalOpen}
+      onClose={closeEditOkrModal}
+      title='Editar objetivo'
+    >
+      <Formik
+        onSubmit={editObjective}
+        initialValues={{ description: okrData?.description, area: okrData?.area }}
+      >
+        {({ handleSubmit }) => (
+          <Form onSubmit={handleSubmit}>
+            <Field
+              name="description"
+              fieldLabel="Título"
+              component={InputV2}
+              validate={validateField}
+            />
+            <Field
+              name="area"
+              fieldLabel="Área"
+              component={InputV2}
+              validate={validateField}
+            />
+            <ButtonsContainer>
+              <Button color="secondary" onClick={closeEditOkrModal}>
+                Cancelar
+              </Button>
+              <Button type="submit">
+                Editar
+              </Button>
+            </ButtonsContainer>
+          </Form>
+        )}
+      </Formik>
+    </ModalV2>
+    <ModalV2
+      isOpen={isAddKrModalOpen}
+      onClose={closeAddKrModal}
+      title='Agregar Key Result'
+    >
+      <Formik
+        onSubmit={addKr}
+        initialValues={{ description: '', frequency: '', responsible: '' }}
+      >
+        {({ handleSubmit }) => (
+          <Form onSubmit={handleSubmit}>
+            <Field
+              name="description"
+              fieldLabel="Nombre"
+              component={InputV2}
+              validate={validateField}
+            />
+            <Field
+              name="frequency"
+              fieldLabel="Frecuencia"
+              component={SelectInputV2}
+              options={filterFrequenciesByHorizon(okrData?.horizon)}
+              validate={validateField}
+            />
+            <Field
+              name="responsible"
+              fieldLabel="Responsable"
+              component={InputV2}
+              validate={validateField}
+            />
+            <ButtonsContainer>
+              <Button color="secondary" onClick={closeEditOkrModal}>
+                Cancelar
+              </Button>
+              <Button type="submit">
+                Agregar
+              </Button>
+            </ButtonsContainer>
+          </Form>
+        )}
+      </Formik>
+    </ModalV2>
   </OkrContainerV2>
 };
 

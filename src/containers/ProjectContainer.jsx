@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ButtonBase, IconButton, Menu, MenuItem, Popover } from '@mui/material';
-import { Formik, Field, ErrorMessage } from 'formik';
+import { Formik, Field, ErrorMessage, Form } from 'formik';
 import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
 import { PopupModal } from 'react-calendly';
@@ -26,14 +26,15 @@ import {
   onAddUser,
   changeMemberPermission,
   changeMemberRole,
-  onSaveMembers
+  onSaveMembers,
+  goBackModal
 } from 'redux/actions/projects.actions';
 import { STEPS } from 'helpers/enums/steps';
 import { COLORS } from 'helpers/enums/colors';
 
 import Modal from 'components/commons/Modal';
 import Button from 'components/commons/Button';
-import Input from 'components/inputs/Input';
+import InputV2 from 'components/inputs/InputV2';
 import {
   CustomForm,
   ButtonsContainer,
@@ -68,8 +69,9 @@ import Loading from 'components/commons/Loading';
 import { onGetAll as onGetAllComments } from 'redux/actions/comments.actions';
 import { onDelete } from 'redux/actions/questionnarie.actions';
 import { CardTitle } from 'views/FodaView/styles';
-import SelectInput from 'components/inputs/SelectInput';
 import { horizonOptions } from 'helpers/enums/okr';
+import ModalV2 from 'components/commons/ModalV2';
+import SelectInputV2 from 'components/inputs/SelectInputV2';
 
 const ProjectContainer = () => {
   let { id } = useParams();
@@ -243,6 +245,10 @@ const ProjectContainer = () => {
     dispatch(onSearchByEmail(email));
   };
 
+  function onGoBackModal() {
+    dispatch(goBackModal());
+  }
+
   function onOpenModal() {
     dispatch(openModal());
   };
@@ -291,6 +297,7 @@ const ProjectContainer = () => {
         onAddUserToProject={onAddUserToProject}
         onOpenModal={onOpenModal}
         onCloseModal={onCloseModal}
+        onGoBackModal={onGoBackModal}
         onChangeMemberRole={onChangeMemberRole}
         onChangeMemberPermission={onChangeMemberPermission}
         onSaveChanges={onSaveChanges}
@@ -402,73 +409,53 @@ const ProjectContainer = () => {
           </MenuItem>
         ))}
       </Menu>
-      <Modal
+      <ModalV2
         isOpen={!!addTool}
         backgroundColor={COLORS.WildSand}
         onClose={() => setAddTool(null)}
+        title={addTool?.titulo}
       >
-        <FormContainer>
-          <Title style={{ fontSize: 18 }}>{addTool?.title}</Title>
-          <Formik
-            onSubmit={(values) => onSubmitTool(addTool.action, values)}
-            initialValues={{ titulo: '', area: '' }}
-          >
-            {({ handleSubmit }) => (
-              <CustomForm onSubmit={handleSubmit}>
-                <CardTitle>{addTool?.titulo}</CardTitle>
-                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}>
-                  <Field
-                    name="titulo"
-                    placeholder="Título"
-                    component={Input}
-                    validate={validateField}
-                  />
-                  <ErrorMessage name="titulo">
-                    {(msg) => (
-                      <Typography
-                        sx={{
-                          textAlign: 'left',
-                          color: 'red',
-                          marginLeft: 2,
-                          marginTop: '2px',
-                          fontSize: '14px',
-                        }}
-                      >
-                        {msg}
-                      </Typography>
-                    )}
-                  </ErrorMessage>
-                  {addTool?.area &&
-                    <Field
-                      name="area"
-                      placeholder="Área"
-                      component={Input}
-                      validate={validateField}
-                    />
-                  }
-                  {addTool?.horizon &&
-                    <Field
-                      name="horizon"
-                      placeholder="Horizonte"
-                      component={SelectInput}
-                      options={Object.values(addTool?.horizon)}
-                      validate={validateField}
-                    />
-                  }
-                </Box>
-                <ButtonsContainer>
-                  <Button color="secondary" onClick={() => setAddTool(null)}>
-                    Cancelar
-                  </Button>
-                  <Button color="primary" type="submit">
-                    Agregar
-                  </Button>
-                </ButtonsContainer>
-              </CustomForm>
-            )}
-          </Formik>
-        </FormContainer>
-      </Modal>
+        <Formik
+          onSubmit={(values) => onSubmitTool(addTool.action, values)}
+          initialValues={{ titulo: '', area: '' }}
+        >
+          {({ handleSubmit }) => (
+            <Form onSubmit={handleSubmit}>
+              <Field
+                name="titulo"
+                fieldLabel="Título"
+                component={InputV2}
+                validate={validateField}
+              />
+              {addTool?.area &&
+                <Field
+                  name="area"
+                  fieldLabel="Área"
+                  component={InputV2}
+                  validate={validateField}
+                />
+              }
+              {addTool?.horizon &&
+                <Field
+                  name="horizon"
+                  fieldLabel="Horizonte"
+                  component={SelectInputV2}
+                  options={Object.values(addTool?.horizon)}
+                  validate={validateField}
+                />
+              }
+              <ButtonsContainer>
+                <Button color="secondary" onClick={() => setAddTool(null)}>
+                  Cancelar
+                </Button>
+                <Button type="submit">
+                  Agregar
+                </Button>
+              </ButtonsContainer>
+            </Form>
+          )}
+        </Formik>
+      </ModalV2>
       {!!consultant?.calendlyUser && (
         <ButtonBase
           sx={{
@@ -519,8 +506,8 @@ const ProjectContainer = () => {
         onSubmit={onSubmitConfirmModal}
         errors={confirmDeleteError}
         titulo="Eliminar herramienta"
-        descripcion="Para confirmar la eliminación, confirme escribiendo el nombre de la herramienta"
-        placeholder="Nombre de la herramienta."
+        descripcion="Para confirmar la eliminación, confirme escribiendo el nombre de la herramienta."
+        placeholder="Nombre de la herramienta"
       />
       {loading && <Loading isModalMode message="Cargando proyecto" />}
     </LayoutContainer>
