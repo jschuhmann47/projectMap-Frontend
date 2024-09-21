@@ -26,7 +26,7 @@ const OKRView = ({
     <OkrProgressAndMoreData>
       <OkrProgress>
         <OkrProgressBar>
-          <LinearProgress value={30} variant="determinate" sx={{
+          <LinearProgress value={okrData?.progress} variant="determinate" sx={{
             height: 20,
             backgroundColor: 'transparent',
             border: '1px solid',
@@ -34,7 +34,7 @@ const OKRView = ({
             ['.MuiLinearProgress-bar1Determinate']: { backgroundColor: '#405C5E' },
           }} />
         </OkrProgressBar>
-        <span>30%</span>
+        <span>{okrData?.progress}%</span>
       </OkrProgress>
       <OkrMoreData>
         <span>Área: {okrData?.area}</span>
