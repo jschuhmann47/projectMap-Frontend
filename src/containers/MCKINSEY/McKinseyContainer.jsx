@@ -23,7 +23,7 @@ import {
 
 import McKinseyView from 'views/McKinseyView';
 import SliderInput from 'components/inputs/SliderInput';
-import { Box, getAccordionSummaryUtilityClass } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 
 import { Menu, MenuItem } from '@mui/material';
 import Comments from 'components/comments/Comments';
