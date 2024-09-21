@@ -1,14 +1,18 @@
 import { Box, MenuItem, Select, Typography } from "@mui/material"
+import ToolTip from "components/commons/ToolTip"
 import { getIn } from "formik"
 
 export default function SelectInputV2(props) {
-  const { field, options, fieldLabel, form } = props
+  const { field, options, fieldLabel, form, tooltip } = props
 
   return (
     <Box sx={{ marginTop: '5px', marginBottom: '5px' }}>
-      <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 16 }}>
-        {fieldLabel}
-      </Typography>
+      <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+        <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 16 }}>
+          {fieldLabel}
+        </Typography>
+        {tooltip && <ToolTip text={tooltip} fontSize='14px' placement='right' />}
+      </Box>
       <Select
         {...field}
         size='small'

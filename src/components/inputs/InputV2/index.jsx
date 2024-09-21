@@ -1,6 +1,7 @@
 import { Box, InputBase, Typography } from "@mui/material";
 import { useState } from "react";
 import { getIn } from "formik";
+import ToolTip from "components/commons/ToolTip";
 
 // to do: support password type
 export default function InputV2(props) {
@@ -11,6 +12,7 @@ export default function InputV2(props) {
     fieldLabel,
     form,
     multiline,
+    tooltip,
   } = props;
   const [showPassword, setShowPassword] = useState(false);
   const isPasswordInput = type === 'password';
@@ -24,9 +26,12 @@ export default function InputV2(props) {
 
   return (
     <Box sx={{ marginTop: '5px', marginBottom: '5px' }}>
-      <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 16 }}>
-        {fieldLabel}
-      </Typography>
+      <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+        <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 16 }}>
+          {fieldLabel}
+        </Typography>
+        {tooltip && <ToolTip text={tooltip} fontSize='14px' placement='right' />}
+      </Box>
       <InputBase
         {...field}
         disabled={disable}

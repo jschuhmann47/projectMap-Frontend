@@ -144,7 +144,7 @@ const FodaContainer = () => {
           onClose={() => setFactor('')}
         >
           <Formik onSubmit={onSubmitFactor} initialValues={initialValues}>
-            {({ handleSubmit, setFieldValue }) => (
+            {({ handleSubmit }) => (
               <Form onSubmit={handleSubmit}>
                 <Field
                   name="descripcion"
@@ -152,11 +152,7 @@ const FodaContainer = () => {
                   component={SelectInputV2}
                   options={(seeds[factor] || seeds[factor?.area] || []).map((s) => s.descripcion)}
                   validate={validateField}
-                />
-                <ToolTip
-                  text="Seleccione o escriba el factor que quiere agregar a su análisis."
-                  placement="right"
-                  fontSize="14px"
+                  tooltip="Seleccione o escriba el factor que quiere agregar a su análisis."
                 />
                 <Field
                   name="importancia"
@@ -164,11 +160,7 @@ const FodaContainer = () => {
                   options={importancia}
                   fieldLabel="Importancia"
                   validate={validateField}
-                />
-                <ToolTip
-                  text="Algunos factores que agregue en su análisis tendrán mayor impacto que otros. Si algo tiene un gran impacto, positivo o negativo, en su organización, utilice la opción superior, de ser menos importante, la inferior"
-                  placement="right"
-                  fontSize="14px"
+                  tooltip="Algunos factores que agregue en su análisis tendrán mayor impacto que otros. Si algo tiene un gran impacto, positivo o negativo, en su organización, utilice la opción superior, de ser menos importante, la inferior"
                 />
                 <Field
                   name={showUrgencia ? 'urgencia' : 'intensidad'}
@@ -176,15 +168,11 @@ const FodaContainer = () => {
                   options={showUrgencia ? urgencia : intensidad}
                   fieldLabel={showUrgencia ? 'Urgencia' : 'Intensidad'}
                   validate={validateField}
-                />
-                <ToolTip
-                  text={
+                  tooltip={
                     showUrgencia
                       ? 'El factor que está agregando tiene asignada una urgencia. Si es una oportunidad, representa la ventana de oportunidad para explotarlo y de ser una amenaza representa con qué rapidez está percibida amenaza se volverá realidad.'
                       : 'Los factores a agregar se pueden manifestar con fuerza variable. No es lo mismo por ejemplo, una inflación del 2% a una de 20%. Utilice esta escala para describir ese comportamiento.'
                   }
-                  placement="right"
-                  fontSize="14px"
                 />
                 <Field
                   name="tendencia"
@@ -192,11 +180,7 @@ const FodaContainer = () => {
                   options={tendencia}
                   fieldLabel="Tendencia"
                   validate={validateField}
-                />
-                <ToolTip
-                  text="Un factor necesariamente tiene una tendencia, ¿Está empeorando o mejorando?, ¿Está tendiendo a desaparecer o se está volviendo más importante?. Utilice estas 5 posibilidades para representar este comportamiento."
-                  placement="right"
-                  fontSize="14px"
+                  tooltip="Un factor necesariamente tiene una tendencia, ¿Está empeorando o mejorando?, ¿Está tendiendo a desaparecer o se está volviendo más importante?. Utilice estas 5 posibilidades para representar este comportamiento."
                 />
                 <ButtonsContainer>
                   <Button color="secondary" onClick={() => setFactor('')}>
