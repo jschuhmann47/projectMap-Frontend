@@ -26,11 +26,14 @@ import { ButtonContainer, CardTitle, Title } from 'views/FodaView/styles';
 import ToolTip from 'components/commons/ToolTip';
 import Modal from 'components/commons/Modal';
 import { ButtonsContainer, CustomForm, FormContainer } from 'styles/form';
-import { ErrorMessage, Field, Formik } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import Input from 'components/inputs/Input';
 import { validateField } from 'helpers/validateField';
 import SelectInput from 'components/inputs/SelectInput';
 import Button from 'components/commons/Button';
+import ModalV2 from 'components/commons/ModalV2';
+import InputV2 from 'components/inputs/InputV2';
+import SelectInputV2 from 'components/inputs/SelectInputV2';
 
 const tableHeaderStyle = {
   display: 'flex',
@@ -329,144 +332,64 @@ const BalancedView = ({
           ))}
         </Grid>
       </Grid>
-      <Modal isOpen={isModalOpen} onClose={closeModal} backgroundColor='#C7DAD9'>
-        <FormContainer>
-          <Formik
-            onSubmit={(formData) => onSubmitObjective(areaInput, formData)}
-            initialValues={{ action: '', frequency: '', responsible: '', measure: '' }}
-          >
-            {({ handleSubmit }) => (
-              <CustomForm onSubmit={handleSubmit}>
-                <CardTitle>Agregar objetivo</CardTitle>
-                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}>
-                  <Field
-                    name="action"
-                    placeholder="Nombre"
-                    component={Input}
-                    validate={validateField}
-                  />
-                  <ErrorMessage name="action">
-                    {(msg) => (
-                      <Typography
-                        sx={{
-                          textAlign: 'left',
-                          color: 'red',
-                          marginLeft: 2,
-                          marginTop: '2px',
-                          fontSize: '14px',
-                        }}
-                      >
-                        {msg}
-                      </Typography>
-                    )}
-                  </ErrorMessage>
-                  <Field
-                    name="frequency"
-                    placeholder="Frecuencia"
-                    component={SelectInput}
-                    options={filterFrequenciesByHorizon(horizon)}
-                    validate={validateField}
-                  />
-                  <ErrorMessage name="frequency">
-                    {(msg) => (
-                      <Typography
-                        sx={{
-                          textAlign: 'left',
-                          color: 'red',
-                          marginLeft: 2,
-                          marginTop: '2px',
-                          fontSize: '14px',
-                        }}
-                      >
-                        {msg}
-                      </Typography>
-                    )}
-                  </ErrorMessage>
-                  <Field
-                    name="responsible"
-                    placeholder="Responsable"
-                    component={Input}
-                    validate={validateField}
-                  />
-                  <ErrorMessage name="responsible">
-                    {(msg) => (
-                      <Typography
-                        sx={{
-                          textAlign: 'left',
-                          color: 'red',
-                          marginLeft: 2,
-                          marginTop: '2px',
-                          fontSize: '14px',
-                        }}
-                      >
-                        {msg}
-                      </Typography>
-                    )}
-                  </ErrorMessage>
-                  <Field
-                    name="baseline"
-                    placeholder="Línea base"
-                    type="number"
-                    component={Input}
-                    validate={validateField}
-                  />
-                  <ErrorMessage name="baseline">
-                    {(msg) => (
-                      <Typography
-                        sx={{
-                          textAlign: 'left',
-                          color: 'red',
-                          marginLeft: 2,
-                          marginTop: '2px',
-                          fontSize: '14px',
-                        }}
-                      >
-                        {msg}
-                      </Typography>
-                    )}
-                  </ErrorMessage>
-                  <Field
-                    name="goal"
-                    placeholder="Resultado esperado"
-                    type="number"
-                    component={Input}
-                    validate={validateField}
-                  />
-                  <ErrorMessage name="goal">
-                    {(msg) => (
-                      <Typography
-                        sx={{
-                          textAlign: 'left',
-                          color: 'red',
-                          marginLeft: 2,
-                          marginTop: '2px',
-                          fontSize: '14px',
-                        }}
-                      >
-                        {msg}
-                      </Typography>
-                    )}
-                  </ErrorMessage>
-                  <Field
-                    name="measure"
-                    placeholder="Unidad de medida"
-                    component={Input}
-                    validate={validateField}
-                  />
-                </Box>
-                <ButtonsContainer>
-                  <Button color="secondary" onClick={closeModal}>
-                    Cancelar
-                  </Button>
-                  <Button color="primary" type="submit">
-                    Agregar
-                  </Button>
-                </ButtonsContainer>
-              </CustomForm>
-            )}
-          </Formik>
-        </FormContainer>
-      </Modal>
+      <ModalV2 isOpen={isModalOpen} onClose={closeModal} title='Agregar objetivo'>
+        <Formik
+          onSubmit={(formData) => onSubmitObjective(areaInput, formData)}
+          initialValues={{ action: '', frequency: '', responsible: '', measure: '' }}
+        >
+          {({ handleSubmit }) => (
+            <Form onSubmit={handleSubmit}>
+              <Field
+                name="action"
+                fieldLabel="Nombre"
+                component={InputV2}
+                validate={validateField}
+              />
+              <Field
+                name="frequency"
+                fieldLabel="Frecuencia"
+                component={SelectInputV2}
+                options={filterFrequenciesByHorizon(horizon)}
+                validate={validateField}
+              />
+              <Field
+                name="responsible"
+                fieldLabel="Responsable"
+                component={InputV2}
+                validate={validateField}
+              />
+              <Field
+                name="baseline"
+                fieldLabel="Línea base"
+                type="number"
+                component={InputV2}
+                validate={validateField}
+              />
+              <Field
+                name="goal"
+                fieldLabel="Resultado esperado"
+                type="number"
+                component={InputV2}
+                validate={validateField}
+              />
+              <Field
+                name="measure"
+                fieldLabel="Unidad de medida"
+                component={InputV2}
+                validate={validateField}
+              />
+              <ButtonsContainer>
+                <Button color="secondary" onClick={closeModal}>
+                  Cancelar
+                </Button>
+                <Button color="primary" type="submit">
+                  Agregar
+                </Button>
+              </ButtonsContainer>
+            </Form>
+          )}
+        </Formik>
+      </ModalV2>
     </>
   );
 };
