@@ -39,3 +39,8 @@ export const onGetProfile = (id) => ({
   type: constants.USER_ON_GET_PROFILE_REQUESTED,
   id,
 });
+
+export const onVerifyCode = (code) => ({
+  type: constants.USER_ON_VERIFY_CODE_REQUESTED,
+  code,
+});

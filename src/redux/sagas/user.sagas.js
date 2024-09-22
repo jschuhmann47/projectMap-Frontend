@@ -11,6 +11,7 @@ import {
   register,
   editProfile,
   getProfile,
+  verifyCode,
 } from 'services/user.services';
 import { getCookie, removeUserCookies } from 'helpers/cookies';
 import { addConsultant } from 'services/consultora.services';
@@ -115,6 +116,16 @@ export function* userGetProfile(action) {
   }
 }
 
+export function* userVerifyCode(action) {
+  try {
+    const { code } = action;
+    const { data } = yield call(verifyCode, code); // complete when we have the route
+    yield put({ type: constants.USER_ON_VERIFY_CODE_SUCCEEDED, data });
+  } catch (error) {
+    yield put({ type: constants.USER_ON_VERIFY_CODE_FAILED, error });
+  }
+}
+
 export function* watchUser() {
   yield all([
     takeLatest(
@@ -131,5 +142,6 @@ export function* watchUser() {
     takeLatest(constants.USER_ON_RESET_PASSWORD_REQUESTED, userResetPassword),
     takeLatest(constants.USER_ON_EDIT_REQUESTED, userEditProfile),
     takeLatest(constants.USER_ON_GET_PROFILE_REQUESTED, userGetProfile),
+    takeLatest(constants.USER_ON_VERIFY_CODE_REQUESTED, userVerifyCode),
   ]);
 }

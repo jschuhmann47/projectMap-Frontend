@@ -1,11 +1,11 @@
 import * as constants from 'redux/contansts/user.constants';
-import * as appConstants from 'redux/contansts/app.constants';
 
 export const defaultState = {
   data: null,
   profile: null,
   loading: false,
   loadingProfile: false,
+  temporaryToken: '',
 };
 
 const userReducer = (state = defaultState, action) => {
@@ -16,6 +16,7 @@ const userReducer = (state = defaultState, action) => {
     case constants.USER_ON_RESET_PASSWORD_REQUESTED:
     case constants.USER_ON_REGISTER_REQUESTED:
     case constants.USER_ON_INITIALIZE_REQUESTED:
+    case constants.USER_ON_VERIFY_CODE_REQUESTED:
       return {
         ...state,
         loading: true,
@@ -62,6 +63,12 @@ const userReducer = (state = defaultState, action) => {
       return {
         defaultState,
       };
+    case constants.USER_ON_VERIFY_CODE_SUCCEEDED:
+      return {
+        ...state,
+        user: data.user,
+        temporaryToken: data.token,
+      }
     case constants.USER_ON_FORGOT_PASSWORD_SUCCEEDED:
     case constants.USER_ON_LOGOUT_SUCCEEDED:
     case constants.USER_ON_RESET_PASSWORD_SUCCEEDED:
@@ -71,6 +78,7 @@ const userReducer = (state = defaultState, action) => {
     case constants.USER_ON_REGISTER_FAILED:
     case constants.USER_ON_RESET_PASSWORD_FAILED:
     case constants.USER_ON_GET_PROFILE_FAILED:
+    case constants.USER_ON_VERIFY_CODE_FAILED:
       return defaultState;
     case constants.USER_ON_LOGOUT_FAILED:
     default:
