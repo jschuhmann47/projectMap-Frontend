@@ -55,6 +55,33 @@ const VerifyCodeForm = ({ onSubmit }) => (
   </FormContainer>
 );
 
-
+const NewPasswordForm = ({ onSubmit }) => (
+    <FormContainer>
+      <Title>Nueva contraseña</Title>
+      <Formik onSubmit={onSubmit} initialValues={{ password: '', repeat: '' }}>
+        {({ handleSubmit }) => (
+          <CustomForm onSubmit={handleSubmit}>
+            <Box sx={{ width: '100%' }}>
+              <Field
+                name="password"
+                type="password"
+                placeholder="Contraseña"
+                component={Input}
+              />
+            </Box>
+            <Box sx={{ width: '100%' }}>
+              <Field
+                name="repeat"
+                type="password"
+                placeholder="Repetir contraseña"
+                component={Input}
+              />
+            </Box>
+            <Button type="submit">Cambiar contraseña</Button>
+          </CustomForm>
+        )}
+      </Formik>
+    </FormContainer>
+  );
 
 export default ResetPasswordView;

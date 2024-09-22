@@ -6,6 +6,7 @@ const storageMiddleware = () => (next) => (action) => {
   const { data, error, type } = action;
   switch (type) {
     case userConstants.USER_ON_LOGIN_SUCCEEDED:
+    case userConstants.USER_ON_RESET_PASSWORD_SUCCEEDED:
       saveUserCookies(data.token);
       break;
     case userConstants.USER_ON_LOGOUT_SUCCEEDED:

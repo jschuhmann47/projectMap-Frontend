@@ -86,9 +86,9 @@ export function* userLogout(action) {
 
 export function* userResetPassword(action) {
   try {
-    const { formData } = action;
-    const { data } = yield call(resetPassword, formData);
-    yield put({ type: constants.USER_ON_RESET_PASSWORD_SUCCEEDED, data });
+    const { formData, temporaryToken } = action;
+    yield call(resetPassword, formData);
+    yield put({ type: constants.USER_ON_RESET_PASSWORD_SUCCEEDED, data: { token: temporaryToken } });
   } catch (error) {
     yield put({ type: constants.USER_ON_RESET_PASSWORD_FAILED, error });
   }

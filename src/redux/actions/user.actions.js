@@ -20,9 +20,10 @@ export const onLogout = (callback) => ({
   callback,
 });
 
-export const onResetPassword = (formData) => ({
+export const onResetPassword = (formData, temporaryToken) => ({
   type: constants.USER_ON_RESET_PASSWORD_REQUESTED,
   formData,
+  temporaryToken,
 });
 
 export const getUser = () => ({
