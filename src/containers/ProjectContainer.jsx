@@ -506,8 +506,8 @@ const ProjectContainer = () => {
         onSubmit={onSubmitConfirmModal}
         errors={confirmDeleteError}
         titulo="Eliminar herramienta"
-        descripcion="Para confirmar la eliminación, confirme escribiendo el nombre de la herramienta."
-        placeholder="Nombre de la herramienta"
+        descripcion="Para confirmar la eliminación, escriba el nombre de la herramienta."
+        fieldLabel="Nombre de la herramienta"
       />
       {loading && <Loading isModalMode message="Cargando proyecto" />}
     </LayoutContainer>

@@ -10,6 +10,7 @@ import InputV2 from "components/inputs/InputV2";
 import SelectInputV2 from "components/inputs/SelectInputV2";
 import { IconButton, LinearProgress } from "@mui/material";
 import { AddCircle } from "@mui/icons-material";
+import ConfirmDeleteModal from "components/commons/ProjectCard/components/confirmDeleteModal";
 
 const OKRView = ({
   okrData,
@@ -18,7 +19,11 @@ const OKRView = ({
   isAddKrModalOpen,
   addKr,
   editKr,
-  deleteKr
+  openConfirmDeleteModal,
+  closeConfirmDeleteModal,
+  isConfirmDeleteModalOpen,
+  submitConfirmDeleteModal,
+  confirmDeleteModalError,
 }) => {
   return <OkrContainerV2>
     <OkrHeader>
@@ -51,7 +56,10 @@ const OKRView = ({
     </KeyResultsHeader>
     <KeyResultsContainer>
       {okrData?.keyResults.map((kr) => (
-        <KeyResult krData={kr} editKr={editKr} deleteKr={deleteKr} />
+        <KeyResult
+          krData={kr}
+          openConfirmDeleteModal={openConfirmDeleteModal}
+        />
       ))}
     </KeyResultsContainer>
     <ModalV2
@@ -96,6 +104,15 @@ const OKRView = ({
         )}
       </Formik>
     </ModalV2>
+    <ConfirmDeleteModal
+      isOpen={isConfirmDeleteModalOpen}
+      onClose={closeConfirmDeleteModal}
+      onSubmit={submitConfirmDeleteModal}
+      errors={confirmDeleteModalError}
+      titulo='Eliminar Key Result'
+      descripcion='Para confirmar, escriba el nombre del Key Result'
+      fieldLabel='Nombre del Key Result'
+    />
   </OkrContainerV2>
 };
 

@@ -5,7 +5,7 @@ import { OkrProgress, OkrProgressBar } from "views/OKRView/styles";
 
 export default function KeyResult({
   krData,
-  deleteKr,
+  openConfirmDeleteModal,
 }) {
   return (
     <Box
@@ -37,7 +37,7 @@ export default function KeyResult({
         </OkrProgressBar>
         <span>{krData?.progress}%</span>
       </OkrProgress>
-      <IconButton onClick={() => deleteKr(krData._id)}>
+      <IconButton onClick={() => openConfirmDeleteModal(krData)}>
         <Delete htmlColor='black' />
       </IconButton>
     </Box>
