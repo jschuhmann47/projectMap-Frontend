@@ -39,8 +39,8 @@ export const CustomLink = styled(Link)({
   textDecoration: 'none',
   fontFamily: 'Fira Sans, sans-serif',
   fontSize: '18px',
-  color: COLORS.BlueDianne,
-  width: '100%'
+  color: 'white',
+  width: '100%',
 });
 
 export const ButtonsContainer = styled('div')({
