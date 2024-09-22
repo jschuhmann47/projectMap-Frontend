@@ -30,11 +30,6 @@ export const OkrHeader = styled('div')({
   marginBottom: 10,
 });
 
-export const EditObjectiveButton = styled('div')({
-  height: '60%',
-  width: '20%',
-});
-
 export const OkrTitle = styled('span')({
   fontSize: 30,
   fontWeight: 'bold',

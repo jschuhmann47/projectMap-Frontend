@@ -5,6 +5,7 @@ import { OkrProgress, OkrProgressBar } from "views/OKRView/styles";
 
 export default function KeyResult({
   krData,
+  deleteKr,
 }) {
   return (
     <Box
@@ -12,7 +13,7 @@ export default function KeyResult({
         border: '1px solid #405C5E',
         width: '100%',
         display: 'grid',
-        gridTemplateColumns: '1fr 14fr 6fr 1fr',
+        gridTemplateColumns: '1fr 14fr 4fr 1fr',
         paddingTop: '5px',
         paddingBottom: '5px',
       }}
@@ -36,7 +37,7 @@ export default function KeyResult({
         </OkrProgressBar>
         <span>{krData?.progress}%</span>
       </OkrProgress>
-      <IconButton onClick={() => {}}>
+      <IconButton onClick={() => deleteKr(krData._id)}>
         <Delete htmlColor='black' />
       </IconButton>
     </Box>

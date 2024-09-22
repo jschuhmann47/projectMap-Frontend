@@ -1,5 +1,5 @@
 import { filterFrequenciesByHorizon, horizonOptions, priorityOptions } from "helpers/enums/okr";
-import { EditObjectiveButton, KeyResultsContainer, KeyResultsHeader, OkrContainerV2, OkrHeader, OkrMoreData, OkrProgress, OkrProgressAndMoreData, OkrProgressBar, OkrTitle } from "./styles";
+import { KeyResultsContainer, KeyResultsHeader, OkrContainerV2, OkrHeader, OkrMoreData, OkrProgress, OkrProgressAndMoreData, OkrProgressBar, OkrTitle } from "./styles";
 import Button from "components/commons/Button";
 import { ButtonsContainer } from "styles/form";
 import { Field, Form, Formik } from "formik";
