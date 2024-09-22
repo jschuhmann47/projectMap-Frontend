@@ -74,7 +74,6 @@ export const KeyResultsHeader = styled('div')({
 export const KeyResultsContainer = styled('div')({
   display: 'flex',
   flexDirection: 'column',
-  gap: 10,
   marginTop: 10,
   marginBottom: 10,
 });
