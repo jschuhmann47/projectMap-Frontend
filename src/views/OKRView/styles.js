@@ -64,6 +64,13 @@ export const OkrMoreData = styled('div')({
   flexDirection: 'column',
 });
 
+export const KeyResultsHeader = styled('div')({
+  fontSize: 22,
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+})
+
 export const KeyResultsContainer = styled('div')({
   display: 'flex',
   flexDirection: 'column',

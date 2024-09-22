@@ -1,5 +1,5 @@
 import { filterFrequenciesByHorizon, horizonOptions, priorityOptions } from "helpers/enums/okr";
-import { EditObjectiveButton, KeyResultsContainer, OkrContainerV2, OkrHeader, OkrMoreData, OkrProgress, OkrProgressAndMoreData, OkrProgressBar, OkrTitle } from "./styles";
+import { EditObjectiveButton, KeyResultsContainer, KeyResultsHeader, OkrContainerV2, OkrHeader, OkrMoreData, OkrProgress, OkrProgressAndMoreData, OkrProgressBar, OkrTitle } from "./styles";
 import Button from "components/commons/Button";
 import { ButtonsContainer } from "styles/form";
 import { Field, Form, Formik } from "formik";
@@ -8,7 +8,8 @@ import KeyResult from "./components/KeyResult";
 import ModalV2 from "components/commons/ModalV2";
 import InputV2 from "components/inputs/InputV2";
 import SelectInputV2 from "components/inputs/SelectInputV2";
-import { LinearProgress } from "@mui/material";
+import { IconButton, LinearProgress } from "@mui/material";
+import { AddCircle } from "@mui/icons-material";
 
 const OKRView = ({
   okrData,
@@ -42,12 +43,17 @@ const OKRView = ({
         <span>Prioridad: <img src={priorityOptions[okrData?.priority]} height="20" width="20" /></span>
       </OkrMoreData>
     </OkrProgressAndMoreData>
+    <KeyResultsHeader>
+      Key Results
+      <IconButton onClick={openAddKrModal}>
+        <AddCircle htmlColor='black' />
+      </IconButton>
+    </KeyResultsHeader>
     <KeyResultsContainer>
       {okrData?.keyResults.map((kr) => (
         <KeyResult krData={kr} editKr={editKr} deleteKr={deleteKr} />
       ))}
     </KeyResultsContainer>
-    <Button onClick={openAddKrModal}>Agregar Key Result</Button>
     <ModalV2
       isOpen={isAddKrModalOpen}
       onClose={closeAddKrModal}
