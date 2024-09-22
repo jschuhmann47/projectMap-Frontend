@@ -26,7 +26,7 @@ const ResetPasswordContainer = () => {
       <ResetPasswordView
         onVerifyCode={verifyCode}
         onResetPassword={resetPassword}
-        step={temporaryToken ? 'resetPassword' : 'verifyCode'}
+        step={temporaryToken ? 'newPassword' : 'verifyCode'}
       />
       {loading && <Loading isModalMode message="Cargando" />}
     </LayoutContainer>

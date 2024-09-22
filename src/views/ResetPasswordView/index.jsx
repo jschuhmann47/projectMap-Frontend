@@ -14,7 +14,7 @@ const ResetPasswordView = ({ onVerifyCode, onResetPassword, step }) => {
         <img src='projectmap-logo-transparent.png' width='100%' />
       </Box>
       {step === 'verifyCode' && <VerifyCodeForm onSubmit={onVerifyCode} />}
-      {step === 'resetPassword' && <ResetPasswordForm onSubmit={onResetPassword} />}
+      {step === 'newPassword' && <NewPasswordForm onSubmit={onResetPassword} />}
     </Container>
   );
 };
