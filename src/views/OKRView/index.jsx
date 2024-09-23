@@ -79,8 +79,7 @@ const OKRView = ({
   openComments,
   deleteOkr,
   onClickBack,
-  deleteKeyResult,
-  organizationalNodes
+  deleteKeyResult
 }) => {
   const [okrInputId, setOkrInputId] = useState(null);
   const [keyResultId, setKeyResultId] = useState(null);

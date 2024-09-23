@@ -23,7 +23,9 @@ const OKRView = ({
   addKr,
   editKr,
   deleteKr,
-  organizationalNodes
+  organizationalNodes,
+  handleAreaChange,
+  setFieldValue
 }) => {
   return <OkrContainerV2>
     <OkrHeader>
@@ -80,9 +82,13 @@ const OKRView = ({
                   placeholder="Área"
                   component={SelectInput}
                   options={[
-                    "Sin área",
-                    ...organizationalNodes.map((node) => `${node.id}-${node.data.label}`)
-                  ]}
+                    { value:"", label: "Sin área" },
+                    ...organizationalNodes.map((node) => ({
+                      value: node.id,
+                      label: node.data.label
+                    }))
+                  ].map(option => option.label)}
+                  onChange={(e) => handleAreaChange(e, setFieldValue)}
                   validate={validateField}
                 />
               </Box>

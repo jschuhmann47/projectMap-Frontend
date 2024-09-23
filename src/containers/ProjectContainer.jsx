@@ -110,6 +110,10 @@ const ProjectContainer = () => {
   const organizationalNodes = useSelector(
     (state) => state.projects.data?.chart?.nodes || []
   );
+  const organizationalNodesMap = {
+    "": "Sin área",
+    ...Object.fromEntries(organizationalNodes.map((node) => [node.id, node.data.label]))
+  };
   const onClickButtonGoBack = () => {
     if (user?.role && user?.role === 'AdminConsultant')
       navigate(`/consultoria`);
@@ -198,22 +202,24 @@ const ProjectContainer = () => {
   };
 
   const onSubmitTool = (action, formData) => {
-    let areaId = "";
-    let area = formData.area;
+    let areaId = formData.area || "";
+    let area = "Sin área";
   
-    if (formData.area && formData.area.includes('-')) {
-      [areaId, area] = formData.area.split('-');
+    if (areaId) {
+      const selectedArea = organizationalNodes.find((node) => node.id === areaId);
+      if (selectedArea) {
+        area = selectedArea.data.label;
+      }
     }
   
     const values = {
       ...formData,
-      areaId: areaId,
-      area: area,
+      areaId,
+      area,
       projectId: id,
     };
   
-    console.log("PABLO", values);
-  
+    console.log('Formulario enviado:', values);
     dispatch(action(values));
     navigate('createTool');
   };
@@ -429,10 +435,22 @@ const ProjectContainer = () => {
         <FormContainer>
           <Title style={{ fontSize: 18 }}>{addTool?.title}</Title>
           <Formik
+            initialValues={{ titulo: '', area: 'Sin área', areaId: '', horizon: '' }}  // Valores iniciales definidos para evitar `undefined`
+            validateOnChange={true}  // Validamos al cambiar
+            validateOnBlur={true}    // Validamos al perder el foco
+            validate={(values) => {
+              const errors = {};
+              if (!values.titulo) {
+                errors.titulo = 'El título es obligatorio';
+              }
+              if (!values.area) {
+                errors.area = 'El área es obligatoria';
+              }
+              return errors;
+            }}
             onSubmit={(values) => onSubmitTool(addTool.action, values)}
-            initialValues={{ titulo: '', area: '' }}
           >
-            {({ handleSubmit }) => (
+            {({ handleSubmit, setFieldValue, isValid, dirty }) => (
               <CustomForm onSubmit={handleSubmit}>
                 <CardTitle>{addTool?.titulo}</CardTitle>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}>
@@ -462,11 +480,11 @@ const ProjectContainer = () => {
                       name="area"
                       placeholder="Área"
                       component={SelectInput}
-                      options={[
-                        "Sin área",
-                        ...organizationalNodes.map((node) => `${node.id}-${node.data.label}`)
-                      ]}
-                      validate={validateField}
+                      options={organizationalNodesMap}  // Usamos el mapa creado para las áreas
+                      onChange={(e) => {
+                        setFieldValue('area', e.target.value); // Actualiza el label del área
+                        setFieldValue('areaId', e.target.value || ''); // Si es "Sin área", el ID será un string vacío
+                      }}
                     />
                   }
                   {addTool?.horizon &&
@@ -474,7 +492,7 @@ const ProjectContainer = () => {
                       name="horizon"
                       placeholder="Horizonte"
                       component={SelectInput}
-                      options={Object.values(addTool?.horizon)}
+                      options={horizonOptions}
                       validate={validateField}
                     />
                   }
@@ -483,7 +501,7 @@ const ProjectContainer = () => {
                   <Button color="secondary" onClick={() => setAddTool(null)}>
                     Cancelar
                   </Button>
-                  <Button color="primary" type="submit">
+                  <Button color="primary" type="submit" disabled={!(dirty && isValid)}>
                     Agregar
                   </Button>
                 </ButtonsContainer>
