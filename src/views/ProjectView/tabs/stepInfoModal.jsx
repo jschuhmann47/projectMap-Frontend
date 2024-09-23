@@ -1,19 +1,18 @@
-import Modal from "components/commons/Modal";
 import { stepsInfo } from "helpers/enums/steps";
 import parse from "html-react-parser";
-import { StepInfo, Title } from "../styles";
+import { StepInfo } from "../styles";
+import ModalV2 from "components/commons/ModalV2";
 
 export default function StepInfoModal({ isOpen, selectedStep, onClose }) {
   const title = stepsInfo[selectedStep]?.title ?? ''
   const description = stepsInfo[selectedStep]?.description ?? ''
-  return <Modal
+  return <ModalV2
     isOpen={isOpen}
     onClose={onClose}
-    backgroundColor="#C7DAD9"
+    title={title}
   >
     <StepInfo>
-      <Title>{title}</Title>
       {parse(description)}
     </StepInfo>
-  </Modal>
+  </ModalV2>
 }

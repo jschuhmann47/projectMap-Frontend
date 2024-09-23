@@ -1,46 +1,66 @@
-import { Box, TextField, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Button from "components/commons/Button";
-import Modal from "components/commons/Modal";
-import { useState } from "react";
+import ModalV2 from "components/commons/ModalV2";
+import InputV2 from "components/inputs/InputV2";
+import { Field, Form, Formik } from "formik";
+import { validateField } from "helpers/validateField";
 
 export default function AddUserModal({
   onClose,
   onSearchUserByEmail,
   onAddUserToProject,
+  onGoBack,
   info
 }) {
-  const [email, setEmail] = useState('');
-
-  function onCloseModal() {
-    setEmail('');
-    onClose();
-  }
-
   function addUserToProject() {
     onAddUserToProject(info.user.email, 'participant') // TODO: allow adding coordinator directly
   }
-
-  return <Modal isOpen={info.isOpen} onClose={onCloseModal} backgroundColor="#C7DAD9">
-    <Box>
-      <Typography id="modal-modal-title" variant="h6" component="h2">
-        Buscar Integrante
-      </Typography>
-      <TextField
-        fullWidth
-        label="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        margin="normal"
-        error={!!info.error}
-        helperText={info.error}
-      />
-      <Button onClick={() => onSearchUserByEmail(email)}>Buscar</Button>
+  
+  return <ModalV2 isOpen={info.isOpen} onClose={onClose} title='Agregar integrante' width={500}>
+    <Box sx={{ height: 150 }}>
+      {!info.user && (
+        <Formik onSubmit={({ userEmail }) => onSearchUserByEmail(userEmail)} initialValues={{ userEmail: '' }}>
+          {({ handleSubmit }) => (
+            <Form onSubmit={handleSubmit} style={{ position: 'relative', height: 150 }}>
+              <Field
+                name='userEmail'
+                fieldLabel='Email'
+                component={InputV2}
+                validate={validateField}
+              />
+              <Box sx={{ color: 'red' }}>{info.error ? 'No se encontró un usuario con este email.' : ''}</Box>
+              <Box sx={{ paddingLeft: '30%', paddingRight: '30%', width: '40%', position: 'absolute', bottom: 0 }}>
+                <Button type='submit'>Buscar</Button>
+              </Box>
+            </Form>
+          )}
+        </Formik>
+      )}
       {info.user && (
-        <Box mt={2}>
-          <Typography variant="body1">Usuario encontrado: {info.user.firstName} {info.user.lastName}</Typography>
-          <Button onClick={addUserToProject}>Confirmar</Button>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '5px' }}>
+          <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 18 }}>
+            ¡Usuario encontrado!
+          </Typography>
+          <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 18 }}>
+            Email: {info.user.email}
+          </Typography>
+          <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 18 }}>
+            Nombre: {info.user.firstName} {info.user.lastName}
+          </Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              width: '40%',
+              paddingLeft: '30%',
+              paddingRight: '30%',
+            }}
+          >
+            <Button color="secondary" onClick={onGoBack}>Atrás</Button>
+            <Button onClick={addUserToProject}>Confirmar</Button>
+          </Box>
         </Box>
       )}
     </Box>
-  </Modal>;
+  </ModalV2>;
 }

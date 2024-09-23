@@ -45,7 +45,9 @@ export const CustomLink = styled(Link)({
 
 export const ButtonsContainer = styled('div')({
   display: 'flex',
-  width: '100%',
+  width: '40%',
   gap: 15,
   justifyContent: 'space-between',
+  paddingLeft: '30%',
+  paddingRight: '30%',
 });

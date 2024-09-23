@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ButtonBase, IconButton, Menu, MenuItem, Popover } from '@mui/material';
-import { Formik, Field, ErrorMessage } from 'formik';
+import { Formik, Field, ErrorMessage, Form } from 'formik';
 import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
 import { PopupModal } from 'react-calendly';
@@ -26,14 +26,15 @@ import {
   onAddUser,
   changeMemberPermission,
   changeMemberRole,
-  onSaveMembers
+  onSaveMembers,
+  goBackModal
 } from 'redux/actions/projects.actions';
 import { STEPS } from 'helpers/enums/steps';
 import { COLORS } from 'helpers/enums/colors';
 
 import Modal from 'components/commons/Modal';
 import Button from 'components/commons/Button';
-import Input from 'components/inputs/Input';
+import InputV2 from 'components/inputs/InputV2';
 import {
   CustomForm,
   ButtonsContainer,
@@ -68,8 +69,9 @@ import Loading from 'components/commons/Loading';
 import { onGetAll as onGetAllComments } from 'redux/actions/comments.actions';
 import { onDelete } from 'redux/actions/questionnarie.actions';
 import { CardTitle } from 'views/FodaView/styles';
-import SelectInput from 'components/inputs/SelectInput';
 import { horizonOptions } from 'helpers/enums/okr';
+import ModalV2 from 'components/commons/ModalV2';
+import SelectInputV2 from 'components/inputs/SelectInputV2';
 
 const ProjectContainer = () => {
   let { id } = useParams();
@@ -268,6 +270,10 @@ const ProjectContainer = () => {
     dispatch(onSearchByEmail(email));
   };
 
+  function onGoBackModal() {
+    dispatch(goBackModal());
+  }
+
   function onOpenModal() {
     dispatch(openModal());
   };
@@ -316,6 +322,7 @@ const ProjectContainer = () => {
         onAddUserToProject={onAddUserToProject}
         onOpenModal={onOpenModal}
         onCloseModal={onCloseModal}
+        onGoBackModal={onGoBackModal}
         onChangeMemberRole={onChangeMemberRole}
         onChangeMemberPermission={onChangeMemberPermission}
         onSaveChanges={onSaveChanges}
@@ -427,17 +434,18 @@ const ProjectContainer = () => {
           </MenuItem>
         ))}
       </Menu>
-      <Modal
+      <ModalV2
         isOpen={!!addTool}
         backgroundColor={COLORS.WildSand}
         onClose={() => setAddTool(null)}
+        title={addTool?.titulo}
       >
         <FormContainer>
           <Title style={{ fontSize: 18 }}>{addTool?.title}</Title>
           <Formik
-            initialValues={{ titulo: '', area: 'Sin área', areaId: '', horizon: '' }}  // Valores iniciales definidos para evitar `undefined`
-            validateOnChange={true}  // Validamos al cambiar
-            validateOnBlur={true}    // Validamos al perder el foco
+            initialValues={{ titulo: '', area: 'Sin área', areaId: '', horizon: '' }}
+            validateOnChange={true}
+            validateOnBlur={true}
             validate={(values) => {
               const errors = {};
               if (!values.titulo) {
@@ -456,8 +464,8 @@ const ProjectContainer = () => {
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}>
                   <Field
                     name="titulo"
-                    placeholder="Título"
-                    component={Input}
+                    fieldLabel="Título"
+                    component={InputV2}
                     validate={validateField}
                   />
                   <ErrorMessage name="titulo">
@@ -479,11 +487,11 @@ const ProjectContainer = () => {
                     <Field
                       name="area"
                       placeholder="Área"
-                      component={SelectInput}
-                      options={organizationalNodesMap}  // Usamos el mapa creado para las áreas
+                      component={SelectInputV2}
+                      options={organizationalNodesMap}
                       onChange={(e) => {
-                        setFieldValue('area', e.target.value); // Actualiza el label del área
-                        setFieldValue('areaId', e.target.value || ''); // Si es "Sin área", el ID será un string vacío
+                        setFieldValue('area', e.target.value);
+                        setFieldValue('areaId', e.target.value || '');
                       }}
                     />
                   }
@@ -491,7 +499,7 @@ const ProjectContainer = () => {
                     <Field
                       name="horizon"
                       placeholder="Horizonte"
-                      component={SelectInput}
+                      component={SelectInputV2}
                       options={horizonOptions}
                       validate={validateField}
                     />
@@ -509,7 +517,7 @@ const ProjectContainer = () => {
             )}
           </Formik>
         </FormContainer>
-      </Modal>
+      </ModalV2>
       {!!consultant?.calendlyUser && (
         <ButtonBase
           sx={{
@@ -560,8 +568,8 @@ const ProjectContainer = () => {
         onSubmit={onSubmitConfirmModal}
         errors={confirmDeleteError}
         titulo="Eliminar herramienta"
-        descripcion="Para confirmar la eliminación, confirme escribiendo el nombre de la herramienta"
-        placeholder="Nombre de la herramienta."
+        descripcion="Para confirmar la eliminación, confirme escribiendo el nombre de la herramienta."
+        placeholder="Nombre de la herramienta"
       />
       {loading && <Loading isModalMode message="Cargando proyecto" />}
     </LayoutContainer>

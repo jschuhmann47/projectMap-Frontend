@@ -73,6 +73,7 @@ export default function RolesTab({
   addUserModalInfo,
   onOpenModal,
   onCloseModal,
+  onGoBackModal,
   onChangeMemberPermission,
   onChangeMemberRole,
   onSaveChanges,
@@ -91,6 +92,7 @@ export default function RolesTab({
         onClose={onCloseModal}
         onSearchUserByEmail={onSearchUserByEmail}
         onAddUserToProject={onAddUserToProject}
+        onGoBack={onGoBackModal}
         info={addUserModalInfo}
       />
       <TableContainer component={Paper} style={{ marginTop: 20 }}>

@@ -3,17 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import LayoutContainer from 'containers/LayoutContainer';
-import Modal from 'components/commons/Modal';
 import Button from 'components/commons/Button';
 import { COLORS } from 'helpers/enums/colors';
 import {
-  ButtonsContainer,
-  CardTitle,
-  CreateContent,
   Container,
 } from 'views/PestelView/styles';
 import PestelView from 'views/PestelView';
-import SelectInput from 'components/inputs/SelectInput';
 import {
   onGetOne,
   onGetOptions,
@@ -23,8 +18,7 @@ import {
   onGetSeeds,
 } from 'redux/actions/pestel.actions';
 import { onGetOne as onGetProject } from 'redux/actions/projects.actions';
-import { CustomForm } from 'styles/form';
-import { Formik, Field, ErrorMessage } from 'formik';
+import { Formik, Field, Form } from 'formik';
 import {
   politicoSelector,
   economicoSelector,
@@ -34,14 +28,16 @@ import {
   legalSelector,
   titleSelector,
 } from 'redux/selectors/pestel.selector';
-import AutoComplete from 'components/inputs/Autocomplete';
 import Comments from 'components/comments/Comments';
-import { Box, Menu, MenuItem, Typography } from '@mui/material';
+import { Menu, MenuItem } from '@mui/material';
 import { validateField } from 'helpers/validateField';
-import ToolTip from 'components/commons/ToolTip';
 import Loading from 'components/commons/Loading';
 import { onGetAll as onGetAllComments } from 'redux/actions/comments.actions';
 import permission from 'helpers/permissions';
+import ModalV2 from 'components/commons/ModalV2';
+import SelectInputV2 from 'components/inputs/SelectInputV2';
+import InputV2 from 'components/inputs/InputV2';
+import { ButtonsContainer } from 'styles/form';
 
 const PestelContainer = () => {
   const { pestelId, id } = useParams();
@@ -139,154 +135,61 @@ const PestelContainer = () => {
             <Comments show tool="PESTEL" toolId={pestelId} projectId={id} />
           </MenuItem>
         </Menu>
-        <Modal isOpen={!!factor} backgroundColor={COLORS.WildSand} disabled>
-          <CreateContent sx={{ width: '400px' }}>
-            <CardTitle>
-              {!!factor?.area
-                ? `Editar factor ${factor?.area}`
-                : `Agregar factor ${factor}`}
-            </CardTitle>
-            <Formik onSubmit={onSubmitFactor} initialValues={initialValues}>
-              {({ handleSubmit, setFieldValue }) => (
-                <CustomForm onSubmit={handleSubmit}>
-                  <Box sx={{ width: '100%', display: 'flex' }}>
-                    <Field
-                      name="descripcion"
-                      placeholder="Descripción"
-                      component={AutoComplete}
-                      options={seeds[factor] || []}
-                      optionKey={'descripcion'}
-                      onChange={(value) =>
-                        setFieldValue(
-                          'descripcion',
-                          value?.descripcion !== null
-                            ? value.descripcion
-                            : initialValues.descripcion
-                        )
-                      }
-                      validate={validateField}
-                    />
-                    <ToolTip
-                      text="Seleccione o escriba el factor que quiere agregar a su análisis."
-                      placement="right"
-                      fontSize="14px"
-                    />
-                    <ErrorMessage name={'descripcion'}>
-                      {(msg) => (
-                        <Typography
-                          sx={{
-                            textAlign: 'left',
-                            color: 'red',
-                            marginLeft: 2,
-                            marginTop: '2px',
-                            fontSize: '14px',
-                          }}
-                        >
-                          {msg}
-                        </Typography>
-                      )}
-                    </ErrorMessage>
-                  </Box>
-                  <Box sx={{ width: '100%', display: 'flex' }}>
-                    <Field
-                      name="importancia"
-                      component={SelectInput}
-                      options={importancia}
-                      placeholder="Importancia"
-                      validate={validateField}
-                    />
-                    <ToolTip
-                      text="Algunos factores que agregue en su análisis tendrán mayor impacto que otros. Si algo tiene un gran impacto, positivo o negativo, en su organización, utilice la opción superior, de ser menos importante, la inferior"
-                      placement="right"
-                      fontSize="14px"
-                    />
-                    <ErrorMessage name={'importancia'}>
-                      {(msg) => (
-                        <Typography
-                          sx={{
-                            textAlign: 'left',
-                            color: 'red',
-                            marginLeft: 2,
-                            marginTop: '2px',
-                            fontSize: '14px',
-                          }}
-                        >
-                          {msg}
-                        </Typography>
-                      )}
-                    </ErrorMessage>
-                  </Box>
-                  <Box sx={{ width: '100%', display: 'flex' }}>
-                    <Field
-                      name={'intensidad'}
-                      component={SelectInput}
-                      options={intensidad}
-                      placeholder={'Intensidad'}
-                      validate={validateField}
-                    />
-                    <ToolTip
-                      text="Los factores a agregar se pueden manifestar con fuerza variable. No es lo mismo por ejemplo, una inflación del 2% a una de 20%. Utilice esta escala para describir ese comportamiento."
-                      placement="right"
-                      fontSize="14px"
-                    />
-                    <ErrorMessage name={'intensidad'}>
-                      {(msg) => (
-                        <Typography
-                          sx={{
-                            textAlign: 'left',
-                            color: 'red',
-                            marginLeft: 2,
-                            marginTop: '2px',
-                            fontSize: '14px',
-                          }}
-                        >
-                          {msg}
-                        </Typography>
-                      )}
-                    </ErrorMessage>
-                  </Box>
-                  <Box sx={{ width: '100%', display: 'flex' }}>
-                    <Field
-                      name="tendencia"
-                      component={SelectInput}
-                      options={tendencia}
-                      placeholder={'Tendencia'}
-                      validate={validateField}
-                    />
-                    <ToolTip
-                      text="Un factor necesariamente tiene una tendencia, ¿Está empeorando o mejorando?, ¿Está tendiendo a desaparecer o se está volviendo más importante?. Utilice estas 5 posibilidades para representar este comportamiento."
-                      placement="right"
-                      fontSize="14px"
-                    />
-                    <ErrorMessage name={'tendencia'}>
-                      {(msg) => (
-                        <Typography
-                          sx={{
-                            textAlign: 'left',
-                            color: 'red',
-                            marginLeft: 2,
-                            marginTop: '2px',
-                            fontSize: '14px',
-                          }}
-                        >
-                          {msg}
-                        </Typography>
-                      )}
-                    </ErrorMessage>
-                  </Box>
-                  <ButtonsContainer>
-                    <Button color="secondary" onClick={() => setFactor('')}>
-                      Cancelar
-                    </Button>
-                    <Button color="primary" type="submit">
-                      {!!factor?.area ? 'Editar' : 'Agregar'}
-                    </Button>
-                  </ButtonsContainer>
-                </CustomForm>
-              )}
-            </Formik>
-          </CreateContent>
-        </Modal>
+        <ModalV2
+          isOpen={!!factor}
+          title={
+            !!factor?.area
+            ? `Editar factor ${factor?.area}`
+            : `Agregar factor ${factor}`
+          }
+          onClose={() => setFactor('')}
+        >
+          <Formik onSubmit={onSubmitFactor} initialValues={initialValues}>
+            {({ handleSubmit }) => (
+              <Form onSubmit={handleSubmit}>
+                <Field
+                  name="descripcion"
+                  fieldLabel="Descripción"
+                  component={InputV2}
+                  validate={validateField}
+                  tooltip="Seleccione o escriba el factor que quiere agregar a su análisis."
+                />
+                <Field
+                  name="importancia"
+                  component={SelectInputV2}
+                  options={importancia}
+                  fieldLabel="Importancia"
+                  validate={validateField}
+                  tooltip="Algunos factores que agregue en su análisis tendrán mayor impacto que otros. Si algo tiene un gran impacto, positivo o negativo, en su organización, utilice la opción superior, de ser menos importante, la inferior"
+                />
+                <Field
+                  name='intensidad'
+                  component={SelectInputV2}
+                  options={intensidad}
+                  fieldLabel='Intensidad'
+                  validate={validateField}
+                  tooltip="Los factores a agregar se pueden manifestar con fuerza variable. No es lo mismo por ejemplo, una inflación del 2% a una de 20%. Utilice esta escala para describir ese comportamiento."
+                />
+                <Field
+                  name="tendencia"
+                  component={SelectInputV2}
+                  options={tendencia}
+                  fieldLabel='Tendencia'
+                  validate={validateField}
+                  tooltip="Un factor necesariamente tiene una tendencia, ¿Está empeorando o mejorando?, ¿Está tendiendo a desaparecer o se está volviendo más importante?. Utilice estas 5 posibilidades para representar este comportamiento."
+                />
+                <ButtonsContainer>
+                  <Button color="secondary" onClick={() => setFactor('')}>
+                    Cancelar
+                  </Button>
+                  <Button type="submit">
+                    {!!factor?.area ? 'Editar' : 'Agregar'}
+                  </Button>
+                </ButtonsContainer>
+              </Form>
+            )}
+          </Formik>
+        </ModalV2>
       </Container>
       {loading && <Loading isModalMode message="Cargando Pestel" />}
     </LayoutContainer>

@@ -1,12 +1,12 @@
-import { Button, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import Modal from 'components/commons/Modal';
-import Input from 'components/inputs/Input';
-import { ErrorMessage, Field, Formik } from 'formik';
-import { COLORS } from 'helpers/enums/colors';
+import Button from 'components/commons/Button';
+import ModalV2 from 'components/commons/ModalV2';
+import InputV2 from 'components/inputs/InputV2';
+import { Field, Form, Formik } from 'formik';
 import { validateField } from 'helpers/validateField';
 import React from 'react';
-import { CustomForm } from 'styles/form';
+import { ButtonsContainer } from 'styles/form';
 
 const ConfirmDeleteModal = ({
   isOpen,
@@ -19,114 +19,73 @@ const ConfirmDeleteModal = ({
 }) => {
   const initialValues = {};
   return (
-    <Modal isOpen={isOpen} backgroundColor={COLORS.WildSand} disabled>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 3,
-          maxWidth: '550px',
-        }}
-      >
-        <span
-          style={{
-            fontFamily: "'Fira Sans'",
-            fontStyle: 'normal',
-            fontWeight: 700,
-            fontSize: '24px',
-            color: COLORS.BlueDianne,
-          }}
-        >
-          {titulo}
-        </span>
+    <ModalV2 isOpen={isOpen} title={titulo} onClose={onClose}>
+      <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '5px' }}>
         <span
           style={{
             fontFamily: "'Fira Sans'",
             fontStyle: 'normal',
             fontWeight: 400,
             fontSize: '18px',
-            color: COLORS.BlueDianne,
           }}
         >
           {descripcion}
         </span>
-        <Box sx={{ alignItems: 'center' }}>
-          <Formik onSubmit={onSubmit} initialValues={initialValues}>
-            {({ handleSubmit, setFieldValue }) => (
-              <CustomForm
-                onSubmit={handleSubmit}
-                sx={{ width: '500px', margin: '0 auto' }}
-              >
-                <Box
-                  sx={{
-                    display: 'flex',
-                    width: '100%',
-                    gap: 15,
-                    justifyContent: 'space-between',
-                  }}
-                >
-                  <Box sx={{ width: '100%' }}>
-                    <Field
-                      name="name"
-                      component={Input}
-                      placeholder={placeholder}
-                      validate={validateField}
-                      onChange={(name) => {
-                        setFieldValue('name', name);
-                      }}
-                    />
-                    <ErrorMessage name={'name'}>
-                      {(msg) => (
-                        <Typography
-                          sx={{
-                            textAlign: 'left',
-                            color: 'red',
-                            marginLeft: 2,
-                            marginTop: '2px',
-                            fontSize: '14px',
-                          }}
-                        >
-                          {msg}
-                        </Typography>
-                      )}
-                    </ErrorMessage>
-                    {errors ? (
-                      <Typography
-                        sx={{
-                          textAlign: 'left',
-                          color: 'red',
-                          marginLeft: 2,
-                          marginTop: '2px',
-                          fontSize: '14px',
-                        }}
-                      >
-                        {errors}
-                      </Typography>
-                    ) : (
-                      <></>
-                    )}
-                  </Box>
-                </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    width: '100%',
-                  }}
-                >
-                  <Button color="secondary" onClick={() => onClose()}>
-                    Cancelar
-                  </Button>
-                  <Button color="primary" type="submit">
-                    Confirmar
-                  </Button>
-                </Box>
-              </CustomForm>
-            )}
-          </Formik>
-        </Box>
       </Box>
-    </Modal>
+      <Box sx={{ alignItems: 'center' }}>
+        <Formik onSubmit={onSubmit} initialValues={initialValues}>
+          {({ handleSubmit, setFieldValue }) => (
+            <Form
+              onSubmit={handleSubmit}
+            >
+              <Box
+                sx={{
+                  display: 'flex',
+                  width: '100%',
+                  gap: 15,
+                  justifyContent: 'space-between',
+                }}
+              >
+                <Box sx={{ width: '100%' }}>
+                  <Field
+                    name="name"
+                    component={InputV2}
+                    fieldLabel={placeholder}
+                    validate={validateField}
+                    onChange={(name) => {
+                      setFieldValue('name', name);
+                    }}
+                  />
+                  {errors ? (
+                    <Typography
+                      sx={{
+                        textAlign: 'left',
+                        color: 'red',
+                        marginLeft: 2,
+                        marginTop: '2px',
+                        fontSize: '14px',
+                      }}
+                    >
+                      {errors}
+                    </Typography>
+                  ) : (
+                    <></>
+                  )}
+                </Box>
+              </Box>
+              <ButtonsContainer>
+                <Button color="secondary" onClick={() => onClose()}>
+                  Cancelar
+                </Button>
+                <Button type="submit">
+                  Confirmar
+                </Button>
+              </ButtonsContainer>
+            </Form>
+          )}
+        </Formik>
+      </Box>
+    </ModalV2>
   );
 };
 

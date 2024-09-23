@@ -15,6 +15,7 @@ export default function ProjectView({
   addUserModalInfo,
   onOpenModal,
   onCloseModal,
+  onGoBackModal,
   onChangeMemberPermission,
   onChangeMemberRole,
   onSaveChanges,
@@ -53,6 +54,7 @@ export default function ProjectView({
           addUserModalInfo={addUserModalInfo}
           onOpenModal={onOpenModal}
           onCloseModal={onCloseModal}
+          onGoBackModal={onGoBackModal}
           onChangeMemberPermission={onChangeMemberPermission}
           onChangeMemberRole={onChangeMemberRole}
           onSaveChanges={onSaveChanges}

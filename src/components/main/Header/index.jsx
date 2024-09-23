@@ -12,9 +12,9 @@ import {
   MenuItemText,
   ProfileAvatar,
 } from './styles';
-import Modal from 'components/commons/Modal';
-import { StepInfo, Title } from 'views/ProjectView/styles';
+import { StepInfo } from 'views/ProjectView/styles';
 import parse from 'html-react-parser';
+import ModalV2 from 'components/commons/ModalV2';
 
 const Header = (props) => {
   const { menuItems, user } = props;
@@ -73,12 +73,11 @@ const Header = (props) => {
                   </MenuItem>
                 ))}
               </Menu>
-              <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+              <ModalV2 isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title='Proceso de planificación estratégica'>
                 <StepInfo>
-                  <Title>Proceso de planificación estratégica</Title>
                   {parse(info)}
                 </StepInfo>
-              </Modal>
+              </ModalV2>
             </HeaderAccountContainer>
           )}
         </ToolbarContainer>
