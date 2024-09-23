@@ -3,7 +3,7 @@ import ToolTip from "components/commons/ToolTip"
 import { getIn } from "formik"
 
 export default function SelectInputV2(props) {
-  const { field, options, fieldLabel, form, tooltip } = props
+  const { field, options, fieldLabel, form, tooltip } = props;
 
   return (
     <Box sx={{ marginTop: '5px', marginBottom: '5px' }}>
@@ -16,6 +16,8 @@ export default function SelectInputV2(props) {
       <Select
         {...field}
         size='small'
+        value={field.value || ""}
+        onChange={(e) => form.setFieldValue(field.name, e.target.value)}
         sx={{
           border: '1px solid',
           borderRadius: '4px',
@@ -27,8 +29,13 @@ export default function SelectInputV2(props) {
             '#344345',
         }}
       >
-        {options?.map((option) => (
-          <MenuItem value={option}>{option}</MenuItem>
+        <MenuItem value="">
+          <em>Selecciona una opción</em>
+        </MenuItem>
+        {options && Object.entries(options).map(([key, label]) => (
+          <MenuItem key={key} value={key}>
+            {label}
+          </MenuItem>
         ))}
       </Select>
     </Box>
