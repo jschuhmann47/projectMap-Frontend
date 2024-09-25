@@ -7,6 +7,7 @@ export default function ModalV2({
   isOpen,
   onClose,
   width = 800,
+  background = '#E1ECEB'
 }) {
   return (
     <Modal
@@ -31,7 +32,7 @@ export default function ModalV2({
         <ModalV2Header title={title} onClose={onClose} />
         <Box
           sx={{
-            backgroundColor: '#E1ECEB',
+            backgroundColor: background,
             width: '90%',
             borderRadius: '0px 0px 8px 8px',
             paddingLeft: '5%',
