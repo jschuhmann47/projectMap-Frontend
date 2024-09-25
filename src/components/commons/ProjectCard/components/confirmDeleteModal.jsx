@@ -15,7 +15,7 @@ const ConfirmDeleteModal = ({
   errors,
   titulo,
   descripcion,
-  placeholder,
+  fieldLabel,
 }) => {
   const initialValues = {};
   return (
@@ -50,7 +50,7 @@ const ConfirmDeleteModal = ({
                   <Field
                     name="name"
                     component={InputV2}
-                    fieldLabel={placeholder}
+                    fieldLabel={fieldLabel}
                     validate={validateField}
                     onChange={(name) => {
                       setFieldValue('name', name);
