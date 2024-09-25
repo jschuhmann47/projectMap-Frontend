@@ -13,10 +13,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import Loading from 'components/commons/Loading';
 import { frequencyOptions } from 'helpers/enums/okr';
+import { useNavigate } from 'react-router-dom';
 
 const OKRContainer = () => {
   const { okrToolId, id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { loading, data: okrData } = useSelector((state) => state.okr);
   const [isAddKrModalOpen, setIsAddKrModalOpen] = useState(false);
   const [krToDelete, setKrToDelete] = useState(null);
@@ -90,6 +92,7 @@ const OKRContainer = () => {
           isConfirmDeleteModalOpen={!!krToDelete}
           submitConfirmDeleteModal={submitConfirmDeleteModal}
           confirmDeleteModalError={confirmDeleteError}
+          onClickBack={() => navigate(`/projects/${id}`)}
         />
       </Grid>
       {loading && <Loading isModalMode message="Cargando OKR" />}

@@ -28,6 +28,7 @@ export const OkrHeader = styled('div')({
   justifyContent: 'center',
   width: '100%',
   marginBottom: 10,
+  position: 'relative',
 });
 
 export const OkrTitle = styled('span')({

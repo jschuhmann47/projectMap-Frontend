@@ -9,7 +9,7 @@ import ModalV2 from "components/commons/ModalV2";
 import InputV2 from "components/inputs/InputV2";
 import SelectInputV2 from "components/inputs/SelectInputV2";
 import { IconButton, LinearProgress } from "@mui/material";
-import { AddCircle } from "@mui/icons-material";
+import { AddCircle, ArrowBack } from "@mui/icons-material";
 import ConfirmDeleteModal from "components/commons/ProjectCard/components/confirmDeleteModal";
 
 const OKRView = ({
@@ -24,9 +24,13 @@ const OKRView = ({
   isConfirmDeleteModalOpen,
   submitConfirmDeleteModal,
   confirmDeleteModalError,
+  onClickBack,
 }) => {
   return <OkrContainerV2>
     <OkrHeader>
+      <IconButton size="small" onClick={onClickBack} sx={{ position: 'absolute', left: 0 }}>
+        <ArrowBack />
+      </IconButton>
       <OkrTitle>{okrData?.description}</OkrTitle>
     </OkrHeader>
     <OkrProgressAndMoreData>
