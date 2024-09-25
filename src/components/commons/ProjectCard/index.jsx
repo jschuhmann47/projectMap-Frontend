@@ -79,8 +79,8 @@ const ProjectCard = (props) => {
           onSubmit={onSubmit}
           errors={confirmDeleteError}
           titulo="Eliminar proyecto"
-          descripcion="Para confirmar la eliminación, confirme escribiendo el nombre del proyecto-"
-          placeholder="Nombre del proyecto"
+          descripcion="Para confirmar la eliminación, escriba el nombre del proyecto."
+          fieldLabel="Nombre del proyecto"
         />
       )}
     </>
