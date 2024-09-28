@@ -30,8 +30,13 @@ export function* userInitialize() {
 export function* userForgotPassword(action) {
   try {
     const { formData } = action;
-    const { data } = yield call(forgotPassword, formData);
-    yield put({ type: constants.USER_ON_FORGOT_PASSWORD_SUCCEEDED, data });
+    yield call(forgotPassword, formData);
+    yield put({
+      type: constants.USER_ON_FORGOT_PASSWORD_SUCCEEDED,
+      data: {
+        message: 'Se envió un mail a tu casilla para que puedas recuperar tu contraseña'
+      }
+    });
   } catch (error) {
     yield put({ type: constants.USER_ON_FORGOT_PASSWORD_FAILED, error });
   }
@@ -87,7 +92,7 @@ export function* userLogout(action) {
 export function* userResetPassword(action) {
   try {
     const { formData, temporaryToken } = action;
-    yield call(resetPassword, formData);
+    yield call(resetPassword, formData, temporaryToken);
     yield put({ type: constants.USER_ON_RESET_PASSWORD_SUCCEEDED, data: { token: temporaryToken } });
   } catch (error) {
     yield put({ type: constants.USER_ON_RESET_PASSWORD_FAILED, error });
@@ -118,8 +123,8 @@ export function* userGetProfile(action) {
 
 export function* userVerifyCode(action) {
   try {
-    const { code } = action;
-    const { data } = yield call(verifyCode, code); // complete when we have the route
+    const { formData } = action;
+    const { data } = yield call(verifyCode, formData);
     yield put({ type: constants.USER_ON_VERIFY_CODE_SUCCEEDED, data });
   } catch (error) {
     yield put({ type: constants.USER_ON_VERIFY_CODE_FAILED, error });

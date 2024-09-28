@@ -22,13 +22,14 @@ const ResetPasswordView = ({ onVerifyCode, onResetPassword, step }) => {
 const VerifyCodeForm = ({ onSubmit }) => (
   <FormContainer>
     <Title>Verificar código</Title>
-    <Formik onSubmit={onSubmit} initialValues={{ code: '' }}>
+    <Formik onSubmit={onSubmit}>
       {({ handleSubmit }) => (
         <CustomForm onSubmit={handleSubmit}>
           <Box sx={{ width: '100%' }}>
             <Field
               name="code"
               placeholder="Código de seis dígitos"
+              type="number"
               component={Input}
               validate={validateField}
             />

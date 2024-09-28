@@ -6,6 +6,7 @@ export const defaultState = {
   loading: false,
   loadingProfile: false,
   temporaryToken: '',
+  resetSucceeded: false,
 };
 
 const userReducer = (state = defaultState, action) => {
@@ -66,12 +67,18 @@ const userReducer = (state = defaultState, action) => {
     case constants.USER_ON_VERIFY_CODE_SUCCEEDED:
       return {
         ...state,
-        user: data.user,
+        data: data.user,
         temporaryToken: data.token,
+        loading: false,
+      }
+    case constants.USER_ON_RESET_PASSWORD_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+        resetSucceeded: true,
       }
     case constants.USER_ON_FORGOT_PASSWORD_SUCCEEDED:
     case constants.USER_ON_LOGOUT_SUCCEEDED:
-    case constants.USER_ON_RESET_PASSWORD_SUCCEEDED:
     case constants.USER_ON_FORGOT_PASSWORD_FAILED:
     case constants.USER_ON_INITIALIZE_FAILED:
     case constants.USER_ON_LOGIN_FAILED:
