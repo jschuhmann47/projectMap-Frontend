@@ -1,71 +1,50 @@
 import ModalV2 from "components/commons/ModalV2";
-import { useEffect, useState } from "react";
 import KrForm from "./KrForm";
-import { Box, Slider, Stack, Typography } from "@mui/material";
+import { Box, Slider, Stack } from "@mui/material";
 
-export default function KeyResultPopup({
-  krData,
-  editKr,
-  deleteKr,
+export default function KeyResultModal({
+  isOpen,
+  onClose,
+  data,
+  onSubmit
 }) {
-  const [isOpen, setIsOpen] = useState(true);
-  const data = {
-    title: "Reducir en 10% los carritos abandonados",
-    responsable: 'Pepito el pistolero',
-    prioridad: 2,
-    lineaBase: 30,
-    resultadoEsperado: 80,
-    porcentajeProgresoActual: 50,
-    progresoActual: 30,
-    rangoFechaValores: [
-      { "fecha": "20/09/24", "valor": 39 },
-      { "fecha": "27/09/24", "valor": 45 },
-      { "fecha": "04/10/24", "valor": 51 },
-      { "fecha": "11/10/24", "valor": 59 },
-      { "fecha": "18/10/24", "valor": 61 },
-      { "fecha": "25/10/24", "valor": 63 },
-      { "fecha": "01/11/24", "valor": 68 },
-      { "fecha": "08/11/24", "valor": 72 },
-      { "fecha": "15/11/24", "valor": 79 },
-    ]
-  }
 
   return (
-    <ModalV2 width={900} isOpen={isOpen} background={'#FFFFFF'} onClose={() => {console.log('Cerrando ...')}} title={data.title}>
+    <ModalV2 width={900} isOpen={isOpen} background={'#FFFFFF'} onClose={onClose} title={data.description}>
       <Box
         sx={{
           position: "relative",
           display: 'flex',
-          justifyContent: 'center', // Centrar horizontalmente
-          alignItems: 'center',     // Centrar verticalmente
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
         <Stack spacing={4} direction="row" sx={{ width: '400px', alignItems: 'center', mb: 1 }}>
-          <p>{data.lineaBase}</p>
+          <p>{data.baseline}</p>
             <Slider 
               valueLabelDisplay="on" 
-              value={data.porcentajeProgresoActual} 
+              value={data.currentScore} 
               aria-label="Default"
               valueLabelFormat={() => (
                 <Box
                   sx={{
                     backgroundColor: 'transparent',
                     position: 'absolute',
-                    top: '500%', // Mover el label debajo de la barra
+                    top: '500%',
                     color: "black",
-                    transform: 'translateX(-50%)', // Centrar el texto
-                    left: `${data.porcentajeProgresoActual}-1%`,
+                    transform: 'translateX(-50%)',
+                    left: `${data.currentScore}`,
                     padding: '0px',
                     marginTop: '5px',
                   }}
                 >
-                  {`${data.progresoActual} `}
+                  {`${data.currentScore} `}
                 </Box>
               )} />
-          <p>{data.resultadoEsperado}</p>
+          <p>{data.goal}</p>
         </Stack>
       </Box>
-      <KrForm onSubmit={() => {console.log('submit')}} data={data}/>
+      <KrForm onSubmit={onSubmit} data={data}/>
     </ModalV2>
   )
   

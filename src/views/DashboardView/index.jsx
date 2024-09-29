@@ -34,7 +34,6 @@ const DashboardView = (props) => {
 
   return (
     <Container>
-      <KeyResultPopup></KeyResultPopup>
       <Content>
         <TitleContainer>
           <Title>Proyectos</Title>

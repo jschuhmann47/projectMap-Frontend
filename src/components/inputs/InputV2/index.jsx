@@ -57,7 +57,7 @@ export default function InputV2(props) {
               '#344345',
           }}
           multiline={multiline}
-          value={value}
+          value={value || field.value} // Si value viene vacio, no toma los initialValues de Formik
         />
       </Box>
     </Box>

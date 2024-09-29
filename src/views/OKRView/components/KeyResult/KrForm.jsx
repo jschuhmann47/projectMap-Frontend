@@ -5,54 +5,33 @@ import Button from 'components/commons/Button';
 import { validateField } from 'helpers/validateField';
 import InputV2 from 'components/inputs/InputV2';
 import { ButtonsContainer } from 'styles/form';
-import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
-import { styled } from '@mui/material/styles';
-import { Avatar, Box, Grid, List, ListItem, Slider, Stack, TextField, Typography } from '@mui/material';
+import { Box, Grid, List, ListItem, Typography } from '@mui/material';
 import { priorityOptions } from 'helpers/enums/okr';
 import ImgSelect from '../ImgSelect';
-import { useEffect, useState } from 'react';
 
 const colors = ['#FFCDD2', '#F8BBD0', '#E1BEE7', '#C5CAE9', '#BBDEFB', '#B3E5FC', '#B2DFDB', '#C8E6C9', '#DCEDC8', '#FFF9C4', '#FFECB3', '#FFE0B2'];
 
 const KrForm = ({ onSubmit, data }) => {
-  const [priority, setPriority] = useState(0);
-
   const CircleIcon = ({ color }) => {
-    console.log(color)
     return (
       <Box
         sx={{
-          width: 16, // Tamaño del círculo
-          height: 16, // Tamaño del círculo
-          borderRadius: '50%', // Hace que sea un círculo
-          backgroundColor: color, // Color del círculo
+          width: 16,
+          height: 16,
+          borderRadius: '50%',
+          backgroundColor: color,
           mr: 2
         }}
       />
     );
   };
 
-  console.log({data})
-  const {
-    rangoFechaValores,
-    prioridad,
-    lineaBase,
-    resultadoEsperado
-  } = data;
-
-  const handlePriority = (e) => {
-    setPriority(e.target.value);
-  }
-  useEffect(() => {
-    setPriority(prioridad ? prioridad : 0);
-  }, [prioridad]);
-
   const ordenarFechasParaVista = () => {
     const resultado = [];
-    const mitad = Math.ceil(rangoFechaValores.length / 2);
+    const mitad = Math.ceil(data.keyStatus.length / 2);
 
-    const primeraMitad = rangoFechaValores.slice(0, mitad);
-    const segundaMitad = rangoFechaValores.slice(mitad);
+    const primeraMitad = data.keyStatus.slice(0, mitad);
+    const segundaMitad = data.keyStatus.slice(mitad);
 
     for (let i = 0; i < Math.max(primeraMitad.length, segundaMitad.length); i = i + 1) {
       if (primeraMitad[i]) {
@@ -67,30 +46,39 @@ const KrForm = ({ onSubmit, data }) => {
     return resultado;
   }
 
+  const initialValues = {
+    description: data.description,
+    frequency: data.frequency,
+    _id: data._id,
+    responsible: data.responsible, 
+    baseline: data.baseline, 
+    goal: data.goal, 
+    priority: data.priority,
+    keyStatus: data.keyStatus
+  }
+
   return (
-    <Formik onSubmit={onSubmit} initialValues={{ titulo: '', descripcion: '' }}>
+    <Formik onSubmit={onSubmit} initialValues={ initialValues }>
       {({ handleSubmit }) => (
         <Form onSubmit={handleSubmit}>
           <Grid container spacing={2} sx={{mt: 2, mb: 2}}>
             <Grid item xs={6}>
               <Field
-                name="responsable"
+                name="responsible"
                 fieldLabel="Responsable"
                 component={InputV2}
                 validate={validateField}
                 inputLayout='inline'
-                value={data.responsable}
-                props={{"multiline": false}}
               />
               <Field
-                name="lineaBase"
+                name="baseline"
                 fieldLabel="Linea base"
                 inputLayout='inline'
                 component={InputV2}
                 validate={validateField}
               />
               <Field
-                name="resultadoEsperado"
+                name="goal"
                 fieldLabel="Resultado esperado"
                 inputLayout='inline'
                 component={InputV2}
@@ -99,6 +87,7 @@ const KrForm = ({ onSubmit, data }) => {
               <Field
                 fieldLabel="Prioridad"
                 inputLayout='inline'
+                value={data.priority}
                 component={(props) => {
                   return (
                     <>
@@ -107,35 +96,29 @@ const KrForm = ({ onSubmit, data }) => {
                           <Typography sx={{ mt: 1 }}>{props.fieldLabel}</Typography>
                         </Box>                    
                         <Box flex={1}>
-                          <ImgSelect {...props} field={{value: priority, onChange: handlePriority, sx:{height: "34px"}}}></ImgSelect>
+                          <ImgSelect {...props} style={{sx: {height: "34px"}}}></ImgSelect>
                         </Box>
                       </Box>
                     </>
                   )
                 }}
-                name="prioridad"
+                name="priority"
                 options={priorityOptions.map((path, i) => ({ path, value: i }))}
               />
             </Grid>
             <Grid item xs={6}>
               <Box sx={{ display: 'flex' }}>
-                {/* Lista de fechas y entradas */}
                 <List sx={{pt: 0, display: "flex", flexWrap: "wrap", width: "400px"}}>
-                  {ordenarFechasParaVista().map((item, index) => (
-                    <ListItem key={index} sx={{ width: "180px",display: 'flex', alignItems: 'center', p: 0.5, mr: 2 }}>
-                      {/* Círculo de color */}
-                      <CircleIcon color={colors[index]} />
-                      {/* Fecha */}
-                      <Typography sx={{ mr: 2 }}>{item.fecha}</Typography>
-                      {/* Input numérico */}
-                      <TextField
-                        variant="outlined"
-                        size="small"
-                        value={item.valor}
-                        //onChange={(e) => handleInputChange(index, e)}
-                        fullWidth
-                        inputProps={{ maxLength: 3, height: "30px" }}
-                        sx={{ width: 60, }}
+                  {ordenarFechasParaVista().map((_, index) => (
+                    <ListItem key={index} sx={{ width: "180px",display: 'flex', alignItems: 'center', p: 0.5, mr: 1.5 }}>
+                      <Box sx={{ width: "24px" }}>
+                        <CircleIcon color={colors[index]}/>
+                      </Box>
+                      <Field
+                        name={`keyStatus[${index}].value`}
+                        fieldLabel={data.keyStatus[index].period}
+                        inputLayout='inline'
+                        component={InputV2}
                       />
                     </ListItem>
                   ))}

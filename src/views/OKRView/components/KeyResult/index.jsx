@@ -6,9 +6,11 @@ import { OkrProgress, OkrProgressBar } from "views/OKRView/styles";
 export default function KeyResult({
   krData,
   openConfirmDeleteModal,
+  handleKrClick
 }) {
   return (
     <Box
+      onClick={() => handleKrClick(krData)}
       sx={{
         border: '1px solid #405C5E',
         width: '100%',
@@ -17,6 +19,7 @@ export default function KeyResult({
         paddingTop: '5px',
         paddingBottom: '5px',
       }}
+
     >
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <img src={priorityOptions[krData?.priority]} height="25" width="25" />
@@ -37,7 +40,10 @@ export default function KeyResult({
         </OkrProgressBar>
         <span>{krData?.progress}%</span>
       </OkrProgress>
-      <IconButton onClick={() => openConfirmDeleteModal(krData)}>
+      <IconButton onClick={(event) => {
+        event.stopPropagation();
+        openConfirmDeleteModal(krData)
+      }}>
         <Delete htmlColor='black' />
       </IconButton>
     </Box>
