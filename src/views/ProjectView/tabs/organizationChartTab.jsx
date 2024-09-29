@@ -17,6 +17,11 @@ import {
 import { getOrganizationalChart, saveOrganizationalChart } from 'services/projects.services';
 import { Dialog, DialogActions, DialogContent, DialogTitle, TextField, Snackbar, Alert } from '@mui/material';
 import { onGetOrganizationalChart, onSaveOrganizationalChart } from 'redux/actions/projects.actions';
+import ModalV2 from 'components/commons/ModalV2';
+import { Field, Form, Formik } from 'formik';
+import InputV2 from 'components/inputs/InputV2';
+import { validateField } from 'helpers/validateField';
+import { ButtonsContainer } from 'styles/form';
 
 export default function OrganizationChartTab({ projectId }) {
   const reactFlowWrapper = useRef(null);
@@ -24,11 +29,9 @@ export default function OrganizationChartTab({ projectId }) {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
-  const [newNodeName, setNewNodeName] = useState('');
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarStatus, setSnackbarStatus] = useState('success');
   const [snackbarText, setSnackbarText] = useState('');
-  const [inputNewNodeError, setInputNewNodeError] = useState(false);
   const dispatch = useDispatch();
   const { organizationalChart } = useSelector((state) => state.projects);
 
@@ -86,11 +89,11 @@ export default function OrganizationChartTab({ projectId }) {
     [],
   );
 
-  const doOnSaveNewNode = () => {
+  const doOnSaveNewNode = (name) => {
     const nodeId = `${generateNextNodeId()}`
     const newNode = {
       id: nodeId,
-      data: { label: newNodeName },
+      data: { label: name },
       type: 'default',
       position: {
         x: (Math.random() - 0.5) * 400,
@@ -99,17 +102,10 @@ export default function OrganizationChartTab({ projectId }) {
     };
     setNodes((nds) => nds ? nds.concat(newNode) : [newNode]);
     setShowPopup(false);
-    setNewNodeName('');
   }
 
-  const onSaveNewNode = () => {
-    setInputNewNodeError(false);
-
-    if (newNodeName.length == 0) {
-      setInputNewNodeError(true);
-    } else {
-      doOnSaveNewNode()
-    }
+  const onSaveNewNode = ({ name }) => {
+    doOnSaveNewNode(name);
   }
 
   const onAddNewNode = () => {
@@ -122,10 +118,6 @@ export default function OrganizationChartTab({ projectId }) {
     dispatch(onSaveOrganizationalChart(projectId, data));
   }
 
-  const handleNewNodeInputName = (event) => {
-    setInputNewNodeError(false);
-    setNewNodeName(event.target.value);
-  };
 
   return (
     <div className="dndflow">
@@ -137,28 +129,29 @@ export default function OrganizationChartTab({ projectId }) {
           Agregar
         </Button>
       </ChartButtons>
-      {showPopup &&
-        <Dialog open={showPopup}>
-          <DialogTitle>Ingresa el nombre de la nueva entidad</DialogTitle>
-          <DialogContent>
-            <TextField
-              autoFocus
-              margin="dense"
-              label="Nombre nueva entidad"
-              type="text"
-              fullWidth
-              value={newNodeName}
-              onChange={handleNewNodeInputName}
-              error={inputNewNodeError}
-              helperText={inputNewNodeError ? "Este campo es obligatorio" : ""}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => { setShowPopup(false) }}>Cancelar</Button>
-            <Button disabled onClick={onSaveNewNode}>Aceptar</Button>
-          </DialogActions>
-        </Dialog>
-      }
+      <ModalV2
+        isOpen={showPopup}
+        onClose={() => setShowPopup(false)}
+        title='Agregar nueva área'
+        width={600}
+      >
+        <Formik onSubmit={onSaveNewNode} initialValues={{ name: '' }}>
+          {({ handleSubmit }) => (
+            <Form onSubmit={handleSubmit}>
+              <Field
+                name='name'
+                fieldLabel='Nombre de la nueva entidad'
+                component={InputV2}
+                validate={validateField}
+              />
+              <ButtonsContainer>
+                <Button color='secondary' onClick={() => setShowPopup(false)}>Cancelar</Button>
+                <Button type='submit'>Aceptar</Button>
+              </ButtonsContainer>
+            </Form>
+          )}
+        </Formik>
+      </ModalV2>
       <ReactFlowProvider>
         <div className="reactflow-wrapper" ref={reactFlowWrapper}>
           <ReactFlow
