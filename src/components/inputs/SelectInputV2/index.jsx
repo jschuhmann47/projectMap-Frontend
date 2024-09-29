@@ -30,7 +30,7 @@ export default function SelectInputV2(props) {
         }}
       >
         <MenuItem value="">
-          <em>Selecciona una opción</em>
+          <em>Seleccioná una opción</em>
         </MenuItem>
         {options && Object.entries(options).map(([key, label]) => (
           <MenuItem key={key} value={key}>

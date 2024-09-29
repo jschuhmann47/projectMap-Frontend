@@ -36,7 +36,6 @@ import Modal from 'components/commons/Modal';
 import Button from 'components/commons/Button';
 import InputV2 from 'components/inputs/InputV2';
 import {
-  CustomForm,
   ButtonsContainer,
   Title,
   FormContainer,
@@ -221,7 +220,6 @@ const ProjectContainer = () => {
       projectId: id,
     };
   
-    console.log('Formulario enviado:', values);
     dispatch(action(values));
     navigate('createTool');
   };
@@ -459,8 +457,7 @@ const ProjectContainer = () => {
             onSubmit={(values) => onSubmitTool(addTool.action, values)}
           >
             {({ handleSubmit, setFieldValue, isValid, dirty }) => (
-              <CustomForm onSubmit={handleSubmit}>
-                <CardTitle>{addTool?.titulo}</CardTitle>
+              <Form onSubmit={handleSubmit}>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}>
                   <Field
                     name="titulo"
@@ -468,25 +465,10 @@ const ProjectContainer = () => {
                     component={InputV2}
                     validate={validateField}
                   />
-                  <ErrorMessage name="titulo">
-                    {(msg) => (
-                      <Typography
-                        sx={{
-                          textAlign: 'left',
-                          color: 'red',
-                          marginLeft: 2,
-                          marginTop: '2px',
-                          fontSize: '14px',
-                        }}
-                      >
-                        {msg}
-                      </Typography>
-                    )}
-                  </ErrorMessage>
                   {addTool?.area &&
                     <Field
                       name="area"
-                      placeholder="Área"
+                      fieldLabel="Área"
                       component={SelectInputV2}
                       options={organizationalNodesMap}
                       onChange={(e) => {
@@ -498,9 +480,9 @@ const ProjectContainer = () => {
                   {addTool?.horizon &&
                     <Field
                       name="horizon"
-                      placeholder="Horizonte"
+                      fieldLabel="Horizonte"
                       component={SelectInputV2}
-                      options={horizonOptions}
+                      options={addTool?.horizon}
                       validate={validateField}
                     />
                   }
@@ -513,7 +495,7 @@ const ProjectContainer = () => {
                     Agregar
                   </Button>
                 </ButtonsContainer>
-              </CustomForm>
+              </Form>
             )}
           </Formik>
         </FormContainer>
