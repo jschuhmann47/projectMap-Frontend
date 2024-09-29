@@ -19,7 +19,6 @@ export default function KeyResult({
         paddingTop: '5px',
         paddingBottom: '5px',
       }}
-
     >
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <img src={priorityOptions[krData?.priority]} height="25" width="25" />

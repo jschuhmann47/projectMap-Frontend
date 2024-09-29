@@ -9,9 +9,9 @@ import ModalV2 from "components/commons/ModalV2";
 import InputV2 from "components/inputs/InputV2";
 import SelectInputV2 from "components/inputs/SelectInputV2";
 import { Box, IconButton, LinearProgress, Typography } from "@mui/material";
-import { AddCircle } from "@mui/icons-material";
 import ConfirmDeleteModal from "components/commons/ProjectCard/components/confirmDeleteModal";
 import ImgSelect from "./components/ImgSelect";
+import { AddCircle, ArrowBack } from "@mui/icons-material";
 
 const OKRView = ({
   okrData,
@@ -24,11 +24,15 @@ const OKRView = ({
   isConfirmDeleteModalOpen,
   submitConfirmDeleteModal,
   confirmDeleteModalError,
-  openKrEditModal
+  openKrEditModal,
+  onClickBack,
 }) => {
 
   return <OkrContainerV2>
     <OkrHeader>
+      <IconButton size="small" onClick={onClickBack} sx={{ position: 'absolute', left: 0 }}>
+        <ArrowBack />
+      </IconButton>
       <OkrTitle>{okrData?.description}</OkrTitle>
     </OkrHeader>
     <OkrProgressAndMoreData>
@@ -57,8 +61,9 @@ const OKRView = ({
       </IconButton>
     </KeyResultsHeader>
     <KeyResultsContainer>
-      {okrData?.keyResults.map((kr) => (
+      {okrData?.keyResults.map((kr, index) => (
         <KeyResult
+          key={index}
           krData={kr}
           openConfirmDeleteModal={openConfirmDeleteModal}
           handleKrClick={openKrEditModal}
@@ -101,10 +106,10 @@ const OKRView = ({
                 return (
                   <>
                     <Box sx={{display: 'flex'}}>
-                      <Box flex={1}>
+                      <Box sx={{mr: 1}}>
                         <Typography sx={{ mt: 1 }}>{props.fieldLabel}</Typography>
                       </Box>                    
-                      <Box flex={1}>
+                      <Box>
                         <ImgSelect {...props} style={{sx: {height: "34px"}}}></ImgSelect>
                       </Box>
                     </Box>

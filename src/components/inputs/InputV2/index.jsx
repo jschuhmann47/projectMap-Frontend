@@ -32,7 +32,7 @@ export default function InputV2(props) {
         sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
         {...(inputLayout == 'inline' ? {flex: 1} : {})}
       >
-        <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 16 }}>
+        <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 16, mr: 1 }}>
           {fieldLabel}
         </Typography>
         {tooltip && <ToolTip text={tooltip} fontSize='14px' placement='right' />}
