@@ -1,6 +1,7 @@
-import { Box, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Box, Checkbox, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import Button from "components/commons/Button";
 import AddUserModal from "./addUserModal";
+import { useState } from "react";
 
 // to do: use helpers/enums/steps.js
 export const stepNames = {
@@ -31,7 +32,7 @@ function memberStepPermissionCell(userId, stepId, permission, changeCallback) {
     changeCallback(userId, stepId, permissionKey)
   }
 
-  return <TableCell>
+  return <TableCell key={stepId}>
     <Select
       value={permissionNames[permission]}
       onChange={onChange}
@@ -52,7 +53,7 @@ function memberRoleCell(userId, role, changeCallback) {
     changeCallback(userId, roleKey)
   }
 
-  return <TableCell>
+  return <TableCell key={userId + "_role"}>
     <Select
       value={roleNames[role]}
       onChange={onChange}
@@ -78,6 +79,25 @@ export default function RolesTab({
   onChangeMemberRole,
   onSaveChanges,
 }) {
+  const [usersToDelete, setUsersToDelete] = useState(new Set());
+
+  const handleToggleDeleteUser = (userId) => {
+    setUsersToDelete((prev) => {
+      const newSet = new Set(prev)
+      if (newSet.has(userId)) {
+        newSet.delete(userId)
+      } else {
+        newSet.add(userId)
+      }
+      return newSet
+    });
+  };
+
+  const handleSaveChanges = () => {
+    const remainingMembers = members.filter(member => !usersToDelete.has(member.user._id))
+    onSaveChanges(remainingMembers)
+  }
+
   return (
     <div>
       <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -85,7 +105,7 @@ export default function RolesTab({
           <Button variant="contained" onClick={onOpenModal}>Agregar Integrante</Button>
         </Box>
         <Box width='20%'>
-          <Button variant="contained" onClick={onSaveChanges}>Guardar</Button>
+          <Button variant="contained" onClick={handleSaveChanges}>Guardar</Button>
         </Box>
       </Box>
       <AddUserModal
@@ -99,22 +119,31 @@ export default function RolesTab({
         <Table>
           <TableHead>
             <TableRow>
+              <TableCell>🗑️</TableCell>
               <TableCell>Nombre y apellido</TableCell>
               <TableCell>Email</TableCell>
               <TableCell>Rol</TableCell>
-              {Object.values(stepNames).map((name) => <TableCell>{name}</TableCell>)}
+              {Object.entries(stepNames).map(([stepKey, name]) => (
+                <TableCell key={stepKey}>{name}</TableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>
             {members.map((member, index) => (
-              <TableRow key={index}>
+              <TableRow key={member.user._id}>
+                <TableCell>
+                  <Checkbox
+                    checked={usersToDelete.has(member.user._id)}
+                    onChange={() => handleToggleDeleteUser(member.user._id)}
+                  />
+                </TableCell>
                 <TableCell>{member.user.firstName} {member.user.lastName}</TableCell>
                 <TableCell>{member.user.email}</TableCell>
                 {memberRoleCell(member.user._id, member.role, onChangeMemberRole)}
                 {Object.keys(stepNames).map((step) =>
                   member.role === 'participant' ? (
                     memberStepPermissionCell(member.user._id, step, member.stages.find((s) => s.id === step)?.permission, onChangeMemberPermission)
-                  ) : <TableCell>-</TableCell>
+                  ) : <TableCell key={step}>-</TableCell>
                 )}
               </TableRow>
             ))}
