@@ -90,8 +90,8 @@ export default function RolesTab({
         newSet.add(userId)
       }
       return newSet
-    });
-  };
+    })
+  }
 
   const handleSaveChanges = () => {
     const remainingMembers = members.filter(member => !usersToDelete.has(member.user._id))
