@@ -94,8 +94,7 @@ export default function RolesTab({
   }
 
   const handleSaveChanges = () => {
-    const remainingMembers = members.filter(member => !usersToDelete.has(member.user._id))
-    onSaveChanges(remainingMembers)
+    onSaveChanges(usersToDelete)
   }
 
   return (
