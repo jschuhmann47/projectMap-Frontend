@@ -1,5 +1,5 @@
 import { filterFrequenciesByHorizon, horizonOptions, priorityOptions } from "helpers/enums/okr";
-import { EditObjectiveButton, KeyResultsContainer, OkrContainerV2, OkrHeader, OkrMoreData, OkrTitle } from "./styles";
+import { KeyResultsContainer, KeyResultsHeader, OkrContainerV2, OkrHeader, OkrMoreData, OkrProgress, OkrProgressAndMoreData, OkrProgressBar, OkrTitle } from "./styles";
 import Button from "components/commons/Button";
 import { ButtonsContainer } from "styles/form";
 import { Field, Form, Formik } from "formik";
@@ -8,77 +8,65 @@ import KeyResult from "./components/KeyResult";
 import ModalV2 from "components/commons/ModalV2";
 import InputV2 from "components/inputs/InputV2";
 import SelectInputV2 from "components/inputs/SelectInputV2";
+import { IconButton, LinearProgress } from "@mui/material";
+import { AddCircle, ArrowBack } from "@mui/icons-material";
+import ConfirmDeleteModal from "components/commons/ProjectCard/components/confirmDeleteModal";
 
 const OKRView = ({
   okrData,
-  openEditOkrModal,
-  closeEditOkrModal,
-  isEditOkrModalOpen,
-  editObjective,
   openAddKrModal,
   closeAddKrModal,
   isAddKrModalOpen,
   addKr,
   editKr,
   deleteKr,
-  organizationalNodes,
-  handleAreaChange,
-  setFieldValue
+  openConfirmDeleteModal,
+  closeConfirmDeleteModal,
+  isConfirmDeleteModalOpen,
+  submitConfirmDeleteModal,
+  confirmDeleteModalError,
+  onClickBack,
 }) => {
   return <OkrContainerV2>
     <OkrHeader>
+      <IconButton size="small" onClick={onClickBack} sx={{ position: 'absolute', left: 0 }}>
+        <ArrowBack />
+      </IconButton>
       <OkrTitle>{okrData?.description}</OkrTitle>
-      <EditObjectiveButton>
-        <Button onClick={openEditOkrModal}>Editar objetivo</Button>
-      </EditObjectiveButton>
     </OkrHeader>
-    <OkrMoreData>
-      <span>Área: {okrData?.area}</span>
-      <span>Horizonte: {horizonOptions[okrData?.horizon]}</span>
-      <span>Prioridad: <img src={priorityOptions[okrData?.priority]} height="20" width="20" /></span>
-      <span>Avance: {okrData?.progress}%</span>
-    </OkrMoreData>
+    <OkrProgressAndMoreData>
+      <OkrProgress>
+        <OkrProgressBar>
+          <LinearProgress value={okrData?.progress} variant="determinate" sx={{
+            height: 20,
+            backgroundColor: 'transparent',
+            border: '1px solid',
+            borderRadius: '8px',
+            ['.MuiLinearProgress-bar1Determinate']: { backgroundColor: '#405C5E' },
+          }} />
+        </OkrProgressBar>
+        <span>{okrData?.progress}%</span>
+      </OkrProgress>
+      <OkrMoreData>
+        <span>Área: {okrData?.area}</span>
+        <span>Horizonte: {horizonOptions[okrData?.horizon]}</span>
+        <span>Prioridad: <img src={priorityOptions[okrData?.priority]} height="20" width="20" /></span>
+      </OkrMoreData>
+    </OkrProgressAndMoreData>
+    <KeyResultsHeader>
+      Key Results
+      <IconButton onClick={openAddKrModal}>
+        <AddCircle htmlColor='black' />
+      </IconButton>
+    </KeyResultsHeader>
     <KeyResultsContainer>
       {okrData?.keyResults.map((kr) => (
-        <KeyResult krData={kr} editKr={editKr} deleteKr={deleteKr} />
+        <KeyResult
+          krData={kr}
+          openConfirmDeleteModal={openConfirmDeleteModal}
+        />
       ))}
     </KeyResultsContainer>
-    <Button onClick={openAddKrModal}>Agregar Key Result</Button>
-    <ModalV2
-      isOpen={isEditOkrModalOpen}
-      onClose={closeEditOkrModal}
-      title='Editar objetivo'
-    >
-      <Formik
-        onSubmit={editObjective}
-        initialValues={{ description: okrData?.description, area: okrData?.area }}
-      >
-        {({ handleSubmit }) => (
-          <Form onSubmit={handleSubmit}>
-            <Field
-              name="description"
-              fieldLabel="Título"
-              component={InputV2}
-              validate={validateField}
-            />
-            <Field
-              name="area"
-              fieldLabel="Área"
-              component={InputV2}
-              validate={validateField}
-            />
-            <ButtonsContainer>
-              <Button color="secondary" onClick={closeEditOkrModal}>
-                Cancelar
-              </Button>
-              <Button type="submit">
-                Editar
-              </Button>
-            </ButtonsContainer>
-          </Form>
-        )}
-      </Formik>
-    </ModalV2>
     <ModalV2
       isOpen={isAddKrModalOpen}
       onClose={closeAddKrModal}
@@ -110,7 +98,7 @@ const OKRView = ({
               validate={validateField}
             />
             <ButtonsContainer>
-              <Button color="secondary" onClick={closeEditOkrModal}>
+              <Button color="secondary" onClick={closeAddKrModal}>
                 Cancelar
               </Button>
               <Button type="submit">
@@ -121,6 +109,15 @@ const OKRView = ({
         )}
       </Formik>
     </ModalV2>
+    <ConfirmDeleteModal
+      isOpen={isConfirmDeleteModalOpen}
+      onClose={closeConfirmDeleteModal}
+      onSubmit={submitConfirmDeleteModal}
+      errors={confirmDeleteModalError}
+      titulo='Eliminar Key Result'
+      descripcion='Para confirmar, escriba el nombre del Key Result'
+      fieldLabel='Nombre del Key Result'
+    />
   </OkrContainerV2>
 };
 
