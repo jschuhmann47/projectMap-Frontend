@@ -71,6 +71,11 @@ import { CardTitle } from 'views/FodaView/styles';
 import { horizonOptions } from 'helpers/enums/okr';
 import ModalV2 from 'components/commons/ModalV2';
 import SelectInputV2 from 'components/inputs/SelectInputV2';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { TextField } from '@mui/material';
+import { format } from 'date-fns';
 
 const ProjectContainer = () => {
   let { id } = useParams();
@@ -212,11 +217,15 @@ const ProjectContainer = () => {
         area = selectedArea.data.label;
       }
     }
+    const formattedDate = formData.startingDate
+    ? format(new Date(formData.startingDate), 'dd-MM-yyyy')
+    : null;
   
     const values = {
       ...formData,
       areaId,
       area,
+      startingDate: formattedDate,
       projectId: id,
     };
   
@@ -439,7 +448,7 @@ const ProjectContainer = () => {
         title={addTool?.titulo}
       >
         <Formik
-          initialValues={{ titulo: '', area: 'Sin área', areaId: '', horizon: '' }}
+          initialValues={{ titulo: '', area: 'Sin área', areaId: '', horizon: '', startingDate: new Date() }}
           validateOnChange={true}
           validateOnBlur={true}
           validate={(values) => {
@@ -454,7 +463,7 @@ const ProjectContainer = () => {
           }}
           onSubmit={(values) => onSubmitTool(addTool.action, values)}
         >
-          {({ handleSubmit, setFieldValue, isValid, dirty }) => (
+          {({ handleSubmit, setFieldValue, isValid, dirty, values, errors, touched }) => (
             <Form onSubmit={handleSubmit}>
               <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}>
                 <Field
@@ -484,6 +493,48 @@ const ProjectContainer = () => {
                     validate={validateField}
                   />
                 }
+                <Field name="startingDate">
+                  {({ field, form }) => (
+                    <Box sx={{ marginTop: '15px', marginBottom: '15px' }}>
+                      <label
+                        htmlFor="startingDate"
+                        style={{
+                          display: 'block',
+                          fontSize: '1rem',
+                          fontWeight: 'normal',
+                          color: '#000000',
+                          marginBottom: '8px',
+                        }}
+                      >
+                        Fecha de inicio
+                      </label>
+                      <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DatePicker
+                          value={field.value}
+                          onChange={(newValue) => {
+                            const formattedDate = newValue ? format(newValue, 'dd-MM-yyyy') : null;
+                            form.setFieldValue('startingDate', formattedDate);
+                          }}
+                          inputFormat="dd-MM-yyyy"
+                          minDate={new Date()}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              variant="outlined"
+                              fullWidth
+                              error={Boolean(form.errors.startingDate && form.touched.startingDate)}
+                              helperText={
+                                form.touched.startingDate && form.errors.startingDate
+                                  ? form.errors.startingDate
+                                  : ''
+                              }
+                            />
+                          )}
+                        />
+                      </LocalizationProvider>
+                    </Box>
+                  )}
+                </Field>
               </Box>
               <ButtonsContainer>
                 <Button color="secondary" onClick={() => setAddTool(null)}>
