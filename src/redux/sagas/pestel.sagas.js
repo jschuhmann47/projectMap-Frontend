@@ -105,6 +105,5 @@ export function* watchPestel() {
     takeLatest(constants.PESTEL_DELETE_FACTOR_REQUESTED, pestelDeleteFactor),
     takeLatest(constants.PESTEL_UPDATE_FACTOR_REQUESTED, pestelUpdateFactor),
     takeLatest(constants.PESTEL_GET_OPTIONS_REQUESTED, pestelGetOptions),
-    takeLatest(constants.PESTEL_GET_SEEDS_REQUESTED, pestelGetSeeds),
   ]);
 }
