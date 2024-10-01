@@ -292,8 +292,9 @@ const ProjectContainer = () => {
     dispatch(changeMemberPermission(userId, stepId, newPermission));
   };
 
-  function onSaveChanges() {
-    const users = members.map((m) => ({
+  function onSaveChanges(usersToDelete) {
+    const remainingMembers = members.filter(member => !usersToDelete.has(member.user._id));
+    const users = remainingMembers.map((m) => ({
       userId: m.user._id,
       role: m.role,
       stages: m.role === 'participant' ? m.stages : undefined,
