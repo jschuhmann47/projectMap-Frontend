@@ -2,6 +2,7 @@ import { Box, Checkbox, MenuItem, Paper, Select, Table, TableBody, TableCell, Ta
 import Button from "components/commons/Button";
 import AddUserModal from "./addUserModal";
 import { useState } from "react";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 // to do: use helpers/enums/steps.js
 export const stepNames = {
@@ -118,7 +119,7 @@ export default function RolesTab({
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>🗑️</TableCell>
+              <TableCell><DeleteIcon /></TableCell>
               <TableCell>Nombre y apellido</TableCell>
               <TableCell>Email</TableCell>
               <TableCell>Rol</TableCell>
