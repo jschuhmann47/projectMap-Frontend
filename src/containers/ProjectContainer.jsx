@@ -438,67 +438,64 @@ const ProjectContainer = () => {
         onClose={() => setAddTool(null)}
         title={addTool?.titulo}
       >
-        <FormContainer>
-          <Title style={{ fontSize: 18 }}>{addTool?.title}</Title>
-          <Formik
-            initialValues={{ titulo: '', area: 'Sin área', areaId: '', horizon: '' }}
-            validateOnChange={true}
-            validateOnBlur={true}
-            validate={(values) => {
-              const errors = {};
-              if (!values.titulo) {
-                errors.titulo = 'El título es obligatorio';
-              }
-              if (!values.area) {
-                errors.area = 'El área es obligatoria';
-              }
-              return errors;
-            }}
-            onSubmit={(values) => onSubmitTool(addTool.action, values)}
-          >
-            {({ handleSubmit, setFieldValue, isValid, dirty }) => (
-              <Form onSubmit={handleSubmit}>
-                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <Formik
+          initialValues={{ titulo: '', area: 'Sin área', areaId: '', horizon: '' }}
+          validateOnChange={true}
+          validateOnBlur={true}
+          validate={(values) => {
+            const errors = {};
+            if (!values.titulo) {
+              errors.titulo = 'El título es obligatorio';
+            }
+            if (!values.area) {
+              errors.area = 'El área es obligatoria';
+            }
+            return errors;
+          }}
+          onSubmit={(values) => onSubmitTool(addTool.action, values)}
+        >
+          {({ handleSubmit, setFieldValue, isValid, dirty }) => (
+            <Form onSubmit={handleSubmit}>
+              <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}>
+                <Field
+                  name="titulo"
+                  fieldLabel="Título"
+                  component={InputV2}
+                  validate={validateField}
+                />
+                {addTool?.area &&
                   <Field
-                    name="titulo"
-                    fieldLabel="Título"
-                    component={InputV2}
+                    name="area"
+                    fieldLabel="Área"
+                    component={SelectInputV2}
+                    options={organizationalNodesMap}
+                    onChange={(e) => {
+                      setFieldValue('area', e.target.value);
+                      setFieldValue('areaId', e.target.value || '');
+                    }}
+                  />
+                }
+                {addTool?.horizon &&
+                  <Field
+                    name="horizon"
+                    fieldLabel="Horizonte"
+                    component={SelectInputV2}
+                    options={addTool?.horizon}
                     validate={validateField}
                   />
-                  {addTool?.area &&
-                    <Field
-                      name="area"
-                      fieldLabel="Área"
-                      component={SelectInputV2}
-                      options={organizationalNodesMap}
-                      onChange={(e) => {
-                        setFieldValue('area', e.target.value);
-                        setFieldValue('areaId', e.target.value || '');
-                      }}
-                    />
-                  }
-                  {addTool?.horizon &&
-                    <Field
-                      name="horizon"
-                      fieldLabel="Horizonte"
-                      component={SelectInputV2}
-                      options={addTool?.horizon}
-                      validate={validateField}
-                    />
-                  }
-                </Box>
-                <ButtonsContainer>
-                  <Button color="secondary" onClick={() => setAddTool(null)}>
-                    Cancelar
-                  </Button>
-                  <Button color="primary" type="submit" disabled={!(dirty && isValid)}>
-                    Agregar
-                  </Button>
-                </ButtonsContainer>
-              </Form>
-            )}
-          </Formik>
-        </FormContainer>
+                }
+              </Box>
+              <ButtonsContainer>
+                <Button color="secondary" onClick={() => setAddTool(null)}>
+                  Cancelar
+                </Button>
+                <Button color="primary" type="submit" disabled={!(dirty && isValid)}>
+                  Agregar
+                </Button>
+              </ButtonsContainer>
+            </Form>
+          )}
+        </Formik>
       </ModalV2>
       {!!consultant?.calendlyUser && (
         <ButtonBase
