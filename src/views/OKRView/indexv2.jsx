@@ -19,6 +19,7 @@ const OKRView = ({
   isAddKrModalOpen,
   addKr,
   editKr,
+  deleteKr,
   openConfirmDeleteModal,
   closeConfirmDeleteModal,
   isConfirmDeleteModalOpen,
