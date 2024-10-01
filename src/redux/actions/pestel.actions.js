@@ -38,7 +38,3 @@ export const onDeleteFactor = (idPestel, idFactor) => ({
 export const onGetOptions = () => ({
   type: constants.PESTEL_GET_OPTIONS_REQUESTED,
 });
-
-export const onGetSeeds = () => ({
-  type: constants.PESTEL_GET_SEEDS_REQUESTED,
-});

@@ -18,7 +18,6 @@ import {
   getQuestionnaires,
   save,
   deleteProject,
-  getShared,
   getSharedUsers,
   shareUser,
   unShareUsers,
@@ -234,18 +233,6 @@ export function* projectsOnGetQuestionnaires(action) {
   }
 }
 
-export function* projectsOnGetAllShared() {
-  try {
-    const { data } = yield call(getShared);
-    yield put({
-      type: constants.PROJECTS_SHARED_ON_GET_ALL_SUCCEEDED,
-      data,
-    });
-  } catch (error) {
-    yield put({ type: constants.PROJECTS_SHARED_ON_GET_ALL_FAILED, error });
-  }
-}
-
 export function* projectsOnGetUsersShared(action) {
   try {
     const { id } = action;
@@ -404,13 +391,6 @@ export function* watchProjects() {
     takeLatest(
       constants.PROJECTS_UNSHARE_USER_REQUESTED,
       projectsOnUnShareUsers
-    ),
-    takeLatest(
-      [
-        constants.PROJECTS_SHARED_ON_GET_ALL_REQUESTED,
-        constants.PROJECTS_ON_GET_ALL_REQUESTED,
-      ],
-      projectsOnGetAllShared
     ),
     takeLatest(constants.PROJECTS_SEARCH_BY_EMAIL_REQUESTED, projectsOnSearchByEmail),
     takeLatest(constants.PROJECTS_ADD_USER_REQUESTED, projectsOnAddUser),
