@@ -7,7 +7,6 @@ import PestelView from 'views/PestelView';
 import {
   onGetOne,
   onGetOptions,
-  onGetSeeds,
 } from 'redux/actions/pestel.actions';
 import {
   titleSelector,
@@ -62,7 +61,6 @@ const PestelContainer = () => {
 
   useEffect(() => {
     disptch(onGetOptions());
-    disptch(onGetSeeds());
     disptch(onGetOne(pestelId));
   }, []);
 

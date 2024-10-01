@@ -15,7 +15,6 @@ import {
   onInsertFactor,
   onUpdateFactor,
   onDeleteFactor,
-  onGetSeeds,
 } from 'redux/actions/pestel.actions';
 import { onGetOne as onGetProject } from 'redux/actions/projects.actions';
 import { Formik, Field, Form } from 'formik';
@@ -68,7 +67,6 @@ const PestelContainer = () => {
 
   useEffect(() => {
     dispatch(onGetOptions());
-    dispatch(onGetSeeds());
     dispatch(onGetOne(pestelId));
     dispatch(onGetAllComments('PESTEL', pestelId));
     dispatch(onGetProject(id));
