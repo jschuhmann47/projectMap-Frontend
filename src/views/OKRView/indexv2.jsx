@@ -8,9 +8,10 @@ import KeyResult from "./components/KeyResult";
 import ModalV2 from "components/commons/ModalV2";
 import InputV2 from "components/inputs/InputV2";
 import SelectInputV2 from "components/inputs/SelectInputV2";
-import { IconButton, LinearProgress } from "@mui/material";
-import { AddCircle, ArrowBack } from "@mui/icons-material";
+import { Box, IconButton, LinearProgress, Typography } from "@mui/material";
 import ConfirmDeleteModal from "components/commons/ProjectCard/components/confirmDeleteModal";
+import ImgSelect from "./components/ImgSelect";
+import { AddCircle, ArrowBack } from "@mui/icons-material";
 
 const OKRView = ({
   okrData,
@@ -18,15 +19,15 @@ const OKRView = ({
   closeAddKrModal,
   isAddKrModalOpen,
   addKr,
-  editKr,
-  deleteKr,
   openConfirmDeleteModal,
   closeConfirmDeleteModal,
   isConfirmDeleteModalOpen,
   submitConfirmDeleteModal,
   confirmDeleteModalError,
+  openKrEditModal,
   onClickBack,
 }) => {
+
   return <OkrContainerV2>
     <OkrHeader>
       <IconButton size="small" onClick={onClickBack} sx={{ position: 'absolute', left: 0 }}>
@@ -60,10 +61,12 @@ const OKRView = ({
       </IconButton>
     </KeyResultsHeader>
     <KeyResultsContainer>
-      {okrData?.keyResults.map((kr) => (
+      {okrData?.keyResults.map((kr, index) => (
         <KeyResult
+          key={index}
           krData={kr}
           openConfirmDeleteModal={openConfirmDeleteModal}
+          handleKrClick={openKrEditModal}
         />
       ))}
     </KeyResultsContainer>
@@ -74,7 +77,7 @@ const OKRView = ({
     >
       <Formik
         onSubmit={addKr}
-        initialValues={{ description: '', frequency: '', responsible: '' }}
+        initialValues={{ description: '', frequency: '', responsible: '', priority: 0 }}
       >
         {({ handleSubmit }) => (
           <Form onSubmit={handleSubmit}>
@@ -84,6 +87,38 @@ const OKRView = ({
               component={InputV2}
               validate={validateField}
             />
+            <Field
+              name="baseline"
+              fieldLabel="Línea Base"
+              component={InputV2}
+              validate={validateField}
+            />
+            <Field
+              name="goal"
+              fieldLabel="Resultado"
+              component={InputV2}
+              validate={validateField}
+            />
+            <Field
+              fieldLabel="Prioridad"
+              inputLayout='inline'
+              component={(props) => {
+                return (
+                  <>
+                    <Box sx={{display: 'flex'}}>
+                      <Box sx={{mr: 1}}>
+                        <Typography sx={{ mt: 1 }}>{props.fieldLabel}</Typography>
+                      </Box>                    
+                      <Box>
+                        <ImgSelect {...props} style={{sx: {height: "34px"}}}></ImgSelect>
+                      </Box>
+                    </Box>
+                  </>
+                )
+                }}
+                name="priority"
+                options={priorityOptions.map((path, i) => ({ path, value: i }))}
+              />
             <Field
               name="frequency"
               fieldLabel="Frecuencia"

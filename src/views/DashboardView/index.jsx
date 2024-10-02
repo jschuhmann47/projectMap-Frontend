@@ -16,6 +16,7 @@ import {
 } from './styles';
 import { TextField } from '@mui/material';
 import { Clear, Search } from '@mui/icons-material';
+import KeyResultPopup from 'views/OKRView/components/KeyResult/indexv2';
 
 const DashboardView = (props) => {
   const {
