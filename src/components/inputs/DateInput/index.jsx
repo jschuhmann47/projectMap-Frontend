@@ -26,8 +26,8 @@ export default function DateInput(props) {
                 <DesktopDatePicker
                     value={parsedValue}
                     onChange={(newValue) => {
-                        if (newValue instanceof Date && !isNaN(newValue)) {
-                            const formattedDate = format(newValue, 'dd-MM-yyyy');
+                        if (newValue instanceof Date) {
+                            const formattedDate = newValue.toISOString();
                             form.setFieldValue(field.name, formattedDate);
                         } else {
                             form.setFieldValue(field.name, null);

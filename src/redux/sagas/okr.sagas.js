@@ -10,17 +10,17 @@ import {
 } from 'services/okr.services';
 
 import * as constants from 'redux/contansts/okr.constants';
-import { horizonOptions } from 'helpers/enums/okr';
 
 export function* okrCreateTool(action) {
   try {
     const { formData } = action;
     const req = {
       description: formData.titulo,
-      area: formData.area,
-      horizon: +(Object.entries(horizonOptions).find((kv) => kv[1] === formData.horizon)[0]),
+      areaId: formData.areaId,
+      horizon: formData.horizon,
       keyResults: [],
       projectId: formData.projectId,
+      startingDate: formData.startingDate,
     };
     const { data } = yield call(createOkr, req);
     yield put({ type: constants.CREATE_OKR_TOOL_SUCCEEDED, data });
