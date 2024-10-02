@@ -72,7 +72,7 @@ const KrForm = ({ onSubmit, data }) => {
               />
               <Field
                 name="baseline"
-                fieldLabel="Linea base"
+                fieldLabel="Línea base"
                 inputLayout='inline'
                 component={InputV2}
                 validate={validateField}

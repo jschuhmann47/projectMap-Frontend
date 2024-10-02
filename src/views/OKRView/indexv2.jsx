@@ -89,7 +89,7 @@ const OKRView = ({
             />
             <Field
               name="baseline"
-              fieldLabel="Linea Base"
+              fieldLabel="Línea Base"
               component={InputV2}
               validate={validateField}
             />
