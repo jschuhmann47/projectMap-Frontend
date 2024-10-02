@@ -71,6 +71,7 @@ import { CardTitle } from 'views/FodaView/styles';
 import { horizonOptions } from 'helpers/enums/okr';
 import ModalV2 from 'components/commons/ModalV2';
 import SelectInputV2 from 'components/inputs/SelectInputV2';
+import DateInput from 'components/inputs/DateInput';
 
 const ProjectContainer = () => {
   let { id } = useParams();
@@ -219,7 +220,7 @@ const ProjectContainer = () => {
       area,
       projectId: id,
     };
-  
+
     dispatch(action(values));
     navigate('createTool');
   };
@@ -440,7 +441,7 @@ const ProjectContainer = () => {
         title={addTool?.titulo}
       >
         <Formik
-          initialValues={{ titulo: '', area: 'Sin área', areaId: '', horizon: '' }}
+          initialValues={{ titulo: '', area: 'Sin área', areaId: '', horizon: '', startingDate: new Date() }}
           validateOnChange={true}
           validateOnBlur={true}
           validate={(values) => {
@@ -455,7 +456,7 @@ const ProjectContainer = () => {
           }}
           onSubmit={(values) => onSubmitTool(addTool.action, values)}
         >
-          {({ handleSubmit, setFieldValue, isValid, dirty }) => (
+          {({ handleSubmit, setFieldValue, isValid, dirty, values, errors, touched }) => (
             <Form onSubmit={handleSubmit}>
               <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}>
                 <Field
@@ -485,6 +486,14 @@ const ProjectContainer = () => {
                     validate={validateField}
                   />
                 }
+                {addTool?.requireStartDate && (
+                  <Field
+                    name="startingDate"
+                    fieldLabel="Fecha de inicio"
+                    component={DateInput}
+                    validate={validateField}
+                  />
+                )}
               </Box>
               <ButtonsContainer>
                 <Button color="secondary" onClick={() => setAddTool(null)}>
