@@ -26,6 +26,7 @@ import MejoraContinuaContainer from 'containers/MEJORA-CONTINUA/MejoraContinuaCo
 import ConsultoriaContainer from 'containers/AdminConsultoria/AdminConsultoriaContainer';
 import UserProfileContainer from 'containers/UserProfileContainer';
 import DashboardRouteContainer from 'containers/DashboardRouteContainer';
+import ResetPasswordContainer from './ResetPasswordContainer';
 
 export const NavigationContainer = () => {
   return (
@@ -33,6 +34,7 @@ export const NavigationContainer = () => {
       <Route path="/login" element={<LoginContainer />} />
       <Route path="/register" element={<RegisterContainer />} />
       <Route path="/forgot-password" element={<ForgotPasswordContainer />} />
+      <Route path="/reset-password" element={<ResetPasswordContainer />} />
       <Route path="/dashboard" element={<DashboardRouteContainer />}>
         <Route path="" element={<DashboardContainer />} />
       </Route>

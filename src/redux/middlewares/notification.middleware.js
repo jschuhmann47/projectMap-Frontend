@@ -17,6 +17,8 @@ const notificationMiddleware = () => (next) => (action) => {
     case userConstants.USER_ON_REGISTER_FAILED:
       sendErrorNotification(error.response?.data?.message || error.message);
       break;
+    case userConstants.USER_ON_FORGOT_PASSWORD_SUCCEEDED:
+      sendSuccessNotification(data.message);
     default:
       if (error?.response?.status === 401)
         sendErrorNotification(error.response?.data?.message || error.message);
