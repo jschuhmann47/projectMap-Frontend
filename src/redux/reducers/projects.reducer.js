@@ -361,7 +361,7 @@ const projectsReducer = (state = defaultState, action) => {
     case constants.PROJECTS_ON_SAVE_ORGANIZATIONAL_CHART_REQUESTED:
       return {
         ...state,
-        organizationalChart: { error: null, success: null }
+        organizationalChart: { ...state.organizationalChart, error: null, success: null }
       };
     case constants.PROJECTS_ON_SAVE_ORGANIZATIONAL_CHART_FAILED:
       return {
@@ -371,7 +371,7 @@ const projectsReducer = (state = defaultState, action) => {
     case constants.PROJECTS_ON_SAVE_ORGANIZATIONAL_CHART_SUCCEEDED:
       return {
         ...state,
-        organizationalChart: { success: true }
+        organizationalChart: { data, success: true }
       };
     case constants.PROJECTS_SHARED_ON_GET_ALL_FAILED:
     case constants.PROJECTS_ON_CREATE_FAILED:

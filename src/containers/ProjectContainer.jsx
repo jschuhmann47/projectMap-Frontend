@@ -73,6 +73,7 @@ import { horizonOptions } from 'helpers/enums/okr';
 import ModalV2 from 'components/commons/ModalV2';
 import SelectInputV2 from 'components/inputs/SelectInputV2';
 import DateInput from 'components/inputs/DateInput';
+import { onGetOrganizationalChart } from 'redux/actions/projects.actions';
 
 const ProjectContainer = () => {
   let { id } = useParams();
@@ -109,6 +110,7 @@ const ProjectContainer = () => {
   );
   const user = useSelector((state) => state.user.data);
   const loading = useSelector(getLoadingSelector);
+  const { organizationalChart } = useSelector((state) => state.projects);
 
   const onClickButtonGoBack = () => {
     if (user?.role && user?.role === 'AdminConsultant')
@@ -181,6 +183,7 @@ const ProjectContainer = () => {
     dispatch(onGetQuestionnaire(id));
     dispatch(onGetSharedUsers(id));
     dispatch(onGetAllComments('HUB', id));
+    dispatch(onGetOrganizationalChart(id));
   }, []);
 
   useEffect(() => {
@@ -286,6 +289,10 @@ const ProjectContainer = () => {
 
   const stepPermissions = projectInfo?.participants
     .find((u) => u.user.email === user?.email)?.stages
+
+  const areaOptions = organizationalChart?.data.nodes?.map((node) => node.data.label)
+
+  console.log('areaOptions', areaOptions)
 
   return (
     <LayoutContainer>
