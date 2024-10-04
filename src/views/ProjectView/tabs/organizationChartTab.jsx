@@ -14,8 +14,7 @@ import Button from 'components/commons/Button';
 import {
   ChartButtons,
 } from '../styles';
-import { getOrganizationalChart, saveOrganizationalChart } from 'services/projects.services';
-import { Dialog, DialogActions, DialogContent, DialogTitle, TextField, Snackbar, Alert } from '@mui/material';
+import { Snackbar, Alert } from '@mui/material';
 import { onGetOrganizationalChart, onSaveOrganizationalChart } from 'redux/actions/projects.actions';
 import ModalV2 from 'components/commons/ModalV2';
 import { Field, Form, Formik } from 'formik';

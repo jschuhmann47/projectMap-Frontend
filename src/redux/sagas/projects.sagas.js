@@ -266,7 +266,7 @@ export function* projectsOnSaveOrganizationalChart(action) {
     const { data } = yield call(saveOrganizationalChart, id, chart);
     yield put({
       type: constants.PROJECTS_ON_SAVE_ORGANIZATIONAL_CHART_SUCCEEDED,
-      data,
+      data: chart,
     });
   } catch (error) {
     yield put({ type: constants.PROJECTS_ON_SAVE_ORGANIZATIONAL_CHART_FAILED, error });
