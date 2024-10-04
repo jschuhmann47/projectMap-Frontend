@@ -36,6 +36,7 @@ import Modal from 'components/commons/Modal';
 import Button from 'components/commons/Button';
 import InputV2 from 'components/inputs/InputV2';
 import {
+  CustomForm,
   ButtonsContainer,
   Title,
   FormContainer,
@@ -109,13 +110,6 @@ const ProjectContainer = () => {
   const user = useSelector((state) => state.user.data);
   const loading = useSelector(getLoadingSelector);
 
-  const organizationalNodes = useSelector(
-    (state) => state.projects.data?.chart?.nodes || []
-  );
-  const organizationalNodesMap = {
-    "": "Sin área",
-    ...Object.fromEntries(organizationalNodes.map((node) => [node.id, node.data.label]))
-  };
   const onClickButtonGoBack = () => {
     if (user?.role && user?.role === 'AdminConsultant')
       navigate(`/consultoria`);
@@ -204,24 +198,7 @@ const ProjectContainer = () => {
   };
 
   const onSubmitTool = (action, formData) => {
-    let areaId = formData.area || "";
-    let area = "Sin área";
-  
-    if (areaId) {
-      const selectedArea = organizationalNodes.find((node) => node.id === areaId);
-      if (selectedArea) {
-        area = selectedArea.data.label;
-      }
-    }
-  
-    const values = {
-      ...formData,
-      areaId,
-      area,
-      projectId: id,
-    };
-
-    dispatch(action(values));
+    dispatch(action({ ...formData, projectId: id }));
     navigate('createTool');
   };
 
@@ -441,65 +418,39 @@ const ProjectContainer = () => {
         title={addTool?.titulo}
       >
         <Formik
-          initialValues={{ titulo: '', area: 'Sin área', areaId: '', horizon: '', startingDate: new Date() }}
-          validateOnChange={true}
-          validateOnBlur={true}
-          validate={(values) => {
-            const errors = {};
-            if (!values.titulo) {
-              errors.titulo = 'El título es obligatorio';
-            }
-            if (!values.area) {
-              errors.area = 'El área es obligatoria';
-            }
-            return errors;
-          }}
           onSubmit={(values) => onSubmitTool(addTool.action, values)}
+          initialValues={{ titulo: '', area: '' }}
         >
-          {({ handleSubmit, setFieldValue, isValid, dirty, values, errors, touched }) => (
+          {({ handleSubmit }) => (
             <Form onSubmit={handleSubmit}>
-              <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }}>
+              <Field
+                name="titulo"
+                fieldLabel="Título"
+                component={InputV2}
+                validate={validateField}
+              />
+              {addTool?.area &&
                 <Field
-                  name="titulo"
-                  fieldLabel="Título"
+                  name="area"
+                  fieldLabel="Área"
                   component={InputV2}
                   validate={validateField}
                 />
-                {addTool?.area &&
-                  <Field
-                    name="area"
-                    fieldLabel="Área"
-                    component={SelectInputV2}
-                    options={organizationalNodesMap}
-                    onChange={(e) => {
-                      setFieldValue('area', e.target.value);
-                      setFieldValue('areaId', e.target.value || '');
-                    }}
-                  />
-                }
-                {addTool?.horizon &&
-                  <Field
-                    name="horizon"
-                    fieldLabel="Horizonte"
-                    component={SelectInputV2}
-                    options={addTool?.horizon}
-                    validate={validateField}
-                  />
-                }
-                {addTool?.requireStartDate && (
-                  <Field
-                    name="startingDate"
-                    fieldLabel="Fecha de inicio"
-                    component={DateInput}
-                    validate={validateField}
-                  />
-                )}
-              </Box>
+              }
+              {addTool?.horizon &&
+                <Field
+                  name="horizon"
+                  fieldLabel="Horizonte"
+                  component={SelectInputV2}
+                  options={Object.values(addTool?.horizon)}
+                  validate={validateField}
+                />
+              }
               <ButtonsContainer>
                 <Button color="secondary" onClick={() => setAddTool(null)}>
                   Cancelar
                 </Button>
-                <Button color="primary" type="submit" disabled={!(dirty && isValid)}>
+                <Button type="submit">
                   Agregar
                 </Button>
               </ButtonsContainer>
