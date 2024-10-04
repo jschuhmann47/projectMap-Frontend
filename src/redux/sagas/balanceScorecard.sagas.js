@@ -23,7 +23,7 @@ export function* balanceScorecardCreate(action) {
     const { formData } = action;
     const req = {
       description: formData.titulo,
-      horizon: formData.horizon,
+      horizon: +Object.entries(horizonOptions).find((kv) => kv[1] === formData.horizon)[0],
       objectives: [],
       projectId: formData.projectId,
     };

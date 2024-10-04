@@ -201,7 +201,13 @@ const ProjectContainer = () => {
   };
 
   const onSubmitTool = (action, formData) => {
-    dispatch(action({ ...formData, projectId: id }));
+    formData.projectId = id;
+    if (formData.area) {
+      formData.areaId = organizationalChart?.data.nodes?.find((node) =>
+        node.data.label === formData.area
+      ).id
+    }
+    dispatch(action(formData));
     navigate('createTool');
   };
 
@@ -440,7 +446,8 @@ const ProjectContainer = () => {
                 <Field
                   name="area"
                   fieldLabel="Área"
-                  component={InputV2}
+                  component={SelectInputV2}
+                  options={areaOptions}
                   validate={validateField}
                 />
               }
@@ -450,6 +457,14 @@ const ProjectContainer = () => {
                   fieldLabel="Horizonte"
                   component={SelectInputV2}
                   options={Object.values(addTool?.horizon)}
+                  validate={validateField}
+                />
+              }
+              {addTool?.requireStartDate &&
+                <Field
+                  name="startingDate"
+                  fieldLabel="Fecha de inicio"
+                  component={DateInput}
                   validate={validateField}
                 />
               }
