@@ -13,6 +13,11 @@ import { useState } from 'react';
 import { CustomForm } from 'styles/form';
 import { ButtonContainer, Title, TitleContainer } from 'views/FodaView/styles';
 
+function isEmpty(obj) {
+  for(var i in obj) { return false; }
+  return true;
+}
+
 const QuestionnaireQuestionsView = ({
   title,
   onClickButtonGoBack,
@@ -56,8 +61,6 @@ const QuestionnaireQuestionsView = ({
       </ButtonContainer>
     </Box>
   );
-
-  console.log('initial values', initialValues)
 
   const renderQuestions = () => (
     <Formik onSubmit={handleSubmit} initialValues={initialValues}>
@@ -152,7 +155,7 @@ const QuestionnaireQuestionsView = ({
   return (
     <>
       {renderTitle()}
-      {renderQuestions()}
+      {!isEmpty(initialValues) && renderQuestions()}
     </>
   );
 };
