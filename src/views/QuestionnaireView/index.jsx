@@ -1,14 +1,14 @@
-import { ArrowBack, ArrowForward, Comment } from '@mui/icons-material';
-import { Box, IconButton } from '@mui/material';
-import React, { useState } from 'react';
-import { ButtonContainer, Title, TitleContainer } from 'views/FodaView/styles';
-import Tab from '@mui/material/Tab';
+import { ArrowBack, Comment } from '@mui/icons-material';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
+import { Box, IconButton } from '@mui/material';
+import Tab from '@mui/material/Tab';
+import Button from 'components/commons/Button';
 import TextStepper from 'components/commons/TextCarousel';
 import parse from 'html-react-parser';
-import Button from 'components/commons/Button';
+import { useState } from 'react';
+import { ButtonContainer, Title, TitleContainer } from 'views/FodaView/styles';
 
 const QuestionnaireView = ({
   title,
