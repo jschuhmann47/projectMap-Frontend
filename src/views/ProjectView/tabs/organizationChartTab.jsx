@@ -14,7 +14,8 @@ import Button from 'components/commons/Button';
 import {
   ChartButtons,
 } from '../styles';
-import { Snackbar, Alert } from '@mui/material';
+import { getOrganizationalChart, saveOrganizationalChart } from 'services/projects.services';
+import { Dialog, DialogActions, DialogContent, DialogTitle, TextField, Snackbar, Alert, Typography, Box } from '@mui/material';
 import { onGetOrganizationalChart, onSaveOrganizationalChart } from 'redux/actions/projects.actions';
 import ModalV2 from 'components/commons/ModalV2';
 import { Field, Form, Formik } from 'formik';
@@ -117,7 +118,6 @@ export default function OrganizationChartTab({ projectId }) {
     dispatch(onSaveOrganizationalChart(projectId, data));
   }
 
-
   return (
     <div className="dndflow">
       <ChartButtons>
@@ -128,6 +128,12 @@ export default function OrganizationChartTab({ projectId }) {
           Agregar
         </Button>
       </ChartButtons>
+      {/* Cartel informativo justo debajo de los botones */}
+      <Box sx={{ marginBottom: 2, marginTop: '4%', textAlign: 'left' }}>
+        <Typography variant="body2" color="textSecondary">
+          Puedes eliminar un área o conexión presionando la tecla "Backspace" o "Delete".
+        </Typography>
+      </Box>
       <ModalV2
         isOpen={showPopup}
         onClose={() => setShowPopup(false)}
