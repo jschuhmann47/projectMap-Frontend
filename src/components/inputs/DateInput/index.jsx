@@ -9,10 +9,6 @@ import { parse, format } from 'date-fns';
 export default function DateInput(props) {
     const { field, fieldLabel, form, tooltip } = props;
 
-    const parsedValue = field.value
-        ? parse(field.value, 'dd-MM-yyyy', new Date())
-        : null;
-
     return (
         <Box sx={{ marginTop: '5px', marginBottom: '5px' }}>
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
@@ -24,7 +20,6 @@ export default function DateInput(props) {
 
             <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DesktopDatePicker
-                    value={parsedValue}
                     onChange={(newValue) => {
                         if (newValue instanceof Date) {
                             const formattedDate = newValue.toISOString();
