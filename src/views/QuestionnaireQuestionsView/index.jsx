@@ -11,6 +11,7 @@ import { CustomForm } from 'styles/form';
 import SelectInput from 'components/inputs/SelectInput';
 import { COLORS } from 'helpers/enums/colors';
 import { validateField } from 'helpers/validateField';
+import Button from 'components/commons/Button';
 
 const QuestionnaireQuestionsView = ({
   title,
@@ -49,9 +50,9 @@ const QuestionnaireQuestionsView = ({
   const renderNextButton = () => (
     <Box sx={{ display: 'flex', justifyContent: 'end' }}>
       <ButtonContainer>
-        <IconButton size="small" type="submit">
-          <ArrowForward />
-        </IconButton>
+      <Button type="submit">
+          Finalizar cuestionario
+        </Button>
       </ButtonContainer>
     </Box>
   );

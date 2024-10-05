@@ -8,6 +8,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import TextStepper from 'components/commons/TextCarousel';
 import parse from 'html-react-parser';
+import Button from 'components/commons/Button';
 
 const QuestionnaireView = ({
   title,
@@ -70,9 +71,9 @@ const QuestionnaireView = ({
   const renderNextButton = () => (
     <Box sx={{ display: 'flex', justifyContent: 'end' }}>
       <ButtonContainer>
-        <IconButton size="small" onClick={onClickNextButton}>
-          <ArrowForward />
-        </IconButton>
+        <Button onClick={onClickNextButton}>
+          Pasar al cuestionario
+        </Button>
       </ButtonContainer>
     </Box>
   );
