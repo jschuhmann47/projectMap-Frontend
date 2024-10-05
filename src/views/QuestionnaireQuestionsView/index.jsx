@@ -12,6 +12,11 @@ import SelectInput from 'components/inputs/SelectInput';
 import { COLORS } from 'helpers/enums/colors';
 import { validateField } from 'helpers/validateField';
 
+function isEmpty(obj) {
+  for(var i in obj) { return false; }
+  return true;
+}
+
 const QuestionnaireQuestionsView = ({
   title,
   onClickButtonGoBack,
@@ -55,8 +60,6 @@ const QuestionnaireQuestionsView = ({
       </ButtonContainer>
     </Box>
   );
-
-  console.log('initial values', initialValues)
 
   const renderQuestions = () => (
     <Formik onSubmit={handleSubmit} initialValues={initialValues}>
@@ -151,7 +154,7 @@ const QuestionnaireQuestionsView = ({
   return (
     <>
       {renderTitle()}
-      {renderQuestions()}
+      {!isEmpty(initialValues) && renderQuestions()}
     </>
   );
 };
