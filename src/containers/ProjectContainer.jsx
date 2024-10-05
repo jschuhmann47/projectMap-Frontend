@@ -75,6 +75,8 @@ import SelectInputV2 from 'components/inputs/SelectInputV2';
 import DateInput from 'components/inputs/DateInput';
 import { onGetOrganizationalChart } from 'redux/actions/projects.actions';
 
+const NO_AREA = 'Sin área'
+
 const ProjectContainer = () => {
   let { id } = useParams();
   const dispatch = useDispatch();
@@ -202,10 +204,12 @@ const ProjectContainer = () => {
 
   const onSubmitTool = (action, formData) => {
     formData.projectId = id;
-    if (formData.area) {
+    if (formData.area !== NO_AREA) {
       formData.areaId = organizationalChart?.data.nodes?.find((node) =>
         node.data.label === formData.area
       ).id
+    } else {
+      formData.areaId = ''
     }
     dispatch(action(formData));
     navigate('createTool');
@@ -296,9 +300,7 @@ const ProjectContainer = () => {
   const stepPermissions = projectInfo?.participants
     .find((u) => u.user.email === user?.email)?.stages
 
-  const areaOptions = organizationalChart?.data.nodes?.map((node) => node.data.label)
-
-  console.log('areaOptions', areaOptions)
+  const areaOptions = organizationalChart?.data.nodes?.map((node) => node.data.label).concat([NO_AREA])
 
   return (
     <LayoutContainer>
@@ -432,7 +434,7 @@ const ProjectContainer = () => {
       >
         <Formik
           onSubmit={(values) => onSubmitTool(addTool.action, values)}
-          initialValues={{ titulo: '', area: '' }}
+          initialValues={{ titulo: '', area: NO_AREA }}
         >
           {({ handleSubmit }) => (
             <Form onSubmit={handleSubmit}>
