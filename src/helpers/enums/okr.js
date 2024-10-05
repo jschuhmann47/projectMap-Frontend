@@ -71,7 +71,7 @@ export const priorityOptions = [
 // A 1 año: mensual, bimestral, trimestral
 export function filterFrequenciesByHorizon(horizon) {
   if (horizon === 15) {
-    return ['Diario', 'Semanal']
+    return ['Diaria', 'Semanal']
   }
   if (horizon === 30) {
     return ['Semanal', 'Quincenal']

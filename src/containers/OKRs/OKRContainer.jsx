@@ -33,7 +33,6 @@ import { validateField, validateFielWithNoZero } from 'helpers/validateField';
 import { useNavigate } from 'react-router-dom';
 import Loading from 'components/commons/Loading';
 import { onGetAll as onGetAllComments } from 'redux/actions/comments.actions';
-import { onGetOne } from 'redux/actions/projects.actions';
 
 const OKRContainer = () => {
   const { okrToolId, id } = useParams();
@@ -46,7 +45,6 @@ const OKRContainer = () => {
   const [anchorElement, setAnchorElement] = useState(null);
 
   useEffect(() => {
-    dispatch(onGetOne(id));
     dispatch(onGetOneTool(okrToolId));
   }, []);
 
@@ -66,10 +64,6 @@ const OKRContainer = () => {
       })
     );
   };
-
-  const organizationalNodes = useSelector(
-    (state) => state.projects.data?.chart?.nodes || []
-  );
 
   const onEditKeyResultStatus = (okrId, keyResultId, formData) => {
     dispatch(onEditKeyResult(okrToolId, okrId, keyResultId, formData));
@@ -95,7 +89,6 @@ const OKRContainer = () => {
             deleteOkr={deleteOkr}
             onClickBack={() => navigate(`/projects/${id}`)}
             deleteKeyResult={deleteKeyResult}
-            organizationalNodes={organizationalNodes}
           />
           <Menu
             anchorEl={anchorElement}

@@ -1,16 +1,22 @@
-import { ArrowBack, ArrowForward, Comment } from '@mui/icons-material';
-import { Box, IconButton, Typography, Grid } from '@mui/material';
-import React, { useState } from 'react';
-import { ButtonContainer, Title, TitleContainer } from 'views/FodaView/styles';
-import Tab from '@mui/material/Tab';
+import { ArrowBack, Comment } from '@mui/icons-material';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import { Formik, Field, ErrorMessage } from 'formik';
-import { CustomForm } from 'styles/form';
+import { Box, Grid, IconButton, Typography } from '@mui/material';
+import Tab from '@mui/material/Tab';
+import Button from 'components/commons/Button';
 import SelectInput from 'components/inputs/SelectInput';
+import { ErrorMessage, Field, Formik } from 'formik';
 import { COLORS } from 'helpers/enums/colors';
 import { validateField } from 'helpers/validateField';
+import { useState } from 'react';
+import { CustomForm } from 'styles/form';
+import { ButtonContainer, Title, TitleContainer } from 'views/FodaView/styles';
+
+function isEmpty(obj) {
+  for(var i in obj) { return false; }
+  return true;
+}
 
 const QuestionnaireQuestionsView = ({
   title,
@@ -49,14 +55,12 @@ const QuestionnaireQuestionsView = ({
   const renderNextButton = () => (
     <Box sx={{ display: 'flex', justifyContent: 'end' }}>
       <ButtonContainer>
-        <IconButton size="small" type="submit">
-          <ArrowForward />
-        </IconButton>
+        <Button type="submit">
+          Finalizar cuestionario
+        </Button>
       </ButtonContainer>
     </Box>
   );
-
-  console.log('initial values', initialValues)
 
   const renderQuestions = () => (
     <Formik onSubmit={handleSubmit} initialValues={initialValues}>
@@ -151,7 +155,7 @@ const QuestionnaireQuestionsView = ({
   return (
     <>
       {renderTitle()}
-      {renderQuestions()}
+      {!isEmpty(initialValues) && renderQuestions()}
     </>
   );
 };

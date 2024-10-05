@@ -10,6 +10,7 @@ import {
 } from 'services/okr.services';
 
 import * as constants from 'redux/contansts/okr.constants';
+import { horizonOptions } from 'helpers/enums/okr';
 
 export function* okrCreateTool(action) {
   try {
@@ -17,7 +18,7 @@ export function* okrCreateTool(action) {
     const req = {
       description: formData.titulo,
       areaId: formData.areaId,
-      horizon: formData.horizon,
+      horizon: +Object.entries(horizonOptions).find((kv) => kv[1] === formData.horizon)[0],
       keyResults: [],
       projectId: formData.projectId,
       startingDate: formData.startingDate,

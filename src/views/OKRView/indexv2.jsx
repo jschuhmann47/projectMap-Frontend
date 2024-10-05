@@ -12,6 +12,7 @@ import { Box, IconButton, LinearProgress, Typography } from "@mui/material";
 import ConfirmDeleteModal from "components/commons/ProjectCard/components/confirmDeleteModal";
 import ImgSelect from "./components/ImgSelect";
 import { AddCircle, ArrowBack } from "@mui/icons-material";
+import { format, parseISO } from 'date-fns';
 
 const OKRView = ({
   okrData,
@@ -52,6 +53,7 @@ const OKRView = ({
         <span>Área: {okrData?.area}</span>
         <span>Horizonte: {horizonOptions[okrData?.horizon]}</span>
         <span>Prioridad: <img src={priorityOptions[okrData?.priority]} height="20" width="20" /></span>
+        <span>Fecha de inicio: {okrData?.startingDate ? format(parseISO(okrData.startingDate), 'dd-MM-yyyy') : ''}</span>
       </OkrMoreData>
     </OkrProgressAndMoreData>
     <KeyResultsHeader>
@@ -95,7 +97,7 @@ const OKRView = ({
             />
             <Field
               name="goal"
-              fieldLabel="Resultado"
+              fieldLabel="Resultado esperado"
               component={InputV2}
               validate={validateField}
             />

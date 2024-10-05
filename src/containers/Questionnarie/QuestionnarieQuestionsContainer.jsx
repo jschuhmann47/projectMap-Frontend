@@ -39,8 +39,7 @@ const QuestionnarieQuestionsContainer = () => {
   const userPermission = permission(root, 'transformationPlans');
 
   const loading = useSelector((state) => state.questionnaire.loading);
-  let initialValues = {};
-  initialValues = useSelector(initialValuesSelector);
+  const initialValues = useSelector(initialValuesSelector);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -52,9 +51,10 @@ const QuestionnarieQuestionsContainer = () => {
   const handleSubmit = (formData) => {
     const submit = [];
     const formDataList = [];
-    Object.entries(formData)?.map(([chapterId, chapter]) =>
+
+    Object.entries(formData)?.forEach(([chapterId, chapter]) => {
       formDataList.push({ chapterId, chapter })
-    );
+    });
     formDataList?.map(({ chapterId, chapter }) => {
       Object.entries(chapter)?.map(([questionId, question]) => {
         Object.entries(question)?.map(([question, answer]) => {
