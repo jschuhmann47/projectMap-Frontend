@@ -8,7 +8,7 @@ export default function KeyResultModal({
   data,
   onSubmit
 }) {
-  const shoeProgress = () => {
+  const showProgress = () => {
     return data.currentScore > data.baseline && data.currentScore < data.goal
   };
 
@@ -72,7 +72,7 @@ export default function KeyResultModal({
                     left: `${data.progress}`,
                     padding: '0px',
                     marginTop: '5px',
-                    display: shoeProgress() ? "block" : "none"
+                    display: showProgress() ? "block" : "none"
                   }}
                 >
                   {`${data.currentScore} `}
