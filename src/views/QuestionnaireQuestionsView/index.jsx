@@ -50,7 +50,7 @@ const QuestionnaireQuestionsView = ({
   const renderNextButton = () => (
     <Box sx={{ display: 'flex', justifyContent: 'end' }}>
       <ButtonContainer>
-      <Button type="submit">
+        <Button type="submit">
           Finalizar cuestionario
         </Button>
       </ButtonContainer>
