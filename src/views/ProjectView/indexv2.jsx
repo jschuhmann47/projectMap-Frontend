@@ -20,7 +20,8 @@ export default function ProjectView({
   onChangeMemberRole,
   onSaveChanges,
   hasFullPermissions,
-  stepPermissions
+  stepPermissions,
+  rolesTabChanged,
 }) {
   const [activeTab, setActiveTab] = useState("1");
 
@@ -58,6 +59,7 @@ export default function ProjectView({
           onChangeMemberPermission={onChangeMemberPermission}
           onChangeMemberRole={onChangeMemberRole}
           onSaveChanges={onSaveChanges}
+          changed={rolesTabChanged}
         />
       });
     }

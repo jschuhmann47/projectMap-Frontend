@@ -79,8 +79,10 @@ export default function RolesTab({
   onChangeMemberPermission,
   onChangeMemberRole,
   onSaveChanges,
+  changed,
 }) {
   const [usersToDelete, setUsersToDelete] = useState(new Set());
+  const [selectorChanged, setSelectorChanged] = useState(false);
 
   const handleToggleDeleteUser = (userId) => {
     setUsersToDelete((prev) => {
@@ -92,21 +94,25 @@ export default function RolesTab({
       }
       return newSet
     })
+    setSelectorChanged(true);
   }
 
   const handleSaveChanges = () => {
     onSaveChanges(usersToDelete);
     setUsersToDelete(new Set());
+    setSelectorChanged(false);
   }
 
   return (
     <div>
       <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
         <Box width='20%'>
-          <Button variant="contained" onClick={onOpenModal}>Agregar Integrante</Button>
+          <Button onClick={onOpenModal}>Agregar Integrante</Button>
         </Box>
         <Box width='20%'>
-          <Button variant="contained" onClick={handleSaveChanges}>Guardar</Button>
+          <Button onClick={handleSaveChanges} disabled={!selectorChanged && !changed}>
+            Guardar
+          </Button>
         </Box>
       </Box>
       <AddUserModal
