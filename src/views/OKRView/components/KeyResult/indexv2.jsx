@@ -72,11 +72,7 @@ export default function KeyResultModal({
                     left: `${data.progress}`,
                     padding: '0px',
                     marginTop: '5px',
-<<<<<<< HEAD
                     display: showProgress() ? "block" : "none"
-=======
-                    display: shoeProgress() ? "block" : "none"
->>>>>>> main
                   }}
                 >
                   {`${data.currentScore} `}
