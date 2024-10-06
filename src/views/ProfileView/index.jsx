@@ -102,20 +102,6 @@ const ProfileView = ({ user, onSubmit }) => {
                       disable
                     />
                   </Box>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                    }}
-                  >
-                    <FormLabel>Biografia</FormLabel>
-                    <Field
-                      name="biography"
-                      type="textarea"
-                      placeholder="Biografia"
-                      component={Textarea}
-                    />
-                  </Box>
                   {/* <Box
                     sx={{
                       display: 'flex',
