@@ -2,7 +2,7 @@ import { Field, Form, Formik } from 'formik';
 
 import Button from 'components/commons/Button';
 
-import { validateField } from 'helpers/validateField';
+import { validateField, validateNumberField } from 'helpers/validateField';
 import InputV2 from 'components/inputs/InputV2';
 import { ButtonsContainer } from 'styles/form';
 import { Box, Grid, List, ListItem, Typography } from '@mui/material';
@@ -73,16 +73,18 @@ const KrForm = ({ onSubmit, data }) => {
               <Field
                 name="baseline"
                 fieldLabel="Línea base"
+                type="number"
                 inputLayout='inline'
                 component={InputV2}
-                validate={validateField}
+                validate={validateNumberField}
               />
               <Field
                 name="goal"
                 fieldLabel="Resultado esperado"
+                type="number"
                 inputLayout='inline'
                 component={InputV2}
-                validate={validateField}
+                validate={validateNumberField}
               />
               <Field
                 fieldLabel="Prioridad"
