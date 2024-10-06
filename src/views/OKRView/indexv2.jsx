@@ -3,7 +3,7 @@ import { KeyResultsContainer, KeyResultsHeader, OkrContainerV2, OkrHeader, OkrMo
 import Button from "components/commons/Button";
 import { ButtonsContainer } from "styles/form";
 import { Field, Form, Formik } from "formik";
-import { validateField } from "helpers/validateField";
+import { validateField, validateNumberField } from "helpers/validateField";
 import KeyResult from "./components/KeyResult";
 import ModalV2 from "components/commons/ModalV2";
 import InputV2 from "components/inputs/InputV2";
@@ -92,14 +92,16 @@ const OKRView = ({
             <Field
               name="baseline"
               fieldLabel="Línea Base"
+              type="number"
               component={InputV2}
-              validate={validateField}
+              validate={validateNumberField}
             />
             <Field
               name="goal"
               fieldLabel="Resultado esperado"
+              type="number"
               component={InputV2}
-              validate={validateField}
+              validate={validateNumberField}
             />
             <Field
               fieldLabel="Prioridad"
