@@ -95,7 +95,8 @@ export default function RolesTab({
   }
 
   const handleSaveChanges = () => {
-    onSaveChanges(usersToDelete)
+    onSaveChanges(usersToDelete);
+    setUsersToDelete(new Set());
   }
 
   return (

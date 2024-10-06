@@ -10,6 +10,7 @@ export const CustomButton = styled('button', {
     styles.root,
     props.color === 'primary' && styles.primary,
     props.color === 'secondary' && styles.secondary,
+    props.disabled && styles.disabled,
   ],
 })({
   width: '100%',
