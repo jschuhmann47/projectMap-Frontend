@@ -20,6 +20,7 @@ const notificationMiddleware = () => (next) => (action) => {
     case userConstants.USER_ON_FORGOT_PASSWORD_SUCCEEDED:
     case projectConstants.PROJECTS_SAVE_MEMBERS_SUCCEEDED:
     case projectConstants.PROJECTS_ON_SAVE_ORGANIZATIONAL_CHART_SUCCEEDED:
+    case userConstants.USER_ON_REGISTER_SUCCEEDED:
       sendSuccessNotification(data.message);
       break;
     case userConstants.USER_ON_FORGOT_PASSWORD_FAILED:
