@@ -30,7 +30,10 @@ export function* balanceScorecardCreate(action) {
     const { data } = yield call(create, req);
     yield put({ type: constants.CREATE_BALANCE_SCORECARD_SUCCEEDED, data });
   } catch (error) {
-    yield put({ type: constants.CREATE_BALANCE_SCORECARD_FAILED, error });
+    yield put({
+      type: constants.CREATE_BALANCE_SCORECARD_FAILED,
+      error: { ...error, message: 'La creación del Balanced Scorecard falló.' },
+    });
   }
 }
 

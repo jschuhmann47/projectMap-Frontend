@@ -19,7 +19,7 @@ export function* questionnaireCreate(action) {
   } catch (error) {
     yield put({
       type: constants.QUESTIONNARIE_ON_CREATE_FAILED,
-      error,
+      error: { ...error, message: 'La creación del plan de transformación falló.' },
     });
   }
 }

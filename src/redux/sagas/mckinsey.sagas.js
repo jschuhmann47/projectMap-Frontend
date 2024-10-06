@@ -15,7 +15,10 @@ export function* mckinseyCreate(action) {
     const { data } = yield call(create, formData);
     yield put({ type: constants.CREATE_MCKINSEY_SUCCEEDED, data });
   } catch (error) {
-    yield put({ type: constants.CREATE_MCKINSEY_FAILED, error });
+    yield put({
+      type: constants.CREATE_MCKINSEY_FAILED,
+      error: { ...error, message: 'La creación de la matriz McKinsey falló.' }
+    });
   }
 }
 

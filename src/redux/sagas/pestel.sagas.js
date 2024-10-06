@@ -18,7 +18,10 @@ export function* pestelCreate(action) {
     const { data } = yield call(create, formData);
     yield put({ type: constants.CREATE_PESTEL_SUCCEEDED, data });
   } catch (error) {
-    yield put({ type: constants.CREATE_PESTEL_FAILED, error });
+    yield put({
+      type: constants.CREATE_PESTEL_FAILED,
+      error: { ...error, message: 'La creación del análisis PESTEL falló.' },
+    });
   }
 }
 

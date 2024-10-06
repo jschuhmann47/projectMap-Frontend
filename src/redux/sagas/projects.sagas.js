@@ -348,9 +348,8 @@ export function* projectsOnSaveMembers(action) {
     });
   } catch (error) {
     yield put({
-      type: constants.PROJECTS_ADD_USER_FAILED,
-      error,
-      data: { message: 'Hubo un problema al guardar los cambios.' },
+      type: constants.PROJECTS_SAVE_MEMBERS_FAILED,
+      error: { ...error, message: 'Hubo un problema al guardar los cambios.' },
     })
   }
 }

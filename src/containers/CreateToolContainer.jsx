@@ -23,10 +23,6 @@ const CreateToolContainer = () => {
   const creationSucceeded =
     foda?._id || pestel?._id || mckinsey?._id || porter?._id || ansoff?._id || okr?._id || balanceScorecard?._id || questionnaire?._id;
 
-  if (!creationSucceeded && !loading) {
-    alert('La creación de la herramienta falló.');
-  };
-
   return (
     <LayoutContainer hasHeader={false}>
       <Routes>

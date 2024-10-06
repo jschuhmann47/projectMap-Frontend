@@ -18,7 +18,10 @@ export function* fodaCreate(action) {
     const { data } = yield call(create, formData);
     yield put({ type: constants.CREATE_FODA_SUCCEEDED, data });
   } catch (error) {
-    yield put({ type: constants.CREATE_FODA_FAILED, error });
+    yield put({
+      type: constants.CREATE_FODA_FAILED,
+      error: { ...error, message: 'La creación del análisis FODA falló.' },
+    });
   }
 }
 

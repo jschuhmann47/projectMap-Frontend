@@ -26,7 +26,10 @@ export function* okrCreateTool(action) {
     const { data } = yield call(createOkr, req);
     yield put({ type: constants.CREATE_OKR_TOOL_SUCCEEDED, data });
   } catch (error) {
-    yield put({ type: constants.CREATE_OKR_TOOL_FAILED, error });
+    yield put({
+      type: constants.CREATE_OKR_TOOL_FAILED,
+      error: { ...error, message: 'La creación del OKR falló.' },
+    });
   }
 }
 
