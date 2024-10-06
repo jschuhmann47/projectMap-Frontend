@@ -41,10 +41,10 @@ const notificationMiddleware = () => (next) => (action) => {
     case bscConstants.CREATE_BALANCE_SCORECARD_FAILED:
       sendErrorNotification(error.response?.data?.message || error.message);
       break;
-    default:
-      if (error?.response?.status === 401)
-        sendErrorNotification(error.response?.data?.message || error.message);
-      break;
+  }
+  if (error?.response?.status === 401) {
+    // if status is unauthorized, we must redirect the user to the login page.
+    window.location.assign('/login');
   }
   return next(action);
 };
