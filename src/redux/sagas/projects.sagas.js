@@ -323,6 +323,7 @@ export function* projectsOnAddUser(action) {
     yield call(addUser, id, formData);
     yield put({
       type: constants.PROJECTS_ADD_USER_SUCCEEDED,
+      data: { message: 'Se agregó exitosamente al usuario al proyecto.' }
     })
     // reload project data after adding user (todo: refactor)
     const { data } = yield call(getOne, id);
