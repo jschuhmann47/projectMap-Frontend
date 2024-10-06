@@ -300,7 +300,7 @@ const ProjectContainer = () => {
   const stepPermissions = projectInfo?.participants
     .find((u) => u.user.email === user?.email)?.stages
 
-  const areaOptions = organizationalChart?.data.nodes?.map((node) => node.data.label).concat([NO_AREA])
+  const areaOptions = [NO_AREA].concat(organizationalChart?.data.nodes?.map((node) => node.data.label))
 
   return (
     <LayoutContainer>
