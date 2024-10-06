@@ -266,10 +266,13 @@ export function* projectsOnSaveOrganizationalChart(action) {
     const { data } = yield call(saveOrganizationalChart, id, chart);
     yield put({
       type: constants.PROJECTS_ON_SAVE_ORGANIZATIONAL_CHART_SUCCEEDED,
-      data: chart,
+      data: { ...chart, message: 'El organigrama se guardó exitosamente' },
     });
   } catch (error) {
-    yield put({ type: constants.PROJECTS_ON_SAVE_ORGANIZATIONAL_CHART_FAILED, error });
+    yield put({
+      type: constants.PROJECTS_ON_SAVE_ORGANIZATIONAL_CHART_FAILED,
+      error: { ...error }
+    });
   }
 }
 
@@ -338,6 +341,7 @@ export function* projectsOnSaveMembers(action) {
     yield call(updateUsers, id, formData);
     yield put({
       type: constants.PROJECTS_SAVE_MEMBERS_SUCCEEDED,
+      data: { message: 'Se guardaron exitosamente los cambios en los permisos.' },
     })
     // reload project data after saving members (todo: refactor)
     const { data } = yield call(getOne, id);
@@ -346,7 +350,10 @@ export function* projectsOnSaveMembers(action) {
       data,
     });
   } catch (error) {
-    yield put({ type: constants.PROJECTS_ADD_USER_FAILED, error })
+    yield put({
+      type: constants.PROJECTS_SAVE_MEMBERS_FAILED,
+      error: { ...error, message: 'Hubo un problema al guardar los cambios.' },
+    })
   }
 }
 

@@ -18,7 +18,10 @@ export function* porterCreate(action) {
     const { data } = yield call(create, formData);
     yield put({ type: constants.PORTER_CREATE_SUCCEEDED, data });
   } catch (error) {
-    yield put({ type: constants.PORTER_CREATE_FAILED, error });
+    yield put({
+      type: constants.PORTER_CREATE_FAILED,
+      error: { ...error, message: 'La creación del análisis de Porter falló.' },
+    });
   }
 }
 

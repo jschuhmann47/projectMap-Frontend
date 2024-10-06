@@ -341,13 +341,11 @@ const projectsReducer = (state = defaultState, action) => {
         loading: true
       }
     case constants.PROJECTS_SAVE_MEMBERS_SUCCEEDED:
-      alert('Se guardaron exitosamente los cambios en los permisos.')
       return {
         ...state,
         loading: false
       }
     case constants.PROJECTS_SAVE_MEMBERS_FAILED:
-      alert('Hubo un problema al guardar los cambios.')
       return {
         ...state,
         loading: false,
@@ -366,7 +364,7 @@ const projectsReducer = (state = defaultState, action) => {
     case constants.PROJECTS_ON_SAVE_ORGANIZATIONAL_CHART_FAILED:
       return {
         ...state,
-        organizationalChart: { error, success: false }
+        organizationalChart: { ...state.organizationalChart, error, success: false }
       };
     case constants.PROJECTS_ON_SAVE_ORGANIZATIONAL_CHART_SUCCEEDED:
       return {

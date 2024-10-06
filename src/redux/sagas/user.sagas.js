@@ -70,7 +70,7 @@ export function* userRegister(action) {
     } else {
       yield put({
         type: constants.USER_ON_REGISTER_SUCCEEDED,
-        data,
+        data: { ...data, message: 'Cuenta creada con éxito. ¡Bienvenido a ProjectMap!' },
       });
     }
   } catch (error) {

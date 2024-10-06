@@ -17,7 +17,10 @@ export function* ansoffCreate(action) {
     const { data } = yield call(create, formData);
     yield put({ type: constants.CREATE_ANSOFF_SUCCEEDED, data });
   } catch (error) {
-    yield put({ type: constants.CREATE_ANSOFF_FAILED, error });
+    yield put({
+      type: constants.CREATE_ANSOFF_FAILED,
+      error: { ...error, message: 'La creación de la matriz Ansoff falló.' },
+    });
   }
 }
 
