@@ -338,6 +338,7 @@ export function* projectsOnSaveMembers(action) {
     yield call(updateUsers, id, formData);
     yield put({
       type: constants.PROJECTS_SAVE_MEMBERS_SUCCEEDED,
+      data: { message: 'Se guardaron exitosamente los cambios en los permisos.' },
     })
     // reload project data after saving members (todo: refactor)
     const { data } = yield call(getOne, id);
@@ -346,7 +347,11 @@ export function* projectsOnSaveMembers(action) {
       data,
     });
   } catch (error) {
-    yield put({ type: constants.PROJECTS_ADD_USER_FAILED, error })
+    yield put({
+      type: constants.PROJECTS_ADD_USER_FAILED,
+      error,
+      data: { message: 'Hubo un problema al guardar los cambios.' },
+    })
   }
 }
 

@@ -341,13 +341,11 @@ const projectsReducer = (state = defaultState, action) => {
         loading: true
       }
     case constants.PROJECTS_SAVE_MEMBERS_SUCCEEDED:
-      alert('Se guardaron exitosamente los cambios en los permisos.')
       return {
         ...state,
         loading: false
       }
     case constants.PROJECTS_SAVE_MEMBERS_FAILED:
-      alert('Hubo un problema al guardar los cambios.')
       return {
         ...state,
         loading: false,
