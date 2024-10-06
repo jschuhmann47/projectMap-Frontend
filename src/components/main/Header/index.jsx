@@ -89,7 +89,7 @@ const Header = (props) => {
 // to do: alargar el texto (la mayoría del texto viejo hablaba de las esferas)
 const info = `
 <br>
-El proceso de Planificación Estratégica puede ser dividido en varias fases, todas con sus distintas herramientas orientadas a evaluar la situación actual de su proyecto, definir lineamientos estratégicos y un plan de acción para alcanzar los objetivos que usted decida definir. En ProjectMap, y con el propósito de simplificar el mismo, nos limitamos a 7 etapas con sus respectivas herramientas. Las mismas pueden ser completadas en cualquier orden, dependiendo de la información que usted tenga a su disposición.
+El proceso de Planificación Estratégica se puede dividir en varias fases, cada una con herramientas específicas diseñadas para evaluar la situación actual de su proyecto, definir lineamientos estratégicos y establecer un plan de acción que le permita alcanzar los objetivos que decida plantear. En ProjectMap, hemos adaptado el proceso a nuestra herramienta definiendo siete etapas, cada una con sus respectivas herramientas. Estas etapas pueden completarse en cualquier orden, según la información que usted tenga disponible.
 `
 
 export default Header;
