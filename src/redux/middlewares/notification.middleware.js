@@ -19,6 +19,7 @@ const notificationMiddleware = () => (next) => (action) => {
     case userConstants.USER_ON_LOGIN_SUCCEEDED:
     case userConstants.USER_ON_FORGOT_PASSWORD_SUCCEEDED:
     case projectConstants.PROJECTS_SAVE_MEMBERS_SUCCEEDED:
+    case projectConstants.PROJECTS_ON_SAVE_ORGANIZATIONAL_CHART_SUCCEEDED:
       sendSuccessNotification(data.message);
       break;
     case userConstants.USER_ON_FORGOT_PASSWORD_FAILED:
@@ -27,6 +28,7 @@ const notificationMiddleware = () => (next) => (action) => {
     case userConstants.USER_ON_RESET_PASSWORD_FAILED:
     case userConstants.USER_ON_REGISTER_FAILED:
     case projectConstants.PROJECTS_SAVE_MEMBERS_FAILED:
+    case projectConstants.PROJECTS_ON_SAVE_ORGANIZATIONAL_CHART_FAILED:
     case pestelConstants.CREATE_PESTEL_FAILED:
     case porterConstants.PORTER_CREATE_FAILED:
     case fodaConstants.CREATE_FODA_FAILED:

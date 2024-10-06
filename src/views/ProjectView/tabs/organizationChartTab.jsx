@@ -14,8 +14,7 @@ import Button from 'components/commons/Button';
 import {
   ChartButtons,
 } from '../styles';
-import { getOrganizationalChart, saveOrganizationalChart } from 'services/projects.services';
-import { Dialog, DialogActions, DialogContent, DialogTitle, TextField, Snackbar, Alert, Typography, Box } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 import { onGetOrganizationalChart, onSaveOrganizationalChart } from 'redux/actions/projects.actions';
 import ModalV2 from 'components/commons/ModalV2';
 import { Field, Form, Formik } from 'formik';
@@ -29,9 +28,6 @@ export default function OrganizationChartTab({ projectId }) {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [snackbarStatus, setSnackbarStatus] = useState('success');
-  const [snackbarText, setSnackbarText] = useState('');
   const dispatch = useDispatch();
   const { organizationalChart } = useSelector((state) => state.projects);
 
@@ -40,10 +36,6 @@ export default function OrganizationChartTab({ projectId }) {
   }, [dispatch]);
 
   useEffect(() => {
-    if (organizationalChart.success != null) {
-      processChartSnackbar()
-    }
-
     if (organizationalChart.data != null) {
       const {nodes, edges } = organizationalChart.data;
       if (nodes != null) {
@@ -55,18 +47,6 @@ export default function OrganizationChartTab({ projectId }) {
       }
     }
   }, [organizationalChart]);
-
-  const processChartSnackbar = () => {
-    if (organizationalChart.success) {
-      setSnackbarStatus('success');
-      setSnackbarText('Guardado exitosamente')
-    } else {
-      setSnackbarStatus('error');
-      setSnackbarText('Hubo un error al guardar')
-    } 
-
-    setOpenSnackbar(true);
-  }
 
   const generateNextNodeId = () => {
     const { nodes } = reactFlowInstance.toObject();
@@ -172,16 +152,6 @@ export default function OrganizationChartTab({ projectId }) {
           </ReactFlow>
         </div>
       </ReactFlowProvider>
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={3000}
-        onClose={() => { setOpenSnackbar(false) }}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      >
-        <Alert severity={snackbarStatus} sx={{ width: '100%' }}>
-          {snackbarText}
-        </Alert>
-      </Snackbar>
     </div>
   );
 }
