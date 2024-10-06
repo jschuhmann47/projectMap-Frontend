@@ -13,6 +13,7 @@ import './index.css';
 import Button from 'components/commons/Button';
 import {
   ChartButtons,
+  ChartHUD,
 } from '../styles';
 import { Typography, Box } from '@mui/material';
 import { onGetOrganizationalChart, onSaveOrganizationalChart } from 'redux/actions/projects.actions';
@@ -100,20 +101,21 @@ export default function OrganizationChartTab({ projectId }) {
 
   return (
     <div className="dndflow">
-      <ChartButtons>
-        <Button onClick={onSaveDiagram}>
-          Guardar
-        </Button>
-        <Button onClick={onAddNewNode}>
-          Agregar
-        </Button>
-      </ChartButtons>
-      {/* Cartel informativo justo debajo de los botones */}
-      <Box sx={{ marginBottom: 2, marginTop: '4%', textAlign: 'left' }}>
-        <Typography variant="body2" color="textSecondary">
-          Puedes eliminar un área o conexión presionando la tecla "Backspace" o "Delete".
-        </Typography>
-      </Box>
+      <ChartHUD>
+        <ChartButtons>
+          <Button onClick={onSaveDiagram}>
+            Guardar
+          </Button>
+          <Button onClick={onAddNewNode}>
+            Agregar
+          </Button>
+        </ChartButtons>
+        <Box sx={{ marginBottom: 2, marginTop: '4%', textAlign: 'left' }}>
+          <Typography variant="body2" sx={{ fontFamily: 'Fira Sans' }}>
+            Podés eliminar un área o conexión presionando la tecla "Backspace" o "Delete".
+          </Typography>
+        </Box>
+      </ChartHUD>      
       <ModalV2
         isOpen={showPopup}
         onClose={() => setShowPopup(false)}

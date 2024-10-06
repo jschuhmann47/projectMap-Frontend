@@ -166,12 +166,15 @@ export const StepInfo = styled('div')({
   paddingTop: 5,
 })
 
+export const ChartHUD = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  position: 'fixed',
+  zIndex: 9999,
+  width: 'min-content',
+})
+
 export const ChartButtons = styled('div')({
   display: 'flex',
-  justifyContent: 'flex-start',
-  position: 'fixed',
-  'z-index': 9999,
-  button: {
-    marginRight: '10px',
-  }
+  gap: 10,
 })
