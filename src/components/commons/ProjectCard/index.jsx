@@ -1,9 +1,7 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import PersonIcon from '@mui/icons-material/Person';
 import { Box, IconButton, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getUser } from 'redux/actions/user.actions';
+import { useState } from 'react';
 import ConfirmDeleteModal from './components/confirmDeleteModal';
 import { Card, CardContent, Description, Title, TitleContainer } from './styles';
 
@@ -19,7 +17,6 @@ const ProjectCard = (props) => {
     userRole,
   } = props;
 
-  const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [confirmDeleteError, setConfirmDeleteError] = useState(null);
 
@@ -40,14 +37,30 @@ const ProjectCard = (props) => {
       closeModal();
     }
   };
+
   const textColor = !isDarkColor(color) ? "#000000" : "#ffffff";
 
   return (
     <>
-      <Card style={{ backgroundColor: color }} onClick={onClick}>
+      <Card style={{ backgroundColor: color, maxWidth: '100%' }} onClick={onClick}>
         <CardContent>
           <TitleContainer>
-            <Title style={{color: textColor}}>{title}</Title>
+            {/* Adjust Title to prevent overflow */}
+            <Title
+              style={{
+                color: textColor,
+                overflowWrap: 'break-word',
+                wordWrap: 'break-word',
+                whiteSpace: 'pre-wrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                display: '-webkit-box',
+                WebkitLineClamp: 1, // Adjust number of lines if necessary
+                WebkitBoxOrient: 'vertical',
+              }}
+            >
+              {title}
+            </Title>
             <Box display="flex" alignItems="center">
               {!isAdmin && (
                 <Typography variant="body2" sx={{ marginRight: 1 }}>
@@ -64,12 +77,27 @@ const ProjectCard = (props) => {
                   }}
                   disabled={onDeleteDisable}
                 >
-                  <DeleteIcon style={{color: textColor}} />
+                  <DeleteIcon style={{ color: textColor }} />
                 </IconButton>
               )}
             </Box>
           </TitleContainer>
-          <Description style={{color: textColor}}>{description}</Description>
+          {/* Apply word-wrap, overflow, and white-space to Description */}
+          <Description
+            style={{
+              color: textColor,
+              overflowWrap: 'break-word',
+              wordWrap: 'break-word',
+              whiteSpace: 'pre-wrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              display: '-webkit-box',
+              WebkitLineClamp: 3, // Adjust number of lines if necessary
+              WebkitBoxOrient: 'vertical',
+            }}
+          >
+            {description}
+          </Description>
         </CardContent>
       </Card>
       {isAdmin && (
