@@ -97,11 +97,7 @@ const OKRView = ({
             />
             <Field
               name="goal"
-<<<<<<< HEAD
-              fieldLabel="Resultado"
-=======
               fieldLabel="Resultado esperado"
->>>>>>> main
               component={InputV2}
               validate={validateField}
             />
