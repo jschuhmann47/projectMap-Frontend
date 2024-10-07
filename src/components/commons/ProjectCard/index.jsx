@@ -82,7 +82,6 @@ const ProjectCard = (props) => {
               )}
             </Box>
           </TitleContainer>
-          {/* Apply word-wrap, overflow, and white-space to Description */}
           <Description
             style={{
               color: textColor,
@@ -92,7 +91,6 @@ const ProjectCard = (props) => {
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               display: '-webkit-box',
-              WebkitLineClamp: 3, // Adjust number of lines if necessary
               WebkitBoxOrient: 'vertical',
             }}
           >
