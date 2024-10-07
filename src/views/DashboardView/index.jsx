@@ -34,7 +34,7 @@ const DashboardView = (props) => {
 
   return (
     <Container>
-      <Content  sx={{
+      <Content sx={{
             position: 'sticky',
             maxWidth: '100%',
             top: 0,
