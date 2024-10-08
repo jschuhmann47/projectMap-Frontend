@@ -94,6 +94,9 @@ const ProjectContainer = () => {
     useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
   const [confirmDeleteError, setConfirmDeleteError] = useState(null);
+
+  const [rolesTabChanged, setRolesTabChanged] = useState(false);
+
   // const menuItems = getMenuItems(stepValue);
   const toolsItems = useSelector(stepToolsSelector);
   const toolsAddOptions = getMenuItems(stepValue);
@@ -277,10 +280,12 @@ const ProjectContainer = () => {
 
   function onChangeMemberRole(userId, newRole) {
     dispatch(changeMemberRole(userId, newRole));
+    setRolesTabChanged(true);
   };
 
   function onChangeMemberPermission(userId, stepId, newPermission) {
     dispatch(changeMemberPermission(userId, stepId, newPermission));
+    setRolesTabChanged(true);
   };
 
   function onSaveChanges(usersToDelete) {
@@ -291,6 +296,7 @@ const ProjectContainer = () => {
       stages: m.role === 'participant' ? m.stages : undefined,
     }));
     dispatch(onSaveMembers(id, { users }))
+    setRolesTabChanged(false);
   }
 
   const hasFullPermissions =
@@ -320,6 +326,7 @@ const ProjectContainer = () => {
         onSaveChanges={onSaveChanges}
         hasFullPermissions={hasFullPermissions}
         stepPermissions={stepPermissions}
+        rolesTabChanged={rolesTabChanged}
       />
       <Menu
         anchorEl={openComments}
