@@ -60,8 +60,12 @@ export default function AddUserModal({
                 marginTop: 0.5
               }}
             >
-              <Button color="secondary" onClick={onGoBack}>Atrás</Button>
-              <Button onClick={addUserToProject}>Confirmar</Button>
+              <Box sx={{ marginLeft: '30px'}}>
+                <Button color="secondary" onClick={onGoBack}>Atrás</Button>
+              </Box>
+              <Box sx={{ marginRight: '30px'}}>
+                <Button onClick={addUserToProject}>Confirmar</Button>
+              </Box>
             </Box>
           </Box>
         )}
