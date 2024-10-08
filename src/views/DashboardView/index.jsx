@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Grid from '@mui/material/Grid';
-import Pagination from '@mui/material/Pagination';
 
 import Button from 'components/commons/Button';
 import ProjectCard from 'components/commons/ProjectCard';
@@ -16,8 +14,9 @@ import {
   Title,
   TitleContainer,
 } from './styles';
-import { Box, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import { Clear, Search } from '@mui/icons-material';
+import KeyResultPopup from 'views/OKRView/components/KeyResult/indexv2';
 
 const DashboardView = (props) => {
   const {
@@ -32,17 +31,6 @@ const DashboardView = (props) => {
     onClearSearch,
     userId
   } = props;
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const projectsPerPage = 5;
-
-  const indexOfLastProject = currentPage * projectsPerPage;
-  const indexOfFirstProject = indexOfLastProject - projectsPerPage;
-  const currentProjects = items.slice(indexOfFirstProject, indexOfLastProject);
-
-  const handlePageChange = (event, value) => {
-    setCurrentPage(value)
-  }
 
   return (
     <Container>
@@ -89,39 +77,28 @@ const DashboardView = (props) => {
             {isAdmin ? 'No hay proyectos con este nombre.' : 'No tenés proyectos asignados.'}
           </NoProjectsMessage>
         ) : (
-          <>
-            <Grid container rowSpacing={1} columnSpacing={2}>
-              {currentProjects.map(({ _id, color, name, description, coordinators, participants }) => (
-                <Grid item xs={12} key={_id}>
-                  <ProjectCard
-                    key={_id}
-                    color={color}
-                    title={name}
-                    description={description}
-                    onClick={() => onClickProject(_id)}
-                    onClickDelete={isAdmin ? () => onClickDelete(_id) : null}
-                    isAdmin={isAdmin}
-                    userRole={
-                      coordinators.some((id) => id === userId)
-                        ? 'Coordinador'
-                        : participants.some((p) => p.user === userId)
-                        ? 'Participante'
-                        : ''
+          <Grid container rowSpacing={2} columnSpacing={4}>
+            {items.map(({ _id, color, name, description, coordinators, participants }) => (
+              <Grid item xs={12} key={_id}>
+                <ProjectCard
+                  key={_id}
+                  color={color}
+                  title={name}
+                  description={description}
+                  onClick={() => onClickProject(_id)}
+                  onClickDelete={isAdmin ? () => onClickDelete(_id) : null}
+                  isAdmin={isAdmin}
+                  userRole={
+                    coordinators.some((id) => id === userId)
+                      ? 'Coordinador'
+                      : participants.some((p) => p.user === userId)
+                      ? 'Participante'
+                      : ''
                     }
-                  />
-                </Grid>
-              ))}
-            </Grid>
-
-            <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
-              <Pagination
-                count={Math.ceil(items.length / projectsPerPage)}
-                page={currentPage}
-                onChange={handlePageChange}
-                color="primary"
-              />
-            </Box>
-          </>
+                />
+              </Grid>
+            ))}
+          </Grid>
         )}
       </Content>
     </Container>
