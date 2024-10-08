@@ -44,7 +44,7 @@ const ProjectCard = (props) => {
 
   return (
     <>
-      <Card style={{ backgroundColor: color }} onClick={onClick}>
+      <Card style={{ backgroundColor: color, height: '120px' }} onClick={onClick}>
         <CardContent>
           <TitleContainer>
             <Title style={{color: textColor}}>{title}</Title>
