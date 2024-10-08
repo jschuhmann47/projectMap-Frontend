@@ -307,6 +307,7 @@ const ProjectContainer = () => {
       <ProjectView
         items={items}
         title={projectInfo?.name}
+        description={projectInfo?.description}
         project={projectInfo}
         members={members}
         addUserModalInfo={addUserModalInfo}
