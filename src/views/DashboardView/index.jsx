@@ -15,8 +15,8 @@ import {
   TitleContainer,
 } from './styles';
 import { TextField } from '@mui/material';
-import { Clear, Search } from '@mui/icons-material';
-import KeyResultPopup from 'views/OKRView/components/KeyResult/indexv2';
+import { Clear } from '@mui/icons-material';
+import { useState, useEffect } from 'react'; 
 
 const DashboardView = (props) => {
   const {
@@ -27,10 +27,18 @@ const DashboardView = (props) => {
     isAdmin,
     searchText,
     onChangeSearchText,
-    onSearch,
     onClearSearch,
     userId
   } = props;
+
+  const [filteredItems, setFilteredItems] = useState(items);
+
+  useEffect(() => {
+    const filtered = items.filter(item =>
+      item.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFilteredItems(filtered);
+  }, [searchText, items]);
 
   return (
     <Container>
@@ -54,13 +62,6 @@ const DashboardView = (props) => {
                   value={searchText}
                   onChange={onChangeSearchText}
                 />
-                <ButtonContainer>
-                  <Button onClick={onSearch}>
-                    <ButtonContent>
-                      <Search />
-                    </ButtonContent>
-                  </Button>
-                </ButtonContainer>
               </>
               <ButtonContainer>
                 <Button onClick={onAddNew}>
@@ -72,13 +73,13 @@ const DashboardView = (props) => {
             </AdminButtonsContainer>
           )}
         </TitleContainer>
-        {items.length === 0 ? (
+        {filteredItems.length === 0 ? (
           <NoProjectsMessage>
             {isAdmin ? 'No hay proyectos con este nombre.' : 'No tenés proyectos asignados.'}
           </NoProjectsMessage>
         ) : (
           <Grid container rowSpacing={2} columnSpacing={4}>
-            {items.map(({ _id, color, name, description, coordinators, participants }) => (
+            {filteredItems.map(({ _id, color, name, description, coordinators, participants }) => (
               <Grid item xs={12} key={_id}>
                 <ProjectCard
                   key={_id}
@@ -94,7 +95,7 @@ const DashboardView = (props) => {
                       : participants.some((p) => p.user === userId)
                       ? 'Participante'
                       : ''
-                    }
+                  }
                 />
               </Grid>
             ))}
