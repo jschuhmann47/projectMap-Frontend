@@ -12,5 +12,5 @@ const getQuestionnaireLoading = (state) => state.questionnaire.loading;
 export const toolsLoadingSelector = createSelector(
   [getFodaLoading, getPestelLoading, getPorterLoading, getAnsoffLoading, getMcKinseyLoading, getOkrLoading, getBSLoading, getQuestionnaireLoading],
   (fodaLoading, pestelLoading, porterLoading, ansoffLoading, mcKinseyLoading, okrLoading, bsLoading, questionnaireLoading) =>
-    fodaLoading || pestelLoading || porterLoading || mcKinseyLoading || okrLoading || bsLoading || questionnaireLoading
+    fodaLoading || pestelLoading || porterLoading || ansoffLoading || mcKinseyLoading || okrLoading || bsLoading || questionnaireLoading
 );
