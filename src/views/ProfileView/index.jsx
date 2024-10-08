@@ -37,7 +37,11 @@ const ProfileView = ({ user, onSubmit }) => {
             flexDirection: 'row',
           }}
         >
-          <Typography sx={{ fontSize: '30px', fontWeight: '800' }}>
+          <Typography sx={{
+            fontSize: '30px',
+            fontWeight: '800',
+            fontFamily: '"Fira Sans", sans-serif',
+          }}>
             Mi perfil
           </Typography>
         </Box>
