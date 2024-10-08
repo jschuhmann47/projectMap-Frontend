@@ -20,8 +20,7 @@ import {
   ChipContainer,
 } from './styles';
 import Button from 'components/commons/Button';
-import { ArrowBack, Comment } from '@mui/icons-material';
-import Comments from 'components/comments/Comments';
+import { ArrowBack } from '@mui/icons-material';
 import ToolTip from 'components/commons/ToolTip';
 import CustomChip from 'components/commons/CustomChip';
 
@@ -95,7 +94,6 @@ const FodaView = ({
             size="small"
             onClick={(event) => openComments(event.currentTarget)}
           >
-            <Comment />
           </IconButton>
           {!showResults && (
             <Button onClick={onClickButton}>{buttonTitle}</Button>

@@ -1,8 +1,7 @@
-import { ArrowBack, Comment } from '@mui/icons-material';
+import { ArrowBack } from '@mui/icons-material';
 import { Box, IconButton, Typography } from '@mui/material';
 import React from 'react';
 import { ButtonContainer, Title, TitleContainer } from 'views/FodaView/styles';
-import { COLORS } from 'helpers/enums/colors';
 import PieChartCustom from 'components/commons/PieChart';
 
 const QuestionnaireResultsView = ({
@@ -24,7 +23,6 @@ const QuestionnaireResultsView = ({
           size="small"
           onClick={(event) => openComments(event.currentTarget)}
         >
-          <Comment />
         </IconButton>
       </ButtonContainer>
     </TitleContainer>

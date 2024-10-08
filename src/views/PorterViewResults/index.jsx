@@ -8,7 +8,7 @@ import Button from 'components/commons/Button';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import { ArrowBack, Comment } from '@mui/icons-material';
+import { ArrowBack } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import { ButtonContainer } from 'views/FodaView/styles';
 import { tooltips } from 'views/PorterView/tooltips';
@@ -47,7 +47,6 @@ const PorterViewResults = ({
             size="small"
             onClick={(event) => openComments(event.currentTarget)}
           >
-            <Comment />
           </IconButton>
         </ButtonContainer>
       </Box>

@@ -1,4 +1,4 @@
-import { ArrowBack, Comment } from '@mui/icons-material';
+import { ArrowBack } from '@mui/icons-material';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
@@ -46,7 +46,6 @@ const QuestionnaireQuestionsView = ({
           size="small"
           onClick={(event) => openComments(event.currentTarget)}
         >
-          <Comment />
         </IconButton>
       </ButtonContainer>
     </TitleContainer>
