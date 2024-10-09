@@ -65,7 +65,10 @@ const BalancedContainer = () => {
         onClickButtonGoBack={() => navigate(`/projects/${id}`)}
         openComments={(target) => setAnchorElement(target)}
         isModalOpen={isModalOpen}
-        openModal={() => setIsModalOpen(true)}
+        openModal={() => {
+          console.log('opening...')
+          setIsModalOpen(true)
+        }}
         closeModal={() => setIsModalOpen(false)}
         horizon={horizon}
       />
