@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getUser, onEdit, onGetProfile } from 'redux/actions/user.actions';
 
 import ProfileView from 'views/ProfileView';
-import { Box, ButtonBase } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 
 import LayoutContainer from './LayoutContainer';
@@ -52,26 +52,20 @@ const UserProfileContainer = () => {
 
   return (
     <LayoutContainer>
-      <ButtonBase
-        onClick={handleBack}
+      <Box
         sx={{
           position: 'absolute',
-          top: '20px',
           left: '20px',
           display: 'flex',
           alignItems: 'center',
-          padding: '8px 12px',
-          borderRadius: '5px',
-          backgroundColor: '#2c3e50',
-          color: '#fff',
-          fontSize: '16px',
-          zIndex: 1,
-          margin: '3%'
+          gap: '5px',
+          justifyContent: 'space-between',
         }}
       >
-        <ArrowBack />
-        Volver
-      </ButtonBase>
+        <IconButton size="small" onClick={handleBack}>
+          <ArrowBack />
+        </IconButton>
+      </Box>
       {loadingPosta ? (
         <Loading isModalMode />
       ) : (
