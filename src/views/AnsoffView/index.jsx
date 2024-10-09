@@ -57,11 +57,6 @@ const AnsoffView = (props) => {
           <IconButton size="small" onClick={onClickGoBackButton}>
             <ArrowBack />
           </IconButton>
-          <IconButton
-            size="small"
-            onClick={(event) => openComments(event.currentTarget)}
-          >
-          </IconButton>
         </ButtonContainer>
         <Title>{showResults ? `Resultados de ${title}` : title}</Title>
       </TitleContainer>

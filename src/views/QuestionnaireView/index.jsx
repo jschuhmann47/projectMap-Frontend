@@ -27,13 +27,6 @@ const QuestionnaireView = ({
         </IconButton>
       </ButtonContainer>
       <Title>{title}</Title>
-      <ButtonContainer sx={{ gap: '10px' }}>
-        <IconButton
-          size="small"
-          onClick={(event) => openComments(event.currentTarget)}
-        >
-        </IconButton>
-      </ButtonContainer>
     </TitleContainer>
   );
 

@@ -90,11 +90,6 @@ const FodaView = ({
         </IconButton>
         <Title>{showResults ? `Resultados de ${title}` : title}</Title>
         <ButtonContainer sx={{ gap: '10px' }}>
-          <IconButton
-            size="small"
-            onClick={(event) => openComments(event.currentTarget)}
-          >
-          </IconButton>
           {!showResults && (
             <Button onClick={onClickButton}>{buttonTitle}</Button>
           )}

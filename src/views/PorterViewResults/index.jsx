@@ -42,13 +42,6 @@ const PorterViewResults = ({
           <CardTitle>{titulo}</CardTitle>
           <ToolTip text={tooltips[titulo]} placement="right" fontSize="14px" />
         </Box>
-        <ButtonContainer sx={{ gap: '10px' }}>
-          <IconButton
-            size="small"
-            onClick={(event) => openComments(event.currentTarget)}
-          >
-          </IconButton>
-        </ButtonContainer>
       </Box>
       <Grid container>
         <Grid
