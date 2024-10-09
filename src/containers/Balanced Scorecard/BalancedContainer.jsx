@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import LayoutContainer from 'containers/LayoutContainer';
 import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import BalancedView from 'views/BalancedView';
+import BalancedView from 'views/BalancedView/indexv2';
 import {
   onAddObjective,
   onGetOne,
