@@ -77,7 +77,7 @@ export default function ProjectView({
               color: 'white',
               fontSize: '18px',
               marginTop: '8px',
-              paddingLeft: '1rem',
+              paddingLeft: '0.7rem',
               textAlign: 'left',
               whiteSpace: 'pre-line',
             }}
