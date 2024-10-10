@@ -99,7 +99,6 @@ const OKRContainer = () => {
           closeAddKrModal={() => setIsAddKrModalOpen(false)}
           isAddKrModalOpen={isAddKrModalOpen}
           addKr={addKr}
-          editKr={editKr}
           openConfirmDeleteModal={(kr) => setKrToDelete(kr)}
           closeConfirmDeleteModal={() => setKrToDelete(null)}
           isConfirmDeleteModalOpen={!!krToDelete}

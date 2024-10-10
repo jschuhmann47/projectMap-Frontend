@@ -12,14 +12,15 @@ import { ButtonsContainer } from "styles/form";
 import { KeyResultsContainer, KeyResultsHeader, OkrContainerV2, OkrHeader, OkrTitle } from "views/OKRView/styles";
 import Objective from "./components/Objective";
 import ConfirmDeleteModal from "components/commons/ProjectCard/components/confirmDeleteModal";
+import ObjectiveModal from "./components/ObjectiveModal";
 
 export default function BalancedView({
   objectives,
   onClickButtonGoBack,
   title,
-  isModalOpen,
-  openModal,
-  closeModal,
+  isAddObjModalOpen,
+  openAddObjModal,
+  closeAddObjModal,
   onSubmitObjective,
   horizon,
   openConfirmDeleteModal,
@@ -27,24 +28,22 @@ export default function BalancedView({
   isConfirmDeleteModalOpen,
   submitConfirmDeleteModal,
   confirmDeleteModalError,
+  onEditObjective,
+  openObjEditModal,
+  closeObjEditModal,
+  isObjEditModalOpen,
+  currentObj,
 }) {
   const [selectedArea, setSelectedArea] = useState(null);
-  
-  function krifyObjective(obj) {
-    return {
-      description: obj.action,
-      responsible: obj.responsible,
-    }
-  }
 
   function onClickAdd(area) {
     setSelectedArea(area)
-    openModal()
+    openAddObjModal()
   }
 
   function onCloseModal() {
     setSelectedArea(null)
-    closeModal()
+    closeAddObjModal()
   }
 
   function renderArea(area) {
@@ -62,7 +61,7 @@ export default function BalancedView({
               key={index}
               objData={obj}
               openConfirmDeleteModal={openConfirmDeleteModal}
-              handleObjClick={() => {}}
+              handleObjClick={openObjEditModal}
             />
           ))}
         </KeyResultsContainer>
@@ -79,7 +78,7 @@ export default function BalancedView({
         <OkrTitle>{title}</OkrTitle>
       </OkrHeader>
       {Object.values(Area).map(renderArea)}
-      <ModalV2 isOpen={isModalOpen} onClose={onCloseModal} title='Agregar objetivo'>
+      <ModalV2 isOpen={isAddObjModalOpen} onClose={closeAddObjModal} title='Agregar objetivo'>
         <Formik
           onSubmit={(formData) => onSubmitObjective(selectedArea, formData)}
           initialValues={{ action: '', frequency: '', responsible: '', measure: '' }}
@@ -126,7 +125,7 @@ export default function BalancedView({
                 validate={validateField}
               />
               <ButtonsContainer>
-                <Button color="secondary" onClick={closeModal}>
+                <Button color="secondary" onClick={closeAddObjModal}>
                   Cancelar
                 </Button>
                 <Button type="submit">
@@ -145,6 +144,12 @@ export default function BalancedView({
         titulo='Eliminar objetivo'
         descripcion='Para confirmar, escriba el nombre del objetivo'
         fieldLabel='Nombre del objetivo'
+      />
+      <ObjectiveModal
+        isOpen={isObjEditModalOpen}
+        onClose={closeObjEditModal}
+        data={currentObj}
+        onSubmit={onEditObjective}
       />
     </OkrContainerV2>
   )

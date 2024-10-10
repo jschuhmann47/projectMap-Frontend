@@ -28,9 +28,11 @@ const BalancedContainer = () => {
   const { title, horizon } = useSelector(titleSelector);
   const { loading } = useSelector((state) => state.balanceScorecard);
   const [anchorElement, setAnchorElement] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddObjModalOpen, setIsAddObjModalOpen] = useState(false);
   const [objToDelete, setObjToDelete] = useState(null);
   const [confirmDeleteError, setConfirmDeleteError] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentObjForModal, setCurrentObjForModal] = useState({})
 
   useEffect(() => {
     dispatch(onGetOne(balancedId));
@@ -49,11 +51,31 @@ const BalancedContainer = () => {
         progress: 0,
       })
     );
-    setIsModalOpen(false);
+    setIsAddObjModalOpen(false);
   };
 
-  const onEditObjective = (objectiveId, formData) => {
-    dispatch(onUpdateObjective(balancedId, objectiveId, formData));
+  const onEditObjective = ({
+    action,
+    frequency,
+    _id,
+    responsible, 
+    baseline, 
+    goal, 
+    checkpoints,
+    measure,
+    category,
+  }) => {
+    const formData = {
+      action,
+      frequency,
+      responsible, 
+      baseline, 
+      goal, 
+      checkpoints,
+      measure,
+      category,
+    }
+    dispatch(onUpdateObjective(balancedId, _id, formData));
   };
 
   function deleteObjective(objectiveId) {
@@ -70,6 +92,16 @@ const BalancedContainer = () => {
     setObjToDelete(null);
   }
 
+  const handleOpenModal = (event) => {
+    setCurrentObjForModal(event)
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+
   return (
     <LayoutContainer>
       <BalancedView
@@ -78,16 +110,19 @@ const BalancedContainer = () => {
         onEditObjective={onEditObjective}
         title={title}
         onClickButtonGoBack={() => navigate(`/projects/${id}`)}
-        openComments={(target) => setAnchorElement(target)}
-        isModalOpen={isModalOpen}
-        openModal={()=> setIsModalOpen(true)}
-        closeModal={() => setIsModalOpen(false)}
+        isAddObjModalOpen={isAddObjModalOpen}
+        openAddObjModal={()=> setIsAddObjModalOpen(true)}
+        closeAddObjModal={() => setIsAddObjModalOpen(false)}
         horizon={horizon}
         openConfirmDeleteModal={setObjToDelete}
         closeConfirmDeleteModal={() => setObjToDelete(null)}
         isConfirmDeleteModalOpen={!!objToDelete}
         submitConfirmDeleteModal={submitConfirmDeleteModal}
         confirmDeleteModalError={confirmDeleteError}
+        openObjEditModal={handleOpenModal}
+        closeObjEditModal={handleCloseModal}
+        isObjEditModalOpen={isModalOpen}
+        currentObj={currentObjForModal}
       />
       <Menu
         anchorEl={anchorElement}

@@ -18,10 +18,11 @@ export default function Objective({
         gridTemplateColumns: '1fr 14fr 4fr 1fr',
         paddingTop: '5px',
         paddingBottom: '5px',
+        cursor: 'pointer',
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <img src={getTrendIcon(objData.trend)} height="25" width="25" />
+        {getTrendIcon(objData.trend)}
       </Box>
       <Box>
         <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 20 }}>{objData.action}</Typography>
