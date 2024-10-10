@@ -5,7 +5,7 @@ import Input from 'components/inputs/Input';
 
 import { Title } from 'styles/form';
 import { FormContainer, CustomForm } from 'styles/form';
-import { validateField } from 'helpers/validateField';
+import { validateField, validatePasswordStrength } from 'helpers/validateField';
 import { Box, Typography } from '@mui/material';
 import Button from 'components/commons/Button';
 
@@ -22,7 +22,7 @@ const RegisterForm = ({ onSubmit }) => (
         confirmPassword: '',
       }}
     >
-      {({ handleSubmit }) => (
+      {({ handleSubmit, values }) => (
         <CustomForm onSubmit={handleSubmit}>
           <Box sx={{ width: '100%' }}>
             <Field
@@ -102,7 +102,7 @@ const RegisterForm = ({ onSubmit }) => (
               type="password"
               placeholder="Contraseña"
               component={Input}
-              validate={validateField}
+              validate={validatePasswordStrength}
             />
             <ErrorMessage name="password">
               {(msg) => (
@@ -126,7 +126,15 @@ const RegisterForm = ({ onSubmit }) => (
               type="password"
               placeholder="Confirmar contraseña"
               component={Input}
-              validate={validateField}
+              validate={(value) => {
+                let error;
+                if (!value) {
+                  error = 'Confirma tu contraseña';
+                } else if (value !== values.password) {
+                  error = 'Las contraseñas no coinciden';
+                }
+                return error;
+              }}
             />
             <ErrorMessage name="confirmPassword">
               {(msg) => (
