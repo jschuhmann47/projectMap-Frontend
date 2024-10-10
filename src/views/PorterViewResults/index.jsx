@@ -8,7 +8,7 @@ import Button from 'components/commons/Button';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import { ArrowBack, Comment } from '@mui/icons-material';
+import { ArrowBack } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import { ButtonContainer } from 'views/FodaView/styles';
 import { tooltips } from 'views/PorterView/tooltips';
@@ -42,14 +42,6 @@ const PorterViewResults = ({
           <CardTitle>{titulo}</CardTitle>
           <ToolTip text={tooltips[titulo]} placement="right" fontSize="14px" />
         </Box>
-        <ButtonContainer sx={{ gap: '10px' }}>
-          <IconButton
-            size="small"
-            onClick={(event) => openComments(event.currentTarget)}
-          >
-            <Comment />
-          </IconButton>
-        </ButtonContainer>
       </Box>
       <Grid container>
         <Grid

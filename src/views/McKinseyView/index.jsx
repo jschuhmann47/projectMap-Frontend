@@ -16,7 +16,7 @@ import {
   FactorDescription,
 } from './styles';
 import { ButtonContainer } from 'views/DashboardView/styles';
-import { ArrowBack, Comment, Delete } from '@mui/icons-material';
+import { ArrowBack, Delete } from '@mui/icons-material';
 import { Title, TitleContainer } from 'views/FodaView/styles';
 import ToolTip from 'components/commons/ToolTip';
 import { tooltips } from './tooltips';
@@ -77,14 +77,6 @@ const McKinseyView = ({
           </IconButton>
         </ButtonContainer>
         <Title>{showResults ? `Resultados de ${title}` : title}</Title>
-        <ButtonContainer sx={{ gap: '10px' }}>
-          <IconButton
-            size="small"
-            onClick={(event) => openComments(event.currentTarget)}
-          >
-            <Comment />
-          </IconButton>
-        </ButtonContainer>
       </TitleContainer>
       <Grid
         container
