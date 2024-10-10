@@ -34,6 +34,7 @@ export default function ProjectView({
           steps={items}
           hasFullPermissions={hasFullPermissions}
           stepPermissions={stepPermissions}
+          projectId={project?._id}
         />
       },
       {
