@@ -145,8 +145,8 @@ export function* balanceScorecardDeleteInitiative(action) {
 
 export function* balanceScorecardDeleteObjective(action) {
   try {
-    const { id, objetiveId } = action;
-    const { data } = yield call(deleteObjetive, id, objetiveId);
+    const { id, objectiveId } = action;
+    const { data } = yield call(deleteObjetive, id, objectiveId);
     yield put({
       type: constants.DELETE_OBJETIVE_BALANCE_SCORECARD_SUCCEEDED,
       data,

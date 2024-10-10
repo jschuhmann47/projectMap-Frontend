@@ -9,8 +9,9 @@ import { Area, filterFrequenciesByHorizon } from "helpers/enums/balanced";
 import { validateField } from "helpers/validateField";
 import { useState } from "react";
 import { ButtonsContainer } from "styles/form";
-import KeyResult from "views/OKRView/components/KeyResult";
 import { KeyResultsContainer, KeyResultsHeader, OkrContainerV2, OkrHeader, OkrTitle } from "views/OKRView/styles";
+import Objective from "./components/Objective";
+import ConfirmDeleteModal from "components/commons/ProjectCard/components/confirmDeleteModal";
 
 export default function BalancedView({
   objectives,
@@ -21,6 +22,11 @@ export default function BalancedView({
   closeModal,
   onSubmitObjective,
   horizon,
+  openConfirmDeleteModal,
+  closeConfirmDeleteModal,
+  isConfirmDeleteModalOpen,
+  submitConfirmDeleteModal,
+  confirmDeleteModalError,
 }) {
   const [selectedArea, setSelectedArea] = useState(null);
   
@@ -52,11 +58,11 @@ export default function BalancedView({
         </KeyResultsHeader>
         <KeyResultsContainer>
           {objectives[area].map((obj, index) => (
-            <KeyResult
+            <Objective
               key={index}
-              krData={krifyObjective(obj)}
-              openConfirmDeleteModal={() => {}}
-              handleKrClick={() => {}}
+              objData={obj}
+              openConfirmDeleteModal={openConfirmDeleteModal}
+              handleObjClick={() => {}}
             />
           ))}
         </KeyResultsContainer>
@@ -131,6 +137,15 @@ export default function BalancedView({
           )}
         </Formik>
       </ModalV2>
+      <ConfirmDeleteModal
+        isOpen={isConfirmDeleteModalOpen}
+        onClose={closeConfirmDeleteModal}
+        onSubmit={submitConfirmDeleteModal}
+        errors={confirmDeleteModalError}
+        titulo='Eliminar objetivo'
+        descripcion='Para confirmar, escriba el nombre del objetivo'
+        fieldLabel='Nombre del objetivo'
+      />
     </OkrContainerV2>
   )
 }

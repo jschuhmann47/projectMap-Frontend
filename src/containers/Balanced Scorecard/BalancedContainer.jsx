@@ -7,6 +7,7 @@ import {
   onAddObjective,
   onGetOne,
   onUpdateObjective,
+  onDeleteObjective,
 } from 'redux/actions/balanceScorecard.actions';
 import {
   areaObjectivesSelector,
@@ -17,7 +18,6 @@ import { Menu, MenuItem } from '@mui/material';
 import { COLORS } from 'helpers/enums/colors';
 import Comments from 'components/comments/Comments';
 import Loading from 'components/commons/Loading';
-import { onGetAll as onGetAllComments } from 'redux/actions/comments.actions';
 import { frequencyOptions } from 'helpers/enums/balanced';
 
 const BalancedContainer = () => {
@@ -29,10 +29,11 @@ const BalancedContainer = () => {
   const { loading } = useSelector((state) => state.balanceScorecard);
   const [anchorElement, setAnchorElement] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [objToDelete, setObjToDelete] = useState(null);
+  const [confirmDeleteError, setConfirmDeleteError] = useState('');
 
   useEffect(() => {
     dispatch(onGetOne(balancedId));
-    dispatch(onGetAllComments('BALANCED_SCORECARD', balancedId));
   }, []);
 
   const onSubmitObjective = (category, { action, frequency, responsible, goal, baseline, measure }) => {
@@ -55,6 +56,20 @@ const BalancedContainer = () => {
     dispatch(onUpdateObjective(balancedId, objectiveId, formData));
   };
 
+  function deleteObjective(objectiveId) {
+    dispatch(onDeleteObjective(balancedId, objectiveId));
+  }
+
+  function submitConfirmDeleteModal({ name }) {
+    if (name !== objToDelete?.action) {
+      setConfirmDeleteError('Nombre del objetivo incorrecto.');
+      return;
+    }
+    deleteObjective(objToDelete?._id);
+    setConfirmDeleteError('');
+    setObjToDelete(null);
+  }
+
   return (
     <LayoutContainer>
       <BalancedView
@@ -65,12 +80,14 @@ const BalancedContainer = () => {
         onClickButtonGoBack={() => navigate(`/projects/${id}`)}
         openComments={(target) => setAnchorElement(target)}
         isModalOpen={isModalOpen}
-        openModal={() => {
-          console.log('opening...')
-          setIsModalOpen(true)
-        }}
+        openModal={()=> setIsModalOpen(true)}
         closeModal={() => setIsModalOpen(false)}
         horizon={horizon}
+        openConfirmDeleteModal={setObjToDelete}
+        closeConfirmDeleteModal={() => setObjToDelete(null)}
+        isConfirmDeleteModalOpen={!!objToDelete}
+        submitConfirmDeleteModal={submitConfirmDeleteModal}
+        confirmDeleteModalError={confirmDeleteError}
       />
       <Menu
         anchorEl={anchorElement}
