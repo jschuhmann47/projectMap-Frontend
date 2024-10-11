@@ -1,12 +1,14 @@
 import ModalV2 from "components/commons/ModalV2";
 import KrForm from "./KrForm";
 import { Box, Slider, Stack } from "@mui/material";
+import ReadonlyKr from "./ReadonlyKr";
 
 export default function KeyResultModal({
   isOpen,
   onClose,
   data,
-  onSubmit
+  onSubmit,
+  userPermission,
 }) {
   const showProgress = () => {
     return data.currentScore > data.baseline && data.currentScore < data.goal
@@ -81,7 +83,11 @@ export default function KeyResultModal({
           <p>{data.goal}</p>
         </Stack>
       </Box>
-      <KrForm onSubmit={onSubmit} data={data}/>
+      {userPermission === 'edit' ? (
+        <KrForm onSubmit={onSubmit} data={data}/>
+      ) : (
+        <ReadonlyKr data={data} />
+      )}
     </ModalV2>
   )
   

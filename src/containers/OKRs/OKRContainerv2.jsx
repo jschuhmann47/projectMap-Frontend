@@ -15,6 +15,7 @@ import Loading from 'components/commons/Loading';
 import { frequencyOptions } from 'helpers/enums/okr';
 import KeyResultModal from 'views/OKRView/components/KeyResult/indexv2';
 import { useNavigate } from 'react-router-dom';
+import permission from 'helpers/permissions';
 
 const OKRContainer = () => {
   const { okrToolId, id } = useParams();
@@ -27,6 +28,9 @@ const OKRContainer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentKrForModal, setCurrentKrForModal] = useState({})
   
+  const root = useSelector((state) => state);
+  const userPermission = permission(root, 'financialPlanning');
+
   useEffect(() => {
     dispatch(onGetOneTool(okrToolId));
   }, []);
@@ -107,8 +111,15 @@ const OKRContainer = () => {
           confirmDeleteModalError={confirmDeleteError}
           openKrEditModal={handleOpenModal}
           onClickBack={() => navigate(`/projects/${id}`)}
+          userPermission={userPermission}
         />
-        <KeyResultModal onSubmit={editKr} data={currentKrForModal} isOpen={isModalOpen} onClose={handleCloseModal}></KeyResultModal>
+        <KeyResultModal
+          onSubmit={editKr}
+          data={currentKrForModal}
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          userPermission={userPermission}
+        />
       </Grid>
       {loading && <Loading isModalMode message="Cargando OKR" />}
     </LayoutContainer>
