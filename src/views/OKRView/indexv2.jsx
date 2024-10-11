@@ -72,6 +72,7 @@ const OKRView = ({
           krData={kr}
           openConfirmDeleteModal={openConfirmDeleteModal}
           handleKrClick={openKrEditModal}
+          userPermission={userPermission}
         />
       ))}
     </KeyResultsContainer>

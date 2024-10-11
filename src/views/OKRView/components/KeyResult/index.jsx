@@ -6,7 +6,8 @@ import { OkrProgress, OkrProgressBar } from "views/OKRView/styles";
 export default function KeyResult({
   krData,
   openConfirmDeleteModal,
-  handleKrClick
+  handleKrClick,
+  userPermission,
 }) {
   return (
     <Box
@@ -39,12 +40,14 @@ export default function KeyResult({
         </OkrProgressBar>
         <span>{krData?.progress}%</span>
       </OkrProgress>
-      <IconButton onClick={(event) => {
-        event.stopPropagation();
-        openConfirmDeleteModal(krData)
-      }}>
-        <Delete htmlColor='black' />
-      </IconButton>
+      {userPermission === 'edit' &&
+        <IconButton onClick={(event) => {
+          event.stopPropagation();
+          openConfirmDeleteModal(krData)
+        }}>
+          <Delete htmlColor='black' />
+        </IconButton>
+      }
     </Box>
   )
 }
