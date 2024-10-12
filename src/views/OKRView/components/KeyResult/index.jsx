@@ -43,7 +43,7 @@ export default function KeyResult({
       {userPermission === 'edit' &&
         <IconButton onClick={(event) => {
           event.stopPropagation();
-          openConfirmDeleteModal(krData)
+          openConfirmDeleteModal?.(krData)
         }}>
           <Delete htmlColor='black' />
         </IconButton>

@@ -28,7 +28,9 @@ const OKRView = ({
   openKrEditModal,
   onClickBack,
   userPermission,
+  openChild
 }) => {
+  const isParent = !!okrData?.childOkrs.length
 
   return <OkrContainerV2>
     <OkrHeader>
@@ -57,25 +59,44 @@ const OKRView = ({
         <span>Fecha de inicio: {okrData?.startingDate ? format(parseISO(okrData.startingDate), 'dd-MM-yyyy') : ''}</span>
       </OkrMoreData>
     </OkrProgressAndMoreData>
-    <KeyResultsHeader>
-      Key Results
-      {userPermission === 'edit' && (
-        <IconButton onClick={openAddKrModal}>
-          <AddCircle htmlColor='black' />
-        </IconButton>
-      )}
-    </KeyResultsHeader>
-    <KeyResultsContainer>
-      {okrData?.keyResults.map((kr, index) => (
-        <KeyResult
-          key={index}
-          krData={kr}
-          openConfirmDeleteModal={openConfirmDeleteModal}
-          handleKrClick={openKrEditModal}
-          userPermission={userPermission}
-        />
-      ))}
-    </KeyResultsContainer>
+    {isParent ? (
+      <>
+        <KeyResultsHeader>
+          OKR hijos
+        </KeyResultsHeader>
+        <KeyResultsContainer>
+          {okrData?.childOkrs.map((child, index) => (
+            <KeyResult
+              key={index}
+              krData={child}
+              handleKrClick={(child) => openChild(child._id)}
+            />
+          ))}
+        </KeyResultsContainer>
+      </>
+    ) : (
+      <>
+        <KeyResultsHeader>
+          Key Results
+          {userPermission === 'edit' && (
+            <IconButton onClick={openAddKrModal}>
+              <AddCircle htmlColor='black' />
+            </IconButton>
+          )}
+        </KeyResultsHeader>
+        <KeyResultsContainer>
+          {okrData?.keyResults.map((kr, index) => (
+            <KeyResult
+              key={index}
+              krData={kr}
+              openConfirmDeleteModal={openConfirmDeleteModal}
+              handleKrClick={openKrEditModal}
+              userPermission={userPermission}
+            />
+          ))}
+        </KeyResultsContainer>
+      </>
+    )}
     <ModalV2
       isOpen={isAddKrModalOpen}
       onClose={closeAddKrModal}

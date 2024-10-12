@@ -94,6 +94,10 @@ const OKRContainer = () => {
     setIsModalOpen(false);
   };
 
+  function openChild(childId) {
+    navigate(`/projects/${id}/okr/${childId}`)
+  }
+
   return (
     <LayoutContainer>
       <Grid item sx={{ height: '100%', width: '100%' }}>
@@ -103,7 +107,6 @@ const OKRContainer = () => {
           closeAddKrModal={() => setIsAddKrModalOpen(false)}
           isAddKrModalOpen={isAddKrModalOpen}
           addKr={addKr}
-          editKr={editKr}
           openConfirmDeleteModal={(kr) => setKrToDelete(kr)}
           closeConfirmDeleteModal={() => setKrToDelete(null)}
           isConfirmDeleteModalOpen={!!krToDelete}
@@ -112,6 +115,7 @@ const OKRContainer = () => {
           openKrEditModal={handleOpenModal}
           onClickBack={() => navigate(`/projects/${id}`)}
           userPermission={userPermission}
+          openChild={openChild}
         />
         <KeyResultModal
           onSubmit={editKr}
