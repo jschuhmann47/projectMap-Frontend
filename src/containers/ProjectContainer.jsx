@@ -582,7 +582,9 @@ function ParentInput(props) {
     const parentEdge = organizationalChart.edges.find((e) => e.target === node.id)
     if (!parentEdge) return []
     const parentNode = organizationalChart.nodes.find((n) => n.id === parentEdge.source)
-    return allOkrs.filter((okr) => okr.area === parentNode.data.label).map((okr) => okr.description)
+    return allOkrs
+      .filter((okr) => okr.area === parentNode.data.label && okr.keyResults.length === 0)
+      .map((okr) => okr.description)
   }, [values.area])
 
   return (
