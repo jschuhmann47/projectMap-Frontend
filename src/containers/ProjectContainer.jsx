@@ -443,7 +443,7 @@ const ProjectContainer = () => {
       >
         <Formik
           onSubmit={(values) => onSubmitTool(addTool.action, values)}
-          initialValues={{ titulo: '', area: NO_AREA }}
+          initialValues={{ titulo: '', area: NO_AREA, parent: NO_PARENT }}
         >
           {({ handleSubmit }) => (
             <Form onSubmit={handleSubmit}>
