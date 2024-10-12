@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ButtonBase, IconButton, Menu, MenuItem, Popover } from '@mui/material';
-import { Formik, Field, ErrorMessage, Form } from 'formik';
+import { Formik, Field, ErrorMessage, Form, useFormikContext } from 'formik';
 import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
 import { PopupModal } from 'react-calendly';
@@ -76,6 +76,7 @@ import DateInput from 'components/inputs/DateInput';
 import { onGetOrganizationalChart } from 'redux/actions/projects.actions';
 
 const NO_AREA = 'Sin área'
+const NO_PARENT = 'Sin padre'
 
 const ProjectContainer = () => {
   let { id } = useParams();
@@ -97,7 +98,6 @@ const ProjectContainer = () => {
 
   const [rolesTabChanged, setRolesTabChanged] = useState(false);
 
-  // const menuItems = getMenuItems(stepValue);
   const toolsItems = useSelector(stepToolsSelector);
   const toolsAddOptions = getMenuItems(stepValue);
   const stepsColors = useSelector(progressSelector);
@@ -116,6 +116,7 @@ const ProjectContainer = () => {
   const user = useSelector((state) => state.user.data);
   const loading = useSelector(getLoadingSelector);
   const { organizationalChart } = useSelector((state) => state.projects);
+  const allOkrs = useSelector((state) => state.projects.okrs);
 
   const onClickButtonGoBack = () => {
     if (user?.role && user?.role === 'AdminConsultant')
@@ -478,6 +479,15 @@ const ProjectContainer = () => {
                   validate={validateField}
                 />
               }
+              {addTool?.parent &&
+                <Field
+                  name="parent"
+                  fieldLabel="OKR padre"
+                  component={ParentInput}
+                  allOkrs={allOkrs}
+                  validate={validateField}
+                />
+              }
               <ButtonsContainer>
                 <Button color="secondary" onClick={() => setAddTool(null)}>
                   Cancelar
@@ -549,3 +559,17 @@ const ProjectContainer = () => {
 };
 
 export default ProjectContainer;
+
+function ParentInput(props) {
+  const { allOkrs } = props
+  const { values } = useFormikContext()
+  const canHaveParent = values.area !== NO_AREA
+  const possibleParents = allOkrs.filter((okr) => okr.area === values.area).map((okr) => okr.description)
+  const options = [NO_PARENT].concat(canHaveParent ? possibleParents : [])
+  return (
+    <SelectInputV2
+      options={options}
+      {...props}
+    />
+  )
+}

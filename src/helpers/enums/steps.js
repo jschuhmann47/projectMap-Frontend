@@ -36,7 +36,14 @@ export const STEPS = [
     title: 'Planeamiento Financiero y Medición de Resultados',
     menuItems: [
       { titulo: 'Agregar Balanced Scorecard', action: onCreateBalanced, horizon: bscHorizonOptions },
-      { titulo: 'Agregar OKR', action: onCreateOkr, area: true, horizon: okrHorizonOptions, requireStartDate: true },
+      {
+        titulo: 'Agregar OKR',
+        action: onCreateOkr,
+        area: true,
+        horizon: okrHorizonOptions,
+        requireStartDate: true,
+        parent: true,
+      },
     ],
     id: 'financialPlanning',
     color: '#fcb6d4'
