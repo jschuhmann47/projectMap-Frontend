@@ -1,9 +1,9 @@
 // @ts-nocheck
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ButtonBase, IconButton, Menu, MenuItem, Popover } from '@mui/material';
-import { Formik, Field, ErrorMessage, Form } from 'formik';
+import { Formik, Field, ErrorMessage, Form, useFormikContext } from 'formik';
 import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
 import { PopupModal } from 'react-calendly';
@@ -76,6 +76,7 @@ import DateInput from 'components/inputs/DateInput';
 import { onGetOrganizationalChart } from 'redux/actions/projects.actions';
 
 const NO_AREA = 'Sin área'
+const NO_PARENT = 'Sin padre'
 
 const ProjectContainer = () => {
   let { id } = useParams();
@@ -97,7 +98,6 @@ const ProjectContainer = () => {
 
   const [rolesTabChanged, setRolesTabChanged] = useState(false);
 
-  // const menuItems = getMenuItems(stepValue);
   const toolsItems = useSelector(stepToolsSelector);
   const toolsAddOptions = getMenuItems(stepValue);
   const stepsColors = useSelector(progressSelector);
@@ -116,6 +116,7 @@ const ProjectContainer = () => {
   const user = useSelector((state) => state.user.data);
   const loading = useSelector(getLoadingSelector);
   const { organizationalChart } = useSelector((state) => state.projects);
+  const allOkrs = useSelector((state) => state.projects.okrs);
 
   const onClickButtonGoBack = () => {
     if (user?.role && user?.role === 'AdminConsultant')
@@ -207,6 +208,7 @@ const ProjectContainer = () => {
 
   const onSubmitTool = (action, formData) => {
     formData.projectId = id;
+
     if (formData.area !== NO_AREA) {
       formData.areaId = organizationalChart?.data.nodes?.find((node) =>
         node.data.label === formData.area
@@ -214,6 +216,15 @@ const ProjectContainer = () => {
     } else {
       formData.areaId = ''
     }
+
+    if (formData.parent !== NO_PARENT) {
+      formData.parentId = allOkrs.find((okr) =>
+        okr.description === formData.parent
+      )._id
+    } else {
+      formData.parentId = undefined
+    }
+
     dispatch(action(formData));
     navigate('createTool');
   };
@@ -442,7 +453,7 @@ const ProjectContainer = () => {
       >
         <Formik
           onSubmit={(values) => onSubmitTool(addTool.action, values)}
-          initialValues={{ titulo: '', area: NO_AREA }}
+          initialValues={{ titulo: '', area: NO_AREA, parent: NO_PARENT }}
         >
           {({ handleSubmit }) => (
             <Form onSubmit={handleSubmit}>
@@ -475,6 +486,16 @@ const ProjectContainer = () => {
                   name="startingDate"
                   fieldLabel="Fecha de inicio"
                   component={DateInput}
+                  validate={validateField}
+                />
+              }
+              {addTool?.parent &&
+                <Field
+                  name="parent"
+                  fieldLabel="OKR padre"
+                  component={ParentInput}
+                  allOkrs={allOkrs}
+                  organizationalChart={organizationalChart?.data}
                   validate={validateField}
                 />
               }
@@ -549,3 +570,27 @@ const ProjectContainer = () => {
 };
 
 export default ProjectContainer;
+
+function ParentInput(props) {
+  const { allOkrs, organizationalChart } = props
+  const { values } = useFormikContext()
+
+  const extraOptions = useMemo(() => {
+    const canHaveParent = values.area !== NO_AREA
+    if (!canHaveParent) return []
+    const node = organizationalChart.nodes.find((n) => n.data.label === values.area)
+    const parentEdge = organizationalChart.edges.find((e) => e.target === node.id)
+    if (!parentEdge) return []
+    const parentNode = organizationalChart.nodes.find((n) => n.id === parentEdge.source)
+    return allOkrs
+      .filter((okr) => okr.area === parentNode.data.label && okr.keyResults.length === 0)
+      .map((okr) => okr.description)
+  }, [values.area])
+
+  return (
+    <SelectInputV2
+      options={[NO_PARENT, ...extraOptions]}
+      {...props}
+    />
+  )
+}
