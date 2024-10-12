@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ButtonBase, IconButton, Menu, MenuItem, Popover } from '@mui/material';
@@ -208,6 +208,7 @@ const ProjectContainer = () => {
 
   const onSubmitTool = (action, formData) => {
     formData.projectId = id;
+
     if (formData.area !== NO_AREA) {
       formData.areaId = organizationalChart?.data.nodes?.find((node) =>
         node.data.label === formData.area
@@ -215,6 +216,15 @@ const ProjectContainer = () => {
     } else {
       formData.areaId = ''
     }
+
+    if (formData.parent !== NO_PARENT) {
+      formData.parentId = allOkrs.find((okr) =>
+        okr.description === formData.parent
+      )._id
+    } else {
+      formData.parentId = undefined
+    }
+
     dispatch(action(formData));
     navigate('createTool');
   };
@@ -485,6 +495,7 @@ const ProjectContainer = () => {
                   fieldLabel="OKR padre"
                   component={ParentInput}
                   allOkrs={allOkrs}
+                  organizationalChart={organizationalChart?.data}
                   validate={validateField}
                 />
               }
@@ -561,14 +572,22 @@ const ProjectContainer = () => {
 export default ProjectContainer;
 
 function ParentInput(props) {
-  const { allOkrs } = props
+  const { allOkrs, organizationalChart } = props
   const { values } = useFormikContext()
-  const canHaveParent = values.area !== NO_AREA
-  const possibleParents = allOkrs.filter((okr) => okr.area === values.area).map((okr) => okr.description)
-  const options = [NO_PARENT].concat(canHaveParent ? possibleParents : [])
+
+  const extraOptions = useMemo(() => {
+    const canHaveParent = values.area !== NO_AREA
+    if (!canHaveParent) return []
+    const node = organizationalChart.nodes.find((n) => n.data.label === values.area)
+    const parentEdge = organizationalChart.edges.find((e) => e.target === node.id)
+    if (!parentEdge) return []
+    const parentNode = organizationalChart.nodes.find((n) => n.id === parentEdge.source)
+    return allOkrs.filter((okr) => okr.area === parentNode.data.label).map((okr) => okr.description)
+  }, [values.area])
+
   return (
     <SelectInputV2
-      options={options}
+      options={[NO_PARENT, ...extraOptions]}
       {...props}
     />
   )
