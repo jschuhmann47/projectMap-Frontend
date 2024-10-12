@@ -27,6 +27,7 @@ const OKRView = ({
   confirmDeleteModalError,
   openKrEditModal,
   onClickBack,
+  userPermission,
 }) => {
 
   return <OkrContainerV2>
@@ -58,9 +59,11 @@ const OKRView = ({
     </OkrProgressAndMoreData>
     <KeyResultsHeader>
       Key Results
-      <IconButton onClick={openAddKrModal}>
-        <AddCircle htmlColor='black' />
-      </IconButton>
+      {userPermission === 'edit' && (
+        <IconButton onClick={openAddKrModal}>
+          <AddCircle htmlColor='black' />
+        </IconButton>
+      )}
     </KeyResultsHeader>
     <KeyResultsContainer>
       {okrData?.keyResults.map((kr, index) => (
@@ -69,6 +72,7 @@ const OKRView = ({
           krData={kr}
           openConfirmDeleteModal={openConfirmDeleteModal}
           handleKrClick={openKrEditModal}
+          userPermission={userPermission}
         />
       ))}
     </KeyResultsContainer>
