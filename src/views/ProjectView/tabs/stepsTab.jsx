@@ -5,26 +5,13 @@ import StepInfoModal from "./stepInfoModal"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-function StepCardView({ step, setStep, permission, onClick }) {
+function StepCardView({ step, setStep, onClick }) {
+  console.log({step})
   return <StepCard style={{backgroundColor: step.color, cursor: step.id != 'continuousImprovement' ? 'pointer' : 'auto'}} onClick={() => onClick(step)}>
     {step.title}
     <IconButton>
-      <HelpOutlined onClick={() => setStep(step.value)} />
+      <HelpOutlined onClick={(e) => {setStep(step); e.stopPropagation();}} />
     </IconButton>
-    <StepIcons>
-      {
-        permission !== 'hide' &&
-        <IconButton onClick={(e) => step.onClickList(step.value, e.currentTarget)}>
-          <Visibility />
-        </IconButton>
-      }
-      {
-        permission === 'edit' &&
-        <IconButton onClick={(e) => step.onClickAdd(step.value, e.currentTarget)}>
-          <Edit />
-        </IconButton>
-      }
-    </StepIcons>
   </StepCard>
 }
 

@@ -15,6 +15,7 @@ import Loading from 'components/commons/Loading';
 import { frequencyOptions } from 'helpers/enums/okr';
 import KeyResultModal from 'views/OKRView/components/KeyResult/indexv2';
 import { useNavigate } from 'react-router-dom';
+import { StageByTool, Tools } from 'helpers/enums/steps';
 
 const OKRContainer = () => {
   const { okrToolId, id } = useParams();
@@ -90,6 +91,11 @@ const OKRContainer = () => {
     setIsModalOpen(false);
   };
 
+  const onClickResultsButtonGoBack = () => {
+    const stage = StageByTool[Tools.Okr];
+    navigate(`/projects/${id}/stage/${stage}`)
+  };
+
   return (
     <LayoutContainer>
       <Grid item sx={{ height: '100%', width: '100%' }}>
@@ -106,7 +112,7 @@ const OKRContainer = () => {
           submitConfirmDeleteModal={submitConfirmDeleteModal}
           confirmDeleteModalError={confirmDeleteError}
           openKrEditModal={handleOpenModal}
-          onClickBack={() => navigate(`/projects/${id}`)}
+          onClickBack={onClickResultsButtonGoBack}
         />
         <KeyResultModal onSubmit={editKr} data={currentKrForModal} isOpen={isModalOpen} onClose={handleCloseModal}></KeyResultModal>
       </Grid>

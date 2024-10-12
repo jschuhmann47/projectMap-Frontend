@@ -26,6 +26,7 @@ import Loading from 'components/commons/Loading';
 import { onGetAll as onGetAllComments } from 'redux/actions/comments.actions';
 import { onGetOne as onGetProject } from 'redux/actions/projects.actions';
 import permission from 'helpers/permissions';
+import { StageByTool, Tools } from 'helpers/enums/steps';
 
 const AnsoffContainer = () => {
   const { ansoffId, id } = useParams();
@@ -66,7 +67,10 @@ const AnsoffContainer = () => {
     else navigate(`/projects/${id}/ansoff/${ansoffId}/results`);
   };
 
-  const onClickGoBackButton = () => navigate(`/projects/${id}`);
+  const onClickGoBackButton = () => {
+    const stage = StageByTool[Tools.Ansoff];
+    navigate(`/projects/${id}/stage/${stage}`)
+  };
 
   const onEditExito = (formData) =>
     dispatch(onEditProduct(ansoffId, formData._id, formData));

@@ -149,9 +149,11 @@ export const StepCard = styled('div')({
   marginTop: 10,
   marginBottom: 10,
   display: 'flex',
+  justifyContent: 'center',
   alignItems: 'center',
   paddingLeft: 20,
   fontSize: 20,
+  border: 'solid 1px',
 })
 
 export const StepIcons = styled('div')({
@@ -183,6 +185,7 @@ export const StageToolView = styled('div', )({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
+  alignItems: 'center'
 });
 
 export const ToolsView = styled('div',
@@ -209,6 +212,7 @@ export const ToolCard = styled('div')({
   ['p']: {
     textAlign: 'center',
   },
+  minWidth: '500px'
 })
 
 export const ToolCardTitle = styled('div')({
@@ -221,4 +225,9 @@ export const ToolCardTitle = styled('div')({
   },
   display: 'flex',
   justifyContent: 'center'
+})
+
+export const ToolCardContainer = styled('div')({
+  overflowY: 'scroll',
+  height: '400px',
 })

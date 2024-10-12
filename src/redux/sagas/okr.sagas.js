@@ -11,6 +11,8 @@ import {
 
 import * as constants from 'redux/contansts/okr.constants';
 import { horizonOptions } from 'helpers/enums/okr';
+import store from 'redux/store';
+import { onGetOKR } from 'redux/actions/projects.actions';
 
 export function* okrCreateTool(action) {
   try {
@@ -24,6 +26,8 @@ export function* okrCreateTool(action) {
       startingDate: formData.startingDate,
     };
     const { data } = yield call(createOkr, req);
+    const { projectId } = formData;
+    store.dispatch(onGetOKR(projectId))
     yield put({ type: constants.CREATE_OKR_TOOL_SUCCEEDED, data });
   } catch (error) {
     yield put({

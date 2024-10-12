@@ -1,6 +1,8 @@
 import { horizonOptions } from 'helpers/enums/balanced';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
+import { onGetBalanced } from 'redux/actions/projects.actions';
 import * as constants from 'redux/contansts/balanceScorecard.constants';
+import store from 'redux/store';
 import {
   addCheckpoint,
   addInitiative,
@@ -28,6 +30,8 @@ export function* balanceScorecardCreate(action) {
       projectId: formData.projectId,
     };
     const { data } = yield call(create, req);
+    const { projectId } = formData;
+    store.dispatch(onGetBalanced(projectId))
     yield put({ type: constants.CREATE_BALANCE_SCORECARD_SUCCEEDED, data });
   } catch (error) {
     yield put({

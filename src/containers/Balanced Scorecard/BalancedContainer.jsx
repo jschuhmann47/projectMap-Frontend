@@ -19,6 +19,7 @@ import Comments from 'components/comments/Comments';
 import Loading from 'components/commons/Loading';
 import { onGetAll as onGetAllComments } from 'redux/actions/comments.actions';
 import { frequencyOptions } from 'helpers/enums/balanced';
+import { StageByTool, Tools } from 'helpers/enums/steps';
 
 const BalancedContainer = () => {
   const { balancedId, id } = useParams();
@@ -55,6 +56,11 @@ const BalancedContainer = () => {
     dispatch(onUpdateObjective(balancedId, objectiveId, formData));
   };
 
+  const onClickResultsButtonGoBack = () => {
+    const stage = StageByTool[Tools.BalacedScorecard];
+    navigate(`/projects/${id}/stage/${stage}`)
+  };
+  
   return (
     <LayoutContainer>
       <BalancedView
@@ -62,7 +68,7 @@ const BalancedContainer = () => {
         objectives={objectives}
         onEditObjective={onEditObjective}
         title={title}
-        onClickButtonGoBack={() => navigate(`/projects/${id}`)}
+        onClickButtonGoBack={onClickResultsButtonGoBack}
         openComments={(target) => setAnchorElement(target)}
         isModalOpen={isModalOpen}
         openModal={() => setIsModalOpen(true)}

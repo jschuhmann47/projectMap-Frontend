@@ -1,5 +1,7 @@
 import { all, call, put, takeLatest } from '@redux-saga/core/effects';
+import { onGetQuestionnaire } from 'redux/actions/projects.actions';
 import * as constants from 'redux/contansts/questionnarie.constants';
+import store from 'redux/store';
 import {
   create,
   deleteQuestionnaire,
@@ -12,6 +14,8 @@ export function* questionnaireCreate(action) {
   try {
     const { formData } = action;
     const { data } = yield call(create, formData);
+    const { projectId } = formData;
+    store.dispatch(onGetQuestionnaire(projectId))
     yield put({
       type: constants.QUESTIONNARIE_ON_CREATE_SUCCEEDED,
       data,

@@ -12,15 +12,16 @@ import {
   onGetPorter,
   onGetQuestionnaire,
 } from 'redux/actions/projects.actions';
-import { Box, Button, IconButton } from "@mui/material"
+import { Box, IconButton } from "@mui/material"
+import Button from 'components/commons/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"
-import { getFirstStep, selectorByStage, stepToolsSelector } from "redux/selectors/project.selector";
-import { StageToolView, StepCard, ToolCard, ToolCardTitle, ToolsView } from "views/ProjectView/styles";
-import { HelpOutlined } from "@mui/icons-material";
-import { getMenuItems, getMenuItemsBy, STEPS } from "helpers/enums/steps";
+import { selectorByStage } from "redux/selectors/project.selector";
+import { StageToolView, StepCard, ToolCard, ToolCardContainer, ToolCardTitle, ToolsView } from "views/ProjectView/styles";
+import { ArrowBack, HelpOutlined } from "@mui/icons-material";
+import { getMenuItemsBy, STEPS } from "helpers/enums/steps";
 import ConfirmDeleteModal from "components/commons/ProjectCard/components/confirmDeleteModal";
 import { onDelete as onDeletePestel } from 'redux/actions/pestel.actions';
 import { onDelete as onDeletePorter } from 'redux/actions/porter.actions';
@@ -38,8 +39,7 @@ import { validateField } from "helpers/validateField";
 import SelectInputV2 from "components/inputs/SelectInputV2";
 import DateInput from "components/inputs/DateInput";
 import { ButtonsContainer } from "styles/form";
-import { getPorters } from "services/projects.services";
-import { getPorterUpdate } from "redux/selectors/porter.selector";
+import StepInfoModal from "views/ProjectView/tabs/stepInfoModal";
 
 const isValidStage = (name) => [
   'externalEnvironment',
@@ -53,8 +53,8 @@ const isValidStage = (name) => [
 const NO_AREA = 'Sin área'
 
 function Card({ onClick, step, item, showDeleteIcon, handleOnDelete }) {
-  return <ToolCard onClick={() => onClick(item.redirectUrl)} style={{ backgroundColor: step?.color }}>
-      <p>{item?.titulo}</p>
+  return <ToolCard onClick={() => onClick(item.redirectUrl)} style={{ cursor: 'pointer', backgroundColor: step?.color }}>
+      <p>{item?.titulo  || item?.description}</p>
 
       {showDeleteIcon &&
         <IconButton
@@ -64,7 +64,7 @@ function Card({ onClick, step, item, showDeleteIcon, handleOnDelete }) {
             height: '10px',
             alignItems: 'right',
           }}
-          onClick={() => { handleOnDelete(item) }}
+          onClick={(e) => { handleOnDelete(item); e.stopPropagation() }}
         >
           <DeleteIcon />
         </IconButton>
@@ -73,10 +73,9 @@ function Card({ onClick, step, item, showDeleteIcon, handleOnDelete }) {
 }
 
 function ToolColumn({ onHandleClick, tool, step, showDeleteIcon, handleOnDelete, handleOnAdd }) {
-  console.log(tool)
   return (
     <>
-      <Box sx={{ width: '80%' }}>
+      <Box sx={{  }}>
         <ToolCardTitle>
           <p>{tool?.title}</p>
           <IconButton
@@ -91,10 +90,12 @@ function ToolColumn({ onHandleClick, tool, step, showDeleteIcon, handleOnDelete,
             <AddIcon />
           </IconButton>
         </ToolCardTitle>
-        {
-          tool?.items?.map(item =>
-            <Card onClick={onHandleClick} step={step} item={item} showDeleteIcon={showDeleteIcon} handleOnDelete={handleOnDelete}></Card>
+        <ToolCardContainer>
+          {
+            tool?.items?.map(item =>
+              <Card onClick={onHandleClick} step={step} item={item} showDeleteIcon={showDeleteIcon} handleOnDelete={handleOnDelete}></Card>
           )}
+        </ToolCardContainer>
       </Box>
     </>
   )
@@ -110,11 +111,11 @@ const StageContainer = () => {
   const [itemToDelete, setItemToDelete] = useState(null);
   const [confirmDeleteError, setConfirmDeleteError] = useState(null);
   const [addTool, setAddTool] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toolItems = useSelector(selectorByStage[stageName]);
 
   const user = useSelector((state) => state.user.data);
-  const state = useSelector((state) => state);
   
   const projectInfo = useSelector((state) => state.projects.data);
   const { organizationalChart } = useSelector((state) => state.projects);
@@ -132,7 +133,6 @@ const StageContainer = () => {
     navigate(`/projects/${projectId}/${url}`)
   };
 
-  console.log({toolItems})
   const getToolsFor = {
     'externalEnvironment': () => { dispatch(onGetPestel(projectId)); dispatch(onGetPorter(projectId)) },
     'internalSituation': () => { dispatch(onGetFoda(projectId)) },
@@ -193,7 +193,6 @@ const StageContainer = () => {
   const openConfirmDeleteModal = (item) => {
     setIsConfirmDeleteModalOpen(true);
     setItemToDelete(item);
-    console.log({ item })
   };
 
   const closeConfirmDeleteModal = () => {
@@ -229,19 +228,24 @@ const StageContainer = () => {
       formData.areaId = ''
     }
     dispatch(action(formData));
+    setAddTool(null);
   };
 
   const areaOptions = [NO_AREA].concat(organizationalChart?.data.nodes?.map((node) => node.data.label))
 
+  const onClickBack = () => navigate(`/projects/${projectId}`)
   return (
     <LayoutContainer>
       {step &&
         <>
           <StageToolView>
             <StepCard style={{ backgroundColor: step?.color }}>
+              <IconButton size="small" onClick={onClickBack} sx={{ position: 'absolute', left: 50 }}>
+                <ArrowBack />
+              </IconButton>
               {step?.title}
               <IconButton>
-                <HelpOutlined onClick={() => { }} />
+                <HelpOutlined onClick={() => { setIsModalOpen(true)}} />
               </IconButton>
             </StepCard>
             {toolItems && toolItems.length &&
@@ -322,6 +326,11 @@ const StageContainer = () => {
           )}
         </Formik>
       </ModalV2>
+      <StepInfoModal
+        isOpen={isModalOpen}
+        selectedStep={step}
+        onClose={() => setIsModalOpen(false)}
+      />
     </LayoutContainer>
   );
 };

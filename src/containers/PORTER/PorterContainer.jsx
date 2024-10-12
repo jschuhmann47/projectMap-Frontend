@@ -25,6 +25,7 @@ import { onGetAll as onGetAllComments } from 'redux/actions/comments.actions';
 import { getLabel } from 'helpers/enums/porter';
 import { onGetOne as onGetProject } from 'redux/actions/projects.actions';
 import permission from 'helpers/permissions';
+import { StageByTool, Tools } from 'helpers/enums/steps';
 
 const PorterContainer = () => {
   const { porterId, id } = useParams();
@@ -33,7 +34,11 @@ const PorterContainer = () => {
   const navigate = useNavigate();
   const onClickResultsButton = () =>
     navigate(`/projects/${id}/porter/${porterId}/results`);
-  const onClickGoBackButton = () => navigate(`/projects/${id}`);
+  
+  const onClickGoBackButton = () => {
+    const stage = StageByTool[Tools.Porter];
+    navigate(`/projects/${id}/stage/${stage}`)
+  };
 
   const { options, questions, loading } = useSelector((state) => state.porter);
 
