@@ -114,7 +114,7 @@ const OKRContainer = () => {
           submitConfirmDeleteModal={submitConfirmDeleteModal}
           confirmDeleteModalError={confirmDeleteError}
           openKrEditModal={handleOpenModal}
-          onClickBack={() => navigate(`/projects/${id}`)}
+          onClickBack={() => navigate(-1)}
           userPermission={userPermission}
           openChild={openChild}
         />
