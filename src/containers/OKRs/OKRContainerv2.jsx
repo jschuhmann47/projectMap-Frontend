@@ -32,8 +32,9 @@ const OKRContainer = () => {
   const userPermission = permission(root, 'financialPlanning');
 
   useEffect(() => {
+    // this has to refresh when redirecting between OKRs
     dispatch(onGetOneTool(okrToolId));
-  }, []);
+  }, [okrToolId]);
 
   function addKr({ description, frequency, responsible, goal, priority, baseline }) {
     const formData = {
