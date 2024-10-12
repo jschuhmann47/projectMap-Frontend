@@ -20,13 +20,24 @@ export const StepValue = {
   MEJORA_CONTINUA: 7,
 };
 
+export const Tools = {
+  Porter: 'porter',
+  Pestel: 'pestel',
+  Foda: 'foda',
+  Ansoff: 'ansoff',
+  McKinsey: 'mckinsey',
+  Questionnaires: 'questionnaires',
+  BalacedScorecard: 'balanced-scorecards',
+  Okr: 'okr-projects',
+}
+
 export const STEPS = [
   {
     value: StepValue.EVALUACION_ENTORNO_EXTERNO,
     title: 'Evaluación del Entorno Externo',
     menuItems: [
-      { titulo: 'Agregar Análisis de Porter', key: 1, action: onCreatePorter },
-      { titulo: 'Agregar Análisis PESTEL', key: 2, action: onCreatePestel },
+      { titulo: 'Agregar Análisis de Porter', key: 1, action: onCreatePorter, toolName: Tools.Porter },
+      { titulo: 'Agregar Análisis PESTEL', key: 2, action: onCreatePestel, toolName: Tools.Pestel },
     ],
     id: 'externalEnvironment',
     color: '#fcf281'
@@ -35,8 +46,8 @@ export const STEPS = [
     value: StepValue.PLAN_FINANCIERO_MEDICION_RESULTADOS,
     title: 'Planeamiento Financiero y Medición de Resultados',
     menuItems: [
-      { titulo: 'Agregar Balanced Scorecard', action: onCreateBalanced, horizon: bscHorizonOptions },
-      { titulo: 'Agregar OKR', action: onCreateOkr, area: true, horizon: okrHorizonOptions, requireStartDate: true },
+      { titulo: 'Agregar Balanced Scorecard', action: onCreateBalanced, horizon: bscHorizonOptions, toolName: Tools.BalacedScorecard },
+      { titulo: 'Agregar OKR', action: onCreateOkr, area: true, horizon: okrHorizonOptions, requireStartDate: true, toolName: Tools.Okr },
     ],
     id: 'financialPlanning',
     color: '#fcb6d4'
@@ -48,6 +59,7 @@ export const STEPS = [
       {
         titulo: 'Agregar Análisis FODA',
         action: onCreateFoda,
+        toolName: Tools.Foda
       },
     ],
     id: 'internalSituation',
@@ -64,15 +76,15 @@ export const STEPS = [
     value: StepValue.DEFINICION_PLANES_TRANSFORMACION,
     title: 'Definición de los Planes de Transformación',
     menuItems: [
-      { titulo: 'Planes de transformación', action: onCreateQuestionnarie },
+      { titulo: 'Planes de transformación', action: onCreateQuestionnarie, toolName: Tools.Questionnaires },
     ],
     id: 'transformationPlans',
-    color: '#d8c7ff'
+    color: '#d8c7ff',
   },
   {
     value: StepValue.DEFINICION_LINIAMIENTOS_ESTRATEGICOS,
     title: 'Definición de Lineamientos Estratégicos',
-    menuItems: [{ titulo: 'Agregar Matriz Ansoff', action: onCreateAnsoff }],
+    menuItems: [{ titulo: 'Agregar Matriz Ansoff', action: onCreateAnsoff, toolName: Tools.Ansoff }],
     id: 'strategicGuidelines',
     color: '#86e6d9'
   },
@@ -80,15 +92,20 @@ export const STEPS = [
     value: StepValue.FORMULACION_ESTRATEGIA_COMPETITIVA,
     title: 'Formulación de la Estrategia Competitiva',
     menuItems: [
-      { titulo: 'Agregar Matriz McKinsey', action: onCreateMckinsey },
+      { titulo: 'Agregar Matriz McKinsey', action: onCreateMckinsey, toolName: Tools.McKinsey },
     ],
     id: 'competitiveStrategy',
     color: '#9edcfa'
   },
 ];
 
+// remove ?
 export const getMenuItems = (stepValue) =>
   Object.values(STEPS)?.find((step) => step.value === stepValue)?.menuItems ||
+  [];
+
+export const getMenuItemsBy = (stageNameId, toolName) =>
+  Object.values(STEPS)?.find((step) => step.id === stageNameId)?.menuItems?.find(item => item.toolName == toolName) ||
   [];
 
 export const stepsInfo = {

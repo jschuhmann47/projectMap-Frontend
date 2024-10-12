@@ -178,3 +178,47 @@ export const ChartButtons = styled('div')({
   display: 'flex',
   gap: 10,
 })
+
+export const StageToolView = styled('div', )({
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%',
+});
+
+export const ToolsView = styled('div',
+  {shouldForwardProp: (prop) => prop !== 'columns',}
+)(({ columns }) => ({
+  display: 'grid',
+  gap: '20px',
+  gridTemplateColumns: `repeat(${columns}, 1fr)`,
+  justifyItems: 'center',
+  width: '100%'
+}));
+
+export const ToolCard = styled('div')({
+  height: 60,
+  backgroundColor: '#719F9D',
+  marginTop: 10,
+  marginBottom: 10,
+  display: 'grid',
+  gridTemplateColumns: '5fr 1fr',
+  alignItems: 'center',
+  paddingLeft: 20,
+  fontSize: 20,
+  border: 'solid 1px',
+  ['p']: {
+    textAlign: 'center',
+  },
+})
+
+export const ToolCardTitle = styled('div')({
+  ['p']: {
+    fontSize: '30px',
+  },
+  ['button']: {
+    alignSelf: 'center',
+    marginLeft: '10px'
+  },
+  display: 'flex',
+  justifyContent: 'center'
+})
