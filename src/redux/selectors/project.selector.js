@@ -48,6 +48,27 @@ const getLoadingBalanced = (state) => state.projects.loadingBalanced;
 const getLoadingQuestionnaires = (state) =>
   state.projects.loadingQuestionnaires;
 
+export const selectorByStage = {
+  'externalEnvironment': 
+    createSelector(
+      [getPorters, getPestels], 
+      (porters, pestels) => {
+        return [
+          { titulo: 'Porters:', items: porters },
+          { titulo: 'Pestels:', items: pestels }
+        ]
+      }),
+    'internalSituation': 
+    createSelector(
+      [getFodas], 
+      (foda) => {
+        return [
+          { titulo: 'FODAs:', items: foda },
+        ]
+      }) 
+  
+}
+
 export const stepToolsSelector = createSelector(
   [
     getFodas,
