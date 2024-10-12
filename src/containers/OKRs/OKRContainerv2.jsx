@@ -32,8 +32,9 @@ const OKRContainer = () => {
   const userPermission = permission(root, 'financialPlanning');
 
   useEffect(() => {
+    // this has to refresh when redirecting between OKRs
     dispatch(onGetOneTool(okrToolId));
-  }, []);
+  }, [okrToolId]);
 
   function addKr({ description, frequency, responsible, goal, priority, baseline }) {
     const formData = {
@@ -94,6 +95,10 @@ const OKRContainer = () => {
     setIsModalOpen(false);
   };
 
+  function openChild(childId) {
+    navigate(`/projects/${id}/okr/${childId}`)
+  }
+
   return (
     <LayoutContainer>
       <Grid item sx={{ height: '100%', width: '100%' }}>
@@ -103,15 +108,15 @@ const OKRContainer = () => {
           closeAddKrModal={() => setIsAddKrModalOpen(false)}
           isAddKrModalOpen={isAddKrModalOpen}
           addKr={addKr}
-          editKr={editKr}
           openConfirmDeleteModal={(kr) => setKrToDelete(kr)}
           closeConfirmDeleteModal={() => setKrToDelete(null)}
           isConfirmDeleteModalOpen={!!krToDelete}
           submitConfirmDeleteModal={submitConfirmDeleteModal}
           confirmDeleteModalError={confirmDeleteError}
           openKrEditModal={handleOpenModal}
-          onClickBack={() => navigate(`/projects/${id}`)}
+          onClickBack={() => navigate(-1)}
           userPermission={userPermission}
+          openChild={openChild}
         />
         <KeyResultModal
           onSubmit={editKr}

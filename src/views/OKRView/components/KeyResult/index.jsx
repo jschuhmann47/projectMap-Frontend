@@ -26,7 +26,9 @@ export default function KeyResult({
       </Box>
       <Box>
         <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 20 }}>{krData.description}</Typography>
-        <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 14 }}>Responsable: {krData.responsible}</Typography>
+        <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 14 }}>
+          {krData.area ? `Área: ${krData.area}` : `Responsable: ${krData.responsible}`}
+        </Typography>
       </Box>
       <OkrProgress>
         <OkrProgressBar>
@@ -43,7 +45,7 @@ export default function KeyResult({
       {userPermission === 'edit' &&
         <IconButton onClick={(event) => {
           event.stopPropagation();
-          openConfirmDeleteModal(krData)
+          openConfirmDeleteModal?.(krData)
         }}>
           <Delete htmlColor='black' />
         </IconButton>
