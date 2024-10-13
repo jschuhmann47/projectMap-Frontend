@@ -1,5 +1,5 @@
 import { filterFrequenciesByHorizon, horizonOptions, priorityOptions } from "helpers/enums/okr";
-import { KeyResultsContainer, KeyResultsHeader, OkrContainerV2, OkrHeader, OkrMoreData, OkrProgress, OkrProgressAndMoreData, OkrProgressBar, OkrTitle } from "./styles";
+import { KeyResultsContainer, KeyResultsHeader, NoMeasurableContainer, NoMeasurableLine, NoMeasurableList, OkrContainerV2, OkrHeader, OkrMoreData, OkrProgress, OkrProgressAndMoreData, OkrProgressBar, OkrTitle } from "./styles";
 import Button from "components/commons/Button";
 import { ButtonsContainer } from "styles/form";
 import { Field, Form, Formik } from "formik";
@@ -8,11 +8,13 @@ import KeyResult from "./components/KeyResult";
 import ModalV2 from "components/commons/ModalV2";
 import InputV2 from "components/inputs/InputV2";
 import SelectInputV2 from "components/inputs/SelectInputV2";
-import { Box, IconButton, LinearProgress, Typography } from "@mui/material";
+import { Box, IconButton, LinearProgress, Slide, TextField, Typography } from "@mui/material";
 import ConfirmDeleteModal from "components/commons/ProjectCard/components/confirmDeleteModal";
 import ImgSelect from "./components/ImgSelect";
-import { AddCircle, ArrowBack } from "@mui/icons-material";
+import { AddCircle, ArrowBack, Check } from "@mui/icons-material";
 import { format, parseISO } from 'date-fns';
+import { useState } from "react";
+import React from "react";
 
 const OKRView = ({
   okrData,
@@ -31,6 +33,128 @@ const OKRView = ({
   openChild
 }) => {
   const isParent = !!okrData?.childOkrs.length
+  const [index, setIndex] = useState(0);
+  const [slideDirection, setSlideDirection] = useState('left');
+  const [showContent, setShowContent] = useState(true);
+
+  const commonContent = <>
+      <Field
+        name="description"
+        fieldLabel="Nombre"
+        component={InputV2}
+        validate={validateField}
+      />
+      <Field
+        name="responsible"
+        fieldLabel="Responsable"
+        component={InputV2}
+        validate={validateField}
+      />
+      <Field
+        fieldLabel="Prioridad"
+        inputLayout='inline'
+        component={(props) => {
+          return (
+            <>
+              <Box sx={{display: 'flex'}}>
+                <Box sx={{mr: 1}}>
+                  <Typography sx={{ mt: 1 }}>{props.fieldLabel}</Typography>
+                </Box>                    
+                <Box>
+                  <ImgSelect {...props} style={{sx: {height: "34px"}}}></ImgSelect>
+                </Box>
+              </Box>
+            </>
+          )
+          }}
+          name="priority"
+          options={priorityOptions.map((path, i) => ({ path, value: i }))}
+        />
+        <Field
+          name="krType"
+          fieldLabel="Tipo de KR"
+          component={SelectInputV2}
+          options={[{label: 'Medible', key: 'normal'}, {label:'No medible', key: 'checklist'}]}
+          hasKey={true}
+          validate={validateField}
+      />
+    </>;
+
+  const measurableContent = <>
+    <Field
+      name="baseline"
+      fieldLabel="Línea Base"
+      type="number"
+      component={InputV2}
+      validate={validateNumberField}
+    />
+    <Field
+      name="goal"
+      fieldLabel="Resultado esperado"
+      type="number"
+      component={InputV2}
+      validate={validateNumberField}
+    />
+    <Field
+      name="frequency"
+      fieldLabel="Frecuencia de medición"
+      component={SelectInputV2}
+      options={filterFrequenciesByHorizon(okrData?.horizon)}
+      validate={validateField}
+    />
+  </>
+
+  const NotMeasurableContent = ({values}) => {
+    console.log('***** DENTRO DEL COMPONENTE ********')
+    const [inputValue, setInputValue] = useState('');
+
+    const handleChange = (event) => {
+      setInputValue(event.target.value);
+    }
+
+    const handleAddNewHito = () => {
+      values.hitos 
+        ? values.hitos.push(inputValue) 
+        : values.hitos = [inputValue]; 
+      console.log({hitos: values.hitos})
+      setInputValue("");
+    }
+    return (
+      <NoMeasurableContainer>
+        <Box sx={{display: 'flex'}}>
+          <TextField 
+            sx={{width:'100%', marginTop:'20px'}}
+            variant="standard"
+            placeholder="Agregar hito a cumplir"
+            onChange={handleChange}
+            value={inputValue}
+            >
+
+          </TextField>
+          <IconButton size="small" disabled={!inputValue} onClick={handleAddNewHito}>
+            <Check />
+          </IconButton>
+        </Box>
+        <NoMeasurableList>
+          {
+          values.hitos && values.hitos.length && 
+            values.hitos.map((hito) => (
+              <NoMeasurableLine>{hito}</NoMeasurableLine>
+            ))
+          }
+        </NoMeasurableList>
+      </NoMeasurableContainer>
+    )}
+
+  const handleNext = (event) => {
+    event.preventDefault();
+    setSlideDirection('left');
+    setShowContent(false);
+    setTimeout(() => {
+      setIndex((prevIndex) => (prevIndex + 1));
+      setShowContent(true);
+    }, 300);
+  };
 
   return <OkrContainerV2>
     <OkrHeader>
@@ -78,6 +202,9 @@ const OKRView = ({
       <>
         <KeyResultsHeader>
           Key Results
+          <IconButton onClick={openAddKrModal}>
+              <AddCircle htmlColor='black' />
+            </IconButton>
           {userPermission === 'edit' && (
             <IconButton onClick={openAddKrModal}>
               <AddCircle htmlColor='black' />
@@ -94,21 +221,46 @@ const OKRView = ({
               userPermission={userPermission}
             />
           ))}
+          {okrData?.checklistKeyResults.map((kr, index) => (
+            <KeyResult
+              key={index}
+              krData={kr}
+              openConfirmDeleteModal={openConfirmDeleteModal}
+              handleKrClick={openKrEditModal}
+              userPermission={userPermission}
+            />
+          ))}
         </KeyResultsContainer>
       </>
     )}
     <ModalV2
       isOpen={isAddKrModalOpen}
-      onClose={closeAddKrModal}
+      onClose={() => {closeAddKrModal(); setIndex(0)}}
       title='Agregar Key Result'
     >
       <Formik
-        onSubmit={addKr}
+        onSubmit={(values) => {
+          setIndex(0);
+          addKr(values);
+        }}
         initialValues={{ description: '', frequency: '', responsible: '', priority: 0 }}
       >
-        {({ handleSubmit }) => (
+        {({ values, handleSubmit }) => (
           <Form onSubmit={handleSubmit}>
-            <Field
+              <Slide
+                direction={slideDirection}
+                in={showContent}
+                timeout={300}
+                mountOnEnter
+                unmountOnExit
+              >
+                <Box sx={{minHeight: '300px'}}>
+                  {index == 0 && (commonContent)}
+                  {index != 0 && values.krType == 'normal' && (measurableContent)}
+                  {index != 0 && values.krType != 'normal' && (<NotMeasurableContent values={values}></NotMeasurableContent>)}
+                </Box>
+              </Slide>
+            {/* <Field
               name="description"
               fieldLabel="Nombre"
               component={InputV2}
@@ -150,7 +302,7 @@ const OKRView = ({
               />
             <Field
               name="frequency"
-              fieldLabel="Frecuencia"
+              fieldLabel="Frecuencia de medición"
               component={SelectInputV2}
               options={filterFrequenciesByHorizon(okrData?.horizon)}
               validate={validateField}
@@ -160,14 +312,21 @@ const OKRView = ({
               fieldLabel="Responsable"
               component={InputV2}
               validate={validateField}
-            />
+            /> */}
             <ButtonsContainer>
-              <Button color="secondary" onClick={closeAddKrModal}>
+              <Button color="secondary" onClick={() => {setIndex(0); closeAddKrModal()}}>
                 Cancelar
               </Button>
-              <Button type="submit">
-                Agregar
-              </Button>
+              {
+                index == 0 ? 
+                (<Button onClick={handleNext}>
+                  Siguiente
+                </Button>) : (
+                <Button type="submit">
+                  Agregar
+                </Button>
+                )
+              }
             </ButtonsContainer>
           </Form>
         )}

@@ -73,3 +73,16 @@ export const KeyResultsContainer = styled('div')({
   marginTop: 10,
   marginBottom: 10,
 });
+
+export const NoMeasurableContainer = styled('div')({
+  display: 'flex',
+  flexDirection: 'column'
+})
+
+export const NoMeasurableList = styled('div')({
+  margin: '30px 0 0 30px'
+})
+
+export const NoMeasurableLine = styled('div')({
+  marginTop: '15px'
+})
