@@ -1,5 +1,5 @@
 import { filterFrequenciesByHorizon, horizonOptions, priorityOptions } from "helpers/enums/okr";
-import { KeyResultsContainer, KeyResultsHeader, NoMeasurableContainer, NoMeasurableLine, NoMeasurableList, OkrContainerV2, OkrHeader, OkrMoreData, OkrProgress, OkrProgressAndMoreData, OkrProgressBar, OkrTitle } from "./styles";
+import { KeyResultsContainer, KeyResultsHeader, KeyResultsSubTitle, NoMeasurableContainer, NoMeasurableLine, NoMeasurableList, OkrContainerV2, OkrHeader, OkrMoreData, OkrProgress, OkrProgressAndMoreData, OkrProgressBar, OkrTitle } from "./styles";
 import Button from "components/commons/Button";
 import { ButtonsContainer } from "styles/form";
 import { Field, Form, Formik } from "formik";
@@ -36,6 +36,8 @@ const OKRView = ({
   const [index, setIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState('left');
   const [showContent, setShowContent] = useState(true);
+  const [disableNextPage, setDisableNextPage] = useState(true);
+  const [currentKrType, setCurrentKrType] = useState('');
 
   const commonContent = <>
       <Field
@@ -70,14 +72,14 @@ const OKRView = ({
           name="priority"
           options={priorityOptions.map((path, i) => ({ path, value: i }))}
         />
-        <Field
+        {/* <Field
           name="krType"
           fieldLabel="Tipo de KR"
           component={SelectInputV2}
           options={[{label: 'Medible', key: 'normal'}, {label:'No medible', key: 'checklist'}]}
           hasKey={true}
           validate={validateField}
-      />
+      /> */}
     </>;
 
   const measurableContent = <>
@@ -105,7 +107,6 @@ const OKRView = ({
   </>
 
   const NotMeasurableContent = ({values}) => {
-    console.log('***** DENTRO DEL COMPONENTE ********')
     const [inputValue, setInputValue] = useState('');
 
     const handleChange = (event) => {
@@ -202,35 +203,47 @@ const OKRView = ({
       <>
         <KeyResultsHeader>
           Key Results
-          <IconButton onClick={openAddKrModal}>
-              <AddCircle htmlColor='black' />
-            </IconButton>
-          {userPermission === 'edit' && (
-            <IconButton onClick={openAddKrModal}>
-              <AddCircle htmlColor='black' />
-            </IconButton>
-          )}
         </KeyResultsHeader>
         <KeyResultsContainer>
+          <KeyResultsSubTitle>
+            <p>Medibles</p>
+            {userPermission === 'edit' && (
+              <IconButton onClick={() => {openAddKrModal(); setCurrentKrType('normal')}}>
+                <AddCircle htmlColor='black' />
+              </IconButton>
+            )}
+          </KeyResultsSubTitle>
           {okrData?.keyResults.map((kr, index) => (
             <KeyResult
               key={index}
               krData={kr}
               openConfirmDeleteModal={openConfirmDeleteModal}
-              handleKrClick={openKrEditModal}
+              handleKrClick={() => openKrEditModal({...kr, krType: 'normal'})}
               userPermission={userPermission}
             />
           ))}
+        </KeyResultsContainer>
+
+        <KeyResultsContainer>
+          <KeyResultsSubTitle>
+            <p>No medibles</p>
+            {userPermission === 'edit' && (
+              <IconButton onClick={() => {openAddKrModal(); setCurrentKrType('checklist')}}>
+                <AddCircle htmlColor='black' />
+              </IconButton>
+            )}
+          </KeyResultsSubTitle>
           {okrData?.checklistKeyResults.map((kr, index) => (
             <KeyResult
               key={index}
               krData={kr}
               openConfirmDeleteModal={openConfirmDeleteModal}
-              handleKrClick={openKrEditModal}
+              handleKrClick={() => openKrEditModal({...kr, krType: 'checklist'})}
               userPermission={userPermission}
             />
           ))}
         </KeyResultsContainer>
+
       </>
     )}
     <ModalV2
@@ -241,9 +254,11 @@ const OKRView = ({
       <Formik
         onSubmit={(values) => {
           setIndex(0);
-          addKr(values);
+          console.log({values})
+          addKr({...values, krType: currentKrType});
         }}
-        initialValues={{ description: '', frequency: '', responsible: '', priority: 0 }}
+        
+        initialValues={{ description: '', frequency: '', responsible: '', priority: 0}}
       >
         {({ values, handleSubmit }) => (
           <Form onSubmit={handleSubmit}>
@@ -256,63 +271,10 @@ const OKRView = ({
               >
                 <Box sx={{minHeight: '300px'}}>
                   {index == 0 && (commonContent)}
-                  {index != 0 && values.krType == 'normal' && (measurableContent)}
-                  {index != 0 && values.krType != 'normal' && (<NotMeasurableContent values={values}></NotMeasurableContent>)}
+                  {index != 0 && currentKrType == 'normal' && (measurableContent)}
+                  {index != 0 && currentKrType != 'normal' && (<NotMeasurableContent values={values}></NotMeasurableContent>)}
                 </Box>
               </Slide>
-            {/* <Field
-              name="description"
-              fieldLabel="Nombre"
-              component={InputV2}
-              validate={validateField}
-            />
-            <Field
-              name="baseline"
-              fieldLabel="Línea Base"
-              type="number"
-              component={InputV2}
-              validate={validateNumberField}
-            />
-            <Field
-              name="goal"
-              fieldLabel="Resultado esperado"
-              type="number"
-              component={InputV2}
-              validate={validateNumberField}
-            />
-            <Field
-              fieldLabel="Prioridad"
-              inputLayout='inline'
-              component={(props) => {
-                return (
-                  <>
-                    <Box sx={{display: 'flex'}}>
-                      <Box sx={{mr: 1}}>
-                        <Typography sx={{ mt: 1 }}>{props.fieldLabel}</Typography>
-                      </Box>                    
-                      <Box>
-                        <ImgSelect {...props} style={{sx: {height: "34px"}}}></ImgSelect>
-                      </Box>
-                    </Box>
-                  </>
-                )
-                }}
-                name="priority"
-                options={priorityOptions.map((path, i) => ({ path, value: i }))}
-              />
-            <Field
-              name="frequency"
-              fieldLabel="Frecuencia de medición"
-              component={SelectInputV2}
-              options={filterFrequenciesByHorizon(okrData?.horizon)}
-              validate={validateField}
-            />
-            <Field
-              name="responsible"
-              fieldLabel="Responsable"
-              component={InputV2}
-              validate={validateField}
-            /> */}
             <ButtonsContainer>
               <Button color="secondary" onClick={() => {setIndex(0); closeAddKrModal()}}>
                 Cancelar

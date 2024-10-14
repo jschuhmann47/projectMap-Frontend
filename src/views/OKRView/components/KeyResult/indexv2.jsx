@@ -2,6 +2,7 @@ import ModalV2 from "components/commons/ModalV2";
 import KrForm from "./KrForm";
 import { Box, Slider, Stack } from "@mui/material";
 import ReadonlyKr from "./ReadonlyKr";
+import ChecklistKrForm from "./ChecklistKrForm";
 
 export default function KeyResultModal({
   isOpen,
@@ -10,10 +11,39 @@ export default function KeyResultModal({
   onSubmit,
   userPermission,
 }) {
-  const showProgress = () => {
-    return data.currentScore > data.baseline && data.currentScore < data.goal
+  const { krType } = data
+  const showProgressNumber = () => {
+    if (krType == 'normal') {
+      return data.currentScore > data.baseline && data.currentScore < data.goal;
+    } else {
+      return data.currentScore > 0 && data.currentScore < data.keyStatus.length;
+    }
   };
 
+  const getBaseValue = () => {
+    if (krType == 'normal') {
+      return data.baseline;
+    } else {
+      return 0;
+    }
+  }
+
+  const getGoalValue = () => {
+    if (krType == 'normal') {
+      return data.goal;
+    } else {
+      return data.keyStatus?.length >= 1 ? `${data.keyStatus?.length} ítem` : `${data.keyStatus?.length} ítems`;
+    }
+  }
+
+  const displayProgressBar = () => {
+    if (krType == 'normal') {
+      return data.currentScore > data.baseline ? 'block' : 'none';
+    } else {
+      return data.currentScore > 0 ? 'block' : 'none';
+    }
+  }
+  
   return (
     <ModalV2 width={900} isOpen={isOpen} background={'#FFFFFF'} onClose={onClose} title={data.description}>
       <Box
@@ -24,8 +54,8 @@ export default function KeyResultModal({
           alignItems: 'center',
         }}
       >
-        <Stack spacing={4} direction="row" sx={{ width: '400px', alignItems: 'center', mb: 1 }}>
-          <p>{data.baseline}</p>
+        <Stack spacing={3} direction="row" sx={{ width: '450px', alignItems: 'center', mb: 1 }}>
+          <p>{getBaseValue()}</p>
             <Slider 
               valueLabelDisplay="on" 
               value={data.progress} 
@@ -52,7 +82,7 @@ export default function KeyResultModal({
                   backgroundColor: '#405C5E', 
                   borderRadius: "8px",
                   borderColor: "#000000",
-                  display: data.currentScore > data.baseline ? 'block' : 'none',
+                  display: displayProgressBar(),
                 },
                 '& .MuiSlider-rail': {
                   backgroundColor: '#FFFFFF',
@@ -74,19 +104,19 @@ export default function KeyResultModal({
                     left: `${data.progress}`,
                     padding: '0px',
                     marginTop: '5px',
-                    display: showProgress() ? "block" : "none"
+                    display: showProgressNumber() ? "block" : "none"
                   }}
                 >
                   {`${data.currentScore} `}
                 </Box>
               )} />
-          <p>{data.goal}</p>
+          <p style={{width: '70px'}}>{getGoalValue()}</p>
         </Stack>
       </Box>
       {userPermission === 'edit' ? (
-        <KrForm onSubmit={onSubmit} data={data}/>
+        krType == 'normal' ? <KrForm onSubmit={onSubmit} data={data}/> : <ChecklistKrForm onSubmit={onSubmit} data={data}/>
       ) : (
-        <ReadonlyKr data={data} />
+        krType == 'normal' ? <ReadonlyKr data={data} /> : <ChecklistKrForm onSubmit={onSubmit} data={data}/>
       )}
     </ModalV2>
   )

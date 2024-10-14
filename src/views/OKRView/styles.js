@@ -67,11 +67,21 @@ export const KeyResultsHeader = styled('div')({
   alignItems: 'center',
 })
 
+export const KeyResultsSubTitle = styled('div')({
+  fontSize: 18,
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+})
+
 export const KeyResultsContainer = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   marginTop: 10,
   marginBottom: 10,
+  ['& >p']: {
+    marginBottom: '20px'
+  }
 });
 
 export const NoMeasurableContainer = styled('div')({
