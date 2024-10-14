@@ -58,7 +58,7 @@ const AnsoffView = (props) => {
             <ArrowBack />
           </IconButton>
         </ButtonContainer>
-        <Title>{showResults ? `Resultados de ${title}` : title}</Title>
+        <Title sx={{ marginRight: '50%' }}>{showResults ? `Resultados de ${title}` : title}</Title>
       </TitleContainer>
       <Grid container>
         <Grid
