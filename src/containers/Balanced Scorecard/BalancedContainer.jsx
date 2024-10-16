@@ -76,6 +76,7 @@ const BalancedContainer = () => {
       category,
     }
     dispatch(onUpdateObjective(balancedId, _id, formData));
+    handleCloseModal();
   };
 
   function deleteObjective(objectiveId) {
