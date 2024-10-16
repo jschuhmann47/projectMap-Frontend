@@ -53,7 +53,6 @@ export const selectorByStage = {
     createSelector(
       [getPorters, getPestels], 
       (porters, pestels) => {
-        console.log({porters})
         return [
           { title: 'Análisis Porter:', items: porters, toolName: Tools.Porter },
           { title: 'Análisis Pestel:', items: pestels, toolName: Tools.Pestel }
@@ -64,7 +63,7 @@ export const selectorByStage = {
         [getFodas], 
         (foda) => {
           return [
-            { title: 'FODAs:', items: foda, toolName: Tools.Foda },
+            { title: 'Análisis FODAs:', items: foda, toolName: Tools.Foda },
           ]
         })
     ,'strategicGuidelines': 
@@ -72,7 +71,7 @@ export const selectorByStage = {
         [getAnsoffs], 
         (ansoffs) => {
           return [
-            { title: 'Ansoffs:', items: ansoffs, toolName: Tools.Ansoff },
+            { title: 'Matrices Ansoffs:', items: ansoffs, toolName: Tools.Ansoff },
           ]
         }) 
     ,'competitiveStrategy': 
@@ -80,7 +79,7 @@ export const selectorByStage = {
         [getMckinseys], 
         (mckenseys) => {
           return [
-            { title: 'McKinseys:', items: mckenseys, toolName: Tools.McKinsey },
+            { title: 'Matrices McKinseys:', items: mckenseys, toolName: Tools.McKinsey },
           ]
         }) 
     ,'transformationPlans': 

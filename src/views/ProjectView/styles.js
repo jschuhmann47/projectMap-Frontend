@@ -204,7 +204,7 @@ export const ToolCard = styled('div')({
   marginTop: 10,
   marginBottom: 10,
   display: 'grid',
-  gridTemplateColumns: '5fr 1fr',
+  gridTemplateColumns: '5fr 0.5fr',
   alignItems: 'center',
   paddingLeft: 20,
   fontSize: 20,
@@ -212,7 +212,7 @@ export const ToolCard = styled('div')({
   ['p']: {
     textAlign: 'center',
   },
-  minWidth: '500px'
+  width: '600px'
 })
 
 export const ToolCardTitle = styled('div')({

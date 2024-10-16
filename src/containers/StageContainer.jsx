@@ -13,9 +13,9 @@ import {
   onGetQuestionnaire,
 } from 'redux/actions/projects.actions';
 import { Box, IconButton } from "@mui/material"
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Button from 'components/commons/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
-import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"
 import { selectorByStage } from "redux/selectors/project.selector";
@@ -87,7 +87,7 @@ function ToolColumn({ onHandleClick, tool, step, showDeleteIcon, handleOnDelete,
             }}
             onClick={() => handleOnAdd(tool.toolName)}
           >
-            <AddIcon />
+            <AddCircleIcon />
           </IconButton>
         </ToolCardTitle>
         <ToolCardContainer>
