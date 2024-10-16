@@ -34,7 +34,7 @@ export const validateNumberField = (value) => {
 export const validatePasswordStrength = (value) => {
   let error;
   
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&-+=()!? "]).{8,128}$/;
 
   if (!value) {
     error = 'La contraseña es obligatoria.';
