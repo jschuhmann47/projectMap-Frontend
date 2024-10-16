@@ -26,6 +26,7 @@ export function* balanceScorecardCreate(action) {
       horizon: +Object.entries(horizonOptions).find((kv) => kv[1] === formData.horizon)[0],
       objectives: [],
       projectId: formData.projectId,
+      startingDate: formData.startingDate,
     };
     const { data } = yield call(create, req);
     yield put({ type: constants.CREATE_BALANCE_SCORECARD_SUCCEEDED, data });

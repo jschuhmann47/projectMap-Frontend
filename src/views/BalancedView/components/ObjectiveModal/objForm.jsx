@@ -102,7 +102,7 @@ const ObjForm = ({ onSubmit, data }) => {
                         <CircleIcon color={colors[index]}/>
                       </Box>
                       <Field
-                        name={`checkpoints[${index}].value`}
+                        name={`checkpoints[${index}].actual`}
                         fieldLabel={data.checkpoints[index].period}
                         inputLayout='inline'
                         component={InputV2}
