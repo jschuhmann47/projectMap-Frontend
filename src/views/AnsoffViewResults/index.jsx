@@ -3,7 +3,7 @@ import { Grid, IconButton, Typography, Chip } from '@mui/material';
 
 import { COLORS } from 'helpers/enums/colors';
 
-import { ArrowBack, Comment } from '@mui/icons-material';
+import { ArrowBack } from '@mui/icons-material';
 import {
   Estrategia,
   EstrategiaClasificacion,
@@ -25,12 +25,6 @@ const AnsoffViewResults = (props) => {
         >
           <IconButton size="small" onClick={onClickGoBackButton}>
             <ArrowBack />
-          </IconButton>
-          <IconButton
-            size="small"
-            onClick={(event) => openComments(event.currentTarget)}
-          >
-            <Comment />
           </IconButton>
         </ButtonContainer>
       </TitleContainer>
