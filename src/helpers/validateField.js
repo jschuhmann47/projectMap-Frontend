@@ -30,3 +30,17 @@ export const validateNumberField = (value) => {
   }
   return error;
 };
+
+export const validatePasswordStrength = (value) => {
+  let error;
+  
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+  if (!value) {
+    error = 'La contraseña es obligatoria.';
+  } else if (!passwordRegex.test(value)) {
+    error = 'La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial.';
+  }
+  
+  return error;
+};
