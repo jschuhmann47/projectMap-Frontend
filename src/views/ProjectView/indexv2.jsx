@@ -1,4 +1,5 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
+import Typography from "@mui/material/Typography";
 import { useState } from 'react';
 import { Header, MainContainer, ProjectTab, Title } from "./styles";
 import StepsTab from "./tabs/stepsTab";
@@ -8,6 +9,7 @@ import OrganizationChartTab from "./tabs/organizationChartTab";
 export default function ProjectView({
   project,
   title,
+  description,
   items,
   members,
   onSearchUserByEmail,
@@ -71,6 +73,19 @@ export default function ProjectView({
       <TabContext value={activeTab}>
         <Header position='static'>
           <Title>{title}</Title>
+          <Typography
+            sx={{
+              fontFamily: '"Fira Sans", sans-serif',
+              color: 'white',
+              fontSize: '18px',
+              marginTop: '8px',
+              paddingLeft: '0.7rem',
+              textAlign: 'left',
+              whiteSpace: 'pre-line',
+            }}
+          >
+            {description}
+          </Typography>
           <TabList
             onChange={(_, newActiveTab) => setActiveTab(newActiveTab)}
             TabIndicatorProps={{ sx: { height: 4, backgroundColor: 'white' } }}
