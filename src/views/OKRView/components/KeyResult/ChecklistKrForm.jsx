@@ -8,47 +8,11 @@ import { ButtonsContainer } from 'styles/form';
 import { Box, Checkbox, FormControlLabel, FormGroup, Grid, List, ListItem, Typography } from '@mui/material';
 import { priorityOptions } from 'helpers/enums/okr';
 import ImgSelect from '../ImgSelect';
-import { CheckListItemsContainer, KrCheckListItem, KrCheckListItemsContainer } from './styles';
-import { useEffect, useState } from 'react';
-
-const colors = ['#FFCDD2', '#F8BBD0', '#E1BEE7', '#C5CAE9', '#BBDEFB', '#B3E5FC', '#B2DFDB', '#C8E6C9', '#DCEDC8', '#FFF9C4', '#FFECB3', '#FFE0B2'];
+import { KrCheckListItemsContainer } from './styles';
+import { useState } from 'react';
 
 const KrForm = ({ onSubmit, data }) => {
   const [checklist, setChecklist] = useState(data.keyStatus);
-  
-  const CircleIcon = ({ color }) => {
-    return (
-      <Box
-        sx={{
-          width: 16,
-          height: 16,
-          borderRadius: '50%',
-          backgroundColor: color,
-          mr: 2
-        }}
-      />
-    );
-  };
-
-  const ordenarFechasParaVista = () => {
-    const resultado = [];
-    const mitad = Math.ceil(data.keyStatus.length / 2);
-
-    const primeraMitad = data.keyStatus.slice(0, mitad);
-    const segundaMitad = data.keyStatus.slice(mitad);
-
-    for (let i = 0; i < Math.max(primeraMitad.length, segundaMitad.length); i = i + 1) {
-      if (primeraMitad[i]) {
-        resultado.push(primeraMitad[i]);
-      }
-
-      if (segundaMitad[i]) {
-        resultado.push(segundaMitad[i]);
-      }
-    }
-
-    return resultado;
-  }
 
   const handleCheckboxChange = (index, values) => {
     const newCheckedList = [...checklist];
@@ -110,11 +74,11 @@ const KrForm = ({ onSubmit, data }) => {
               </Box>
             </Grid>
           </Grid>
-          <ButtonsContainer>
-            <Button type="submit">
-              Guardar
-            </Button>
-          </ButtonsContainer>
+            <ButtonsContainer>
+              <Button type="submit">
+                Guardar
+              </Button>
+            </ButtonsContainer>
         </Form>
       )}
     </Formik>

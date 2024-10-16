@@ -90,7 +90,9 @@ export const NoMeasurableContainer = styled('div')({
 })
 
 export const NoMeasurableList = styled('div')({
-  margin: '30px 0 0 30px'
+  margin: '30px 0 0 30px',
+  height: "250px",
+  overflow: "scroll"
 })
 
 export const NoMeasurableLine = styled('div')({

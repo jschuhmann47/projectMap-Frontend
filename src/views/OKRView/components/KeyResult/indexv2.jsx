@@ -3,6 +3,7 @@ import KrForm from "./KrForm";
 import { Box, Slider, Stack } from "@mui/material";
 import ReadonlyKr from "./ReadonlyKr";
 import ChecklistKrForm from "./ChecklistKrForm";
+import ReadonlyChecklistKr from "./ReadonlyChecklistKr";
 
 export default function KeyResultModal({
   isOpen,
@@ -114,9 +115,9 @@ export default function KeyResultModal({
         </Stack>
       </Box>
       {userPermission === 'edit' ? (
-        krType == 'normal' ? <KrForm onSubmit={onSubmit} data={data}/> : <ChecklistKrForm onSubmit={onSubmit} data={data}/>
+        krType == 'normal' ? <KrForm onSubmit={onSubmit} data={data}/> : <ChecklistKrForm userPermission={userPermission} onSubmit={onSubmit} data={data}/>
       ) : (
-        krType == 'normal' ? <ReadonlyKr data={data} /> : <ChecklistKrForm onSubmit={onSubmit} data={data}/>
+        krType == 'normal' ? <ReadonlyKr data={data} /> : <ReadonlyChecklistKr data={data}/>
       )}
     </ModalV2>
   )

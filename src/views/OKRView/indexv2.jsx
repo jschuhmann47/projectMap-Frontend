@@ -36,8 +36,8 @@ const OKRView = ({
   const [index, setIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState('left');
   const [showContent, setShowContent] = useState(true);
-  const [disableNextPage, setDisableNextPage] = useState(true);
   const [currentKrType, setCurrentKrType] = useState('');
+  const [disableAddKr, setDisableAddKr] = useState(true);
 
   const commonContent = <>
       <Field
@@ -54,32 +54,24 @@ const OKRView = ({
       />
       <Field
         fieldLabel="Prioridad"
-        inputLayout='inline'
-        component={(props) => {
-          return (
-            <>
-              <Box sx={{display: 'flex'}}>
-                <Box sx={{mr: 1}}>
-                  <Typography sx={{ mt: 1 }}>{props.fieldLabel}</Typography>
-                </Box>                    
-                <Box>
-                  <ImgSelect {...props} style={{sx: {height: "34px"}}}></ImgSelect>
-                </Box>
+      inputLayout='inline'
+      component={(props) => {
+        return (
+          <>
+            <Box sx={{display: 'flex'}}>
+              <Box sx={{mr: 1}}>
+                <Typography sx={{ mt: 1 }}>{props.fieldLabel}</Typography>
+              </Box>                    
+              <Box>
+                <ImgSelect {...props} style={{sx: {height: "34px"}}}></ImgSelect>
               </Box>
-            </>
-          )
-          }}
-          name="priority"
-          options={priorityOptions.map((path, i) => ({ path, value: i }))}
-        />
-        {/* <Field
-          name="krType"
-          fieldLabel="Tipo de KR"
-          component={SelectInputV2}
-          options={[{label: 'Medible', key: 'normal'}, {label:'No medible', key: 'checklist'}]}
-          hasKey={true}
-          validate={validateField}
-      /> */}
+            </Box>
+          </>
+        )
+        }}
+        name="priority"
+        options={priorityOptions.map((path, i) => ({ path, value: i }))}
+      />
     </>;
 
   const measurableContent = <>
@@ -117,8 +109,9 @@ const OKRView = ({
       values.hitos 
         ? values.hitos.push(inputValue) 
         : values.hitos = [inputValue]; 
-      console.log({hitos: values.hitos})
+
       setInputValue("");
+      setDisableAddKr(false);
     }
     return (
       <NoMeasurableContainer>
@@ -130,10 +123,9 @@ const OKRView = ({
             onChange={handleChange}
             value={inputValue}
             >
-
           </TextField>
-          <IconButton size="small" disabled={!inputValue} onClick={handleAddNewHito}>
-            <Check />
+          <IconButton size="small" disabled={!inputValue} onClick={handleAddNewHito} disableRipple>
+            <Check sx={{fontSize: 40, color: !inputValue ? 'gray' : 'black', mt: "10px"}}/>
           </IconButton>
         </Box>
         <NoMeasurableList>
@@ -156,6 +148,14 @@ const OKRView = ({
       setShowContent(true);
     }, 300);
   };
+
+  const disableNextPage = (values) => {
+    return !(values.description != "" &&  values.responsible != "")
+  }
+
+  const disableForNormalKr = ({baseline, goal, frequency}) => {
+    return !(baseline != "" && goal !="" && frequency != "")
+  }
 
   return <OkrContainerV2>
     <OkrHeader>
@@ -253,8 +253,8 @@ const OKRView = ({
     >
       <Formik
         onSubmit={(values) => {
+          setDisableAddKr(true);
           setIndex(0);
-          console.log({values})
           addKr({...values, krType: currentKrType});
         }}
         
@@ -269,7 +269,7 @@ const OKRView = ({
                 mountOnEnter
                 unmountOnExit
               >
-                <Box sx={{minHeight: '300px'}}>
+                <Box sx={{minHeight: '200px'}}>
                   {index == 0 && (commonContent)}
                   {index != 0 && currentKrType == 'normal' && (measurableContent)}
                   {index != 0 && currentKrType != 'normal' && (<NotMeasurableContent values={values}></NotMeasurableContent>)}
@@ -281,10 +281,10 @@ const OKRView = ({
               </Button>
               {
                 index == 0 ? 
-                (<Button onClick={handleNext}>
+                (<Button disabled={disableNextPage(values)} onClick={(event) => handleNext(event)}>
                   Siguiente
                 </Button>) : (
-                <Button type="submit">
+                <Button type="submit" disabled={disableAddKr && disableForNormalKr(values)}>
                   Agregar
                 </Button>
                 )
