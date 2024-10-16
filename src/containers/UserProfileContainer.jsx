@@ -55,8 +55,8 @@ const UserProfileContainer = () => {
       <Box
         sx={{
           position: 'absolute',
-          left: '15%',
-          top: '8%',
+          left: '5%',
+          top: '20%',
           display: 'flex',
           alignItems: 'center',
           gap: '5px',
