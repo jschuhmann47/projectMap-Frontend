@@ -38,6 +38,7 @@ export default function ModalV2({
             paddingLeft: '5%',
             paddingRight: '5%',
             paddingBottom: '2%',
+            overflow: 'hidden'
           }}
         >
           {children}
