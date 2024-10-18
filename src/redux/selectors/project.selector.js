@@ -1,5 +1,4 @@
 import { CompletitionColors } from 'helpers/enums/completition';
-import { getMenuItems } from 'helpers/enums/steps';
 import { createSelector } from 'reselect';
 
 const getFodas = (state) =>

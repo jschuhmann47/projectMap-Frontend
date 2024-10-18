@@ -29,6 +29,7 @@ export default function OrganizationChartTab({ projectId }) {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
+  const [hasChanges, setHasChanges] = useState(false);
   const dispatch = useDispatch();
   const { organizationalChart } = useSelector((state) => state.projects);
 
@@ -38,7 +39,7 @@ export default function OrganizationChartTab({ projectId }) {
 
   useEffect(() => {
     if (organizationalChart.data != null) {
-      const {nodes, edges } = organizationalChart.data;
+      const { nodes, edges } = organizationalChart.data;
       if (nodes != null) {
         setNodes(nodes);
       }
@@ -46,6 +47,8 @@ export default function OrganizationChartTab({ projectId }) {
       if (edges != null) {
         setEdges(edges);
       }
+
+      setHasChanges(false);
     }
   }, [organizationalChart]);
 
@@ -66,11 +69,12 @@ export default function OrganizationChartTab({ projectId }) {
       setEdges((eds) => {
         return addEdge({ ...params, type: ConnectionLineType.Step }, eds)
       })
+      setHasChanges(true);
     },
     [],
   );
 
-  const doOnSaveNewNode = (name) => {
+  const onSaveNewNode = ({ name }) => {
     const nodeId = `${generateNextNodeId()}`
     const newNode = {
       id: nodeId,
@@ -83,10 +87,7 @@ export default function OrganizationChartTab({ projectId }) {
     };
     setNodes((nds) => nds ? nds.concat(newNode) : [newNode]);
     setShowPopup(false);
-  }
-
-  const onSaveNewNode = ({ name }) => {
-    doOnSaveNewNode(name);
+    setHasChanges(true);
   }
 
   const onAddNewNode = () => {
@@ -97,13 +98,24 @@ export default function OrganizationChartTab({ projectId }) {
     const { nodes, edges } = reactFlowInstance.toObject();
     const data = { nodes, edges };
     dispatch(onSaveOrganizationalChart(projectId, data));
+    setHasChanges(false);
+  }
+
+  function onNodesChangeWithState(changes) {
+    setHasChanges(true);
+    onNodesChange(changes);
+  }
+
+  function onEdgesChangeWithState(changes) {
+    setHasChanges(true);
+    onEdgesChange(changes);
   }
 
   return (
     <div className="dndflow">
       <ChartHUD>
         <ChartButtons>
-          <Button onClick={onSaveDiagram}>
+          <Button onClick={onSaveDiagram} disabled={!hasChanges}>
             Guardar
           </Button>
           <Button onClick={onAddNewNode}>
@@ -144,8 +156,8 @@ export default function OrganizationChartTab({ projectId }) {
           <ReactFlow
             nodes={nodes}
             edges={edges}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
+            onNodesChange={onNodesChangeWithState}
+            onEdgesChange={onEdgesChangeWithState}
             onConnect={onConnect}
             onInit={setReactFlowInstance}
             fitView
