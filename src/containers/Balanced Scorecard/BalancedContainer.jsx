@@ -19,6 +19,8 @@ import { COLORS } from 'helpers/enums/colors';
 import Comments from 'components/comments/Comments';
 import Loading from 'components/commons/Loading';
 import { frequencyOptions } from 'helpers/enums/balanced';
+import { onGetOne as onGetProject } from 'redux/actions/projects.actions';
+import permission from 'helpers/permissions';
 
 const BalancedContainer = () => {
   const { balancedId, id } = useParams();
@@ -37,6 +39,13 @@ const BalancedContainer = () => {
   useEffect(() => {
     dispatch(onGetOne(balancedId));
   }, []);
+
+  useEffect(() => {
+    dispatch(onGetProject(id));
+  }, []);
+
+  const root = useSelector((state) => state);
+  const userPermission = permission(root, 'financialPlanning');
 
   const onSubmitObjective = (category, { action, frequency, responsible, goal, baseline, measure }) => {
     dispatch(
@@ -124,6 +133,7 @@ const BalancedContainer = () => {
         closeObjEditModal={handleCloseModal}
         isObjEditModalOpen={isModalOpen}
         currentObj={currentObjForModal}
+        userPermission={userPermission}
       />
       <Menu
         anchorEl={anchorElement}

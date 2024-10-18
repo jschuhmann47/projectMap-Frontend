@@ -33,6 +33,7 @@ export default function BalancedView({
   closeObjEditModal,
   isObjEditModalOpen,
   currentObj,
+  userPermission,
 }) {
   const [selectedArea, setSelectedArea] = useState(null);
 
@@ -51,9 +52,11 @@ export default function BalancedView({
       <>
         <KeyResultsHeader>
           {area}
-          <IconButton onClick={() => onClickAdd(area)}>
-            <AddCircle htmlColor="black" />
-          </IconButton>
+          {userPermission === 'edit' && (
+            <IconButton onClick={() => onClickAdd(area)}>
+              <AddCircle htmlColor="black" />
+            </IconButton>
+          )}
         </KeyResultsHeader>
         <KeyResultsContainer>
           {objectives[area].map((obj, index) => (
@@ -62,6 +65,7 @@ export default function BalancedView({
               objData={obj}
               openConfirmDeleteModal={openConfirmDeleteModal}
               handleObjClick={openObjEditModal}
+              userPermission={userPermission}
             />
           ))}
         </KeyResultsContainer>
@@ -78,7 +82,7 @@ export default function BalancedView({
         <OkrTitle>{title}</OkrTitle>
       </OkrHeader>
       {Object.values(Area).map(renderArea)}
-      <ModalV2 isOpen={isAddObjModalOpen} onClose={closeAddObjModal} title='Agregar objetivo'>
+      <ModalV2 isOpen={isAddObjModalOpen} onClose={onCloseModal} title='Agregar objetivo'>
         <Formik
           onSubmit={(formData) => onSubmitObjective(selectedArea, formData)}
           initialValues={{ action: '', frequency: '', responsible: '', measure: '' }}
@@ -150,6 +154,7 @@ export default function BalancedView({
         onClose={closeObjEditModal}
         data={currentObj}
         onSubmit={onEditObjective}
+        userPermission={userPermission}
       />
     </OkrContainerV2>
   )
