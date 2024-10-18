@@ -76,7 +76,7 @@ const McKinseyView = ({
             <ArrowBack />
           </IconButton>
         </ButtonContainer>
-        <Title sx={{ marginRight: '50%' }}>{showResults ? `Resultados de ${title}` : title}</Title>
+        <Title>{showResults ? `Resultados de ${title}` : title}</Title>
       </TitleContainer>
       <Grid
         container
