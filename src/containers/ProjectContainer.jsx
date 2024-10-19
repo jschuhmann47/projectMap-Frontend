@@ -17,10 +17,7 @@ import {
   onGetPestel,
   onGetPorter,
   onGetQuestionnaire,
-  onGetSharedUsers,
   onSearchByEmail,
-  onShareUser,
-  onUnShareUsers,
   openModal,
   closeModal,
   onAddUser,
@@ -52,22 +49,10 @@ import {
   getLoadingSelector,
 } from 'redux/selectors/project.selector';
 import { validateField } from 'helpers/validateField';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { onDelete as onDeletePestel } from 'redux/actions/pestel.actions';
-import { onDelete as onDeletePorter } from 'redux/actions/porter.actions';
-import { onDelete as onDeleteFoda } from 'redux/actions/foda.actions';
-import { onDelete as onDeleteAnsoff } from 'redux/actions/ansoff.actions';
-import { onDelete as onDeleteMckinsey } from 'redux/actions/mckinsey.actions';
-import { onDelete as onDeleteBalanceScorecard } from 'redux/actions/balanceScorecard.actions';
-import { onDeleteTool as onDeleteOkr } from 'redux/actions/okr.actions';
 import { getMenuItems } from 'helpers/enums/steps';
 import Comments from 'components/comments/Comments';
-import ShareModal from 'views/ProjectView/components/shareModal';
-import UnShareModal from 'views/ProjectView/components/unShareModal';
-import ConfirmDeleteModal from 'components/commons/ProjectCard/components/confirmDeleteModal';
 import Loading from 'components/commons/Loading';
 import { onGetAll as onGetAllComments } from 'redux/actions/comments.actions';
-import { onDelete } from 'redux/actions/questionnarie.actions';
 import { CardTitle } from 'views/FodaView/styles';
 import { horizonOptions } from 'helpers/enums/okr';
 import ModalV2 from 'components/commons/ModalV2';
@@ -88,13 +73,6 @@ const ProjectContainer = () => {
   const [addTool, setAddTool] = useState(null);
   const [isCalendlyOpen, setCalendlyOpen] = useState(false);
 
-  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
-  const [isUnShareModalOpen, setIsUnShareModalOpen] = useState(false);
-  const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] =
-    useState(false);
-  const [itemToDelete, setItemToDelete] = useState(null);
-  const [confirmDeleteError, setConfirmDeleteError] = useState(null);
-
   const [rolesTabChanged, setRolesTabChanged] = useState(false);
 
   // const menuItems = getMenuItems(stepValue);
@@ -104,15 +82,8 @@ const ProjectContainer = () => {
   const consultant = useSelector(getConsultantSelector);
 
   const projectInfo = useSelector((state) => state.projects.data);
-  const sharedUsers = useSelector((state) => state.projects.sharedUsers);
   const members = useSelector((state) => state.projects.members);
   const addUserModalInfo = useSelector((state) => state.projects.addUserModal);
-  const errorShared = useSelector(
-    (state) => state.projects.errorShared?.response?.data?.message
-  );
-  const sharedUsersSuccess = useSelector(
-    (state) => state.projects.sharedUsersSuccess
-  );
   const user = useSelector((state) => state.user.data);
   const loading = useSelector(getLoadingSelector);
   const { organizationalChart } = useSelector((state) => state.projects);
@@ -123,77 +94,10 @@ const ProjectContainer = () => {
     else navigate(`/dashborard`);
   };
 
-  const openShareModal = () => {
-    setIsShareModalOpen(true);
-  };
-
-  const closeShareModal = () => {
-    setIsShareModalOpen(false);
-  };
-
-  const openUnShareModal = () => {
-    setIsUnShareModalOpen(true);
-  };
-
-  const closeUnShareModal = () => {
-    setIsUnShareModalOpen(false);
-  };
-
-  const openConfirmDeleteModal = (item) => {
-    setIsConfirmDeleteModalOpen(true);
-    setItemToDelete(item);
-  };
-
-  const closeConfirmDeleteModal = () => {
-    setIsConfirmDeleteModalOpen(false);
-    setConfirmDeleteError(null);
-    setItemToDelete(null);
-  };
-
-  const onSubmitConfirmModal = ({ name }) => {
-    if (
-      name !== itemToDelete?.titulo &&
-      name !== itemToDelete?.description
-    ) {
-      setConfirmDeleteError('Nombre de la herramienta incorrecto.');
-    } else {
-      deleteTool(itemToDelete);
-      closeConfirmDeleteModal();
-    }
-  };
-
-  const shareModalOnSubmit = (formData) => {
-    dispatch(onShareUser(id, formData));
-  };
-
-  const unShareModalOnSubmit = (formDataDirty) => {
-    const formData = {
-      emails: formDataDirty.projects
-        .filter((x) => x.checked)
-        .map((x) => x.titulo),
-    };
-    dispatch(onUnShareUsers(id, formData));
-    closeUnShareModal();
-  };
-
   useEffect(() => {
     dispatch(onGetOne(id));
-    dispatch(onGetFoda(id));
-    dispatch(onGetPestel(id));
-    dispatch(onGetPorter(id));
-    dispatch(onGetAnsoff(id));
-    dispatch(onGetMckinsey(id));
-    dispatch(onGetOKR(id));
-    dispatch(onGetBalanced(id));
-    dispatch(onGetQuestionnaire(id));
-    dispatch(onGetSharedUsers(id));
-    dispatch(onGetAllComments('HUB', id));
     dispatch(onGetOrganizationalChart(id));
   }, []);
-
-  useEffect(() => {
-    if (sharedUsersSuccess) closeShareModal();
-  }, [sharedUsersSuccess]);
 
   const onClickAdd = (value, anchorElement) => {
     setStepValue(value);
@@ -216,38 +120,6 @@ const ProjectContainer = () => {
     }
     dispatch(action(formData));
     navigate('createTool');
-  };
-
-  const deleteTool = (item) => {
-    const tool = item.redirectUrl.split('/')[0];
-    const id = item._id;
-    const deleteTool = {
-      pestel: () => {
-        dispatch(onDeletePestel(id));
-      },
-      porter: () => {
-        dispatch(onDeletePorter(id));
-      },
-      foda: () => {
-        dispatch(onDeleteFoda(id));
-      },
-      ansoff: () => {
-        dispatch(onDeleteAnsoff(id));
-      },
-      mckinsey: () => {
-        dispatch(onDeleteMckinsey(id));
-      },
-      balanceScorecard: () => {
-        dispatch(onDeleteBalanceScorecard(id));
-      },
-      okr: () => {
-        dispatch(onDeleteOkr(id));
-      },
-      questionnaire: () => {
-        dispatch(onDelete(id));
-      },
-    };
-    deleteTool[tool]();
   };
 
   const onCLickMejoraContinua = () => navigate('mejora-continua');

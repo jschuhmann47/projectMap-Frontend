@@ -6,7 +6,6 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 function StepCardView({ step, setStep, onClick }) {
-  console.log({step})
   return <StepCard style={{backgroundColor: step.color, cursor: step.id != 'continuousImprovement' ? 'pointer' : 'auto'}} onClick={() => onClick(step)}>
     {step.title}
     <IconButton>
