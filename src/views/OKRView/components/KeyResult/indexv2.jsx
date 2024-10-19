@@ -33,7 +33,7 @@ export default function KeyResultModal({
     if (krType == 'normal') {
       return data.goal;
     } else {
-      return data.keyStatus?.length >= 1 ? `${data.keyStatus?.length} ítem` : `${data.keyStatus?.length} ítems`;
+      return data.keyStatus?.length >= 1 ? `${data.keyStatus?.length} ítems` : `${data.keyStatus?.length} ítem`;
     }
   }
 
@@ -115,7 +115,7 @@ export default function KeyResultModal({
         </Stack>
       </Box>
       {userPermission === 'edit' ? (
-        krType == 'normal' ? <KrForm onSubmit={onSubmit} data={data}/> : <ChecklistKrForm userPermission={userPermission} onSubmit={onSubmit} data={data}/>
+        krType == 'normal' ? <KrForm onSubmit={onSubmit} data={data}/> : <ChecklistKrForm onSubmit={onSubmit} data={data}/>
       ) : (
         krType == 'normal' ? <ReadonlyKr data={data} /> : <ReadonlyChecklistKr data={data}/>
       )}

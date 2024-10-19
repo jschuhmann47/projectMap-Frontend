@@ -96,5 +96,6 @@ export const NoMeasurableList = styled('div')({
 })
 
 export const NoMeasurableLine = styled('div')({
-  marginTop: '15px'
+  marginTop: '15px',
+  fontFamily: "'Fira Sans'"
 })
