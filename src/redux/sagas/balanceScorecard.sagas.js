@@ -28,6 +28,7 @@ export function* balanceScorecardCreate(action) {
       horizon: +Object.entries(horizonOptions).find((kv) => kv[1] === formData.horizon)[0],
       objectives: [],
       projectId: formData.projectId,
+      startingDate: formData.startingDate,
     };
     const { data } = yield call(create, req);
     const { projectId } = formData;
@@ -149,8 +150,8 @@ export function* balanceScorecardDeleteInitiative(action) {
 
 export function* balanceScorecardDeleteObjective(action) {
   try {
-    const { id, objetiveId } = action;
-    const { data } = yield call(deleteObjetive, id, objetiveId);
+    const { id, objectiveId } = action;
+    const { data } = yield call(deleteObjetive, id, objectiveId);
     yield put({
       type: constants.DELETE_OBJETIVE_BALANCE_SCORECARD_SUCCEEDED,
       data,

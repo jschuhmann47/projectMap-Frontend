@@ -7,6 +7,7 @@ import {
   deleteOkr,
   deleteKeyResult,
   editOneOkr,
+  assignParent,
 } from 'services/okr.services';
 
 import * as constants from 'redux/contansts/okr.constants';
@@ -27,7 +28,14 @@ export function* okrCreateTool(action) {
     };
     const { data } = yield call(createOkr, req);
     const { projectId } = formData;
+    const { parentId } = formData;
+
     store.dispatch(onGetOKR(projectId))
+    
+    if (parentId) {
+      yield call(assignParent, data._id, { parentOkrId: parentId });
+    };
+
     yield put({ type: constants.CREATE_OKR_TOOL_SUCCEEDED, data });
   } catch (error) {
     yield put({

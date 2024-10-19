@@ -16,6 +16,7 @@ import { frequencyOptions } from 'helpers/enums/okr';
 import KeyResultModal from 'views/OKRView/components/KeyResult/indexv2';
 import { useNavigate } from 'react-router-dom';
 import { StageByTool, Tools } from 'helpers/enums/steps';
+import permission from 'helpers/permissions';
 
 const OKRContainer = () => {
   const { okrToolId, id } = useParams();
@@ -28,9 +29,13 @@ const OKRContainer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentKrForModal, setCurrentKrForModal] = useState({})
   
+  const root = useSelector((state) => state);
+  const userPermission = permission(root, 'financialPlanning');
+
   useEffect(() => {
+    // this has to refresh when redirecting between OKRs
     dispatch(onGetOneTool(okrToolId));
-  }, []);
+  }, [okrToolId]);
 
   function addKr({ description, frequency, responsible, goal, priority, baseline }) {
     const formData = {
@@ -95,6 +100,10 @@ const OKRContainer = () => {
     const stage = StageByTool[Tools.Okr];
     navigate(`/projects/${id}/stage/${stage}`)
   };
+  
+  function openChild(childId) {
+    navigate(`/projects/${id}/okr/${childId}`)
+  }
 
   return (
     <LayoutContainer>
@@ -105,7 +114,6 @@ const OKRContainer = () => {
           closeAddKrModal={() => setIsAddKrModalOpen(false)}
           isAddKrModalOpen={isAddKrModalOpen}
           addKr={addKr}
-          editKr={editKr}
           openConfirmDeleteModal={(kr) => setKrToDelete(kr)}
           closeConfirmDeleteModal={() => setKrToDelete(null)}
           isConfirmDeleteModalOpen={!!krToDelete}
@@ -113,8 +121,16 @@ const OKRContainer = () => {
           confirmDeleteModalError={confirmDeleteError}
           openKrEditModal={handleOpenModal}
           onClickBack={onClickResultsButtonGoBack}
+          userPermission={userPermission}
+          openChild={openChild}
         />
-        <KeyResultModal onSubmit={editKr} data={currentKrForModal} isOpen={isModalOpen} onClose={handleCloseModal}></KeyResultModal>
+        <KeyResultModal
+          onSubmit={editKr}
+          data={currentKrForModal}
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          userPermission={userPermission}
+        />
       </Grid>
       {loading && <Loading isModalMode message="Cargando OKR" />}
     </LayoutContainer>

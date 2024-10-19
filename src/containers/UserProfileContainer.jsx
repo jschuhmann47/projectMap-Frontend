@@ -2,16 +2,19 @@ import Loading from 'components/commons/Loading';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-
 import { getUser, onEdit, onGetProfile } from 'redux/actions/user.actions';
 
 import ProfileView from 'views/ProfileView';
+import { Box, IconButton } from '@mui/material';
+import { ArrowBack } from '@mui/icons-material';
 
 import LayoutContainer from './LayoutContainer';
 
 const UserProfileContainer = () => {
   const { userId } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const user = useSelector((state) => state.user.data);
   const profile = useSelector((state) => state.user.profile);
   const loading = useSelector((state) => state.user.loading);
@@ -43,8 +46,27 @@ const UserProfileContainer = () => {
 
   const loadingPosta = userId ? loadingProfile : loading;
 
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   return (
     <LayoutContainer>
+      <Box
+        sx={{
+          position: 'absolute',
+          left: '5%',
+          top: '20%',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '5px',
+          justifyContent: 'space-between',
+        }}
+      >
+        <IconButton size="small" onClick={handleBack}>
+          <ArrowBack />
+        </IconButton>
+      </Box>
       {loadingPosta ? (
         <Loading isModalMode />
       ) : (

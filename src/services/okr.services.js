@@ -16,3 +16,6 @@ export const editKeyResult = (id, keyResultId, formData) =>
 
 export const deleteKeyResult = (id, keyResultId) =>
   remove(`okr/${id}/key-result/${keyResultId}`);
+
+export const assignParent = (id, formData) =>
+  post(`okr/${id}/parent`, formData);

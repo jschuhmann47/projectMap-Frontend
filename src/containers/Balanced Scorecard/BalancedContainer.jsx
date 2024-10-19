@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import LayoutContainer from 'containers/LayoutContainer';
 import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import BalancedView from 'views/BalancedView';
+import BalancedView from 'views/BalancedView/indexv2';
 import {
   onAddObjective,
   onGetOne,
   onUpdateObjective,
+  onDeleteObjective,
 } from 'redux/actions/balanceScorecard.actions';
 import {
   areaObjectivesSelector,
@@ -17,7 +18,6 @@ import { Menu, MenuItem } from '@mui/material';
 import { COLORS } from 'helpers/enums/colors';
 import Comments from 'components/comments/Comments';
 import Loading from 'components/commons/Loading';
-import { onGetAll as onGetAllComments } from 'redux/actions/comments.actions';
 import { frequencyOptions } from 'helpers/enums/balanced';
 import { StageByTool, Tools } from 'helpers/enums/steps';
 
@@ -29,11 +29,14 @@ const BalancedContainer = () => {
   const { title, horizon } = useSelector(titleSelector);
   const { loading } = useSelector((state) => state.balanceScorecard);
   const [anchorElement, setAnchorElement] = useState(null);
+  const [isAddObjModalOpen, setIsAddObjModalOpen] = useState(false);
+  const [objToDelete, setObjToDelete] = useState(null);
+  const [confirmDeleteError, setConfirmDeleteError] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentObjForModal, setCurrentObjForModal] = useState({})
 
   useEffect(() => {
     dispatch(onGetOne(balancedId));
-    dispatch(onGetAllComments('BALANCED_SCORECARD', balancedId));
   }, []);
 
   const onSubmitObjective = (category, { action, frequency, responsible, goal, baseline, measure }) => {
@@ -49,12 +52,57 @@ const BalancedContainer = () => {
         progress: 0,
       })
     );
+    setIsAddObjModalOpen(false);
+  };
+
+  const onEditObjective = ({
+    action,
+    frequency,
+    _id,
+    responsible, 
+    baseline, 
+    goal, 
+    checkpoints,
+    measure,
+    category,
+  }) => {
+    const formData = {
+      action,
+      frequency,
+      responsible, 
+      baseline, 
+      goal, 
+      checkpoints,
+      measure,
+      category,
+    }
+    dispatch(onUpdateObjective(balancedId, _id, formData));
+    handleCloseModal();
+  };
+
+  function deleteObjective(objectiveId) {
+    dispatch(onDeleteObjective(balancedId, objectiveId));
+  }
+
+  function submitConfirmDeleteModal({ name }) {
+    if (name !== objToDelete?.action) {
+      setConfirmDeleteError('Nombre del objetivo incorrecto.');
+      return;
+    }
+    deleteObjective(objToDelete?._id);
+    setConfirmDeleteError('');
+    setObjToDelete(null);
+  }
+
+  const handleOpenModal = (event) => {
+    setCurrentObjForModal(event)
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
     setIsModalOpen(false);
   };
 
-  const onEditObjective = (objectiveId, formData) => {
-    dispatch(onUpdateObjective(balancedId, objectiveId, formData));
-  };
 
   const onClickResultsButtonGoBack = () => {
     const stage = StageByTool[Tools.BalacedScorecard];
@@ -69,11 +117,19 @@ const BalancedContainer = () => {
         onEditObjective={onEditObjective}
         title={title}
         onClickButtonGoBack={onClickResultsButtonGoBack}
-        openComments={(target) => setAnchorElement(target)}
-        isModalOpen={isModalOpen}
-        openModal={() => setIsModalOpen(true)}
-        closeModal={() => setIsModalOpen(false)}
+        isAddObjModalOpen={isAddObjModalOpen}
+        openAddObjModal={()=> setIsAddObjModalOpen(true)}
+        closeAddObjModal={() => setIsAddObjModalOpen(false)}
         horizon={horizon}
+        openConfirmDeleteModal={setObjToDelete}
+        closeConfirmDeleteModal={() => setObjToDelete(null)}
+        isConfirmDeleteModalOpen={!!objToDelete}
+        submitConfirmDeleteModal={submitConfirmDeleteModal}
+        confirmDeleteModalError={confirmDeleteError}
+        openObjEditModal={handleOpenModal}
+        closeObjEditModal={handleCloseModal}
+        isObjEditModalOpen={isModalOpen}
+        currentObj={currentObjForModal}
       />
       <Menu
         anchorEl={anchorElement}

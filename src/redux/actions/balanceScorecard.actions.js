@@ -51,11 +51,10 @@ export const onDeleteInitiative = (id, initiativeId, formData) => ({
   formData,
 });
 
-export const onDeleteObjective = (id, objectiveId, formData) => ({
+export const onDeleteObjective = (id, objectiveId) => ({
   type: constants.DELETE_OBJETIVE_BALANCE_SCORECARD_REQUESTED,
   id,
   objectiveId,
-  formData,
 });
 
 export const onDeleteCheckpoint = (
