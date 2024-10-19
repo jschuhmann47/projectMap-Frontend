@@ -20,6 +20,7 @@ export const OkrContainerV2 = styled('div')({
   marginTop: '5%',
   display: 'flex',
   flexDirection: 'column',
+  width: '90%',
 })
 
 export const OkrHeader = styled('div')({
