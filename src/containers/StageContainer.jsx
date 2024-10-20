@@ -8,6 +8,7 @@ import {
   onGetMckinsey,
   onGetOKR,
   onGetOne,
+  onGetPdcas,
   onGetPestel,
   onGetPorter,
   onGetQuestionnaire,
@@ -30,6 +31,7 @@ import { onDelete as onDeleteAnsoff } from 'redux/actions/ansoff.actions';
 import { onDelete as onDeleteMckinsey } from 'redux/actions/mckinsey.actions';
 import { onDelete as onDeleteBalanceScorecard } from 'redux/actions/balanceScorecard.actions';
 import { onDeleteTool as onDeleteOkr } from 'redux/actions/okr.actions';
+import { onDelete as onDeletePdca } from 'redux/actions/pdca.actions';
 import { onDelete } from 'redux/actions/questionnarie.actions';
 import ModalV2 from "components/commons/ModalV2";
 import { COLORS } from "helpers/enums/colors";
@@ -40,15 +42,6 @@ import SelectInputV2 from "components/inputs/SelectInputV2";
 import DateInput from "components/inputs/DateInput";
 import { ButtonsContainer } from "styles/form";
 import StepInfoModal from "views/ProjectView/tabs/stepInfoModal";
-
-const isValidStage = (name) => [
-  'externalEnvironment',
-  'internalSituation',
-  'strategicGuidelines',
-  'competitiveStrategy',
-  'transformationPlans',
-  'financialPlanning'
-].includes(name);
 
 const NO_AREA = 'Sin área'
 
@@ -139,7 +132,8 @@ const StageContainer = () => {
     'strategicGuidelines': () => { dispatch(onGetAnsoff(projectId)) },
     'competitiveStrategy': () => { dispatch(onGetMckinsey(projectId)) },
     'transformationPlans': () => { dispatch(onGetQuestionnaire(projectId)) },
-    'financialPlanning': () => { dispatch(onGetBalanced(projectId)); dispatch(onGetOKR(projectId)) }
+    'financialPlanning': () => { dispatch(onGetBalanced(projectId)); dispatch(onGetOKR(projectId)) },
+    'continuousImprovement': () => { dispatch(onGetPdcas(projectId)) }
   }
 
   const deleteTool = (item) => {
@@ -170,17 +164,16 @@ const StageContainer = () => {
       questionnaire: () => {
         dispatch(onDelete(id));
       },
+      pdca: () => {
+        dispatch(onDeletePdca(id));
+      }
     };
     deleteTool[tool]();
   };
 
   useEffect(() => {
-    if (isValidStage(stageName)) {
-      getToolsFor[stageName]();
-      dispatch(onGetOne(projectId));
-    } else {
-      navigate(`/dashboard`)
-    }
+    getToolsFor[stageName]();
+    dispatch(onGetOne(projectId));
 
     if (stageName) {
       const step = STEPS.find(({ id }) => id == stageName);

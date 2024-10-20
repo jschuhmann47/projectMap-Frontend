@@ -36,6 +36,11 @@ const getQuestionnaires = (state) =>
     ...x,
     redirectUrl: `questionnaire/${x._id}`,
   }));
+const getPdcas = (state) =>
+  state.projects.pdcas?.map((x) => ({
+    ...x,
+    redirectUrl: `pdca/${x._id}`,
+  }))
 const getSharedUsers = (state) => state.projects.sharedUsers;
 
 const getLoadingFoda = (state) => state.projects.loadingFodas;
@@ -54,8 +59,8 @@ export const selectorByStage = {
       [getPorters, getPestels], 
       (porters, pestels) => {
         return [
-          { title: 'Análisis Porter:', items: porters, toolName: Tools.Porter },
-          { title: 'Análisis Pestel:', items: pestels, toolName: Tools.Pestel }
+          { title: 'Análisis Porter', items: porters, toolName: Tools.Porter },
+          { title: 'Análisis Pestel', items: pestels, toolName: Tools.Pestel }
         ]
       }),
     'internalSituation': 
@@ -63,7 +68,7 @@ export const selectorByStage = {
         [getFodas], 
         (foda) => {
           return [
-            { title: 'Análisis FODAs:', items: foda, toolName: Tools.Foda },
+            { title: 'Análisis FODA', items: foda, toolName: Tools.Foda },
           ]
         })
     ,'strategicGuidelines': 
@@ -71,7 +76,7 @@ export const selectorByStage = {
         [getAnsoffs], 
         (ansoffs) => {
           return [
-            { title: 'Matrices Ansoffs:', items: ansoffs, toolName: Tools.Ansoff },
+            { title: 'Matrices Ansoff', items: ansoffs, toolName: Tools.Ansoff },
           ]
         }) 
     ,'competitiveStrategy': 
@@ -79,7 +84,7 @@ export const selectorByStage = {
         [getMckinseys], 
         (mckenseys) => {
           return [
-            { title: 'Matrices McKinseys:', items: mckenseys, toolName: Tools.McKinsey },
+            { title: 'Matrices McKinsey', items: mckenseys, toolName: Tools.McKinsey },
           ]
         }) 
     ,'transformationPlans': 
@@ -87,7 +92,7 @@ export const selectorByStage = {
         [getQuestionnaires], 
         (questionnaires) => {
           return [
-            { title: 'Cuestionarios:', items: questionnaires, toolName: Tools.Questionnaires },
+            { title: 'Cuestionarios', items: questionnaires, toolName: Tools.Questionnaires },
           ]
         }) 
     ,'financialPlanning': 
@@ -95,10 +100,18 @@ export const selectorByStage = {
       [getBalancedScorecard,getOkrs], 
       (balanceScorecards, okrs) => {
         return [
-          { title: 'OKRs:', items: okrs, toolName: Tools.Okr },
-          {title: 'Balanced scorecards:', items: balanceScorecards, toolName: Tools.BalacedScorecard}
+          { title: 'OKRs', items: okrs, toolName: Tools.Okr },
+          {title: 'Balanced scorecards', items: balanceScorecards, toolName: Tools.BalacedScorecard}
         ]
-      }) 
+      }),
+    'continuousImprovement': createSelector(
+      [getPdcas],
+      (pdcas) => {
+        return [
+          { title: 'Ciclos PDCA', items: pdcas, toolName: Tools.Pdca }
+        ]
+      }
+    )
 }
 
 export const stepToolsSelector = createSelector(
