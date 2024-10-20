@@ -15,7 +15,11 @@ export default function KeyResultModal({
   const { krType } = data
   const showProgressNumber = () => {
     if (krType == 'normal') {
-      return data.currentScore > data.baseline && data.currentScore < data.goal;
+      if (data.baseline < data.goal) { 
+        return data.currentScore > data.baseline && data.currentScore < data.goal;
+      } else {
+        return data.currentScore < data.baseline && data.currentScore > data.goal
+      }
     } else {
       return data.currentScore > 0 && data.currentScore < data.keyStatus.length;
     }
@@ -39,7 +43,11 @@ export default function KeyResultModal({
 
   const displayProgressBar = () => {
     if (krType == 'normal') {
-      return data.currentScore > data.baseline ? 'block' : 'none';
+      if (data.baseline < data.goal) {
+        return data.currentScore > data.baseline ? 'block' : 'none';
+      } else {
+        return data.currentScore < data.baseline ? 'block' : 'none';
+      }
     } else {
       return data.currentScore > 0 ? 'block' : 'none';
     }

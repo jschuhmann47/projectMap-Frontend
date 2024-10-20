@@ -154,7 +154,7 @@ const OKRView = ({
   }
 
   const disableForNormalKr = ({baseline, goal, frequency}) => {
-    return !(baseline != "" && goal !="" && frequency != "")
+    return !(typeof baseline == "number" && typeof goal == "number" && frequency != "")
   }
 
   return <OkrContainerV2>
