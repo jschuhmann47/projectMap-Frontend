@@ -3,35 +3,24 @@ import { StepCard, StepIcons, StepsContainer } from "../styles"
 import { Edit, HelpOutlined, Visibility } from "@mui/icons-material"
 import StepInfoModal from "./stepInfoModal"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
-function StepCardView({ step, setStep, permission }) {
-  return <StepCard style={{backgroundColor: step.color}}>
+function StepCardView({ step, setStep, onClick }) {
+  return <StepCard style={{backgroundColor: step.color, cursor: step.id != 'continuousImprovement' ? 'pointer' : 'auto'}} onClick={() => onClick(step)}>
     {step.title}
     <IconButton>
-      <HelpOutlined onClick={() => setStep(step.value)} />
+      <HelpOutlined onClick={(e) => {setStep(step); e.stopPropagation();}} />
     </IconButton>
-    <StepIcons>
-      {
-        permission !== 'hide' &&
-        <IconButton onClick={(e) => step.onClickList(step.value, e.currentTarget)}>
-          <Visibility />
-        </IconButton>
-      }
-      {
-        permission === 'edit' &&
-        <IconButton onClick={(e) => step.onClickAdd(step.value, e.currentTarget)}>
-          <Edit />
-        </IconButton>
-      }
-    </StepIcons>
   </StepCard>
 }
 
-export default function StepsTab({ steps, hasFullPermissions, stepPermissions }) {
+export default function StepsTab({ steps, hasFullPermissions, stepPermissions, projectId }) {
+  const navigate = useNavigate();
+
   const orderedSteps = steps.sort((step1, step2) => step1.value - step2.value)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedStep, setSelectedStep] = useState(0);
-
+  
   function setStep(step) {
     setSelectedStep(step);
     setIsModalOpen(true);
@@ -43,9 +32,15 @@ export default function StepsTab({ steps, hasFullPermissions, stepPermissions })
     return stepPermissions.find((p) => p.id === step).permission
   }
 
+  const handleOnStepClick = (step) => {
+    if (step.id !== 'continuousImprovement') {
+      navigate(`/projects/${projectId}/stage/${step.id}`)
+    }
+  }
   return <StepsContainer>
     {orderedSteps.map((step) =>
       <StepCardView
+        onClick={handleOnStepClick}
         step={step}
         setStep={setStep}
         permission={stepPermission(step.id)}

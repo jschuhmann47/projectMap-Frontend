@@ -19,6 +19,7 @@ import { COLORS } from 'helpers/enums/colors';
 import Comments from 'components/comments/Comments';
 import Loading from 'components/commons/Loading';
 import { frequencyOptions } from 'helpers/enums/balanced';
+import { StageByTool, Tools } from 'helpers/enums/steps';
 
 const BalancedContainer = () => {
   const { balancedId, id } = useParams();
@@ -103,6 +104,11 @@ const BalancedContainer = () => {
   };
 
 
+  const onClickResultsButtonGoBack = () => {
+    const stage = StageByTool[Tools.BalacedScorecard];
+    navigate(`/projects/${id}/stage/${stage}`)
+  };
+  
   return (
     <LayoutContainer>
       <BalancedView
@@ -110,7 +116,7 @@ const BalancedContainer = () => {
         objectives={objectives}
         onEditObjective={onEditObjective}
         title={title}
-        onClickButtonGoBack={() => navigate(`/projects/${id}`)}
+        onClickButtonGoBack={onClickResultsButtonGoBack}
         isAddObjModalOpen={isAddObjModalOpen}
         openAddObjModal={()=> setIsAddObjModalOpen(true)}
         closeAddObjModal={() => setIsAddObjModalOpen(false)}

@@ -15,6 +15,7 @@ import Loading from 'components/commons/Loading';
 import { frequencyOptions } from 'helpers/enums/okr';
 import KeyResultModal from 'views/OKRView/components/KeyResult/indexv2';
 import { useNavigate } from 'react-router-dom';
+import { StageByTool, Tools } from 'helpers/enums/steps';
 import permission from 'helpers/permissions';
 
 const OKRContainer = () => {
@@ -95,6 +96,11 @@ const OKRContainer = () => {
     setIsModalOpen(false);
   };
 
+  const onClickResultsButtonGoBack = () => {
+    const stage = StageByTool[Tools.Okr];
+    navigate(`/projects/${id}/stage/${stage}`)
+  };
+  
   function openChild(childId) {
     navigate(`/projects/${id}/okr/${childId}`)
   }
@@ -114,7 +120,7 @@ const OKRContainer = () => {
           submitConfirmDeleteModal={submitConfirmDeleteModal}
           confirmDeleteModalError={confirmDeleteError}
           openKrEditModal={handleOpenModal}
-          onClickBack={() => navigate(-1)}
+          onClickBack={onClickResultsButtonGoBack}
           userPermission={userPermission}
           openChild={openChild}
         />

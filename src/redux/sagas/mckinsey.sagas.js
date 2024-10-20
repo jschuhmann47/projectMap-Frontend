@@ -8,11 +8,15 @@ import {
 } from 'services/mckinsey.services';
 
 import * as constants from 'redux/contansts/mckinsey.constants';
+import store from 'redux/store';
+import { onGetMckinsey } from 'redux/actions/projects.actions';
 
 export function* mckinseyCreate(action) {
   try {
     const { formData } = action;
     const { data } = yield call(create, formData);
+    const { projectId } = formData;
+    store.dispatch(onGetMckinsey(projectId))
     yield put({ type: constants.CREATE_MCKINSEY_SUCCEEDED, data });
   } catch (error) {
     yield put({

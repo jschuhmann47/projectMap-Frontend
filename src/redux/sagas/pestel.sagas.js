@@ -11,11 +11,15 @@ import {
 } from 'services/pestel.services';
 
 import * as constants from 'redux/contansts/pestel.constants';
+import store from 'redux/store';
+import { onGetPestel } from 'redux/actions/projects.actions';
 
 export function* pestelCreate(action) {
   try {
     const { formData } = action;
     const { data } = yield call(create, formData);
+    const { projectId } = formData;
+    store.dispatch(onGetPestel(projectId))
     yield put({ type: constants.CREATE_PESTEL_SUCCEEDED, data });
   } catch (error) {
     yield put({
