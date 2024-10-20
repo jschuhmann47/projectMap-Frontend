@@ -64,6 +64,11 @@ export const onGetQuestionnaire = (id) => ({
   id,
 });
 
+export const onGetPdcas = (id) => ({
+  type: constants.PROJECTS_ON_GET_PDCAS_REQUESTED,
+  id,
+})
+
 export const onGetSharedUsers = (id) => ({
   type: constants.PROJECTS_SHARED_USERS_REQUESTED,
   id,

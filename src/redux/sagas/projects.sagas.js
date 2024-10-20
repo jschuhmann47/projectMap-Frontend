@@ -25,7 +25,8 @@ import {
   updateUsers,
   search,
   getOrganizationalChart,
-  saveOrganizationalChart
+  saveOrganizationalChart,
+  getPdcas
 } from 'services/projects.services';
 import { searchByEmail } from 'services/user.services';
 
@@ -233,6 +234,24 @@ export function* projectsOnGetQuestionnaires(action) {
   }
 }
 
+export function* projectsOnGetPdcas(action) {
+  try {
+    const { id } = action;
+    if (id) {
+      const { data } = yield call(getPdcas, id);
+      yield put({
+        type: constants.PROJECTS_ON_GET_PDCAS_SUCCEEDED,
+        data,
+      });
+    }
+  } catch (error) {
+    yield put({
+      type: constants.PROJECTS_ON_GET_PDCAS_FAILED,
+      error,
+    });
+  }
+}
+
 export function* projectsOnGetUsersShared(action) {
   try {
     const { id } = action;
@@ -391,6 +410,7 @@ export function* watchProjects() {
       constants.PROJECTS_ON_GET_QUESTIONNAIRE_REQUESTED,
       projectsOnGetQuestionnaires
     ),
+    takeLatest(constants.PROJECTS_ON_GET_PDCAS_REQUESTED, projectsOnGetPdcas),
     takeLatest(
       constants.PROJECTS_SHARED_USERS_REQUESTED,
       projectsOnGetUsersShared
