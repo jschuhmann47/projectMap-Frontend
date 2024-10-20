@@ -16,7 +16,7 @@ import { Box, IconButton } from "@mui/material"
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Button from 'components/commons/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom"
 import { selectorByStage } from "redux/selectors/project.selector";
 import { StageToolView, StepCard, ToolCard, ToolCardContainer, ToolCardTitle, ToolsView } from "views/ProjectView/styles";
@@ -33,7 +33,7 @@ import { onDeleteTool as onDeleteOkr } from 'redux/actions/okr.actions';
 import { onDelete } from 'redux/actions/questionnarie.actions';
 import ModalV2 from "components/commons/ModalV2";
 import { COLORS } from "helpers/enums/colors";
-import { Field, Form, Formik } from "formik";
+import { Field, Form, Formik, useFormikContext } from "formik";
 import InputV2 from "components/inputs/InputV2";
 import { validateField } from "helpers/validateField";
 import SelectInputV2 from "components/inputs/SelectInputV2";
@@ -51,6 +51,7 @@ const isValidStage = (name) => [
 ].includes(name);
 
 const NO_AREA = 'Sin área'
+const NO_PARENT = 'Sin padre'
 
 function Card({ onClick, step, item, showDeleteIcon, handleOnDelete }) {
   return <ToolCard onClick={() => onClick(item.redirectUrl)} style={{ cursor: 'pointer', backgroundColor: step?.color }}>
@@ -114,7 +115,7 @@ const StageContainer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toolItems = useSelector(selectorByStage[stageName]);
-
+  const allOkrs = useSelector((state) => state.projects.okrs);
   const user = useSelector((state) => state.user.data);
   
   const projectInfo = useSelector((state) => state.projects.data);
@@ -227,6 +228,15 @@ const StageContainer = () => {
     } else {
       formData.areaId = ''
     }
+
+    if (formData.parent !== NO_PARENT) {
+      formData.parentId = allOkrs.find((okr) =>
+        okr.description === formData.parent
+      )._id
+    } else {
+      formData.parentId = undefined
+    }
+
     dispatch(action(formData));
     setAddTool(null);
   };
@@ -314,6 +324,16 @@ const StageContainer = () => {
                   validate={validateField}
                 />
               }
+              {addTool?.parent &&
+                <Field
+                  name="parent"
+                  fieldLabel="OKR padre"
+                  component={ParentInput}
+                  allOkrs={allOkrs}
+                  organizationalChart={organizationalChart?.data}
+                  validate={validateField}
+                />
+              }
               <ButtonsContainer>
                 <Button color="secondary" onClick={() => setAddTool(null)}>
                   Cancelar
@@ -336,3 +356,27 @@ const StageContainer = () => {
 };
 
 export default StageContainer;
+
+function ParentInput(props) {
+  const { allOkrs, organizationalChart } = props
+  const { values } = useFormikContext()
+
+  const extraOptions = useMemo(() => {
+    const canHaveParent = values.area !== NO_AREA
+    if (!canHaveParent) return []
+    const node = organizationalChart.nodes.find((n) => n.data.label === values.area)
+    const parentEdge = organizationalChart.edges.find((e) => e.target === node.id)
+    if (!parentEdge) return []
+    const parentNode = organizationalChart.nodes.find((n) => n.id === parentEdge.source)
+    return allOkrs
+      .filter((okr) => okr.area === parentNode.data.label && okr.keyResults.length === 0)
+      .map((okr) => okr.description)
+  }, [values.area])
+
+  return (
+    <SelectInputV2
+      options={[NO_PARENT, ...extraOptions]}
+      {...props}
+    />
+  )
+}
