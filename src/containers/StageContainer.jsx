@@ -265,7 +265,6 @@ const StageContainer = () => {
       />
       <ModalV2
         isOpen={!!addTool}
-        backgroundColor={COLORS.WildSand}
         onClose={() => setAddTool(null)}
         title={addTool?.titulo}
       >
