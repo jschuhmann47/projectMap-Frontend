@@ -37,7 +37,14 @@ const DashboardView = (props) => {
 
   return (
     <Container>
-      <Content>
+      <Content sx={{
+            position: 'sticky',
+            maxWidth: '100%',
+            top: 0,
+            backgroundColor: 'white',
+            zIndex: 10,
+            padding: '10px 0',
+          }}>
         <TitleContainer>
           <Title>Proyectos</Title>
           {isAdmin && (

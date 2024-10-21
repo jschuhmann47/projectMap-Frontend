@@ -21,16 +21,21 @@ const customTheme = createTheme({
           backgroundColor: COLORS.white,
           color: COLORS.GreenJungle,
           border: `1px solid ${COLORS.GreenJungle}`,
+        },
+        disabled: {
+          backgroundColor: '#aaaaaa',
+          color: COLORS.white,
+          cursor: 'default',
         }
       },
     },
   },
 });
 
-const Button = ({ children, href, type, onClick, color }) => {
+const Button = ({ children, href, type, onClick, color, disabled }) => {
   const renderButton = () => (
     <ThemeProvider theme={customTheme}>
-      <CustomButton type={type} onClick={onClick} color={color}>
+      <CustomButton type={type} onClick={onClick} color={color} disabled={disabled}>
         {children}
       </CustomButton>
     </ThemeProvider>
