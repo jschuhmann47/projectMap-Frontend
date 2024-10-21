@@ -47,7 +47,8 @@ export const defaultState = {
     },
     error: null,
     success: null,
-  }
+  },
+  total: 0,
 };
 
 const projectsReducer = (state = defaultState, action) => {
@@ -110,8 +111,15 @@ const projectsReducer = (state = defaultState, action) => {
     case constants.PROJECTS_ON_SEARCH_SUCCEEDED:
       return {
         ...state,
-        items: data,
+        items: action.data,
+        total: action.total,
         loading: false,
+      };
+    case constants.PROJECTS_ON_GET_ALL_FAILED:
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
       };
     case constants.PROJECTS_ON_GET_ONE_SUCCEEDED:
       const members = [

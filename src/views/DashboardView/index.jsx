@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
-
 import Button from 'components/commons/Button';
 import ProjectCard from 'components/commons/ProjectCard';
-
 import {
   AdminButtonsContainer,
   ButtonContainer,
@@ -30,19 +28,12 @@ const DashboardView = (props) => {
     onChangeSearchText,
     onSearch,
     onClearSearch,
-    userId
+    userId,
+    totalProjects,
+    currentPage,
+    projectsPerPage,
+    onPageChange,
   } = props;
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const projectsPerPage = 5;
-
-  const indexOfLastProject = currentPage * projectsPerPage;
-  const indexOfFirstProject = indexOfLastProject - projectsPerPage;
-  const currentProjects = items.slice(indexOfFirstProject, indexOfLastProject);
-
-  const handlePageChange = (event, value) => {
-    setCurrentPage(value)
-  }
 
   return (
     <Container>
@@ -91,7 +82,7 @@ const DashboardView = (props) => {
         ) : (
           <>
             <Grid container rowSpacing={1} columnSpacing={2}>
-              {currentProjects.map(({ _id, color, name, description, coordinators, participants }) => (
+              {items.map(({ _id, color, name, description, coordinators, participants }) => (
                 <Grid item xs={12} key={_id}>
                   <ProjectCard
                     key={_id}
@@ -115,9 +106,9 @@ const DashboardView = (props) => {
 
             <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
               <Pagination
-                count={Math.ceil(items.length / projectsPerPage)}
+                count={Math.ceil(totalProjects / projectsPerPage)}
                 page={currentPage}
-                onChange={handlePageChange}
+                onChange={onPageChange}
                 color="primary"
               />
             </Box>

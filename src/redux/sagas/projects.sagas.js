@@ -67,12 +67,15 @@ export function* projectsDelete(action) {
   }
 }
 
-export function* projectsOnGetAll() {
+export function* projectsOnGetAll(action) {
   try {
-    const { data } = yield call(getAll);
+    const { limit, offset } = action;
+    const { data } = yield call(getAll, { limit, offset });
+
     yield put({
       type: constants.PROJECTS_ON_GET_ALL_SUCCEEDED,
-      data,
+      data: data.items,
+      total: data.total,
     });
   } catch (error) {
     yield put({ type: constants.PROJECTS_ON_GET_ALL_FAILED, error });

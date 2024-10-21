@@ -1,8 +1,6 @@
 import Loading from 'components/commons/Loading';
-import Modal from 'components/commons/Modal';
 import ModalV2 from 'components/commons/ModalV2';
 import LayoutContainer from 'containers/LayoutContainer';
-import { getRandomInt } from 'helpers/randomNumber';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -16,17 +14,26 @@ const DashboardContainer = () => {
   const navigate = useNavigate();
   const [isAddNewOpen, setAddNew] = useState(false);
   const [searchText, setSearchText] = useState("");
-  const { items, loading } = useSelector((state) => state.projects);
+  const [currentPage, setCurrentPage] = useState(1);
+  const projectsPerPage = 5;
+
+  const { items, loading, total } = useSelector((state) => state.projects);
   const user = useSelector((state) => state.user.data);
 
   useEffect(() => {
-    dispatch(onGetAll());
+    fetchProjects();
     dispatch(getUser());
-  }, [dispatch]);
+  }, [dispatch, currentPage]);
+
+  const fetchProjects = () => {
+    const limit = projectsPerPage;
+    const offset = (currentPage - 1) * projectsPerPage;
+    dispatch(onGetAll({ limit, offset }));
+  };
 
   const onSubmit = (formData) => {
     function randomHSLA() {
-      return `hsla(${~~(360 * Math.random())}, 70%,  72%, 0.8)`;
+      return `hsla(${~~(360 * Math.random())}, 70%, 72%, 0.8)`;
     }
     const color = randomHSLA();
 
@@ -42,13 +49,17 @@ const DashboardContainer = () => {
 
   const isAdmin = user && user.isAdmin;
 
-  function search() {
-    dispatch(onSearch(searchText));
+  const search = () => {
+    dispatch(onSearch(searchText))
   }
 
-  function clearSearch() {
-    setSearchText("");
-    dispatch(onGetAll());
+  const clearSearch = () => {
+    setSearchText("")
+    fetchProjects()
+  }
+
+  const onPageChange = (event, value) => {
+    setCurrentPage(value);
   }
 
   return (
@@ -64,6 +75,10 @@ const DashboardContainer = () => {
         onSearch={search}
         onClearSearch={clearSearch}
         userId={user?._id}
+        totalProjects={total}
+        currentPage={currentPage}
+        projectsPerPage={projectsPerPage}
+        onPageChange={onPageChange}
       />
       <ModalV2 isOpen={isAddNewOpen} onClose={() => setAddNew(false)} title='Nuevo proyecto'>
         <ProjectForm onSubmit={onSubmit} />
