@@ -19,6 +19,10 @@ export const validateCalendlyLink = (value) => {
     : 'Link invalido. Formato valido: https://calendly.com/{nombreUsuario}/{tipoReunion}';
 };
 
+export const validateDifferentFrom = (value ,target) => {
+  return value != null && value != undefined && target != null && target !== undefined && value == target ? 'Error' : undefined;
+}
+
 export const validateNumberField = (value) => {
   let error;
   if (value === '' || value === null || value === undefined) {
