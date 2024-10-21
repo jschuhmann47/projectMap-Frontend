@@ -288,7 +288,7 @@ const StageContainer = () => {
       >
         <Formik
           onSubmit={(values) => onSubmitTool(addTool.action, values)}
-          initialValues={{ titulo: '', area: 'Sin área' }}
+          initialValues={{ titulo: '', area: 'Sin área', parent: 'Sin padre' }}
         >
           {({ handleSubmit }) => (
             <Form onSubmit={handleSubmit}>
