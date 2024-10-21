@@ -23,5 +23,5 @@ export const areaObjectivesSelector = createSelector(
 
 export const titleSelector = createSelector([getBalancedSelected], (tool) => ({
   ...tool,
-  title: `${tool?.description} - ${parseDate(tool?.createdAt)} - Horizonte: ${horizonOptions[tool?.horizon]}`,
+  title: `${tool?.description} - ${parseDate(tool?.startingDate)} - Horizonte: ${horizonOptions[tool?.horizon]}`,
 }));
