@@ -15,7 +15,7 @@ import {
   TitleContainer,
 } from './styles';
 import { Box, TextField } from '@mui/material';
-import { Clear, Search } from '@mui/icons-material';
+import { Clear } from '@mui/icons-material';
 
 const DashboardView = (props) => {
   const {
@@ -26,7 +26,6 @@ const DashboardView = (props) => {
     isAdmin,
     searchText,
     onChangeSearchText,
-    onSearch,
     onClearSearch,
     userId,
     totalProjects,
@@ -37,14 +36,16 @@ const DashboardView = (props) => {
 
   return (
     <Container>
-      <Content sx={{
-            position: 'sticky',
-            maxWidth: '100%',
-            top: 0,
-            backgroundColor: 'white',
-            zIndex: 10,
-            padding: '10px 0',
-          }}>
+      <Content
+        sx={{
+          position: 'sticky',
+          maxWidth: '100%',
+          top: 0,
+          backgroundColor: 'white',
+          zIndex: 10,
+          padding: '10px 0',
+        }}
+      >
         <TitleContainer>
           <Title>Proyectos</Title>
           {isAdmin && (
@@ -64,13 +65,6 @@ const DashboardView = (props) => {
                   value={searchText}
                   onChange={onChangeSearchText}
                 />
-                <ButtonContainer>
-                  <Button onClick={onSearch}>
-                    <ButtonContent>
-                      <Search />
-                    </ButtonContent>
-                  </Button>
-                </ButtonContainer>
               </>
               <ButtonContainer>
                 <Button onClick={onAddNew}>
