@@ -11,11 +11,16 @@ import {
   insertQuestion,
 } from 'services/porter.services';
 import * as constants from 'redux/contansts/porter.constants';
+import { PROJECTS_ON_GET_ONE_REQUESTED } from 'redux/contansts/projects.constants';
+import store from 'redux/store';
+import { onGetOne, onGetPestel, onGetPorter } from 'redux/actions/projects.actions';
 
 export function* porterCreate(action) {
   try {
     const { formData } = action;
     const { data } = yield call(create, formData);
+    const { projectId } = formData;
+    store.dispatch(onGetPorter(projectId))
     yield put({ type: constants.PORTER_CREATE_SUCCEEDED, data });
   } catch (error) {
     yield put({
