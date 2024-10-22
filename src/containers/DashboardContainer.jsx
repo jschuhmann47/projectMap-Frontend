@@ -37,7 +37,7 @@ const DashboardContainer = () => {
     const limit = projectsPerPage;
     const offset = (currentPage - 1) * projectsPerPage;
 
-    dispatch(onGetAll({ limit, offset, text: searchText }));
+    dispatch(onGetAll({ limit, offset, search: searchText }));
   };
 
   const onSubmit = (formData) => {

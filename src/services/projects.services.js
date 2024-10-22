@@ -2,10 +2,10 @@ import { post, get, remove, put } from 'services/api';
 
 export const save = (formData) => post('projects', formData);
 
-export const getAll = ({ limit, offset, text }) => {
+export const getAll = ({ limit, offset, search }) => {
   const params = { limit, offset };
-  if (text) {
-    params.text = text;
+  if (search) {
+    params.search = search;
   }
 
   return get('projects', params);

@@ -69,8 +69,8 @@ export function* projectsDelete(action) {
 
 export function* projectsOnGetAll(action) {
   try {
-    const { limit, offset, text } = action;
-    const { data } = yield call(getAll, { limit, offset, text });
+    const { limit, offset, search } = action;
+    const { data } = yield call(getAll, { limit, offset, search });
     yield put({
       type: constants.PROJECTS_ON_GET_ALL_SUCCEEDED,
       data: data.items,
