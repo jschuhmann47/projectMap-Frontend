@@ -2,9 +2,14 @@ import { post, get, remove, put } from 'services/api';
 
 export const save = (formData) => post('projects', formData);
 
-export const getAll = () => get('projects');
+export const getAll = ({ limit, offset, search }) => {
+  const params = { limit, offset };
+  if (search) {
+    params.search = search;
+  }
 
-export const search = (text) => get(`projects/search?name=${text}`)
+  return get('projects', params);
+};
 
 export const deleteProject = (id) => remove(`projects/${id}`);
 
