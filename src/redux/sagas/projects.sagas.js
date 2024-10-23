@@ -23,7 +23,6 @@ import {
   unShareUsers,
   addUser,
   updateUsers,
-  search,
   getOrganizationalChart,
   saveOrganizationalChart
 } from 'services/projects.services';
