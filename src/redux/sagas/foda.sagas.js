@@ -11,11 +11,15 @@ import {
 } from 'services/foda.services';
 
 import * as constants from 'redux/contansts/foda.constants';
+import store from 'redux/store';
+import { onGetFoda } from 'redux/actions/projects.actions';
 
 export function* fodaCreate(action) {
   try {
     const { formData } = action;
     const { data } = yield call(create, formData);
+    const { projectId } = formData;
+    store.dispatch(onGetFoda(projectId))
     yield put({ type: constants.CREATE_FODA_SUCCEEDED, data });
   } catch (error) {
     yield put({

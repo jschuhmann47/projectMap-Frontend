@@ -32,6 +32,7 @@ import { onGetOne as onGetProject } from 'redux/actions/projects.actions';
 import permission from 'helpers/permissions';
 import SelectInputV2 from 'components/inputs/SelectInputV2';
 import ModalV2 from 'components/commons/ModalV2';
+import { StageByTool, Tools } from 'helpers/enums/steps';
 
 const FodaContainer = () => {
   const { fodaId, id } = useParams();
@@ -39,7 +40,10 @@ const FodaContainer = () => {
   const navigate = useNavigate();
   const onClickResultsButton = () =>
     navigate(`/projects/${id}/foda/${fodaId}/results`);
-  const onClickResultsButtonGoBack = () => navigate(`/projects/${id}`);
+  const onClickResultsButtonGoBack = () => {
+    const stage = StageByTool[Tools.Foda];
+    navigate(`/projects/${id}/stage/${stage}`)
+  };
   const dispatch = useDispatch();
   const [anchorElement, setAnchorElement] = useState(null);
   const { importancia, intensidad, tendencia, urgencia } = useSelector(

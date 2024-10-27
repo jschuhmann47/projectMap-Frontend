@@ -1,4 +1,5 @@
 import { CompletitionColors } from 'helpers/enums/completition';
+import { Tools } from 'helpers/enums/steps';
 import { createSelector } from 'reselect';
 
 const getFodas = (state) =>
@@ -46,6 +47,59 @@ const getLoadingMckinseys = (state) => state.projects.loadingMckinseys;
 const getLoadingBalanced = (state) => state.projects.loadingBalanced;
 const getLoadingQuestionnaires = (state) =>
   state.projects.loadingQuestionnaires;
+
+export const selectorByStage = {
+  'externalEnvironment': 
+    createSelector(
+      [getPorters, getPestels], 
+      (porters, pestels) => {
+        return [
+          { title: 'Análisis Porter:', items: porters, toolName: Tools.Porter },
+          { title: 'Análisis Pestel:', items: pestels, toolName: Tools.Pestel }
+        ]
+      }),
+    'internalSituation': 
+      createSelector(
+        [getFodas], 
+        (foda) => {
+          return [
+            { title: 'Análisis FODAs:', items: foda, toolName: Tools.Foda },
+          ]
+        })
+    ,'strategicGuidelines': 
+      createSelector(
+        [getAnsoffs], 
+        (ansoffs) => {
+          return [
+            { title: 'Matrices Ansoffs:', items: ansoffs, toolName: Tools.Ansoff },
+          ]
+        }) 
+    ,'competitiveStrategy': 
+      createSelector(
+        [getMckinseys], 
+        (mckenseys) => {
+          return [
+            { title: 'Matrices McKinseys:', items: mckenseys, toolName: Tools.McKinsey },
+          ]
+        }) 
+    ,'transformationPlans': 
+      createSelector(
+        [getQuestionnaires], 
+        (questionnaires) => {
+          return [
+            { title: 'Cuestionarios:', items: questionnaires, toolName: Tools.Questionnaires },
+          ]
+        }) 
+    ,'financialPlanning': 
+    createSelector(
+      [getBalancedScorecard,getOkrs], 
+      (balanceScorecards, okrs) => {
+        return [
+          { title: 'OKRs:', items: okrs, toolName: Tools.Okr },
+          {title: 'Balanced scorecards:', items: balanceScorecards, toolName: Tools.BalacedScorecard}
+        ]
+      }) 
+}
 
 export const stepToolsSelector = createSelector(
   [

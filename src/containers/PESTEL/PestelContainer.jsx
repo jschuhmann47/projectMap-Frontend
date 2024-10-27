@@ -37,6 +37,7 @@ import ModalV2 from 'components/commons/ModalV2';
 import SelectInputV2 from 'components/inputs/SelectInputV2';
 import InputV2 from 'components/inputs/InputV2';
 import { ButtonsContainer } from 'styles/form';
+import { StageByTool, Tools } from 'helpers/enums/steps';
 
 const PestelContainer = () => {
   const { pestelId, id } = useParams();
@@ -44,7 +45,10 @@ const PestelContainer = () => {
   const navigate = useNavigate();
   const onClickResultsButton = () =>
     navigate(`/projects/${id}/pestel/${pestelId}/results`);
-  const onClickResultsButtonGoBack = () => navigate(`/projects/${id}`);
+  const onClickResultsButtonGoBack = () => {
+    const stage = StageByTool[Tools.Pestel];
+    navigate(`/projects/${id}/stage/${stage}`)
+  };
   const dispatch = useDispatch();
   const { importancia, intensidad, tendencia } = useSelector((state) => {
     return state.pestel.options;

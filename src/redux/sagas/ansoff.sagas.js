@@ -10,11 +10,15 @@ import {
 } from 'services/ansoff.services';
 
 import * as constants from 'redux/contansts/ansoff.constants';
+import store from 'redux/store';
+import { onGetAnsoff } from 'redux/actions/projects.actions';
 
 export function* ansoffCreate(action) {
   try {
     const { formData } = action;
     const { data } = yield call(create, formData);
+    const { projectId } = formData;
+    store.dispatch(onGetAnsoff(projectId))
     yield put({ type: constants.CREATE_ANSOFF_SUCCEEDED, data });
   } catch (error) {
     yield put({

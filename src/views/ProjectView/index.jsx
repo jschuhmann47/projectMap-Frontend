@@ -30,7 +30,6 @@ import {
   Title,
 } from './styles';
 import { stepsInfo, StepValue } from 'helpers/enums/steps';
-import { color } from '@mui/system';
 
 const ProjectView = ({
   items,

@@ -12,6 +12,8 @@ import {
 
 import * as constants from 'redux/contansts/okr.constants';
 import { horizonOptions } from 'helpers/enums/okr';
+import store from 'redux/store';
+import { onGetOKR } from 'redux/actions/projects.actions';
 
 export function* okrCreateTool(action) {
   try {
@@ -25,8 +27,11 @@ export function* okrCreateTool(action) {
       startingDate: formData.startingDate,
     };
     const { data } = yield call(createOkr, req);
-    
+    const { projectId } = formData;
     const { parentId } = formData;
+
+    store.dispatch(onGetOKR(projectId))
+    
     if (parentId) {
       yield call(assignParent, data._id, { parentOkrId: parentId });
     };
