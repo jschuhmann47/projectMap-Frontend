@@ -25,8 +25,8 @@ function* pdcaCreate(action) {
 function* pdcaDelete(action) {
   try {
     const { id } = action;
-    const { data } = yield call(deletePdca, id);
-    yield put({ type: constants.DELETE_PDCA_SUCCEEDED, data });
+    yield call(deletePdca, id);
+    yield put({ type: constants.DELETE_PDCA_SUCCEEDED, data: { _id: id } });
   } catch (error) {
     yield put({ type: constants.DELETE_PDCA_FAILED, error });
   }
