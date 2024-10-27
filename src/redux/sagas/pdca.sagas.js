@@ -5,7 +5,11 @@ import { createPdca, deletePdca } from 'services/pdca.services';
 function* pdcaCreate(action) {
   try {
     const { formData } = action;
-    const { data } = yield call(createPdca, formData);
+    const req = {
+      name: formData.titulo,
+      projectId: formData.projectId,
+    };
+    const { data } = yield call(createPdca, req);
     yield put({ type: constants.CREATE_PDCA_SUCCEEDED, data });
   } catch (error) {
     yield put({

@@ -48,7 +48,7 @@ const NO_PARENT = 'Sin padre'
 
 function Card({ onClick, step, item, showDeleteIcon, handleOnDelete }) {
   return <ToolCard onClick={() => onClick(item.redirectUrl)} style={{ cursor: 'pointer', backgroundColor: step?.color }}>
-      <p>{item?.titulo  || item?.description}</p>
+      <p>{item?.titulo  || item?.description || item?.name}</p> {/* yeah, this is not pretty */}
 
       {showDeleteIcon &&
         <IconButton
@@ -198,7 +198,8 @@ const StageContainer = () => {
   const onSubmitConfirmModal = ({ name }) => {
     if (
       name !== itemToDelete?.titulo &&
-      name !== itemToDelete?.description
+      name !== itemToDelete?.description &&
+      name !== itemToDelete?.name
     ) {
       setConfirmDeleteError('Nombre de la herramienta incorrecto.');
     } else {
