@@ -1,6 +1,8 @@
 import * as constants from 'redux/contansts/pdca.constants';
 import { put, call, all, takeLatest } from 'redux-saga/effects';
 import { createPdca, deletePdca } from 'services/pdca.services';
+import { onGetPdcas } from 'redux/actions/projects.actions';
+import store from 'redux/store';
 
 function* pdcaCreate(action) {
   try {
@@ -10,6 +12,7 @@ function* pdcaCreate(action) {
       projectId: formData.projectId,
     };
     const { data } = yield call(createPdca, req);
+    store.dispatch(onGetPdcas(formData.projectId));
     yield put({ type: constants.CREATE_PDCA_SUCCEEDED, data });
   } catch (error) {
     yield put({
