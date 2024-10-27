@@ -37,15 +37,23 @@ const OKRContainer = () => {
     dispatch(onGetOneTool(okrToolId));
   }, [okrToolId]);
 
-  function addKr({ description, frequency, responsible, goal, priority, baseline }) {
+  function addKr(krForm) {
+    const { krType } = krForm;
     const formData = {
-      description,
-      frequency: +(Object.entries(frequencyOptions).find((kv) => kv[1] === frequency)[0]),
-      responsible,
-      baseline,
-      goal,
-      priority,
-    };
+      description: krForm.description,
+      responsible: krForm.responsible,
+      priority: krForm.priority,
+      type: krType
+    }
+
+    if (krType == 'normal') {
+      formData['frequency'] = +(Object.entries(frequencyOptions).find((kv) => kv[1] === krForm.frequency)[0]);
+      formData['baseline']= krForm.baseline;
+      formData['goal']= krForm.goal;
+    } else {
+      formData['keyStatus'] = krForm.hitos.map(hito => ({description: hito, checked: false}));
+    }
+
     dispatch(onAddKeyResult(okrToolId, formData));
     setIsAddKrModalOpen(false);
   };

@@ -61,7 +61,6 @@ import DateInput from 'components/inputs/DateInput';
 import { onGetOrganizationalChart } from 'redux/actions/projects.actions';
 
 const NO_AREA = 'Sin área'
-const NO_PARENT = 'Sin padre'
 
 const ProjectContainer = () => {
   let { id } = useParams();
@@ -108,29 +107,6 @@ const ProjectContainer = () => {
   const onClickList = (value, anchorElement) => {
     setStepValue(value);
     setAnchorElement(anchorElement);
-  };
-
-  const onSubmitTool = (action, formData) => {
-    formData.projectId = id;
-
-    if (formData.area !== NO_AREA) {
-      formData.areaId = organizationalChart?.data.nodes?.find((node) =>
-        node.data.label === formData.area
-      ).id
-    } else {
-      formData.areaId = ''
-    }
-
-    if (formData.parent !== NO_PARENT) {
-      formData.parentId = allOkrs.find((okr) =>
-        okr.description === formData.parent
-      )._id
-    } else {
-      formData.parentId = undefined
-    }
-
-    dispatch(action(formData));
-    navigate('createTool');
   };
 
   const onCLickMejoraContinua = () => navigate('mejora-continua');
@@ -228,27 +204,3 @@ const ProjectContainer = () => {
 };
 
 export default ProjectContainer;
-
-function ParentInput(props) {
-  const { allOkrs, organizationalChart } = props
-  const { values } = useFormikContext()
-
-  const extraOptions = useMemo(() => {
-    const canHaveParent = values.area !== NO_AREA
-    if (!canHaveParent) return []
-    const node = organizationalChart.nodes.find((n) => n.data.label === values.area)
-    const parentEdge = organizationalChart.edges.find((e) => e.target === node.id)
-    if (!parentEdge) return []
-    const parentNode = organizationalChart.nodes.find((n) => n.id === parentEdge.source)
-    return allOkrs
-      .filter((okr) => okr.area === parentNode.data.label && okr.keyResults.length === 0)
-      .map((okr) => okr.description)
-  }, [values.area])
-
-  return (
-    <SelectInputV2
-      options={[NO_PARENT, ...extraOptions]}
-      {...props}
-    />
-  )
-}

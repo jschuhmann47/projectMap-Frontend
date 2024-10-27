@@ -1,8 +1,6 @@
 import { Field, Form, Formik } from 'formik';
-
 import Button from 'components/commons/Button';
-
-import { validateField, validateNumberField } from 'helpers/validateField';
+import { validateDifferentFrom, validateField, validateNumberField } from 'helpers/validateField';
 import InputV2 from 'components/inputs/InputV2';
 import { ButtonsContainer } from 'styles/form';
 import { Box, Grid, List, ListItem, Typography } from '@mui/material';
@@ -57,9 +55,14 @@ const KrForm = ({ onSubmit, data }) => {
     keyStatus: data.keyStatus
   }
 
+
+  const handleDisableSaveButton = (values) => {
+    return values.baseline == values.goal;
+  }
+
   return (
     <Formik onSubmit={onSubmit} initialValues={ initialValues }>
-      {({ handleSubmit }) => (
+      {({ handleSubmit, values }) => (
         <Form onSubmit={handleSubmit}>
           <Grid container spacing={2} sx={{mt: 2, mb: 2}}>
             <Grid item xs={6}>
@@ -76,7 +79,7 @@ const KrForm = ({ onSubmit, data }) => {
                 type="number"
                 inputLayout='inline'
                 component={InputV2}
-                validate={validateNumberField}
+                validate={(value) => validateNumberField(value) || validateDifferentFrom(value, values.goal)}
               />
               <Field
                 name="goal"
@@ -84,7 +87,7 @@ const KrForm = ({ onSubmit, data }) => {
                 type="number"
                 inputLayout='inline'
                 component={InputV2}
-                validate={validateNumberField}
+                validate={(value) => validateNumberField(value) || validateDifferentFrom(value, values.baseline)}
               />
               <Field
                 fieldLabel="Prioridad"
@@ -129,7 +132,7 @@ const KrForm = ({ onSubmit, data }) => {
             </Grid>
           </Grid>
           <ButtonsContainer>
-            <Button type="submit">
+            <Button type="submit" disabled={handleDisableSaveButton(values)}>
               Guardar
             </Button>
           </ButtonsContainer>

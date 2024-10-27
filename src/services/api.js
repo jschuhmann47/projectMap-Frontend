@@ -16,8 +16,8 @@ const getOptions = () => {
   return options;
 };
 
-export const get = (url, headers = {}) =>
-  api.get(url, { ...getOptions(), ...headers });
+export const get = (url, params = {}, headers = {}) =>
+  api.get(url, { ...getOptions(), params, ...headers });
 
 export const post = (url, params = {}, headers = {}) =>
   api.post(url, params, { ...getOptions(), ...headers });

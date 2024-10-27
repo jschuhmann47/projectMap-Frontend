@@ -10,14 +10,12 @@ export const onDelete = (id) => ({
   id,
 });
 
-export const onGetAll = () => ({
+export const onGetAll = ({ limit, offset, search }) => ({
   type: constants.PROJECTS_ON_GET_ALL_REQUESTED,
+  limit,
+  offset,
+  search,
 });
-
-export const onSearch = (text) => ({
-  type: constants.PROJECTS_ON_SEARCH_REQUESTED,
-  text
-})
 
 export const onGetOne = (id) => ({
   type: constants.PROJECTS_ON_GET_ONE_REQUESTED,
