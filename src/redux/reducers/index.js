@@ -13,6 +13,7 @@ import questionnaireReducer from 'redux/reducers/questionnaire.reducer';
 import commentsReducer from 'redux/reducers/comments.reducer';
 import mejoraContinuaReducer from 'redux/reducers/mejora.containua.reducer';
 import consultoraReducer from './consultora.reducer';
+import pdcaReducer from './pdca.reducer';
 
 export default combineReducers({
   user: userReducer,
@@ -28,4 +29,5 @@ export default combineReducers({
   questionnaire: questionnaireReducer,
   mejoraContinua: mejoraContinuaReducer,
   consultora: consultoraReducer,
+  pdca: pdcaReducer,
 });

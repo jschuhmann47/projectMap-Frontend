@@ -28,6 +28,7 @@ import UserProfileContainer from 'containers/UserProfileContainer';
 import DashboardRouteContainer from 'containers/DashboardRouteContainer';
 import ResetPasswordContainer from './ResetPasswordContainer';
 import StageContainer from './StageContainer';
+import PdcaContainer from './PDCA/PdcaContainer';
 
 export const NavigationContainer = () => {
   return (
@@ -88,6 +89,10 @@ export const NavigationContainer = () => {
         <Route
           path=":id/questionnaire/:questionnaireId/results"
           element={<QuestionnarieResultsContainer />}
+        />
+        <Route
+          path=":id/pdca/:pdcaId"
+          element={<PdcaContainer />}
         />
         <Route
           path=":id/mejora-continua"
