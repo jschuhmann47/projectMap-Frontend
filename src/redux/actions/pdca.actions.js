@@ -14,3 +14,9 @@ export const onGetOne = (id) => ({
   type: constants.GET_PDCA_REQUESTED,
   id,
 })
+
+export const onPatch = (id, formData) => ({
+  type: constants.PATCH_PDCA_REQUESTED,
+  id,
+  formData,
+})

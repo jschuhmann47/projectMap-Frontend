@@ -16,10 +16,13 @@ export default function pdcaReducer(state = defaultState, action) {
   const { data, error, type } = action;
   switch (type) {
     case constants.GET_PDCA_REQUESTED:
+    case constants.PATCH_PDCA_REQUESTED:
       return { ...state, loading: true };
     case constants.GET_PDCA_SUCCEEDED:
+    case constants.PATCH_PDCA_SUCCEEDED:
       return { data, loading: false };
     case constants.GET_PDCA_FAILED:
+    case constants.PATCH_PDCA_FAILED:
       return { ...state, loading: false };
     case projectConstants.PROJECTS_ON_GET_ONE_REQUESTED:
       return defaultState;
