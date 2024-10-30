@@ -20,3 +20,8 @@ export const onPatch = (id, formData) => ({
   id,
   formData,
 })
+
+export const changeDemingStage = (newStage) => ({
+  type: constants.CHANGE_DEMING_STAGE,
+  data: { newStage },
+})
