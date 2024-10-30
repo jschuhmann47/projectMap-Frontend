@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { onGetOne, onPatch } from "redux/actions/pdca.actions";
-import PdcaView from "views/PdcaView";
+import Stage1View from "views/PdcaView/stage1";
 
 export default function PdcaContainer() {
   const { id, pdcaId } = useParams()
@@ -40,7 +40,7 @@ export default function PdcaContainer() {
       return (
         <LayoutContainer>
           <Grid item sx={{ height: '100%', width: '100%' }}>
-            <PdcaView
+            <Stage1View
               loading={loading}
               pdcaData={data}
               onClickBack={onClickBack}

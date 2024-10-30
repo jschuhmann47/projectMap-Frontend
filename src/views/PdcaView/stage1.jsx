@@ -10,7 +10,7 @@ function ActionItem({ action, onClickRemove }) {
   </Box>
 }
 
-export default function PdcaView({
+export default function Stage1View({
   loading,
   pdcaData,
   onClickBack,
