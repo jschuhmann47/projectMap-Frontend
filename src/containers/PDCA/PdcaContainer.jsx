@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { onGetOne, onPatch } from "redux/actions/pdca.actions";
 import Stage1View from "views/PdcaView/stage1";
+import Stage2View from "views/PdcaView/stage2";
 
 export default function PdcaContainer() {
   const { id, pdcaId } = useParams()
@@ -35,6 +36,13 @@ export default function PdcaContainer() {
     dispatch(onPatch(pdcaId, formData))
   }
 
+  function onEditAction(editedAction) {
+    const formData = {
+      actions: data.actions.map((a) => a._id === editedAction._id ? editedAction : a)
+    }
+    dispatch(onPatch(pdcaId, formData))
+  }
+
   switch(demingStage) {
     case DemingStage.Planificar:
       return (
@@ -52,5 +60,18 @@ export default function PdcaContainer() {
           </Grid>
         </LayoutContainer>
       )
-  }  
+    case DemingStage.Hacer:
+      return (
+        <LayoutContainer>
+          <Grid item sx={{ height: '100%', width: '100%' }}>
+            <Stage2View
+              loading={loading}
+              pdcaData={data}
+              onClickBack={onClickBack}
+              onEditAction={onEditAction}
+            />
+          </Grid>
+        </LayoutContainer>
+      )
+  }
 }
