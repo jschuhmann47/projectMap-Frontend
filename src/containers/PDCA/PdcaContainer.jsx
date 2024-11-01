@@ -1,11 +1,13 @@
-import { Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
+import Button from "components/commons/Button";
 import LayoutContainer from "containers/LayoutContainer";
-import { DemingStage } from "helpers/enums/pdca";
+import { DEMING_STAGE_ACT, DEMING_STAGE_DO, DEMING_STAGE_PLAN, DEMING_STAGE_CHECK, DemingStage } from "helpers/enums/pdca";
 import { StageByTool, Tools } from "helpers/enums/steps";
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { onGetOne, onPatch } from "redux/actions/pdca.actions";
+import { changeDemingStage, onGetOne, onPatch } from "redux/actions/pdca.actions";
+import { ButtonsContainer } from "styles/form";
 import Stage1View from "views/PdcaView/stage1";
 import Stage2View from "views/PdcaView/stage2";
 import Stage3View from "views/PdcaView/stage3";
@@ -47,7 +49,7 @@ export default function PdcaContainer() {
 
   const stageView = useMemo(() => {
     switch (demingStage) {
-      case DemingStage.Planificar:
+      case DEMING_STAGE_PLAN:
         return (
           <Stage1View
             loading={loading}
@@ -59,7 +61,7 @@ export default function PdcaContainer() {
             setInputValue={(e) => setInputValue(e.target.value)}
           />
         )
-      case DemingStage.Hacer:
+      case DEMING_STAGE_DO:
         return (
           <Stage2View
             loading={loading}
@@ -68,7 +70,7 @@ export default function PdcaContainer() {
             onEditAction={onEditAction}
           />
         )
-      case DemingStage.Verificar:
+      case DEMING_STAGE_CHECK:
         return (
           <Stage3View
             loading={loading}
@@ -77,7 +79,7 @@ export default function PdcaContainer() {
             onEditAction={onEditAction}
           />
         )
-      case DemingStage.Actuar:
+      case DEMING_STAGE_ACT:
         return (
           <Stage4View
             loading={loading}
@@ -88,10 +90,34 @@ export default function PdcaContainer() {
     }
   }, [demingStage])
 
+  function goToPreviousStage() {
+    dispatch(changeDemingStage(demingStage - 1))
+  }
+
+  function goToNextStage() {
+    dispatch(changeDemingStage(demingStage + 1))
+  }
+
   return (
     <LayoutContainer>
       <Grid item sx={{ height: '100%', width: '100%' }}>
         {stageView}
+        <Box sx={{ position: 'relative', marginTop: 5 }}>
+          {demingStage !== DEMING_STAGE_PLAN && (
+            <Box sx={{ position: 'absolute', left: '5%' }}>
+              <Button onClick={goToPreviousStage}>
+                Etapa anterior
+              </Button>
+            </Box>
+          )}
+          {demingStage !== DEMING_STAGE_ACT && (
+            <Box sx={{ position: 'absolute', right: '5%' }}>
+              <Button onClick={goToNextStage}>
+                Siguiente etapa
+              </Button>
+            </Box>
+          )}
+        </Box>
       </Grid>
     </LayoutContainer>
   )

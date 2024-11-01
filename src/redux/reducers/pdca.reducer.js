@@ -1,4 +1,4 @@
-import { DemingStage } from 'helpers/enums/pdca';
+import { DEMING_STAGE_ACT, DEMING_STAGE_DO, DEMING_STAGE_PLAN, DEMING_STAGE_CHECK } from 'helpers/enums/pdca';
 import * as constants from 'redux/contansts/pdca.constants';
 import * as projectConstants from 'redux/contansts/projects.constants';
 
@@ -11,7 +11,7 @@ const defaultState = {
     progress: 0,
   },
   loading: false,
-  demingStage: DemingStage.Planificar,
+  demingStage: DEMING_STAGE_PLAN,
 }
 
 export default function pdcaReducer(state = defaultState, action) {
@@ -38,13 +38,13 @@ export default function pdcaReducer(state = defaultState, action) {
 
 function determineInitialDemingStage(pdca) {
   if (pdca.actions.length === 0) {
-    return DemingStage.Planificar
+    return DEMING_STAGE_PLAN
   }
   if (pdca.actions.every((a) => a.responsible && a.progress && a.deadline)) {
-    return DemingStage.Actuar
+    return DEMING_STAGE_ACT
   }
   if (pdca.actions.every((a) => a.responsible && a.deadline)) {
-    return DemingStage.Verificar
+    return DEMING_STAGE_CHECK
   }
-  return DemingStage.Hacer
+  return DEMING_STAGE_DO
 }
