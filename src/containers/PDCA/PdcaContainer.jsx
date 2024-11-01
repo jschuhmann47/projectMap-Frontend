@@ -2,12 +2,13 @@ import { Grid } from "@mui/material";
 import LayoutContainer from "containers/LayoutContainer";
 import { DemingStage } from "helpers/enums/pdca";
 import { StageByTool, Tools } from "helpers/enums/steps";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { onGetOne, onPatch } from "redux/actions/pdca.actions";
 import Stage1View from "views/PdcaView/stage1";
 import Stage2View from "views/PdcaView/stage2";
+import Stage3View from "views/PdcaView/stage3";
 
 export default function PdcaContainer() {
   const { id, pdcaId } = useParams()
@@ -43,35 +44,50 @@ export default function PdcaContainer() {
     dispatch(onPatch(pdcaId, formData))
   }
 
-  switch(demingStage) {
-    case DemingStage.Planificar:
-      return (
-        <LayoutContainer>
-          <Grid item sx={{ height: '100%', width: '100%' }}>
-            <Stage1View
-              loading={loading}
-              pdcaData={data}
-              onClickBack={onClickBack}
-              onAddAction={onAddAction}
-              onRemoveAction={onRemoveAction}
-              inputValue={inputValue}
-              setInputValue={(e) => setInputValue(e.target.value)}
-            />
-          </Grid>
-        </LayoutContainer>
-      )
-    case DemingStage.Hacer:
-      return (
-        <LayoutContainer>
-          <Grid item sx={{ height: '100%', width: '100%' }}>
-            <Stage2View
-              loading={loading}
-              pdcaData={data}
-              onClickBack={onClickBack}
-              onEditAction={onEditAction}
-            />
-          </Grid>
-        </LayoutContainer>
-      )
-  }
+  const stageView = useMemo(() => {
+    switch (demingStage) {
+      case DemingStage.Planificar:
+        return (
+          <Stage1View
+            loading={loading}
+            pdcaData={data}
+            onClickBack={onClickBack}
+            onAddAction={onAddAction}
+            onRemoveAction={onRemoveAction}
+            inputValue={inputValue}
+            setInputValue={(e) => setInputValue(e.target.value)}
+          />
+        )
+      case DemingStage.Hacer:
+        return (
+          <Stage2View
+            loading={loading}
+            pdcaData={data}
+            onClickBack={onClickBack}
+            onEditAction={onEditAction}
+          />
+        )
+      case DemingStage.Verificar:
+        return (
+          <Stage3View
+            loading={loading}
+            pdcaData={data}
+            onClickBack={onClickBack}
+            onEditAction={onEditAction}
+          />
+        )
+      case DemingStage.Actuar:
+        return (
+          <span>etapa 4</span>
+        )
+    }
+  }, [demingStage])
+
+  return (
+    <LayoutContainer>
+      <Grid item sx={{ height: '100%', width: '100%' }}>
+        {stageView}
+      </Grid>
+    </LayoutContainer>
+  )
 }
