@@ -9,6 +9,7 @@ import { onGetOne, onPatch } from "redux/actions/pdca.actions";
 import Stage1View from "views/PdcaView/stage1";
 import Stage2View from "views/PdcaView/stage2";
 import Stage3View from "views/PdcaView/stage3";
+import Stage4View from "views/PdcaView/stage4";
 
 export default function PdcaContainer() {
   const { id, pdcaId } = useParams()
@@ -78,7 +79,11 @@ export default function PdcaContainer() {
         )
       case DemingStage.Actuar:
         return (
-          <span>etapa 4</span>
+          <Stage4View
+            loading={loading}
+            pdcaData={data}
+            onClickBack={onClickBack}
+          />
         )
     }
   }, [demingStage])
