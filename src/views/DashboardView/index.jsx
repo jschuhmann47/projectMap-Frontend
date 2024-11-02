@@ -1,9 +1,9 @@
+import React from 'react';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Grid from '@mui/material/Grid';
-
+import Pagination from '@mui/material/Pagination';
 import Button from 'components/commons/Button';
 import ProjectCard from 'components/commons/ProjectCard';
-
 import {
   AdminButtonsContainer,
   ButtonContainer,
@@ -14,9 +14,8 @@ import {
   Title,
   TitleContainer,
 } from './styles';
-import { TextField } from '@mui/material';
-import { Clear, Search } from '@mui/icons-material';
-import KeyResultPopup from 'views/OKRView/components/KeyResult/indexv2';
+import { Box, TextField } from '@mui/material';
+import { Clear } from '@mui/icons-material';
 
 const DashboardView = (props) => {
   const {
@@ -27,21 +26,26 @@ const DashboardView = (props) => {
     isAdmin,
     searchText,
     onChangeSearchText,
-    onSearch,
     onClearSearch,
-    userId
+    userId,
+    totalProjects,
+    currentPage,
+    projectsPerPage,
+    onPageChange,
   } = props;
 
   return (
     <Container>
-      <Content sx={{
-            position: 'sticky',
-            maxWidth: '100%',
-            top: 0,
-            backgroundColor: 'white',
-            zIndex: 10,
-            padding: '10px 0',
-          }}>
+      <Content
+        sx={{
+          position: 'sticky',
+          maxWidth: '100%',
+          top: 0,
+          backgroundColor: 'white',
+          zIndex: 10,
+          padding: '10px 0',
+        }}
+      >
         <TitleContainer>
           <Title>Proyectos</Title>
           {isAdmin && (
@@ -61,13 +65,6 @@ const DashboardView = (props) => {
                   value={searchText}
                   onChange={onChangeSearchText}
                 />
-                <ButtonContainer>
-                  <Button onClick={onSearch}>
-                    <ButtonContent>
-                      <Search />
-                    </ButtonContent>
-                  </Button>
-                </ButtonContainer>
               </>
               <ButtonContainer>
                 <Button onClick={onAddNew}>
@@ -84,28 +81,39 @@ const DashboardView = (props) => {
             {isAdmin ? 'No hay proyectos con este nombre.' : 'No tenés proyectos asignados.'}
           </NoProjectsMessage>
         ) : (
-          <Grid container rowSpacing={1} columnSpacing={2}>
-            {items.map(({ _id, color, name, description, coordinators, participants }) => (
-              <Grid item xs={12} key={_id}>
-                <ProjectCard
-                  key={_id}
-                  color={color}
-                  title={name}
-                  description={description}
-                  onClick={() => onClickProject(_id)}
-                  onClickDelete={isAdmin ? () => onClickDelete(_id) : null}
-                  isAdmin={isAdmin}
-                  userRole={
-                    coordinators.some((id) => id === userId)
-                      ? 'Coordinador'
-                      : participants.some((p) => p.user === userId)
-                      ? 'Participante'
-                      : ''
+          <>
+            <Grid container rowSpacing={1} columnSpacing={2}>
+              {items.map(({ _id, color, name, description, coordinators, participants }) => (
+                <Grid item xs={12} key={_id}>
+                  <ProjectCard
+                    key={_id}
+                    color={color}
+                    title={name}
+                    description={description}
+                    onClick={() => onClickProject(_id)}
+                    onClickDelete={isAdmin ? () => onClickDelete(_id) : null}
+                    isAdmin={isAdmin}
+                    userRole={
+                      coordinators.some((id) => id === userId)
+                        ? 'Coordinador'
+                        : participants.some((p) => p.user === userId)
+                        ? 'Participante'
+                        : ''
                     }
-                />
-              </Grid>
-            ))}
-          </Grid>
+                  />
+                </Grid>
+              ))}
+            </Grid>
+
+            <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
+              <Pagination
+                count={Math.ceil(totalProjects / projectsPerPage)}
+                page={currentPage}
+                onChange={onPageChange}
+                color="primary"
+              />
+            </Box>
+          </>
         )}
       </Content>
     </Container>

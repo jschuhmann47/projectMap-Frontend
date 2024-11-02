@@ -2,9 +2,14 @@ import { post, get, remove, put } from 'services/api';
 
 export const save = (formData) => post('projects', formData);
 
-export const getAll = () => get('projects');
+export const getAll = ({ limit, offset, search }) => {
+  const params = { limit, offset };
+  if (search) {
+    params.search = search;
+  }
 
-export const search = (text) => get(`projects/search?name=${text}`)
+  return get('projects', params);
+};
 
 export const deleteProject = (id) => remove(`projects/${id}`);
 
@@ -26,6 +31,8 @@ export const getBalancedScorecard = (id) =>
   get(`projects/${id}/balanced-scorecards`);
 
 export const getQuestionnaires = (id) => get(`projects/${id}/questionnaires`);
+
+export const getPdcas = (id) => get(`projects/${id}/pdcas`);
 
 export const getSharedUsers = (id) => get(`projects/${id}/shared`);
 

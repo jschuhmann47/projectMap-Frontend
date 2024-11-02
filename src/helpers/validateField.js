@@ -19,6 +19,10 @@ export const validateCalendlyLink = (value) => {
     : 'Link invalido. Formato valido: https://calendly.com/{nombreUsuario}/{tipoReunion}';
 };
 
+export const validateDifferentFrom = (value ,target) => {
+  return value != null && value != undefined && target != null && target !== undefined && value == target ? 'Error' : undefined;
+}
+
 export const validateNumberField = (value) => {
   let error;
   if (value === '' || value === null || value === undefined) {
@@ -28,5 +32,19 @@ export const validateNumberField = (value) => {
   } else if (Number(value) < 0) {
     error = 'El número debe ser mayor o igual a 0.';
   }
+  return error;
+};
+
+export const validatePasswordStrength = (value) => {
+  let error;
+  
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&-+=()!? "]).{8,128}$/;
+
+  if (!value) {
+    error = 'La contraseña es obligatoria.';
+  } else if (!passwordRegex.test(value)) {
+    error = 'La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial.';
+  }
+  
   return error;
 };
