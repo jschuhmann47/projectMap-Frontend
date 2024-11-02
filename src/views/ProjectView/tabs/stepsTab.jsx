@@ -6,7 +6,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 function StepCardView({ step, setStep, onClick }) {
-  return <StepCard style={{backgroundColor: step.color, cursor: step.id != 'continuousImprovement' ? 'pointer' : 'auto'}} onClick={() => onClick(step)}>
+  return <StepCard style={{backgroundColor: step.color, cursor: 'pointer'}} onClick={() => onClick(step)}>
     {step.title}
     <IconButton>
       <HelpOutlined onClick={(e) => {setStep(step); e.stopPropagation();}} />
@@ -33,9 +33,7 @@ export default function StepsTab({ steps, hasFullPermissions, stepPermissions, p
   }
 
   const handleOnStepClick = (step) => {
-    if (step.id !== 'continuousImprovement') {
-      navigate(`/projects/${projectId}/stage/${step.id}`)
-    }
+    navigate(`/projects/${projectId}/stage/${step.id}`)
   }
   return <StepsContainer>
     {orderedSteps.map((step) =>

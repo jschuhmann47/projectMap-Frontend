@@ -32,6 +32,8 @@ export const getBalancedScorecard = (id) =>
 
 export const getQuestionnaires = (id) => get(`projects/${id}/questionnaires`);
 
+export const getPdcas = (id) => get(`projects/${id}/pdcas`);
+
 export const getSharedUsers = (id) => get(`projects/${id}/shared`);
 
 export const shareUser = (id, formData) =>
