@@ -10,13 +10,13 @@ const getSeeds = (state) => state.pestel.seeds;
 export const politicoSelector = createSelector(
   [getPestel],
   (pestel) =>
-    pestel?.factores.filter((factor) => factor.area === 'Politico') || []
+    pestel?.factores.filter((factor) => factor.area === 'Político') || []
 );
 
 export const economicoSelector = createSelector(
   [getPestel],
   (pestel) =>
-    pestel?.factores.filter((factor) => factor.area === 'Economico') || []
+    pestel?.factores.filter((factor) => factor.area === 'Económico') || []
 );
 
 export const socialSelector = createSelector(
@@ -28,7 +28,7 @@ export const socialSelector = createSelector(
 export const tecnologicoSelector = createSelector(
   [getPestel],
   (pestel) =>
-    pestel?.factores.filter((factor) => factor.area === 'Tecnologico') || []
+    pestel?.factores.filter((factor) => factor.area === 'Tecnológico') || []
 );
 
 export const ambientalSelector = createSelector(
@@ -99,7 +99,7 @@ export const porcentajeSelector = createSelector(
     let totalPuntuacion = 0;
     Object.keys(total)?.forEach((area) => (totalPuntuacion += total[area]));
     const politica = {
-      area: 'Politico',
+      area: 'Político',
       porcentaje: (total['politicos'] * 100) / totalPuntuacion,
     };
     const economia = {
@@ -111,7 +111,7 @@ export const porcentajeSelector = createSelector(
       porcentaje: (total['sociales'] * 100) / totalPuntuacion,
     };
     const tecnologia = {
-      area: 'Tecnologico',
+      area: 'Tecnológico',
       porcentaje: (total['tecnologicos'] * 100) / totalPuntuacion,
     };
     const ambientales = {
@@ -201,7 +201,7 @@ export const consejosSelector = createSelector(
     return Object.entries(seeds).reduce((prevValue, [key, seedList]) => {
       let actualSeed = {};
       switch (key) {
-        case 'Politico':
+        case 'Político':
           return prevValue.concat(
             seedList
               ?.filter((seed) =>
@@ -221,7 +221,7 @@ export const consejosSelector = createSelector(
                 };
               })
           );
-        case 'Economico':
+        case 'Económico':
           return prevValue.concat(
             seedList
               ?.filter((seed) =>
@@ -261,7 +261,7 @@ export const consejosSelector = createSelector(
                 };
               })
           );
-        case 'Tecnologico':
+        case 'Tecnológico':
           return prevValue.concat(
             seedList
               ?.filter((seed) =>
