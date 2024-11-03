@@ -4,6 +4,7 @@ import { Box, IconButton, Typography } from '@mui/material';
 import { useState } from 'react';
 import ConfirmDeleteModal from './components/confirmDeleteModal';
 import { Card, CardContent, Description, Title, TitleContainer } from './styles';
+import { Height } from '@mui/icons-material';
 
 const ProjectCard = (props) => {
   const {
@@ -42,7 +43,7 @@ const ProjectCard = (props) => {
 
   return (
     <>
-      <Card style={{ backgroundColor: color, maxWidth: '100%', height: '120px' }} onClick={onClick}>
+      <Card style={{ backgroundColor: color, maxWidth: '100%', height: '100px',  margin: '2px' }} onClick={onClick}>
         <CardContent>
           <TitleContainer>
             <Title

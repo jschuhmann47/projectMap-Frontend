@@ -6,6 +6,7 @@ import { onCreate as onCreatePorter } from 'redux/actions/porter.actions';
 import { onCreateTool as onCreateOkr } from 'redux/actions/okr.actions';
 import { onCreate as onCreateBalanced } from 'redux/actions/balanceScorecard.actions';
 import { onCreate as onCreateQuestionnarie } from 'redux/actions/questionnarie.actions';
+import { onCreate as onCreatePdca } from 'redux/actions/pdca.actions';
 import { horizonOptions as okrHorizonOptions } from './okr';
 import { horizonOptions as bscHorizonOptions } from './balanced';
 
@@ -29,6 +30,7 @@ export const Tools = {
   Questionnaires: 'questionnaires',
   BalacedScorecard: 'balanced-scorecards',
   Okr: 'okr-projects',
+  Pdca: 'pdca',
 }
 
 export const StageByTool = {
@@ -40,6 +42,7 @@ export const StageByTool = {
    [Tools.Questionnaires]: 'transformationPlans',
    [Tools.Okr]: 'financialPlanning',
    [Tools.BalacedScorecard]: 'financialPlanning',
+   [Tools.Pdca]: 'continuousImprovement',
 }
 
 export const STEPS = [
@@ -119,7 +122,7 @@ export const STEPS = [
   {
     value: StepValue.MEJORA_CONTINUA,
     title: 'Mejora Continua',
-    menuItems: [{ titulo: '', action: () => { } }],
+    menuItems: [{ titulo: 'Agregar ciclo PDCA', action: onCreatePdca, toolName: Tools.Pdca }],
     id: 'continuousImprovement',
     color: '#febbbe',
     description: `
@@ -133,7 +136,7 @@ export const STEPS = [
     value: StepValue.DEFINICION_PLANES_TRANSFORMACION,
     title: 'Definición de los Planes de Transformación',
     menuItems: [
-      { titulo: 'Planes de transformación', action: onCreateQuestionnarie, toolName: Tools.Questionnaires },
+      { titulo: 'Agregar plan de transformación', action: onCreateQuestionnarie, toolName: Tools.Questionnaires },
     ],
     id: 'transformationPlans',
     color: '#d8c7ff',
