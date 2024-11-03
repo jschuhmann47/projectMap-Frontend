@@ -7,8 +7,7 @@ export const Card = styled('div')({
 });
 
 export const CardContent = styled('div')({
-  padding: '20px',
-  borderRadius: '8px',
+  padding: '10px',
 });
 
 export const TitleContainer = styled('div')({
