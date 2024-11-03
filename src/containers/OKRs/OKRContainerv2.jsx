@@ -15,6 +15,7 @@ import Loading from 'components/commons/Loading';
 import { frequencyOptions } from 'helpers/enums/okr';
 import KeyResultModal from 'views/OKRView/components/KeyResult/indexv2';
 import { useNavigate } from 'react-router-dom';
+import { StageByTool, Tools } from 'helpers/enums/steps';
 import permission from 'helpers/permissions';
 import { onGetOne as onGetProject } from 'redux/actions/projects.actions';
 
@@ -41,15 +42,23 @@ const OKRContainer = () => {
     dispatch(onGetProject(id));
   }, []);
 
-  function addKr({ description, frequency, responsible, goal, priority, baseline }) {
+  function addKr(krForm) {
+    const { krType } = krForm;
     const formData = {
-      description,
-      frequency: +(Object.entries(frequencyOptions).find((kv) => kv[1] === frequency)[0]),
-      responsible,
-      baseline,
-      goal,
-      priority,
-    };
+      description: krForm.description,
+      responsible: krForm.responsible,
+      priority: krForm.priority,
+      type: krType
+    }
+
+    if (krType == 'normal') {
+      formData['frequency'] = +(Object.entries(frequencyOptions).find((kv) => kv[1] === krForm.frequency)[0]);
+      formData['baseline']= krForm.baseline;
+      formData['goal']= krForm.goal;
+    } else {
+      formData['keyStatus'] = krForm.hitos.map(hito => ({description: hito, checked: false}));
+    }
+
     dispatch(onAddKeyResult(okrToolId, formData));
     setIsAddKrModalOpen(false);
   };
@@ -100,6 +109,11 @@ const OKRContainer = () => {
     setIsModalOpen(false);
   };
 
+  const onClickResultsButtonGoBack = () => {
+    const stage = StageByTool[Tools.Okr];
+    navigate(`/projects/${id}/stage/${stage}`)
+  };
+  
   function openChild(childId) {
     navigate(`/projects/${id}/okr/${childId}`)
   }
@@ -119,7 +133,7 @@ const OKRContainer = () => {
           submitConfirmDeleteModal={submitConfirmDeleteModal}
           confirmDeleteModalError={confirmDeleteError}
           openKrEditModal={handleOpenModal}
-          onClickBack={() => navigate(-1)}
+          onClickBack={onClickResultsButtonGoBack}
           userPermission={userPermission}
           openChild={openChild}
         />

@@ -33,6 +33,7 @@ import permission from 'helpers/permissions';
 import ModalV2 from 'components/commons/ModalV2';
 import InputV2 from 'components/inputs/InputV2';
 import { ButtonsContainer } from 'styles/form';
+import { StageByTool, Tools } from 'helpers/enums/steps';
 
 const McKinseyContainer = () => {
   const { matrizId, id } = useParams();
@@ -41,7 +42,10 @@ const McKinseyContainer = () => {
   const onClickResultsButton = () =>
     navigate(`/projects/${id}/mckinsey/${matrizId}/results`);
 
-  const onClickGoBackButton = () => navigate(`/projects/${id}`);
+  const onClickGoBackButton = () => {
+    const stage = StageByTool[Tools.McKinsey];
+    navigate(`/projects/${id}/stage/${stage}`)
+  };
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const cuadrantes = useSelector(cuadrantesSelector);
   const loading = useSelector((state) => state.mckinsey.loading);

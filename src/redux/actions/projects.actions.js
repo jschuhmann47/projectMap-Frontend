@@ -10,14 +10,12 @@ export const onDelete = (id) => ({
   id,
 });
 
-export const onGetAll = () => ({
+export const onGetAll = ({ limit, offset, search }) => ({
   type: constants.PROJECTS_ON_GET_ALL_REQUESTED,
+  limit,
+  offset,
+  search,
 });
-
-export const onSearch = (text) => ({
-  type: constants.PROJECTS_ON_SEARCH_REQUESTED,
-  text
-})
 
 export const onGetOne = (id) => ({
   type: constants.PROJECTS_ON_GET_ONE_REQUESTED,
@@ -63,6 +61,11 @@ export const onGetQuestionnaire = (id) => ({
   type: constants.PROJECTS_ON_GET_QUESTIONNAIRE_REQUESTED,
   id,
 });
+
+export const onGetPdcas = (id) => ({
+  type: constants.PROJECTS_ON_GET_PDCAS_REQUESTED,
+  id,
+})
 
 export const onGetSharedUsers = (id) => ({
   type: constants.PROJECTS_SHARED_USERS_REQUESTED,

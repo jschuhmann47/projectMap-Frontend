@@ -10,11 +10,15 @@ import Comments from 'components/comments/Comments';
 import { useDispatch, useSelector } from 'react-redux';
 import { onGetQuestions } from 'redux/actions/questionnarie.actions';
 import Loading from 'components/commons/Loading';
+import { StageByTool, Tools } from 'helpers/enums/steps';
 
 const QuestionnarieContainer = () => {
   const { questionnaireId, id } = useParams();
   const navigate = useNavigate();
-  const onClickResultsButtonGoBack = () => navigate(`/projects/${id}`);
+  const onClickResultsButtonGoBack = () => {
+    const stage = StageByTool[Tools.Questionnaires];
+    navigate(`/projects/${id}/stage/${stage}`)
+  };
   const onClickNextButton = () =>
     navigate(`/projects/${id}/questionnaire/${questionnaireId}/questions`);
 
