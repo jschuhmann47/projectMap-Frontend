@@ -51,9 +51,11 @@ export default function Stage1View({
           Etapa 1: planificar
         </Typography>
       </Box>
-      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 2fr', width: '100%' }}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: '2fr 3fr', width: '100%' }}>
         <Box sx={{ border: '1px black solid', backgroundColor: '#E1ECEB', padding: 2 }}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et tortor fringilla, rhoncus augue et, egestas nunc. Fusce luctus viverra odio, a dignissim magna egestas ut. Morbi commodo leo ante, id ultrices erat laoreet ut. Fusce congue ipsum in molestie ornare. Praesent vestibulum facilisis dui. In mattis, ex non aliquet consectetur, mauris purus consequat tellus, vitae suscipit tortor mi vitae enim. Proin vehicula laoreet est, eget volutpat nulla aliquet in. Morbi non odio ac nulla porta dictum. Sed convallis, elit facilisis iaculis sodales, ante odio posuere lectus, eu lobortis est purus vitae tellus. Fusce ut ligula suscipit, venenatis urna ut, bibendum lacus. 
+          Es crucial generar accionables que permitan abordar las causas raíz del problema y preparar soluciones efectivas. Algunas dinámicas útiles son el diagrama de espina de pescado, que desglosa un problema en categorías como personas, métodos, maquinaria, materiales, entorno y mediciones; la técnica de los "5 Porqués", que profundiza en la identificación de causas subyacentes preguntando repetidamente "¿por qué?" hasta encontrar la raíz; y la lluvias de ideas o brainstorming, donde los miembros del equipo aportan soluciones creativas y colaborativas para explorar diferentes enfoques.
+          <br />
+          Una vez identificadas las causas raíz mediante herramientas como el diagrama de espina de pescado, los "5 Porqués" o el brainstorming, es fundamental traducir estos hallazgos en acciones concretas. Esto se logra priorizando las causas con mayor impacto y viabilidad de resolución, y diseñando un plan detallado que asigne tareas específicas, responsables y plazos. Las acciones deben estar alineadas con los objetivos del proyecto y enfocadas en abordar las causas identificadas.
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 20 }}>
