@@ -12,7 +12,6 @@ import okrReducer from 'redux/reducers/okr.reducer';
 import questionnaireReducer from 'redux/reducers/questionnaire.reducer';
 import commentsReducer from 'redux/reducers/comments.reducer';
 import mejoraContinuaReducer from 'redux/reducers/mejora.containua.reducer';
-import consultoraReducer from './consultora.reducer';
 
 export default combineReducers({
   user: userReducer,
@@ -27,5 +26,4 @@ export default combineReducers({
   comments: commentsReducer,
   questionnaire: questionnaireReducer,
   mejoraContinua: mejoraContinuaReducer,
-  consultora: consultoraReducer,
 });
