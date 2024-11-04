@@ -7,6 +7,7 @@ export default function Objective({
   objData,
   openConfirmDeleteModal,
   handleObjClick,
+  userPermission,
 }) {
   return (
     <Box
@@ -40,12 +41,16 @@ export default function Objective({
         </OkrProgressBar>
         <span>{objData?.progress}%</span>
       </OkrProgress>
-      <IconButton onClick={(event) => {
-        event.stopPropagation();
-        openConfirmDeleteModal(objData)
-      }}>
-        <Delete htmlColor='black' />
-      </IconButton>
+      {userPermission === 'edit' && (
+        <IconButton
+          onClick={(event) => {
+            event.stopPropagation();
+            openConfirmDeleteModal(objData)
+          }}
+        >
+          <Delete htmlColor='black' />
+        </IconButton>
+      )}
     </Box>
   )
 }

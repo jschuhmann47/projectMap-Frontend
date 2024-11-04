@@ -17,6 +17,7 @@ import KeyResultModal from 'views/OKRView/components/KeyResult/indexv2';
 import { useNavigate } from 'react-router-dom';
 import { StageByTool, Tools } from 'helpers/enums/steps';
 import permission from 'helpers/permissions';
+import { onGetOne as onGetProject } from 'redux/actions/projects.actions';
 
 const OKRContainer = () => {
   const { okrToolId, id } = useParams();
@@ -36,6 +37,10 @@ const OKRContainer = () => {
     // this has to refresh when redirecting between OKRs
     dispatch(onGetOneTool(okrToolId));
   }, [okrToolId]);
+
+  useEffect(() => {
+    dispatch(onGetProject(id));
+  }, []);
 
   function addKr(krForm) {
     const { krType } = krForm;
