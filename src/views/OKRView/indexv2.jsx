@@ -60,7 +60,7 @@ const OKRView = ({
             <>
               <Box>
                 <Box sx={{mr: 1}}>
-                  <Typography sx={{ mt: 1 }}>{props.fieldLabel}</Typography>
+                  <Typography sx={{ fontSize: 'Fira Sans', mt: 1 }}>{props.fieldLabel}</Typography>
                 </Box>                    
                 <Box>
                   <ImgSelect {...props} style={{sx: {border: '1px solid #344345',
