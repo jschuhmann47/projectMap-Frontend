@@ -1,10 +1,5 @@
-import { containerClasses } from '@mui/material';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-import { onSaveOrganizationalChart } from 'redux/actions/projects.actions';
-
-import * as constantesConsultora from 'redux/contansts/consultora.constants';
 import * as constants from 'redux/contansts/projects.constants';
-import { addProject } from 'services/consultora.services';
 import {
   getAll,
   getAnsoffs,
@@ -33,22 +28,11 @@ export function* projectsSaveOne(action) {
   try {
     const { formData } = action;
     const { data } = yield call(save, formData);
-    if (formData?.consultora) {
-      const { data: dataConsultora } = yield call(
-        addProject,
-        formData.consultora,
-        data._id
-      );
-      yield put({
-        type: constantesConsultora.CONSULTORIA_ADD_PROJECT_SUCCEEDED,
-        data: dataConsultora,
-      });
-    } else {
-      yield put({
-        type: constants.PROJECTS_ON_CREATE_SUCCEEDED,
-        data,
-      });
-    }
+
+    yield put({
+      type: constants.PROJECTS_ON_CREATE_SUCCEEDED,
+      data,
+    });
   } catch (error) {
     yield put({ type: constants.PROJECTS_ON_CREATE_FAILED, error });
   }
@@ -270,7 +254,7 @@ export function* projectsOnGetOrganizationalChart(action) {
 export function* projectsOnSaveOrganizationalChart(action) {
   try {
     const { id, chart } = action;
-    const { data } = yield call(saveOrganizationalChart, id, chart);
+    yield call(saveOrganizationalChart, id, chart);
     yield put({
       type: constants.PROJECTS_ON_SAVE_ORGANIZATIONAL_CHART_SUCCEEDED,
       data: { ...chart, message: 'El organigrama se guardó exitosamente' },
