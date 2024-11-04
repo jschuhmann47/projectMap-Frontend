@@ -12,7 +12,6 @@ import okrReducer from 'redux/reducers/okr.reducer';
 import questionnaireReducer from 'redux/reducers/questionnaire.reducer';
 import commentsReducer from 'redux/reducers/comments.reducer';
 import mejoraContinuaReducer from 'redux/reducers/mejora.containua.reducer';
-import consultoraReducer from './consultora.reducer';
 import pdcaReducer from './pdca.reducer';
 
 export default combineReducers({
@@ -28,6 +27,5 @@ export default combineReducers({
   comments: commentsReducer,
   questionnaire: questionnaireReducer,
   mejoraContinua: mejoraContinuaReducer,
-  consultora: consultoraReducer,
   pdca: pdcaReducer,
 });

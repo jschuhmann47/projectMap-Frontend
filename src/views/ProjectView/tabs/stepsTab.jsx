@@ -5,8 +5,19 @@ import StepInfoModal from "./stepInfoModal"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
+const NOT_ACCESS_COLOR = "#B0B0B0";
+
+function StepCardViewDisabled({ step, setStep }) {
+  return <StepCard color={NOT_ACCESS_COLOR} cursor={'default'}>
+    {step.title}
+    <IconButton>
+      <HelpOutlined onClick={(e) => {setStep(step); e.stopPropagation();}} />
+    </IconButton>
+  </StepCard>
+}
+
 function StepCardView({ step, setStep, onClick }) {
-  return <StepCard style={{backgroundColor: step.color, cursor: 'pointer'}} onClick={() => onClick(step)}>
+  return <StepCard color={step.color}  cursor={'pointer'} onClick={() => onClick(step)}>
     {step.title}
     <IconButton>
       <HelpOutlined onClick={(e) => {setStep(step); e.stopPropagation();}} />
@@ -37,12 +48,17 @@ export default function StepsTab({ steps, hasFullPermissions, stepPermissions, p
   }
   return <StepsContainer>
     {orderedSteps.map((step) =>
-      <StepCardView
-        onClick={handleOnStepClick}
-        step={step}
-        setStep={setStep}
-        permission={stepPermission(step.id)}
-      />
+      stepPermission(step.id) == 'hide' ? 
+        <StepCardViewDisabled
+          step={step}
+          setStep={setStep}
+        />
+        :
+        <StepCardView
+          onClick={handleOnStepClick}
+          step={step}
+          setStep={setStep}
+        />
       )
     }
     <StepInfoModal

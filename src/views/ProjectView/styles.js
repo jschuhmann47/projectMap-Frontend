@@ -142,10 +142,10 @@ export const StepsContainer = styled('div')({
   width: '100%',
 })
 
-export const StepCard = styled('div')({
+export const StepCard = styled('div')(({color, cursor}) => ({
   width: '80%',
   height: 60,
-  backgroundColor: '#719F9D',
+  backgroundColor: color,
   marginTop: 10,
   marginBottom: 10,
   display: 'flex',
@@ -154,7 +154,8 @@ export const StepCard = styled('div')({
   paddingLeft: 20,
   fontSize: 20,
   border: 'solid 1px',
-})
+  cursor,
+}))
 
 export const StepIcons = styled('div')({
   marginLeft: 'auto',

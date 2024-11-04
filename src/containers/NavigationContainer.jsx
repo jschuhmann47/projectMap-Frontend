@@ -23,7 +23,6 @@ import QuestionnarieContainer from 'containers/Questionnarie/QuestionnarieContai
 import QuestionnarieQuestionsContainer from 'containers/Questionnarie/QuestionnarieQuestionsContainer';
 import QuestionnarieResultsContainer from 'containers/Questionnarie/QuestionnarieResultsContainer';
 import MejoraContinuaContainer from 'containers/MEJORA-CONTINUA/MejoraContinuaContainer';
-import ConsultoriaContainer from 'containers/AdminConsultoria/AdminConsultoriaContainer';
 import UserProfileContainer from 'containers/UserProfileContainer';
 import DashboardRouteContainer from 'containers/DashboardRouteContainer';
 import ResetPasswordContainer from './ResetPasswordContainer';
@@ -40,7 +39,6 @@ export const NavigationContainer = () => {
       <Route path="/dashboard" element={<DashboardRouteContainer />}>
         <Route path="" element={<DashboardContainer />} />
       </Route>
-      <Route path="/consultoria" element={<ConsultoriaContainer />} />
       <Route path="/profile/:userId" element={<UserProfileContainer />} />
       <Route path="/profile" element={<UserProfileContainer />} />
       <Route path="/projects">
