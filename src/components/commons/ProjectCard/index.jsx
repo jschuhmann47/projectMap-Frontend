@@ -4,6 +4,7 @@ import { Box, IconButton, Typography } from '@mui/material';
 import { useState } from 'react';
 import ConfirmDeleteModal from './components/confirmDeleteModal';
 import { Card, CardContent, Description, Title, TitleContainer } from './styles';
+import { Height } from '@mui/icons-material';
 
 const ProjectCard = (props) => {
   const {
@@ -42,10 +43,9 @@ const ProjectCard = (props) => {
 
   return (
     <>
-      <Card style={{ backgroundColor: color, maxWidth: '100%' }} onClick={onClick}>
+      <Card style={{ backgroundColor: color, maxWidth: '100%', height: '100px',  margin: '2px' }} onClick={onClick}>
         <CardContent>
           <TitleContainer>
-            {/* Adjust Title to prevent overflow */}
             <Title
               style={{
                 color: textColor,
@@ -55,7 +55,7 @@ const ProjectCard = (props) => {
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 display: '-webkit-box',
-                WebkitLineClamp: 1, // Adjust number of lines if necessary
+                WebkitLineClamp: 1,
                 WebkitBoxOrient: 'vertical',
               }}
             >

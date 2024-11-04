@@ -27,6 +27,7 @@ import ConsultoriaContainer from 'containers/AdminConsultoria/AdminConsultoriaCo
 import UserProfileContainer from 'containers/UserProfileContainer';
 import DashboardRouteContainer from 'containers/DashboardRouteContainer';
 import ResetPasswordContainer from './ResetPasswordContainer';
+import StageContainer from './StageContainer';
 
 export const NavigationContainer = () => {
   return (
@@ -42,6 +43,10 @@ export const NavigationContainer = () => {
       <Route path="/profile/:userId" element={<UserProfileContainer />} />
       <Route path="/profile" element={<UserProfileContainer />} />
       <Route path="/projects">
+        <Route
+          path=":id/stage/:stageName"
+          element={<StageContainer />}
+        />
         <Route
           path=":id/foda/:fodaId/results"
           element={<FodaContainerResults />}

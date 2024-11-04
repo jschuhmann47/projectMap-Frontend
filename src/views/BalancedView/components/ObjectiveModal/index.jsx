@@ -1,12 +1,14 @@
 import ModalV2 from "components/commons/ModalV2";
 import ObjForm from "./objForm";
 import { Box, Slider, Stack } from "@mui/material";
+import ReadonlyObj from "./readonlyObj";
 
 export default function ObjectiveModal({
   isOpen,
   onClose,
   data,
-  onSubmit
+  onSubmit,
+  userPermission,
 }) {
   const showProgress = () => {
     return data.currentScore > data.baseline && data.currentScore < data.goal
@@ -82,7 +84,11 @@ export default function ObjectiveModal({
           <p>{data.goal}</p>
         </Stack>
       </Box>
-      <ObjForm onSubmit={onSubmit} data={data}/>
+      {userPermission === 'edit' ? (
+		<ObjForm onSubmit={onSubmit} data={data}/>
+	  ) : (
+		<ReadonlyObj data={data} />
+	  )}
     </ModalV2>
   )
   

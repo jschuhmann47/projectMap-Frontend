@@ -19,6 +19,9 @@ import { COLORS } from 'helpers/enums/colors';
 import Comments from 'components/comments/Comments';
 import Loading from 'components/commons/Loading';
 import { frequencyOptions } from 'helpers/enums/balanced';
+import { onGetOne as onGetProject } from 'redux/actions/projects.actions';
+import permission from 'helpers/permissions';
+import { StageByTool, Tools } from 'helpers/enums/steps';
 
 const BalancedContainer = () => {
   const { balancedId, id } = useParams();
@@ -37,6 +40,13 @@ const BalancedContainer = () => {
   useEffect(() => {
     dispatch(onGetOne(balancedId));
   }, []);
+
+  useEffect(() => {
+    dispatch(onGetProject(id));
+  }, []);
+
+  const root = useSelector((state) => state);
+  const userPermission = permission(root, 'financialPlanning');
 
   const onSubmitObjective = (category, { action, frequency, responsible, goal, baseline, measure }) => {
     dispatch(
@@ -103,6 +113,11 @@ const BalancedContainer = () => {
   };
 
 
+  const onClickResultsButtonGoBack = () => {
+    const stage = StageByTool[Tools.BalacedScorecard];
+    navigate(`/projects/${id}/stage/${stage}`)
+  };
+  
   return (
     <LayoutContainer>
       <BalancedView
@@ -110,7 +125,7 @@ const BalancedContainer = () => {
         objectives={objectives}
         onEditObjective={onEditObjective}
         title={title}
-        onClickButtonGoBack={() => navigate(`/projects/${id}`)}
+        onClickButtonGoBack={onClickResultsButtonGoBack}
         isAddObjModalOpen={isAddObjModalOpen}
         openAddObjModal={()=> setIsAddObjModalOpen(true)}
         closeAddObjModal={() => setIsAddObjModalOpen(false)}
@@ -124,6 +139,7 @@ const BalancedContainer = () => {
         closeObjEditModal={handleCloseModal}
         isObjEditModalOpen={isModalOpen}
         currentObj={currentObjForModal}
+        userPermission={userPermission}
       />
       <Menu
         anchorEl={anchorElement}
