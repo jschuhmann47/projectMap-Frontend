@@ -58,7 +58,10 @@ export default function PdcaContainer() {
             onAddAction={onAddAction}
             onRemoveAction={onRemoveAction}
             inputValue={inputValue}
-            setInputValue={(e) => setInputValue(e.target.value)}
+            setInputValue={(e) => {
+              console.log(e.target.value)
+              setInputValue(e.target.value)
+            }}
           />
         )
       case DEMING_STAGE_DO:
@@ -88,7 +91,7 @@ export default function PdcaContainer() {
           />
         )
     }
-  }, [demingStage])
+  }, [demingStage, inputValue, data])
 
   function goToPreviousStage() {
     dispatch(changeDemingStage(demingStage - 1))

@@ -6,7 +6,7 @@ function ActionItem({ action, onClickEdit }) {
   // I know this breaks the container/presentational pattern...
   // but I think this component is too simple to break down into two
   const [responsible, setResponsible] = useState(action.responsible)
-  const [deadline, setDeadline] = useState(action.deadline.substring(0, 10))
+  const [deadline, setDeadline] = useState(action.deadline?.substring(0, 10) ?? '')
 
   function edit() {
     onClickEdit({
