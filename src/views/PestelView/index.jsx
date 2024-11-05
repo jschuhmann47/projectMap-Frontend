@@ -94,7 +94,7 @@ const PestelView = ({
         <IconButton size="small" onClick={onClickButtonGoBack}>
           <ArrowBack />
         </IconButton>
-        <Title>{showResults ? `Resultados de ${title}` : title}</Title>
+        <Title sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>{showResults ? `Resultados de ${title}` : title}</Title>
         <ButtonContainer sx={{ gap: '10px' }}>
           {!showResults && (
             <Button onClick={onClickButton}>{buttonTitle}</Button>

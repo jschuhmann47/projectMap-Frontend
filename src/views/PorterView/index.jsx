@@ -46,7 +46,7 @@ const PorterView = ({
           <ArrowBack />
         </IconButton>
         <Box sx={{ display: 'flex', alignItems: 'center', marginRight: '30%' }}>
-          <CardTitle>{titulo}</CardTitle>
+          <CardTitle sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>{titulo}</CardTitle>
           <ToolTip text={tooltips[titulo]} placement="right" fontSize="14px" />
         </Box>
       </Box>

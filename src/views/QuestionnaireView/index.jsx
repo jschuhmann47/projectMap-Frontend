@@ -26,7 +26,7 @@ const QuestionnaireView = ({
           <ArrowBack />
         </IconButton>
       </ButtonContainer>
-      <Title sx={{ marginRight: '46%' }}>{title}</Title>
+      <Title sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>{title}</Title>
     </TitleContainer>
   );
 
