@@ -2,7 +2,6 @@ import { all, call, put, takeLatest } from 'redux-saga/effects';
 
 import * as appConstants from 'redux/contansts/app.constants';
 import * as constants from 'redux/contansts/user.constants';
-import * as constantsConsultoria from 'redux/contansts/consultora.constants';
 import {
   forgotPassword,
   initialize,
@@ -14,7 +13,6 @@ import {
   verifyCode,
 } from 'services/user.services';
 import { getCookie, removeUserCookies } from 'helpers/cookies';
-import { addConsultant } from 'services/consultora.services';
 
 export function* userInitialize() {
   try {
@@ -59,20 +57,11 @@ export function* userRegister(action) {
   try {
     const { formData } = action;
     const { data } = yield call(register, formData);
-    if (formData.role === 'Consultant') {
-      const { data: dataAdd } = yield call(addConsultant, formData.consultora, {
-        email: formData.email,
-      });
-      yield put({
-        type: constantsConsultoria.CONSULTORIA_ADD_CONSULTANT_SUCCEEDED,
-        data: dataAdd,
-      });
-    } else {
-      yield put({
-        type: constants.USER_ON_REGISTER_SUCCEEDED,
-        data: { ...data, message: 'Cuenta creada con éxito. ¡Bienvenido a ProjectMap!' },
-      });
-    }
+    
+    yield put({
+      type: constants.USER_ON_REGISTER_SUCCEEDED,
+      data: { ...data, message: 'Cuenta creada con éxito. ¡Bienvenido a ProjectMap!' },
+    });
   } catch (error) {
     yield put({ type: constants.USER_ON_REGISTER_FAILED, error });
   }

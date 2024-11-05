@@ -54,20 +54,26 @@ const OKRView = ({
       />
       <Field
         fieldLabel="Prioridad"
-      inputLayout='inline'
-      component={(props) => {
-        return (
-          <>
-            <Box sx={{display: 'flex'}}>
-              <Box sx={{mr: 1}}>
-                <Typography sx={{ mt: 1 }}>{props.fieldLabel}</Typography>
-              </Box>                    
+        inputLayout='inline'
+        component={(props) => {
+          return (
+            <>
               <Box>
-                <ImgSelect {...props} style={{sx: {height: "34px"}}}></ImgSelect>
+                <Box sx={{mr: 1}}>
+                  <Typography sx={{ fontFamily: 'Fira Sans', mt: 1 }}>{props.fieldLabel}</Typography>
+                </Box>                    
+                <Box>
+                  <ImgSelect {...props} style={{sx: {border: '1px solid #344345',
+                  '&:hover .MuiOutlinedInput-notchedOutline': {
+                    border: 'none',
+                  },
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    border: 'none',
+                  }, height: "34px"}}}></ImgSelect>
+                </Box>
               </Box>
-            </Box>
-          </>
-        )
+            </>
+          )
         }}
         name="priority"
         options={priorityOptions.map((path, i) => ({ path, value: i }))}

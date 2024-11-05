@@ -32,6 +32,13 @@ export default function DateInput(props) {
                     openTo="day"
                     format="dd-MM-yyyy"
                     views={["day"]}
+                    sx={{
+                        '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': { border: '1px solid #344345' },
+                        '& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': { border: '1px solid #344345' },
+                        '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': { border: '1px solid #344345' },
+                        '& .MuiOutlinedInput-root input': { fontSize: 16, fontFamily: 'Fira Sans' },
+                        '& .MuiOutlinedInput-root': { height: 42 }
+                    }}
                     renderInput={(params) => (
                         <TextField
                             {...params}
@@ -39,10 +46,6 @@ export default function DateInput(props) {
                             fullWidth
                             size="small"
                             sx={{
-                                border: '1px solid',
-                                borderRadius: '4px',
-                                fontFamily: 'Fira Sans',
-                                fontSize: 16,
                                 width: '100%',
                                 borderColor:
                                     getIn(form.errors, field.name) && getIn(form.touched, field.name)
