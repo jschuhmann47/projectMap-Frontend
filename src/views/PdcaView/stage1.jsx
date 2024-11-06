@@ -18,6 +18,7 @@ export default function Stage1View({
   onRemoveAction,
   inputValue,
   setInputValue,
+  userPermission,
 }) {
   return (
     <Box sx={{
@@ -61,22 +62,32 @@ export default function Stage1View({
           <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 20 }}>
             Acciones a realizar
           </Typography>
-          <Box sx={{ display: 'flex', width: '80%' }}>
-            <TextField 
-              sx={{ width: '100%' }}
-              inputProps={{ style: { fontFamily: 'Fira Sans' } }}
-              variant="standard"
-              placeholder="Agregar acción"
-              onChange={setInputValue}
-              value={inputValue}
-            >
-            </TextField>
-            <IconButton size="small" disabled={!inputValue} onClick={onAddAction} disableRipple>
-              <Check sx={{fontSize: 40, color: !inputValue ? 'gray' : 'black' }}/>
-            </IconButton>
-          </Box>
-          {pdcaData.actions.map((a) =>
-            <ActionItem action={a} onClickRemove={() => onRemoveAction(a.name)} />
+          {userPermission === 'edit' ? (
+            <>
+              <Box sx={{ display: 'flex', width: '80%' }}>
+                <TextField 
+                  sx={{ width: '100%' }}
+                  inputProps={{ style: { fontFamily: 'Fira Sans' } }}
+                  variant="standard"
+                  placeholder="Agregar acción"
+                  onChange={setInputValue}
+                  value={inputValue}
+                >
+                </TextField>
+                <IconButton size="small" disabled={!inputValue} onClick={onAddAction} disableRipple>
+                  <Check sx={{fontSize: 40, color: !inputValue ? 'gray' : 'black' }}/>
+                </IconButton>
+              </Box>
+              {pdcaData.actions.map((a) =>
+                <ActionItem action={a} onClickRemove={() => onRemoveAction(a.name)} />
+              )}
+            </>
+          ) : (
+            <>
+              {pdcaData.actions.map((a) =>
+                <Typography sx={{ fontFamily: 'Fira Sans' }}>{a.name}</Typography>
+              )}
+            </>
           )}
         </Box>
       </Box>

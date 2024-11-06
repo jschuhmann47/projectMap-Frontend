@@ -2,7 +2,7 @@ import { ArrowBack } from "@mui/icons-material";
 import { Box, IconButton, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 
-function ActionItem({ action, onClickEdit }) {
+function ActionItem({ action, onClickEdit, userPermission }) {
   // I know this breaks the container/presentational pattern...
   // but I think this component is too simple to break down into two
   const [responsible, setResponsible] = useState(action.responsible)
@@ -32,32 +32,46 @@ function ActionItem({ action, onClickEdit }) {
           {action.name}
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 14 }}>
-            Responsable:
-          </Typography>
-          <TextField
-            sx={{ width: '50%' }}
-            inputProps={{ style: { fontFamily: 'Fira Sans', fontSize: 14 } }}
-            variant="standard"
-            onBlur={edit}
-            value={responsible}
-            onChange={(e) => setResponsible(e.target.value)}
-          >
-          </TextField>
+          {userPermission === 'edit' ? (
+            <>
+              <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 14 }}>
+                Responsable:
+              </Typography>
+              <TextField
+                sx={{ width: '50%' }}
+                inputProps={{ style: { fontFamily: 'Fira Sans', fontSize: 14 } }}
+                variant="standard"
+                onBlur={edit}
+                value={responsible}
+                onChange={(e) => setResponsible(e.target.value)}
+              >
+              </TextField>
+            </>
+          ) : (
+            <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 14 }}>
+              Responsable: {responsible}
+            </Typography>
+          )}
         </Box>
       </Box>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 14 }}>
           Fecha límite
         </Typography>
-        <TextField
-          type="date"
-          value={deadline}
-          onChange={(e) => setDeadline(e.target.value)}
-          inputProps={{ style: { fontFamily: 'Fira Sans', fontSize: 14 } }}
-          onBlur={edit}
-          size="small"
-        />
+        {userPermission === 'edit' ? (
+          <TextField
+            type="date"
+            value={deadline}
+            onChange={(e) => setDeadline(e.target.value)}
+            inputProps={{ style: { fontFamily: 'Fira Sans', fontSize: 14 } }}
+            onBlur={edit}
+            size="small"
+          />
+        ) : (
+          <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 14 }}>
+            {deadline}
+          </Typography>
+        )}
       </Box>
     </Box>
   )
@@ -68,6 +82,7 @@ export default function Stage2View({
   pdcaData,
   onClickBack,
   onEditAction,
+  userPermission,
 }) {
   return (
     <Box sx={{
@@ -101,7 +116,7 @@ export default function Stage2View({
         ¿Cómo se llevarán a cabo las acciones?
       </Typography>
       {pdcaData.actions.map((a) =>
-        <ActionItem action={a} onClickEdit={onEditAction} />
+        <ActionItem action={a} onClickEdit={onEditAction} userPermission={userPermission} />
       )}
     </Box>
   )

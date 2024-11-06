@@ -1,17 +1,18 @@
 import { Box, Grid } from "@mui/material";
 import Button from "components/commons/Button";
 import LayoutContainer from "containers/LayoutContainer";
-import { DEMING_STAGE_ACT, DEMING_STAGE_DO, DEMING_STAGE_PLAN, DEMING_STAGE_CHECK, DemingStage } from "helpers/enums/pdca";
+import { DEMING_STAGE_ACT, DEMING_STAGE_DO, DEMING_STAGE_PLAN, DEMING_STAGE_CHECK } from "helpers/enums/pdca";
 import { StageByTool, Tools } from "helpers/enums/steps";
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { changeDemingStage, onGetOne, onPatch } from "redux/actions/pdca.actions";
-import { ButtonsContainer } from "styles/form";
 import Stage1View from "views/PdcaView/stage1";
 import Stage2View from "views/PdcaView/stage2";
 import Stage3View from "views/PdcaView/stage3";
 import Stage4View from "views/PdcaView/stage4";
+import { onGetOne as onGetProject } from 'redux/actions/projects.actions';
+import permission from "helpers/permissions";
 
 export default function PdcaContainer() {
   const { id, pdcaId } = useParams()
@@ -19,10 +20,16 @@ export default function PdcaContainer() {
   const { loading, data, demingStage } = useSelector((state) => state.pdca)
   const navigate = useNavigate()
   const [inputValue, setInputValue] = useState("")
+  const root = useSelector((state) => state);
+  const userPermission = permission(root, 'continuousImprovement');
 
   useEffect(() => {
     dispatch(onGetOne(pdcaId))
   }, [])
+
+  useEffect(() => {
+    dispatch(onGetProject(id));
+  }, []);
 
   function onClickBack() {
     const stage = StageByTool[Tools.Pdca];
@@ -59,9 +66,9 @@ export default function PdcaContainer() {
             onRemoveAction={onRemoveAction}
             inputValue={inputValue}
             setInputValue={(e) => {
-              console.log(e.target.value)
               setInputValue(e.target.value)
             }}
+            userPermission={userPermission}
           />
         )
       case DEMING_STAGE_DO:
@@ -71,6 +78,7 @@ export default function PdcaContainer() {
             pdcaData={data}
             onClickBack={onClickBack}
             onEditAction={onEditAction}
+            userPermission={userPermission}
           />
         )
       case DEMING_STAGE_CHECK:
@@ -80,6 +88,7 @@ export default function PdcaContainer() {
             pdcaData={data}
             onClickBack={onClickBack}
             onEditAction={onEditAction}
+            userPermission={userPermission}
           />
         )
       case DEMING_STAGE_ACT:

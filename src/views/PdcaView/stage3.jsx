@@ -2,7 +2,7 @@ import { ArrowBack } from "@mui/icons-material";
 import { Box, IconButton, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 
-function ActionItem({ action, onClickEdit }) {
+function ActionItem({ action, onClickEdit, userPermission }) {
   // I know this breaks the container/presentational pattern...
   // but I think this component is too simple to break down into two
   const [progress, setProgress] = useState(action.progress)
@@ -35,25 +35,34 @@ function ActionItem({ action, onClickEdit }) {
             Responsable: {action.responsible}
           </Typography>
           <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 14 }}>
-            Fecha límite: {action.deadline.substring(0, 10)}
+            Fecha límite: {action.deadline?.substring(0, 10)}
           </Typography>
         </Box>
       </Box>
       <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-        <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 16 }}>
-          Cumplimiento (%)
-        </Typography>
-        <TextField
-          type='number'
-          value={progress}
-          onChange={(e) => setProgress(e.target.value)}
-          inputProps={{
-            style: { fontFamily: 'Fira Sans', fontSize: 14 },
-          }}
-          onBlur={edit}
-          size='small'
-          sx={{ width: '40%' }}
-        />
+        {userPermission === 'edit' ? (
+          <>
+            <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 16 }}>
+              Cumplimiento (%)
+            </Typography>
+            <TextField
+              type='number'
+              value={progress}
+              onChange={(e) => setProgress(e.target.value)}
+              inputProps={{
+                style: { fontFamily: 'Fira Sans', fontSize: 14 },
+              }}
+              onBlur={edit}
+              size='small'
+              sx={{ width: '40%' }}
+            />
+          </>
+        ) : (
+          <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 16 }}>
+            Cumplimiento: {progress}%
+          </Typography>
+        )
+      }
       </Box>
     </Box>
   )
@@ -64,6 +73,7 @@ export default function Stage3View({
   pdcaData,
   onClickBack,
   onEditAction,
+  userPermission,
 }) {
   return (
     <Box sx={{
@@ -97,7 +107,7 @@ export default function Stage3View({
         ¿Cuál es el grado de cumplimiento de cada acción?
       </Typography>
       {pdcaData.actions.map((a) =>
-        <ActionItem action={a} onClickEdit={onEditAction} />
+        <ActionItem action={a} onClickEdit={onEditAction} userPermission={userPermission} />
       )}
     </Box>
   )
