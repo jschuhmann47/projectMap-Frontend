@@ -11,7 +11,7 @@ import SelectInput from 'components/inputs/SelectInput';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import { ArrowBack, Comment } from '@mui/icons-material';
+import { ArrowBack } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import { ButtonContainer } from 'views/FodaView/styles';
 import { validateField } from 'helpers/validateField';
@@ -45,18 +45,10 @@ const PorterView = ({
         <IconButton size="small" onClick={onClickButtonGoBack}>
           <ArrowBack />
         </IconButton>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <CardTitle>{titulo}</CardTitle>
+        <Box sx={{ display: 'flex', alignItems: 'center', marginRight: '30%' }}>
+          <CardTitle sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>{titulo}</CardTitle>
           <ToolTip text={tooltips[titulo]} placement="right" fontSize="14px" />
         </Box>
-        <ButtonContainer sx={{ gap: '10px' }}>
-          <IconButton
-            size="small"
-            onClick={(event) => openComments(event.currentTarget)}
-          >
-            <Comment />
-          </IconButton>
-        </ButtonContainer>
       </Box>
       <Formik onSubmit={handleSubmit} initialValues={initialValues}>
         {({ handleSubmit }) => (

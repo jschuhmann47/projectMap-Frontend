@@ -5,7 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Chip from '@mui/material/Chip';
 import { COLORS } from 'helpers/enums/colors';
-import { ArrowBack, Comment } from '@mui/icons-material';
+import { ArrowBack } from '@mui/icons-material';
 
 import {
   CardTitleContainer,
@@ -94,14 +94,8 @@ const PestelView = ({
         <IconButton size="small" onClick={onClickButtonGoBack}>
           <ArrowBack />
         </IconButton>
-        <Title>{showResults ? `Resultados de ${title}` : title}</Title>
+        <Title sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>{showResults ? `Resultados de ${title}` : title}</Title>
         <ButtonContainer sx={{ gap: '10px' }}>
-          <IconButton
-            size="small"
-            onClick={(event) => openComments(event.currentTarget)}
-          >
-            <Comment />
-          </IconButton>
           {!showResults && (
             <Button onClick={onClickButton}>{buttonTitle}</Button>
           )}

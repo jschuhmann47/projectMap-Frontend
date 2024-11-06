@@ -22,7 +22,7 @@ import SelectInput from 'components/inputs/SelectInput';
 import { CustomForm, ButtonsContainer } from './styles';
 import { COLORS } from 'helpers/enums/colors';
 import Steps from './components';
-import { ArrowBack, Check, Comment } from '@mui/icons-material';
+import { ArrowBack, Check } from '@mui/icons-material';
 import { TitleContainer } from 'components/commons/ProjectCard/styles';
 import { ButtonContainer } from 'views/DashboardView/styles';
 import { Title } from 'styles/form';
@@ -57,14 +57,8 @@ const AnsoffView = (props) => {
           <IconButton size="small" onClick={onClickGoBackButton}>
             <ArrowBack />
           </IconButton>
-          <IconButton
-            size="small"
-            onClick={(event) => openComments(event.currentTarget)}
-          >
-            <Comment />
-          </IconButton>
         </ButtonContainer>
-        <Title>{showResults ? `Resultados de ${title}` : title}</Title>
+        <Title sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>{showResults ? `Resultados de ${title}` : title}</Title>
       </TitleContainer>
       <Grid container>
         <Grid
