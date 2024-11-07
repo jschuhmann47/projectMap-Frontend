@@ -12,6 +12,7 @@ import * as mcKinseyConstants from 'redux/contansts/mckinsey.constants';
 import * as questionnaireConstants from 'redux/contansts/questionnarie.constants';
 import * as okrConstants from 'redux/contansts/okr.constants';
 import * as bscConstants from 'redux/contansts/balanceScorecard.constants';
+import * as pdcaConstants from 'redux/contansts/pdca.constants';
 
 const notificationMiddleware = () => (next) => (action) => {
   const { data, error, type } = action;
@@ -39,6 +40,8 @@ const notificationMiddleware = () => (next) => (action) => {
     case questionnaireConstants.QUESTIONNARIE_ON_CREATE_FAILED:
     case okrConstants.CREATE_OKR_TOOL_FAILED:
     case bscConstants.CREATE_BALANCE_SCORECARD_FAILED:
+    case pdcaConstants.CREATE_PDCA_FAILED:
+    case pdcaConstants.PATCH_PDCA_FAILED:
       sendErrorNotification(error.response?.data?.message || error.message);
       break;
   }
