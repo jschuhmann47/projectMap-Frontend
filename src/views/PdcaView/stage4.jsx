@@ -17,7 +17,7 @@ function progressText(progress) {
     </>
   }
   return <>
-    Se puede considerar que esta iteración ha sido altamente exitosa. L planificación fue efectiva y que los procesos de ejecución y monitoreo funcionaron adecuadamente. El equipo puede estar satisfecho con los resultados obtenidos, ya que muestran que la organización fue capaz de identificar con precisión las causas raíz y establecer acciones adecuadas para solucionarlas. Sin embargo, es importante no caer en la complacencia y buscar siempre oportunidades para la mejora continua.
+    Se puede considerar que esta iteración ha sido altamente exitosa. La planificación fue efectiva y que los procesos de ejecución y monitoreo funcionaron adecuadamente. El equipo puede estar satisfecho con los resultados obtenidos, ya que muestran que la organización fue capaz de identificar con precisión las causas raíz y establecer acciones adecuadas para solucionarlas. Sin embargo, es importante no caer en la complacencia y buscar siempre oportunidades para la mejora continua.
     <br />
     En esta situación, las conclusiones deben centrarse en consolidar las buenas prácticas implementadas y explorar áreas en las que, aunque se alcanzaron los objetivos, aún se podría aumentar la eficiencia o innovar. Reflexionar sobre los elementos que llevaron al éxito, como la correcta asignación de responsabilidades, el seguimiento riguroso y la adaptabilidad durante la ejecución, permitirá replicar y mejorar estos enfoques en futuros ciclos. Este análisis refuerza la cultura de mejora continua y motiva al equipo a mantener altos estándares en sus próximas iniciativas.
   </>
