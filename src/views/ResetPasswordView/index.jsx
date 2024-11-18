@@ -22,7 +22,7 @@ const ResetPasswordView = ({ onVerifyCode, onResetPassword, step }) => {
 const VerifyCodeForm = ({ onSubmit }) => (
   <FormContainer>
     <Title>Verificar código</Title>
-    <Formik onSubmit={onSubmit}>
+    <Formik onSubmit={onSubmit} initialValues={{ code: undefined }}>
       {({ handleSubmit }) => (
         <CustomForm onSubmit={handleSubmit}>
           <Box sx={{ width: '100%' }}>
@@ -57,72 +57,72 @@ const VerifyCodeForm = ({ onSubmit }) => (
 );
 
 const NewPasswordForm = ({ onSubmit }) => (
-    <FormContainer>
-      <Title>Nueva contraseña</Title>
-      <Formik onSubmit={onSubmit} initialValues={{ password: '', repeat: '' }}>
-        {({ handleSubmit, values }) => (
-          <CustomForm onSubmit={handleSubmit}>
-            <Box sx={{ width: '100%' }}>
-              <Field
-                name="password"
-                type="password"
-                placeholder="Contraseña"
-                component={Input}
-                validate={validatePasswordStrength}
-              />
-              <ErrorMessage name="password">
-                {(msg) => (
-                  <Typography
-                    sx={{
-                      textAlign: 'left',
-                      color: 'red',
-                      marginLeft: 2,
-                      marginTop: '2px',
-                      fontSize: '14px',
-                    }}
-                  >
-                    {msg}
-                  </Typography>
-                )}
-              </ErrorMessage>
-            </Box>
-            <Box sx={{ width: '100%' }}>
-              <Field
-                name="repeat"
-                type="password"
-                placeholder="Repetir contraseña"
-                component={Input}
-                validate={(value) => {
-                  let error;
-                  if (!value) {
-                    error = 'Confirma tu contraseña';
-                  } else if (value !== values.password) {
-                    error = 'Las contraseñas no coinciden';
-                  }
-                  return error;
-                }}
-              />
-              <ErrorMessage name="repeat">
-                {(msg) => (
-                  <Typography
-                    sx={{
-                      textAlign: 'left',
-                      color: 'red',
-                      marginLeft: 2,
-                      marginTop: '2px',
-                      fontSize: '14px',
-                    }}
-                  >
-                    {msg}
-                  </Typography>
-                )}
-              </ErrorMessage>
-            </Box>
-            <Button type="submit">Cambiar contraseña</Button>
-          </CustomForm>
-        )}
-      </Formik>
-    </FormContainer>
-  );
+  <FormContainer>
+    <Title>Nueva contraseña</Title>
+    <Formik onSubmit={onSubmit} initialValues={{ password: '', repeat: '' }}>
+      {({ handleSubmit, values }) => (
+        <CustomForm onSubmit={handleSubmit}>
+          <Box sx={{ width: '100%' }}>
+            <Field
+              name="password"
+              type="password"
+              placeholder="Contraseña"
+              component={Input}
+              validate={validatePasswordStrength}
+            />
+            <ErrorMessage name="password">
+              {(msg) => (
+                <Typography
+                  sx={{
+                    textAlign: 'left',
+                    color: 'red',
+                    marginLeft: 2,
+                    marginTop: '2px',
+                    fontSize: '14px',
+                  }}
+                >
+                  {msg}
+                </Typography>
+              )}
+            </ErrorMessage>
+          </Box>
+          <Box sx={{ width: '100%' }}>
+            <Field
+              name="repeat"
+              type="password"
+              placeholder="Repetir contraseña"
+              component={Input}
+              validate={(value) => {
+                let error;
+                if (!value) {
+                  error = 'Confirma tu contraseña';
+                } else if (value !== values.password) {
+                  error = 'Las contraseñas no coinciden';
+                }
+                return error;
+              }}
+            />
+            <ErrorMessage name="repeat">
+              {(msg) => (
+                <Typography
+                  sx={{
+                    textAlign: 'left',
+                    color: 'red',
+                    marginLeft: 2,
+                    marginTop: '2px',
+                    fontSize: '14px',
+                  }}
+                >
+                  {msg}
+                </Typography>
+              )}
+            </ErrorMessage>
+          </Box>
+          <Button type="submit">Cambiar contraseña</Button>
+        </CustomForm>
+      )}
+    </Formik>
+  </FormContainer>
+);
 
 export default ResetPasswordView;
