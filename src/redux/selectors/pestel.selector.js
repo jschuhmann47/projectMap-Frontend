@@ -83,12 +83,12 @@ export const totalResultsSelect = createSelector(
   ],
   (politicos, economicos, sociales, tecnologicos, ambientales, legales) => {
     return {
-      politicos: politicos.reduce(reduceByPuntuacion, 0),
-      economicos: economicos.reduce(reduceByPuntuacion, 0),
-      sociales: sociales.reduce(reduceByPuntuacion, 0),
-      tecnologicos: tecnologicos.reduce(reduceByPuntuacion, 0),
-      ambientales: ambientales.reduce(reduceByPuntuacion, 0),
-      legales: legales.reduce(reduceByPuntuacion, 0),
+      "políticos": politicos.reduce(reduceByPuntuacion, 0),
+      "económicos": economicos.reduce(reduceByPuntuacion, 0),
+      "sociales": sociales.reduce(reduceByPuntuacion, 0),
+      "tecnológicos": tecnologicos.reduce(reduceByPuntuacion, 0),
+      "ambientales": ambientales.reduce(reduceByPuntuacion, 0),
+      "legales": legales.reduce(reduceByPuntuacion, 0),
     };
   }
 );
@@ -100,11 +100,11 @@ export const porcentajeSelector = createSelector(
     Object.keys(total)?.forEach((area) => (totalPuntuacion += total[area]));
     const politica = {
       area: 'Político',
-      porcentaje: (total['politicos'] * 100) / totalPuntuacion,
+      porcentaje: (total['políticos'] * 100) / totalPuntuacion,
     };
     const economia = {
       area: 'Económico',
-      porcentaje: (total['economicos'] * 100) / totalPuntuacion,
+      porcentaje: (total['económicos'] * 100) / totalPuntuacion,
     };
     const sociales = {
       area: 'Social',
@@ -112,7 +112,7 @@ export const porcentajeSelector = createSelector(
     };
     const tecnologia = {
       area: 'Tecnológico',
-      porcentaje: (total['tecnologicos'] * 100) / totalPuntuacion,
+      porcentaje: (total['tecnológicos'] * 100) / totalPuntuacion,
     };
     const ambientales = {
       area: 'Ambiental',
