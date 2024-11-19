@@ -34,7 +34,6 @@ import { onDeleteTool as onDeleteOkr } from 'redux/actions/okr.actions';
 import { onDelete as onDeletePdca } from 'redux/actions/pdca.actions';
 import { onDelete } from 'redux/actions/questionnarie.actions';
 import ModalV2 from "components/commons/ModalV2";
-import { COLORS } from "helpers/enums/colors";
 import { Field, Form, Formik, useFormikContext } from "formik";
 import InputV2 from "components/inputs/InputV2";
 import { validateField } from "helpers/validateField";
@@ -66,28 +65,30 @@ function Card({ onClick, step, item, showDeleteIcon, handleOnDelete }) {
     </ToolCard>
 }
 
-function ToolColumn({ onHandleClick, tool, step, showDeleteIcon, handleOnDelete, handleOnAdd }) {
+function ToolColumn({ onHandleClick, tool, step, showIcons, handleOnDelete, handleOnAdd }) {
   return (
     <>
       <Box sx={{  }}>
         <ToolCardTitle>
           <p>{tool?.title}</p>
-          <IconButton
-            sx={{
-              display: 'flex',
-              width: '10px',
-              height: '10px',
-              alignItems: 'right',
-            }}
-            onClick={() => handleOnAdd(tool.toolName)}
-          >
-            <AddCircleIcon />
-          </IconButton>
+          {showIcons && (
+            <IconButton
+              sx={{
+                display: 'flex',
+                width: '10px',
+                height: '10px',
+                alignItems: 'right',
+              }}
+              onClick={() => handleOnAdd(tool.toolName)}
+            >
+              <AddCircleIcon />
+            </IconButton>
+          )}
         </ToolCardTitle>
         <ToolCardContainer>
           {
             tool?.items?.map(item =>
-              <Card onClick={onHandleClick} step={step} item={item} showDeleteIcon={showDeleteIcon} handleOnDelete={handleOnDelete}></Card>
+              <Card onClick={onHandleClick} step={step} item={item} showDeleteIcon={showIcons} handleOnDelete={handleOnDelete}></Card>
           )}
         </ToolCardContainer>
       </Box>
@@ -256,7 +257,7 @@ const StageContainer = () => {
               <>
                 <ToolsView columns={toolItems.length}>
                   {toolItems.map((item) =>
-                    <ToolColumn onHandleClick={onHandleCardClick} tool={item} step={step} showDeleteIcon={userIsCoordinator || userCanEdit()} handleOnAdd={handleAddTool} handleOnDelete={openConfirmDeleteModal}>
+                    <ToolColumn onHandleClick={onHandleCardClick} tool={item} step={step} showIcons={userIsCoordinator || userCanEdit()} handleOnAdd={handleAddTool} handleOnDelete={openConfirmDeleteModal}>
                     </ToolColumn>
                   )}
                 </ToolsView>
