@@ -193,7 +193,7 @@ const PestelContainer = () => {
           </Formik>
         </ModalV2>
       </Container>
-      {loading && <Loading isModalMode message="Cargando Pestel" />}
+      {loading && <Loading isModalMode message="Cargando PESTEL" />}
     </LayoutContainer>
   );
 };

@@ -60,7 +60,7 @@ export const selectorByStage = {
       (porters, pestels) => {
         return [
           { title: 'Análisis Porter', items: porters, toolName: Tools.Porter },
-          { title: 'Análisis Pestel', items: pestels, toolName: Tools.Pestel }
+          { title: 'Análisis PESTEL', items: pestels, toolName: Tools.Pestel }
         ]
       }),
     'internalSituation': 
