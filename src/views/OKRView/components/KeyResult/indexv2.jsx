@@ -54,7 +54,7 @@ export default function KeyResultModal({
   }
   
   return (
-    <ModalV2 width={900} isOpen={isOpen} background={'#FFFFFF'} onClose={onClose} title={data.description}>
+    <ModalV2 width={900} isOpen={isOpen} onClose={onClose} title={data.description}>
       <Box
         sx={{
           position: "relative",

@@ -19,6 +19,7 @@ export default function KeyResult({
         gridTemplateColumns: '1fr 14fr 4fr 1fr',
         paddingTop: '5px',
         paddingBottom: '5px',
+        cursor: 'pointer',
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
