@@ -24,7 +24,7 @@ export default function PdcaContainer() {
   const userPermission = permission(root, 'continuousImprovement');
 
   useEffect(() => {
-    dispatch(onGetOne(pdcaId))
+    dispatch(onGetOne(pdcaId));
   }, [])
 
   useEffect(() => {
@@ -100,7 +100,7 @@ export default function PdcaContainer() {
           />
         )
     }
-  }, [demingStage, inputValue, data])
+  }, [demingStage, inputValue, data, userPermission])
 
   function goToPreviousStage() {
     dispatch(changeDemingStage(demingStage - 1))
