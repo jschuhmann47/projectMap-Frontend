@@ -200,7 +200,6 @@ export const ToolsView = styled('div',
 }));
 
 export const ToolCard = styled('div')({
-  height: 60,
   backgroundColor: '#719F9D',
   marginTop: 10,
   marginBottom: 10,

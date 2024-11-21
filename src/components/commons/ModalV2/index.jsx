@@ -68,6 +68,7 @@ function ModalV2Header({ title, onClose }) {
           fontFamily: 'Fira Sans',
           fontSize: 18,
           color: 'white',
+          textAlign: 'center',
         }}
       >
         {title}

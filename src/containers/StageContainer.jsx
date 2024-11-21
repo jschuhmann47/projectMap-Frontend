@@ -46,8 +46,12 @@ const NO_AREA = 'Sin área'
 const NO_PARENT = 'Sin padre'
 
 function Card({ onClick, step, item, showDeleteIcon, handleOnDelete }) {
-  return <ToolCard onClick={() => onClick(item.redirectUrl)} style={{ cursor: 'pointer', backgroundColor: step?.color }}>
-      <p>{item?.titulo  || item?.description || item?.name}</p> {/* yeah, this is not pretty */}
+  return (
+    <ToolCard
+      onClick={() => onClick(item.redirectUrl)}
+      style={{ cursor: 'pointer', backgroundColor: step?.color }}
+    >
+      <p>{item?.titulo || item?.description || item?.name}</p> {/* yeah, this is not pretty */}
 
       {showDeleteIcon &&
         <IconButton
@@ -63,6 +67,7 @@ function Card({ onClick, step, item, showDeleteIcon, handleOnDelete }) {
         </IconButton>
       }
     </ToolCard>
+  )
 }
 
 function ToolColumn({ onHandleClick, tool, step, showIcons, handleOnDelete, handleOnAdd }) {
