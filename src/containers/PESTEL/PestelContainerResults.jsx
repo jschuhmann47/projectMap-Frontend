@@ -40,7 +40,7 @@ import ToolTip from 'components/commons/ToolTip';
 
 const PestelContainer = () => {
   const { pestelId, id } = useParams();
-  const disptch = useDispatch();
+  const dispatch = useDispatch();
   const politicos = useSelector(politicoSelectorOrdenadas);
   const economicos = useSelector(economicoSelectorOrdenadas);
   const sociales = useSelector(socialSelectorOrdenadas);
@@ -60,8 +60,8 @@ const PestelContainer = () => {
   const [anchorElement, setAnchorElement] = useState(null);
 
   useEffect(() => {
-    disptch(onGetOptions());
-    disptch(onGetOne(pestelId));
+    dispatch(onGetOptions());
+    dispatch(onGetOne(pestelId));
   }, []);
 
   return (
