@@ -90,7 +90,7 @@ const PorterView = ({
                           placeholder={
                             key === 'nivelDeConcordancia'
                               ? 'nivel de concordancia'
-                              : key
+                              : 'valoración'
                           }
                           validate={validateField}
                         />
@@ -98,21 +98,6 @@ const PorterView = ({
                           initialValues[steps[activeStep]][id][key]
                         )
                       }
-                      <ErrorMessage name={`${steps[activeStep]}.${id}.${key}`}>
-                        {(msg) => (
-                          <Typography
-                            sx={{
-                              textAlign: 'left',
-                              color: 'red',
-                              marginLeft: 2,
-                              marginTop: '2px',
-                              fontSize: '14px',
-                            }}
-                          >
-                            {msg}
-                          </Typography>
-                        )}
-                      </ErrorMessage>
                     </Box>
                   </Grid>
                 ))}
