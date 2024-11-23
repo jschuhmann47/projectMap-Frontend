@@ -152,5 +152,9 @@ export const SectionTable = styled('div')({
   padding: '30px 0',
   gap: 20,
 });
-export const SectionRadar = styled('div')({});
-export const SectionPie = styled('div')({});
+export const SectionRadar = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  marginTop: '20px',
+});
