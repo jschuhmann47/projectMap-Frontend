@@ -96,7 +96,7 @@ const QuestionnaireQuestionsView = ({
                                 name={`${subject.chapterId}.${questionId}.${question}`}
                                 component={SelectInput}
                                 options={answers?.map((answer) => answer.answer)}
-                                placeholder="Respuesta.."
+                                placeholder="Respuesta..."
                                 validate={validateField}
                               />
                             ) : (

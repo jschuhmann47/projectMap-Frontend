@@ -38,7 +38,7 @@ export const SignificadoCuadrante = {
   MANTENER:
     'Algunas de las inversiones deben hacerse en esta unidad de negocio, dando prioridad a mejorar / corregir las fallas que llevaron a la puntuación y tomar la puntuación más alta.',
   ABANDONAR:
-    'Ni unidad de negocio ni el mercado tienen perspectivas de éxito. Vale la pena detenerse a invertir en esta unidad y minimizar las pérdidas.',
+    'Ni unidad de negocio ni el mercado tienen perspectivas de éxito. Vale la pena detener la inversión en esta unidad y minimizar las pérdidas.',
   SALIR_CON_ORDEN:
     'Si la unidad de negocio a generar dinero, vale la pena invertir lo menos posible para que continúe operando. Si no es así, reducir las inversiones y planificar una salida gradual.',
   COSECHAR:

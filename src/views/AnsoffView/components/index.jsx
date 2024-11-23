@@ -255,7 +255,7 @@ const Steps = ({
                     margin: '0 auto',
                   }}
                 >
-                  Agregue productos usando el boton <AddIcon />
+                  Agregue productos usando el botón <AddIcon />
                 </Typography>
               )}
             </>
@@ -284,7 +284,7 @@ const Steps = ({
               </Grid>
               <Grid item xs={6} display="flex" justifyContent={'center'}>
                 <span style={{ textAlign: 'center' }}>
-                  Exito del producto actual
+                  Éxito del producto actual
                 </span>
               </Grid>
             </Grid>
@@ -316,7 +316,7 @@ const Steps = ({
                           selectedValue={
                             producto?.exito
                               ? getExitoProducto(producto.exito)
-                              : { label: 'Seleccione el exito', value: '' }
+                              : { label: 'Seleccione el éxito', value: '' }
                           }
                           onChange={(newValue) => {
                             onEditExito({ ...producto, exito: newValue });
@@ -340,7 +340,7 @@ const Steps = ({
                 margin: '0 auto',
               }}
             >
-              No hay productos clasificados en esta area
+              No hay productos clasificados en esta área
             </Typography>
           )}
         </>
@@ -367,7 +367,7 @@ const Steps = ({
               </Grid>
               <Grid item xs={6} display="flex" justifyContent={'center'}>
                 <span style={{ textAlign: 'center' }}>
-                  Exito del producto actual
+                  Éxito del producto actual
                 </span>
               </Grid>
             </Grid>
@@ -400,7 +400,7 @@ const Steps = ({
                             selectedValue={
                               producto?.exito
                                 ? getExitoProducto(producto.exito)
-                                : { label: 'Seleccione el exito', value: '' }
+                                : { label: 'Seleccione el éxito', value: '' }
                             }
                             onChange={(newValue) => {
                               onEditExito({ ...producto, exito: newValue });
@@ -425,7 +425,7 @@ const Steps = ({
                 margin: '0 auto',
               }}
             >
-              No hay productos clasificados en esta area
+              No hay productos clasificados en esta área
             </Typography>
           )}
         </>
@@ -452,7 +452,7 @@ const Steps = ({
               </Grid>
               <Grid item xs={6} display="flex" justifyContent={'center'}>
                 <span style={{ textAlign: 'center' }}>
-                  Exito del producto actual
+                  Éxito del producto actual
                 </span>
               </Grid>
             </Grid>
@@ -484,7 +484,7 @@ const Steps = ({
                           selectedValue={
                             producto?.exito
                               ? getExitoProducto(producto.exito)
-                              : { label: 'Seleccione el exito', value: '' }
+                              : { label: 'Seleccione el éxito', value: '' }
                           }
                           onChange={(newValue) => {
                             onEditExito({ ...producto, exito: newValue });
@@ -508,7 +508,7 @@ const Steps = ({
                 margin: '0 auto',
               }}
             >
-              No hay productos clasificados en esta area
+              No hay productos clasificados en esta área
             </Typography>
           )}
         </>
@@ -535,7 +535,7 @@ const Steps = ({
               </Grid>
               <Grid item xs={6} display="flex" justifyContent={'center'}>
                 <span style={{ textAlign: 'center' }}>
-                  Exito del producto actual
+                  Éxito del producto actual
                 </span>
               </Grid>
             </Grid>
@@ -567,7 +567,7 @@ const Steps = ({
                           selectedValue={
                             producto?.exito
                               ? getExitoProducto(producto.exito)
-                              : { label: 'Seleccione el exito', value: '' }
+                              : { label: 'Seleccione el éxito', value: '' }
                           }
                           onChange={(newValue) => {
                             onEditExito({ ...producto, exito: newValue });
@@ -591,7 +591,7 @@ const Steps = ({
                 margin: '0 auto',
               }}
             >
-              No hay productos clasificados en esta area
+              No hay productos clasificados en esta área
             </Typography>
           )}
         </>
