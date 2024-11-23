@@ -6,7 +6,6 @@ import { COLORS } from 'helpers/enums/colors';
 export const Container = styled('div')({
   display: 'flex',
   flexDirection: 'column',
-  maxWidth: 1300,
   alignItems: 'center',
   width: '100%',
 });
