@@ -7,6 +7,7 @@ import Button from 'components/commons/Button';
 import { COLORS } from 'helpers/enums/colors';
 import {
   Container,
+  ViewContainer,
 } from 'views/PestelView/styles';
 import PestelView from 'views/PestelView';
 import {
@@ -101,97 +102,99 @@ const PestelContainer = () => {
   return (
     <LayoutContainer>
       <Container>
-        <PestelView
-          onAdd={onAdd}
-          politicos={politicos}
-          economicos={economicos}
-          sociales={sociales}
-          tecnologicos={tecnologicos}
-          ambientales={ambientales}
-          legales={legales}
-          onEdit={onEdit}
-          onDelete={onDelete}
-          title={title}
-          onClickButton={onClickResultsButton}
-          onClickButtonGoBack={onClickResultsButtonGoBack}
-          buttonTitle="Resultados"
-          openComments={(target) => setAnchorElement(target)}
-          userPermission={userPermission}
-        />
-        <Menu
-          anchorEl={anchorElement}
-          onClose={() => setAnchorElement(null)}
-          open={!!anchorElement}
-          PaperProps={{
-            style: {
-              width: 500,
-            },
-          }}
-          sx={{
-            '& .MuiMenu-list': {
-              background: COLORS.AthensGray,
-            },
-          }}
-        >
-          <MenuItem key={1} disableRipple>
-            <Comments show tool="PESTEL" toolId={pestelId} projectId={id} />
-          </MenuItem>
-        </Menu>
-        <ModalV2
-          isOpen={!!factor}
-          title={
-            !!factor?.area
-            ? `Editar factor ${factor?.area}`
-            : `Agregar factor ${factor}`
-          }
-          onClose={() => setFactor('')}
-        >
-          <Formik onSubmit={onSubmitFactor} initialValues={initialValues}>
-            {({ handleSubmit }) => (
-              <Form onSubmit={handleSubmit}>
-                <Field
-                  name="descripcion"
-                  fieldLabel="Descripción"
-                  component={InputV2}
-                  validate={validateField}
-                  tooltip="Seleccione o escriba el factor que quiere agregar a su análisis."
-                />
-                <Field
-                  name="importancia"
-                  component={SelectInputV2}
-                  options={importancia}
-                  fieldLabel="Importancia"
-                  validate={validateField}
-                  tooltip="Algunos factores que agregue en su análisis tendrán mayor impacto que otros. Si algo tiene un gran impacto, positivo o negativo, en su organización, utilice la opción superior, de ser menos importante, la inferior"
-                />
-                <Field
-                  name='intensidad'
-                  component={SelectInputV2}
-                  options={intensidad}
-                  fieldLabel='Intensidad'
-                  validate={validateField}
-                  tooltip="Los factores a agregar se pueden manifestar con fuerza variable. No es lo mismo por ejemplo, una inflación del 2% a una de 20%. Utilice esta escala para describir ese comportamiento."
-                />
-                <Field
-                  name="tendencia"
-                  component={SelectInputV2}
-                  options={tendencia}
-                  fieldLabel='Tendencia'
-                  validate={validateField}
-                  tooltip="Un factor necesariamente tiene una tendencia, ¿Está empeorando o mejorando?, ¿Está tendiendo a desaparecer o se está volviendo más importante?. Utilice estas 5 posibilidades para representar este comportamiento."
-                />
-                <ButtonsContainer>
-                  <Button color="secondary" onClick={() => setFactor('')}>
-                    Cancelar
-                  </Button>
-                  <Button type="submit">
-                    {!!factor?.area ? 'Editar' : 'Agregar'}
-                  </Button>
-                </ButtonsContainer>
-              </Form>
-            )}
-          </Formik>
-        </ModalV2>
+        <ViewContainer>
+          <PestelView
+            onAdd={onAdd}
+            politicos={politicos}
+            economicos={economicos}
+            sociales={sociales}
+            tecnologicos={tecnologicos}
+            ambientales={ambientales}
+            legales={legales}
+            onEdit={onEdit}
+            onDelete={onDelete}
+            title={title}
+            onClickButton={onClickResultsButton}
+            onClickButtonGoBack={onClickResultsButtonGoBack}
+            buttonTitle="Resultados"
+            openComments={(target) => setAnchorElement(target)}
+            userPermission={userPermission}
+          />
+          <Menu
+            anchorEl={anchorElement}
+            onClose={() => setAnchorElement(null)}
+            open={!!anchorElement}
+            PaperProps={{
+              style: {
+                width: 500,
+              },
+            }}
+            sx={{
+              '& .MuiMenu-list': {
+                background: COLORS.AthensGray,
+              },
+            }}
+          >
+            <MenuItem key={1} disableRipple>
+              <Comments show tool="PESTEL" toolId={pestelId} projectId={id} />
+            </MenuItem>
+          </Menu>
+          <ModalV2
+            isOpen={!!factor}
+            title={
+              !!factor?.area
+              ? `Editar factor ${factor?.area}`
+              : `Agregar factor ${factor}`
+            }
+            onClose={() => setFactor('')}
+          >
+            <Formik onSubmit={onSubmitFactor} initialValues={initialValues}>
+              {({ handleSubmit }) => (
+                <Form onSubmit={handleSubmit}>
+                  <Field
+                    name="descripcion"
+                    fieldLabel="Descripción"
+                    component={InputV2}
+                    validate={validateField}
+                    tooltip="Seleccione o escriba el factor que quiere agregar a su análisis."
+                  />
+                  <Field
+                    name="importancia"
+                    component={SelectInputV2}
+                    options={importancia}
+                    fieldLabel="Importancia"
+                    validate={validateField}
+                    tooltip="Algunos factores que agregue en su análisis tendrán mayor impacto que otros. Si algo tiene un gran impacto, positivo o negativo, en su organización, utilice la opción superior, de ser menos importante, la inferior"
+                  />
+                  <Field
+                    name='intensidad'
+                    component={SelectInputV2}
+                    options={intensidad}
+                    fieldLabel='Intensidad'
+                    validate={validateField}
+                    tooltip="Los factores a agregar se pueden manifestar con fuerza variable. No es lo mismo por ejemplo, una inflación del 2% a una de 20%. Utilice esta escala para describir ese comportamiento."
+                  />
+                  <Field
+                    name="tendencia"
+                    component={SelectInputV2}
+                    options={tendencia}
+                    fieldLabel='Tendencia'
+                    validate={validateField}
+                    tooltip="Un factor necesariamente tiene una tendencia, ¿Está empeorando o mejorando?, ¿Está tendiendo a desaparecer o se está volviendo más importante?. Utilice estas 5 posibilidades para representar este comportamiento."
+                  />
+                  <ButtonsContainer>
+                    <Button color="secondary" onClick={() => setFactor('')}>
+                      Cancelar
+                    </Button>
+                    <Button type="submit">
+                      {!!factor?.area ? 'Editar' : 'Agregar'}
+                    </Button>
+                  </ButtonsContainer>
+                </Form>
+              )}
+            </Formik>
+          </ModalV2>
+        </ViewContainer>
       </Container>
       {loading && <Loading isModalMode message="Cargando PESTEL" />}
     </LayoutContainer>

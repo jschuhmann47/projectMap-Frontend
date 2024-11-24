@@ -18,7 +18,7 @@ import { Box, Grid } from '@mui/material';
 import { Menu, MenuItem } from '@mui/material';
 import Comments from 'components/comments/Comments';
 import { COLORS } from 'helpers/enums/colors';
-import { Container } from 'views/FodaView/styles';
+import { Container } from 'views/PestelView/styles';
 import RadarChartCustom from 'components/commons/RadarChart';
 
 const McKinseyContainerResults = () => {
@@ -69,8 +69,8 @@ const McKinseyContainerResults = () => {
   return (
     <LayoutContainer>
       <Container>
-        <Grid container sx={{ height: '100%' }}>
-          <Grid item sx={{ height: '100%' }}>
+        <Box sx={{ width: '90%' }}>
+          <Box sx={{ height: 'max-content' }}>
             <McKinseyView
               cuadrantes={cuadrantes}
               showResults
@@ -78,7 +78,7 @@ const McKinseyContainerResults = () => {
               title={title}
               onClickGoBackButton={onClickGoBackButton}
             />
-          </Grid>
+          </Box>
           <Menu
             anchorEl={anchorElement}
             onClose={() => setAnchorElement(null)}
@@ -98,10 +98,14 @@ const McKinseyContainerResults = () => {
               <Comments show tool="MCKINSEY" toolId={matrizId} projectId={id} />
             </MenuItem>
           </Menu>
-          <Grid item sx={{ height: '100%', marginTop: '40px' }}>
-            <Grid container>
-              <Grid item sx={{ padding: '30px' }}>
-                <Title>Tabla de Resultados</Title>
+            <Box sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              width: '100%'
+            }}>
+              <Title>Tabla de Resultados</Title>
+              <Box sx={{ paddingLeft: '30px', paddingRight: '30px' }}>
                 <CustomizedTables
                   items={cuadrantesOrdenados}
                   columns={[
@@ -119,16 +123,13 @@ const McKinseyContainerResults = () => {
                     },
                   ]}
                 />
-              </Grid>
-            </Grid>
-          </Grid>
-          <Box sx={{ margin: '0 auto', marginTop: '10%' }}>
-            <SectionRadar sx={{ textAlign: 'center' }}>
-              <Title>Gráfico de Radar</Title>
-              <RadarChartCustom data={buildChartData()} />
-            </SectionRadar>
-          </Box>
-        </Grid>
+              </Box>
+            </Box>
+          <SectionRadar>
+            <Title>Gráfico de Radar</Title>
+            <RadarChartCustom data={buildChartData()} />
+          </SectionRadar>
+        </Box>
       </Container>
     </LayoutContainer>
   );

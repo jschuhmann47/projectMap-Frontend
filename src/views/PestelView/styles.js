@@ -6,12 +6,8 @@ import { COLORS } from 'helpers/enums/colors';
 export const Container = styled('div')({
   display: 'flex',
   flexDirection: 'column',
-  margin: '0 auto',
-  maxWidth: 1300,
   alignItems: 'center',
-  justifyContent: 'center',
-  height: '100%',
-  width: '90%',
+  width: '100%',
 });
 
 export const ButtonContainer = styled('div')({
@@ -119,10 +115,9 @@ export const ChipContainer = styled('div')({
 
 export const ViewContainer = styled('div')({
   display: 'flex',
-  flex: 1,
   margin: '0 auto',
   flexDirection: 'column',
-  height: '100%',
+  width: '90%',
 });
 
 export const ChartContainer = styled('div')({

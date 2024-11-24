@@ -61,7 +61,7 @@ const McKinseyView = ({
   //  top: 50%;
   //  rotate: 270deg;
   const renderBox = (backgroundcolor, child, showText = false) => (
-    <Grid item xs={4} sx={{ display: 'flex', height: '33%' }}>
+    <Grid item xs={4} sx={{ display: 'flex', minHeight: '33%' }}>
       {/* {showText && <span>hola</span>} */}
       <CardContent backgroundcolor={backgroundcolor}>{child}</CardContent>
     </Grid>
