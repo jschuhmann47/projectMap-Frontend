@@ -42,7 +42,7 @@ function ActionItem({ action, onClickEdit, userPermission }) {
       <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
         {userPermission === 'edit' ? (
           <>
-            <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 16 }}>
+            <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 15 }}>
               Cumplimiento (%)
             </Typography>
             <TextField
@@ -101,7 +101,7 @@ export default function Stage3View({
         </Typography>
       </Box>
       <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 26, fontWeight: 'bold', marginBottom: '10px' }}>
-        Etapa 3: hacer
+        Etapa 3: verificar
       </Typography>
       <Typography sx={{ fontFamily: 'Fira Sans', fontSize: 20, marginBottom: '5px' }}>
         ¿Cuál es el grado de cumplimiento de cada acción?

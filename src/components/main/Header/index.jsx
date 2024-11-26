@@ -33,16 +33,19 @@ const Header = (props) => {
           <Logo />
           {user && (
             <HeaderAccountContainer>
-              { !user.isAdmin ? (
+              {!user.isAdmin ? (
                 <>
                   Planificación estratégica
                   <IconButton onClick={() => setIsModalOpen(true)}>
                     <InfoOutlined htmlColor='#FFFFFF' />
                   </IconButton>
                 </>
-              ) : 
-                <Star />
-              }
+              ) : (
+                <>
+                  Administrador
+                  <Star />    
+                </>
+              )}
               
               {!!menuItems?.length && (
                 <AccountButton

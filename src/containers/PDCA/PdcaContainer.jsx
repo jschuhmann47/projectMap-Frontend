@@ -37,7 +37,7 @@ export default function PdcaContainer() {
   }
 
   function onAddAction() {
-    const formData = { actions: [{ name: inputValue }, ...data.actions] }
+    const formData = { actions: [...data.actions, { name: inputValue }] }
     dispatch(onPatch(pdcaId, formData))
     setInputValue("")
   }
