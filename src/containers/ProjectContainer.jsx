@@ -81,10 +81,10 @@ const ProjectContainer = () => {
   const consultant = useSelector(getConsultantSelector);
 
   const projectInfo = useSelector((state) => state.projects.data);
+  const loading = useSelector((state) => state.projects.loading);
   const members = useSelector((state) => state.projects.members);
   const addUserModalInfo = useSelector((state) => state.projects.addUserModal);
   const user = useSelector((state) => state.user.data);
-  const loading = useSelector(getLoadingSelector);
   const { organizationalChart } = useSelector((state) => state.projects);
   const allOkrs = useSelector((state) => state.projects.okrs);
 

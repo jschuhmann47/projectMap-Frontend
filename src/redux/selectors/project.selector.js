@@ -246,34 +246,3 @@ export const getConsultantSelector = createSelector(
   [getSharedUsers],
   (sharedUsers) => sharedUsers?.find((user) => user.role === 'Consultant')
 );
-
-export const getLoadingSelector = createSelector(
-  [
-    getLoadingFoda,
-    getLoadingPestels,
-    getLoadingPortes,
-    getLoadingAnsoffs,
-    getLoadingOkrs,
-    getLoadingMckinseys,
-    getLoadingBalanced,
-    getLoadingQuestionnaires,
-  ],
-  (
-    loadingFodas,
-    loadingPestels,
-    loadingPorters,
-    loadingAnsoffs,
-    loadingOkrs,
-    loadingMckinseys,
-    loadingBalanced,
-    loadingQuestionnaires
-  ) =>
-    loadingFodas &&
-    loadingPestels &&
-    loadingPorters &&
-    loadingAnsoffs &&
-    loadingOkrs &&
-    loadingMckinseys &&
-    loadingBalanced &&
-    loadingQuestionnaires
-);
