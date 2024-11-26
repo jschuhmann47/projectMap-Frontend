@@ -18,7 +18,7 @@ const ReadonlyChecklistKr = ({ data }) => {
       </Grid>
       <Grid item xs={6}>
         <Box sx={{ display: 'flex', height: '200px', overflow: 'scroll', width: '100%' }}>
-          <List sx={{pt: 0, display: "flex", flexDirection: 'column'}}>
+          <List sx={{pt: 0, display: "flex", flexDirection: 'column', gap: '15px'}}>
             {hitos && hitos.length && hitos.map((hito, index) => (
               <ListItem key={index} sx={{ display: 'flex',alignItems: 'baseline',flexDirection: 'column', p: 0.5, mr: 1.5 }}>
                 <Box sx={{display: 'flex'}}>

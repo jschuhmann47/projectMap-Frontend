@@ -68,7 +68,20 @@ const KrForm = ({ onSubmit, data }) => {
               <Box sx={{ display: 'flex' }}>
                 <KrCheckListItemsContainer>
                   {values.keyStatus.map((key, index) => (
-                    <FormControlLabel control={<Checkbox onChange={() => handleCheckboxChange(index, values)} checked={checklist[index].checked}/>} label={key.description} />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          onChange={() => handleCheckboxChange(index, values)}
+                          checked={checklist[index].checked}
+                        />
+                      }
+                      label={key.description}
+                      slotProps={{
+                        typography: {
+                          fontFamily: 'Fira Sans',
+                        }
+                      }}
+                    />
                   ))}
                 </KrCheckListItemsContainer>
               </Box>

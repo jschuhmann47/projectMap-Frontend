@@ -4,9 +4,10 @@ export const KrCheckListItemsContainer = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   height: "300px",
-  overflow: "scroll",
+  overflowY: "scroll",
   width: "100%",
-  marginLeft: "30px"
+  marginLeft: "30px",
+  gap: '15px',
 });
 
 export const KrCheckListItem = styled('div')({
