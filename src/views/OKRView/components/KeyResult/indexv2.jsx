@@ -113,6 +113,8 @@ export default function KeyResultModal({
                     left: `${data.progress}`,
                     padding: '0px',
                     marginTop: '5px',
+                    fontFamily: 'Fira Sans',
+                    fontSize: '16px',
                     display: showProgressNumber() ? "block" : "none"
                   }}
                 >

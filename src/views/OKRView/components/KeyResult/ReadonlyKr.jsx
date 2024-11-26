@@ -45,7 +45,7 @@ const ReadonlyKr = ({ data }) => {
         <Typography sx={{ fontFamily: 'Fira Sans' }}>Línea base: {data.baseline}</Typography>
         <Typography sx={{ fontFamily: 'Fira Sans' }}>Resultado esperado: {data.goal}</Typography>
         <Box sx={{ display: 'flex' }}>
-          <Typography sx={{ fontFamily: 'Fira Sans' }}>Prioridad:</Typography>
+          <Typography sx={{ fontFamily: 'Fira Sans', fontSize: '16px' }}>Prioridad:</Typography>
           <img src={priorityOptions[data.priority]} height="25" width="25" />
         </Box>
       </Grid>

@@ -12,7 +12,7 @@ const ReadonlyChecklistKr = ({ data }) => {
       <Grid item xs={6}>
         <Typography sx={{ fontFamily: 'Fira Sans' }}>Responsable: {data.responsible}</Typography>
         <Box sx={{ display: 'flex' }}>
-          <Typography sx={{ fontFamily: 'Fira Sans' }}>Prioridad:</Typography>
+          <Typography sx={{ fontFamily: 'Fira Sans', fontSize: '16px' }}>Prioridad:</Typography>
           <img src={priorityOptions[data.priority]} height="25" width="25" />
         </Box>
       </Grid>

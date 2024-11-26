@@ -51,7 +51,7 @@ const KrForm = ({ onSubmit, data }) => {
                     <>
                       <Box sx={{display: 'flex'}}>
                         <Box flex={1}>
-                          <Typography sx={{ mt: 1 }}>{props.fieldLabel}</Typography>
+                          <Typography sx={{ fontFamily: 'Fira Sans', fontSize: '16px', mt: 1 }}>{props.fieldLabel}</Typography>
                         </Box>                    
                         <Box flex={1}>
                           <ImgSelect {...props} style={{sx: {height: "34px"}}}></ImgSelect>
