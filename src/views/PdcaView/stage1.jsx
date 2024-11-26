@@ -2,7 +2,7 @@ import { ArrowBack, Check, Delete } from "@mui/icons-material";
 import { Box, IconButton, TextField, Typography } from "@mui/material";
 
 function ActionItem({ action, onClickRemove }) {
-  return <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '80%' }}>
+  return <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
     <Typography sx={{ fontFamily: 'Fira Sans' }}>{action.name}</Typography>
     <IconButton onClick={onClickRemove}>
       <Delete htmlColor='black' />
@@ -79,16 +79,18 @@ export default function Stage1View({
                   <Check sx={{fontSize: 40, color: !inputValue ? 'gray' : 'black' }}/>
                 </IconButton>
               </Box>
-              {pdcaData.actions.map((a) =>
-                <ActionItem action={a} onClickRemove={() => onRemoveAction(a.name)} />
-              )}
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '15px', width: '80%' }}>
+                {pdcaData.actions.map((a) =>
+                  <ActionItem action={a} onClickRemove={() => onRemoveAction(a.name)} />
+                )}
+              </Box>
             </>
           ) : (
-            <>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '15px', width: '80%' }}>
               {pdcaData.actions.map((a) =>
                 <Typography sx={{ fontFamily: 'Fira Sans' }}>{a.name}</Typography>
               )}
-            </>
+            </Box>
           )}
         </Box>
       </Box>
